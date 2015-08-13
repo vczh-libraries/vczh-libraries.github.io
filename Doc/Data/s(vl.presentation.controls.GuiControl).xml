@@ -1,0 +1,2273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbols>
+  <ClassDecl Access="Public" Name="GuiControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl" OverloadKey="::vl::presentation::controls::GuiControl" ClassType="Class">
+    <Document>&lt;Document&gt;
+  &lt;summary&gt;
+The base class of all controls.
+When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
+If you want to manually destroy a control, you should first remove it from its parent.
+The only way to remove a control from a parent control, is to remove the bounds composition from its parent composition. The same to inserting a control.
+&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+    <Children>
+      <TypedefDecl Access="Private" Name="ControlList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlList" OverloadKey="::vl::presentation::controls::GuiControl::ControlList">
+        <Type>
+          <GenericTypeDecl>
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::collections@ns:vl.collections" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+            <TypeArguments>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </TypeArguments>
+          </GenericTypeDecl>
+        </Type>
+      </TypedefDecl>
+      <ClassDecl Access="Public" Name="IStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController" ClassType="Class">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;
+Represents a style for a control. A style is something like a skin, but contains some default action handlers.
+&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Children>
+          <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::GetBoundsComposition" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::GetBoundsComposition()" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the bounds composition. A bounds composition represents all visible contents of a control.&lt;/summary&gt;
+  &lt;returns&gt;The bounds composition.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="GetContainerComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::GetContainerComposition" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::GetContainerComposition()" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the container composition. A container composition is where to place all bounds compositions for child controls.&lt;/summary&gt;
+  &lt;returns&gt;The container composition.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFocusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetFocusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetFocusableComposition(* compositions::GuiGraphicsComposition)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the focusable composition. A focusable composition is the composition to be focused when the control is focused.&lt;/summary&gt;
+  &lt;param name="value"&gt;The focusable composition.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetFocusableComposition::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetFocusableComposition(* compositions::GuiGraphicsComposition)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="Pointer">
+                        <Element>
+                          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                            </ReferencingOverloadKeys>
+                            <Parent>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Parent>
+                          </SubTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetText" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetText(&amp; const WString)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the text to display on the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The text to display.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetText::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetText(&amp; const WString)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::WString@s:vl.WString" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetFont" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetFont(&amp; const FontProperties)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the font to render the text.&lt;/summary&gt;
+  &lt;param name="value"&gt;The font to render the text.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetFont::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetFont(&amp; const FontProperties)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetVisuallyEnabled(bool)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the enableing state to affect the rendering of the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The enableing state.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleController::SetVisuallyEnabled::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleController::SetVisuallyEnabled(bool)::value" Static="False">
+                    <Type>
+                      <RefTypeDecl Name="bool" />
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+        </Children>
+        <BaseTypes>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <GenericTypeDecl>
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+                <TypeArguments>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </TypeArguments>
+              </GenericTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+        </BaseTypes>
+      </ClassDecl>
+      <ClassDecl Access="Public" Name="EmptyStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController" ClassType="Class">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;
+An empty style for &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" /&gt;&lt;/links&gt;.
+&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Children>
+          <VarDecl Access="Protected" Name="boundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::boundsComposition" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::boundsComposition" Static="False">
+            <Type>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </Type>
+          </VarDecl>
+          <FuncDecl Access="Public" Name="EmptyStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::EmptyStyleController" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::EmptyStyleController()" Virtual="Normal" Function="Constructor">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="~EmptyStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::~EmptyStyleController" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::~EmptyStyleController()" Virtual="Normal" Function="Destructor">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::GetBoundsComposition" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::GetBoundsComposition()" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="GetContainerComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::GetContainerComposition" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::GetContainerComposition()" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFocusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFocusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFocusableComposition(* compositions::GuiGraphicsComposition)" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFocusableComposition::value" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFocusableComposition(* compositions::GuiGraphicsComposition)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="Pointer">
+                        <Element>
+                          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                            </ReferencingOverloadKeys>
+                            <Parent>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Parent>
+                          </SubTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetText" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetText(&amp; const WString)" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetText::value" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetText(&amp; const WString)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::WString@s:vl.WString" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFont" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFont(&amp; const FontProperties)" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFont::value" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetFont(&amp; const FontProperties)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetVisuallyEnabled(bool)" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetVisuallyEnabled::value" OverloadKey="::vl::presentation::controls::GuiControl::EmptyStyleController::SetVisuallyEnabled(bool)::value" Static="False">
+                    <Type>
+                      <RefTypeDecl Name="bool" />
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+        </Children>
+        <BaseTypes>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <RefTypeDecl ReferencingNameKey="::vl::Object" Name="Object">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::Object@s:vl.Object" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <GenericTypeDecl>
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+                <TypeArguments>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::EmptyStyleController" Name="EmptyStyleController">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl::EmptyStyleController@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </TypeArguments>
+              </GenericTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+        </BaseTypes>
+      </ClassDecl>
+      <ClassDecl Access="Public" Name="IStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider" ClassType="Class">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;
+A style provider is a callback interface for some control that already provides a style controller, but the controller need callbacks to create sub compositions or handle actions.
+&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Children>
+          <FuncDecl Access="Public" Name="AssociateStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::AssociateStyleController" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::AssociateStyleController(* IStyleController)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Called when a style provider is associated with a style controller.&lt;/summary&gt;
+  &lt;param name="controller"&gt;The style controller that is associated.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="controller" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::AssociateStyleController::controller" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::AssociateStyleController(* IStyleController)::controller" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="Pointer">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFocusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFocusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFocusableComposition(* compositions::GuiGraphicsComposition)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the focusable composition. A focusable composition is the composition to be focused when the control is focused.&lt;/summary&gt;
+  &lt;param name="value"&gt;The focusable composition.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFocusableComposition::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFocusableComposition(* compositions::GuiGraphicsComposition)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="Pointer">
+                        <Element>
+                          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                            </ReferencingOverloadKeys>
+                            <Parent>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Parent>
+                          </SubTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetText" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetText(&amp; const WString)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the text to display on the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The text to display.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetText::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetText(&amp; const WString)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::WString@s:vl.WString" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFont" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFont(&amp; const FontProperties)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the font to render the text.&lt;/summary&gt;
+  &lt;param name="value"&gt;The font to render the text.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFont::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetFont(&amp; const FontProperties)::value" Static="False">
+                    <Type>
+                      <DecorateTypeDecl Decoration="LeftRef">
+                        <Element>
+                          <DecorateTypeDecl Decoration="Const">
+                            <Element>
+                              <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Element>
+                          </DecorateTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+          <FuncDecl Access="Public" Name="SetVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetVisuallyEnabled(bool)" Virtual="Abstract" Function="Function">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the enableing state to affect the rendering of the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The enableing state.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <RefTypeDecl Name="void" />
+                </ReturnType>
+                <Parameters>
+                  <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetVisuallyEnabled::value" OverloadKey="::vl::presentation::controls::GuiControl::IStyleProvider::SetVisuallyEnabled(bool)::value" Static="False">
+                    <Type>
+                      <RefTypeDecl Name="bool" />
+                    </Type>
+                  </VarDecl>
+                </Parameters>
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+        </Children>
+        <BaseTypes>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+          <BaseTypeDecl Access="Public" Tags="x86, Windows">
+            <Type>
+              <GenericTypeDecl>
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+                <TypeArguments>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleProvider" Name="IStyleProvider">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl::IStyleProvider@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </TypeArguments>
+              </GenericTypeDecl>
+            </Type>
+          </BaseTypeDecl>
+        </BaseTypes>
+      </ClassDecl>
+      <VarDecl Access="Protected" Name="styleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::styleController" OverloadKey="::vl::presentation::controls::GuiControl::styleController" Static="False">
+        <Type>
+          <GenericTypeDecl>
+            <Element>
+              <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Element>
+            <TypeArguments>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </TypeArguments>
+          </GenericTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="boundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::boundsComposition" OverloadKey="::vl::presentation::controls::GuiControl::boundsComposition" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="focusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::focusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::focusableComposition" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="eventReceiver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::eventReceiver" OverloadKey="::vl::presentation::controls::GuiControl::eventReceiver" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsEventReceiver" Name="GuiGraphicsEventReceiver">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::GuiGraphicsEventReceiver@s:vl.presentation.compositions.GuiGraphicsEventReceiver" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="isEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::isEnabled" OverloadKey="::vl::presentation::controls::GuiControl::isEnabled" Static="False">
+        <Type>
+          <RefTypeDecl Name="bool" />
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="isVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::isVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::isVisuallyEnabled" Static="False">
+        <Type>
+          <RefTypeDecl Name="bool" />
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="isVisible" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::isVisible" OverloadKey="::vl::presentation::controls::GuiControl::isVisible" Static="False">
+        <Type>
+          <RefTypeDecl Name="bool" />
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="alt" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::alt" OverloadKey="::vl::presentation::controls::GuiControl::alt" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::WString@s:vl.WString" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::text" OverloadKey="::vl::presentation::controls::GuiControl::text" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::WString@s:vl.WString" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="font" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::font" OverloadKey="::vl::presentation::controls::GuiControl::font" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="activatingAltHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::activatingAltHost" OverloadKey="::vl::presentation::controls::GuiControl::activatingAltHost" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiAltActionHost" Name="IGuiAltActionHost">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::IGuiAltActionHost@s:vl.presentation.compositions.IGuiAltActionHost" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="parent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::parent" OverloadKey="::vl::presentation::controls::GuiControl::parent" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="children" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::children" OverloadKey="::vl::presentation::controls::GuiControl::children" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::ControlList" Name="ControlList">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::controls::GuiControl::ControlList@s:vl.presentation.controls.GuiControl" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="tag" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::tag" OverloadKey="::vl::presentation::controls::GuiControl::tag" Static="False">
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="tooltipControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::tooltipControl" OverloadKey="::vl::presentation::controls::GuiControl::tooltipControl" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="tooltipWidth" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::tooltipWidth" OverloadKey="::vl::presentation::controls::GuiControl::tooltipWidth" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::vint@s:vl.vint" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <FuncDecl Access="Protected" Name="OnChildInserted" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnChildInserted" OverloadKey="::vl::presentation::controls::GuiControl::OnChildInserted(* GuiControl)" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="control" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnChildInserted::control" OverloadKey="::vl::presentation::controls::GuiControl::OnChildInserted(* GuiControl)::control" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnChildRemoved" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnChildRemoved" OverloadKey="::vl::presentation::controls::GuiControl::OnChildRemoved(* GuiControl)" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="control" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnChildRemoved::control" OverloadKey="::vl::presentation::controls::GuiControl::OnChildRemoved(* GuiControl)::control" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnParentChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnParentChanged" OverloadKey="::vl::presentation::controls::GuiControl::OnParentChanged(* GuiControl,* GuiControl)" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="oldParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnParentChanged::oldParent" OverloadKey="::vl::presentation::controls::GuiControl::OnParentChanged(* GuiControl,* GuiControl)::oldParent" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+              <VarDecl Access="Public" Name="newParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnParentChanged::newParent" OverloadKey="::vl::presentation::controls::GuiControl::OnParentChanged(* GuiControl,* GuiControl)::newParent" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnParentLineChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnParentLineChanged" OverloadKey="::vl::presentation::controls::GuiControl::OnParentLineChanged()" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnRenderTargetChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnRenderTargetChanged" OverloadKey="::vl::presentation::controls::GuiControl::OnRenderTargetChanged(* elements::IGuiGraphicsRenderTarget)" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="renderTarget" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnRenderTargetChanged::renderTarget" OverloadKey="::vl::presentation::controls::GuiControl::OnRenderTargetChanged(* elements::IGuiGraphicsRenderTarget)::renderTarget" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::elements::IGuiGraphicsRenderTarget" Name="IGuiGraphicsRenderTarget">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::elements::IGuiGraphicsRenderTarget@s:vl.presentation.elements.IGuiGraphicsRenderTarget" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::elements" Name="elements">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::elements@ns:vl.presentation.elements" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnBeforeReleaseGraphicsHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnBeforeReleaseGraphicsHost" OverloadKey="::vl::presentation::controls::GuiControl::OnBeforeReleaseGraphicsHost()" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="UpdateVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::UpdateVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::UpdateVisuallyEnabled()" Virtual="Virtual" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="SetFocusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetFocusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::SetFocusableComposition(* compositions::GuiGraphicsComposition)" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetFocusableComposition::value" OverloadKey="::vl::presentation::controls::GuiControl::SetFocusableComposition(* compositions::GuiGraphicsComposition)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="IsAltEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IsAltEnabled" OverloadKey="::vl::presentation::controls::GuiControl::IsAltEnabled()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="IsAltAvailable" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::IsAltAvailable" OverloadKey="::vl::presentation::controls::GuiControl::IsAltAvailable()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="GetAltComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetAltComposition" OverloadKey="::vl::presentation::controls::GuiControl::GetAltComposition()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="GetActivatingAltHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetActivatingAltHost" OverloadKey="::vl::presentation::controls::GuiControl::GetActivatingAltHost()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiAltActionHost" Name="IGuiAltActionHost">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::IGuiAltActionHost@s:vl.presentation.compositions.IGuiAltActionHost" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnActiveAlt" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnActiveAlt" OverloadKey="::vl::presentation::controls::GuiControl::OnActiveAlt()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="SharedPtrDestructorProc" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc" OverloadKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc(* DescriptableObject,bool)" Virtual="Static" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="obj" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc::obj" OverloadKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc(* DescriptableObject,bool)::obj" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject" Name="DescriptableObject">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::reflection::DescriptableObject@s:vl.reflection.DescriptableObject" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+              <VarDecl Access="Public" Name="forceDisposing" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc::forceDisposing" OverloadKey="::vl::presentation::controls::GuiControl::SharedPtrDestructorProc(* DescriptableObject,bool)::forceDisposing" Static="False">
+                <Type>
+                  <RefTypeDecl Name="bool" />
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GuiControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GuiControl" OverloadKey="::vl::presentation::controls::GuiControl::GuiControl(* IStyleController)" Virtual="Normal" Function="Constructor">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Create a control with a specified style controller.&lt;/summary&gt;
+  &lt;param name="_styleController"&gt;The style controller.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="_styleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GuiControl::_styleController" OverloadKey="::vl::presentation::controls::GuiControl::GuiControl(* IStyleController)::_styleController" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="~GuiControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::~GuiControl" OverloadKey="::vl::presentation::controls::GuiControl::~GuiControl()" Virtual="Normal" Function="Destructor">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <VarDecl Access="Public" Name="VisibleChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::VisibleChanged" OverloadKey="::vl::presentation::controls::GuiControl::VisibleChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Visible event. This event will be raised when the visibility state of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Public" Name="EnabledChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::EnabledChanged" OverloadKey="::vl::presentation::controls::GuiControl::EnabledChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Enabled event. This event will be raised when the enabling state of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Public" Name="VisuallyEnabledChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::VisuallyEnabledChanged" OverloadKey="::vl::presentation::controls::GuiControl::VisuallyEnabledChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;
+Enabled event. This event will be raised when the visually enabling state of the control is changed. A visually enabling is combined by the enabling state and the parent's visually enabling state.
+A control is rendered as disabled, not only when the control itself is disabled, but also when the parent control is rendered as disabled.
+&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Public" Name="AltChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AltChanged" OverloadKey="::vl::presentation::controls::GuiControl::AltChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Alt changed event. This event will be raised when the associated Alt-combined shortcut key of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Public" Name="TextChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::TextChanged" OverloadKey="::vl::presentation::controls::GuiControl::TextChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Text changed event. This event will be raised when the text of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Public" Name="FontChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::FontChanged" OverloadKey="::vl::presentation::controls::GuiControl::FontChanged" Static="False">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Font changed event. This event will be raised when the font of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </VarDecl>
+      <FuncDecl Access="Public" Name="GetNotifyEventArguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetNotifyEventArguments" OverloadKey="::vl::presentation::controls::GuiControl::GetNotifyEventArguments()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;A function to create the argument for notify events that raised by itself.&lt;/summary&gt;
+  &lt;returns&gt;The created argument.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiEventArgs" Name="GuiEventArgs">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::GuiEventArgs@s:vl.presentation.compositions.GuiEventArgs" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetStyleController" OverloadKey="::vl::presentation::controls::GuiControl::GetStyleController()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the associated style controller.&lt;/summary&gt;
+  &lt;returns&gt;The associated style controller.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::IStyleController" Name="IStyleController">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl::IStyleController@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetBoundsComposition" OverloadKey="::vl::presentation::controls::GuiControl::GetBoundsComposition()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the bounds composition for the control. The value is from &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiControl::IStyleController::GetBoundsComposition()@s:vl.presentation.controls.GuiControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
+  &lt;returns&gt;The bounds composition.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetContainerComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetContainerComposition" OverloadKey="::vl::presentation::controls::GuiControl::GetContainerComposition()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the container composition for the control. The value is from &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiControl::IStyleController::GetContainerComposition()@s:vl.presentation.controls.GuiControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
+  &lt;returns&gt;The container composition.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetFocusableComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetFocusableComposition" OverloadKey="::vl::presentation::controls::GuiControl::GetFocusableComposition()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the focusable composition for the control. A focusable composition is the composition to be focused when the control is focused.&lt;/summary&gt;
+  &lt;returns&gt;The focusable composition.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetEventReceiver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetEventReceiver" OverloadKey="::vl::presentation::controls::GuiControl::GetEventReceiver()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the event receiver from the bounds composition.&lt;/summary&gt;
+  &lt;returns&gt;The event receiver.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsEventReceiver" Name="GuiGraphicsEventReceiver">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::compositions::GuiGraphicsEventReceiver@s:vl.presentation.compositions.GuiGraphicsEventReceiver" />
+                    </ReferencingOverloadKeys>
+                    <Parent>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetParent" OverloadKey="::vl::presentation::controls::GuiControl::GetParent()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the parent control.&lt;/summary&gt;
+  &lt;returns&gt;The parent control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetChildrenCount" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetChildrenCount" OverloadKey="::vl::presentation::controls::GuiControl::GetChildrenCount()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the number of child controls.&lt;/summary&gt;
+  &lt;returns&gt;The number of child controls.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::vint@s:vl.vint" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetChild" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetChild" OverloadKey="::vl::presentation::controls::GuiControl::GetChild(vint)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the child control using a specified index.&lt;/summary&gt;
+  &lt;returns&gt;The child control.&lt;/returns&gt;
+  &lt;param name="index"&gt;The specified index.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetChild::index" OverloadKey="::vl::presentation::controls::GuiControl::GetChild(vint)::index" Static="False">
+                <Type>
+                  <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::vint@s:vl.vint" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="AddChild" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AddChild" OverloadKey="::vl::presentation::controls::GuiControl::AddChild(* GuiControl)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Put another control in the container composition of this control.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+  &lt;param name="control"&gt;The control to put in this control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="control" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AddChild::control" OverloadKey="::vl::presentation::controls::GuiControl::AddChild(* GuiControl)::control" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="HasChild" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::HasChild" OverloadKey="::vl::presentation::controls::GuiControl::HasChild(* GuiControl)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if a control owned by this control.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if the control is owned by this control.&lt;/returns&gt;
+  &lt;param name="control"&gt;The control to test.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="control" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::HasChild::control" OverloadKey="::vl::presentation::controls::GuiControl::HasChild(* GuiControl)::control" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetRelatedControlHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetRelatedControlHost" OverloadKey="::vl::presentation::controls::GuiControl::GetRelatedControlHost()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiControlHost@s:vl.presentation.controls.GuiControlHost" /&gt;&lt;/links&gt; that contains this control.&lt;/summary&gt;
+  &lt;returns&gt;The &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiControlHost@s:vl.presentation.controls.GuiControlHost" /&gt;&lt;/links&gt; that contains this control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControlHost" Name="GuiControlHost">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControlHost@s:vl.presentation.controls.GuiControlHost" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetVisuallyEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetVisuallyEnabled" OverloadKey="::vl::presentation::controls::GuiControl::GetVisuallyEnabled()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if this control is rendered as enabled.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this control is rendered as enabled.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetEnabled" OverloadKey="::vl::presentation::controls::GuiControl::GetEnabled()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if this control is enabled.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this control is enabled.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetEnabled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetEnabled" OverloadKey="::vl::presentation::controls::GuiControl::SetEnabled(bool)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Make the control enabled or disabled.&lt;/summary&gt;
+  &lt;param name="value"&gt;Set to true to make the control enabled.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetEnabled::value" OverloadKey="::vl::presentation::controls::GuiControl::SetEnabled(bool)::value" Static="False">
+                <Type>
+                  <RefTypeDecl Name="bool" />
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetVisible" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetVisible" OverloadKey="::vl::presentation::controls::GuiControl::GetVisible()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if this visible or invisible.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this control is visible.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetVisible" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetVisible" OverloadKey="::vl::presentation::controls::GuiControl::SetVisible(bool)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Make the control visible or invisible.&lt;/summary&gt;
+  &lt;param name="value"&gt;Set to true to make the visible enabled.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetVisible::value" OverloadKey="::vl::presentation::controls::GuiControl::SetVisible(bool)::value" Static="False">
+                <Type>
+                  <RefTypeDecl Name="bool" />
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetAlt" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetAlt" OverloadKey="::vl::presentation::controls::GuiControl::GetAlt()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the Alt-combined shortcut key associated with this control.&lt;/summary&gt;
+  &lt;returns&gt;The Alt-combined shortcut key associated with this control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="LeftRef">
+                <Element>
+                  <DecorateTypeDecl Decoration="Const">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::WString@s:vl.WString" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetAlt" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetAlt" OverloadKey="::vl::presentation::controls::GuiControl::SetAlt(&amp; const WString)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Associate a Alt-combined shortcut key with this control.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+  &lt;param name="value"&gt;The Alt-combined shortcut key to associate. Only zero, sigle or multiple upper case letters are legal.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetAlt::value" OverloadKey="::vl::presentation::controls::GuiControl::SetAlt(&amp; const WString)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::WString@s:vl.WString" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetActivatingAltHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetActivatingAltHost" OverloadKey="::vl::presentation::controls::GuiControl::SetActivatingAltHost(* compositions::IGuiAltActionHost)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Make the control as the parent of multiple Alt-combined shortcut key activatable controls.&lt;/summary&gt;
+  &lt;param name="host"&gt;The alt action host object.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="host" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetActivatingAltHost::host" OverloadKey="::vl::presentation::controls::GuiControl::SetActivatingAltHost(* compositions::IGuiAltActionHost)::host" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiAltActionHost" Name="IGuiAltActionHost">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::compositions::IGuiAltActionHost@s:vl.presentation.compositions.IGuiAltActionHost" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetText" OverloadKey="::vl::presentation::controls::GuiControl::GetText()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the text to display on the control.&lt;/summary&gt;
+  &lt;returns&gt;The text to display on the control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="LeftRef">
+                <Element>
+                  <DecorateTypeDecl Decoration="Const">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::WString@s:vl.WString" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetText" OverloadKey="::vl::presentation::controls::GuiControl::SetText(&amp; const WString)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the text to display on the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The text to display on the control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetText::value" OverloadKey="::vl::presentation::controls::GuiControl::SetText(&amp; const WString)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::WString@s:vl.WString" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetFont" OverloadKey="::vl::presentation::controls::GuiControl::GetFont()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the font to render the text.&lt;/summary&gt;
+  &lt;returns&gt;The font to render the text.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="LeftRef">
+                <Element>
+                  <DecorateTypeDecl Decoration="Const">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetFont" OverloadKey="::vl::presentation::controls::GuiControl::SetFont(&amp; const FontProperties)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the font to render the text.&lt;/summary&gt;
+  &lt;param name="value"&gt;The font to render the text.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetFont::value" OverloadKey="::vl::presentation::controls::GuiControl::SetFont(&amp; const FontProperties)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::FontProperties" Name="FontProperties">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetFocus" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetFocus" OverloadKey="::vl::presentation::controls::GuiControl::SetFocus()" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Focus this control.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetTag" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetTag" OverloadKey="::vl::presentation::controls::GuiControl::GetTag()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the tag object of the control.&lt;/summary&gt;
+  &lt;returns&gt;The tag object of the control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetTag" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTag" OverloadKey="::vl::presentation::controls::GuiControl::SetTag(&amp; const description::Value)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the tag object of the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The tag object of the control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTag::value" OverloadKey="::vl::presentation::controls::GuiControl::SetTag(&amp; const description::Value)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                            </ReferencingOverloadKeys>
+                            <Parent>
+                              <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                                <ReferencingOverloadKeys>
+                                  <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                                </ReferencingOverloadKeys>
+                              </RefTypeDecl>
+                            </Parent>
+                          </SubTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetTooltipControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetTooltipControl" OverloadKey="::vl::presentation::controls::GuiControl::GetTooltipControl()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the tooltip control of the control.&lt;/summary&gt;
+  &lt;returns&gt;The tooltip control of the control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetTooltipControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTooltipControl" OverloadKey="::vl::presentation::controls::GuiControl::SetTooltipControl(* GuiControl)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the tooltip control of the control. The tooltip control will be released when this control is released. If you set a new tooltip control to replace the old one, the old one will not be owned by this control anymore, therefore user should release the old tooltip control manually.&lt;/summary&gt;
+  &lt;returns&gt;The old tooltip control.&lt;/returns&gt;
+  &lt;param name="value"&gt;The tooltip control of the control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTooltipControl::value" OverloadKey="::vl::presentation::controls::GuiControl::SetTooltipControl(* GuiControl)::value" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetTooltipWidth" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetTooltipWidth" OverloadKey="::vl::presentation::controls::GuiControl::GetTooltipWidth()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the tooltip width of the control.&lt;/summary&gt;
+  &lt;returns&gt;The tooltip width of the control.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::vint@s:vl.vint" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="SetTooltipWidth" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTooltipWidth" OverloadKey="::vl::presentation::controls::GuiControl::SetTooltipWidth(vint)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the tooltip width of the control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The tooltip width of the control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetTooltipWidth::value" OverloadKey="::vl::presentation::controls::GuiControl::SetTooltipWidth(vint)::value" Static="False">
+                <Type>
+                  <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::vint@s:vl.vint" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="DisplayTooltip" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::DisplayTooltip" OverloadKey="::vl::presentation::controls::GuiControl::DisplayTooltip(Point)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Display the tooltip.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+  &lt;param name="location"&gt;The relative location to specify the left-top position of the tooltip.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::DisplayTooltip::location" OverloadKey="::vl::presentation::controls::GuiControl::DisplayTooltip(Point)::location" Static="False">
+                <Type>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::Point" Name="Point">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::Point@s:vl.presentation.Point" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="CloseTooltip" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::CloseTooltip" OverloadKey="::vl::presentation::controls::GuiControl::CloseTooltip()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Close the tooltip that owned by this control.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="QueryService" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::QueryService" OverloadKey="::vl::presentation::controls::GuiControl::QueryService(&amp; const WString)" Virtual="Virtual" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Query a service using an identifier. If you want to get a service of type IXXX, use IXXX::Identifier as the identifier.&lt;/summary&gt;
+  &lt;returns&gt;The requested service. If the control doesn't support this service, it will be null.&lt;/returns&gt;
+  &lt;param name="identifier"&gt;The identifier.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="Pointer">
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="identifier" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::QueryService::identifier" OverloadKey="::vl::presentation::controls::GuiControl::QueryService(&amp; const WString)::identifier" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::WString@s:vl.WString" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <TemplateDecl Access="Public" Tags="x86, Windows">
+        <TypeParameters>
+          <TypeParameterDecl Access="Public" Name="T" Tags="x86, Windows" NameKey="::vl::presentation::controls::GuiControl::T" OverloadKey="::vl::presentation::controls::GuiControl::QueryTypedService`1()::T" />
+        </TypeParameters>
+        <Specialization />
+        <Element>
+          <FuncDecl Access="Public" Name="QueryTypedService" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::QueryTypedService" OverloadKey="::vl::presentation::controls::GuiControl::QueryTypedService`1()" Virtual="Normal" Function="Function">
+            <Type>
+              <FunctionTypeDecl CallingConvention="Default" Const="False">
+                <ReturnType>
+                  <DecorateTypeDecl Decoration="Pointer">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::T" Name="T">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiControl::QueryTypedService`1()::T@s:vl.presentation.controls.GuiControl" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </ReturnType>
+                <Parameters />
+              </FunctionTypeDecl>
+            </Type>
+          </FuncDecl>
+        </Element>
+      </TemplateDecl>
+    </Children>
+    <BaseTypes>
+      <BaseTypeDecl Access="Public" Tags="x86, Windows">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::Object" Name="Object">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::Object@s:vl.Object" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </BaseTypeDecl>
+      <BaseTypeDecl Access="Protected" Tags="x86, Windows">
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiAltAction" Name="IGuiAltAction">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::compositions::IGuiAltAction@s:vl.presentation.compositions.IGuiAltAction" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </BaseTypeDecl>
+      <BaseTypeDecl Access="Public" Tags="x86, Windows">
+        <Type>
+          <GenericTypeDecl>
+            <Element>
+              <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Element>
+            <TypeArguments>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </TypeArguments>
+          </GenericTypeDecl>
+        </Type>
+      </BaseTypeDecl>
+    </BaseTypes>
+  </ClassDecl>
+</Symbols>
