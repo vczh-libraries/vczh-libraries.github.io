@@ -141,6 +141,10 @@ Packages.Define("Doc.View", ["Class", "Doc.SymbolTree", "IO.Resource", "IO.Delay
         return null;
     }
 
+    function IsValidOverloadKey(key) {
+        return key.indexOf("@") !== -1;
+    }
+
     function OverloadKeyToUrl(key) {
         var index = key.indexOf("@s:");
         if (index === -1) {
@@ -264,6 +268,7 @@ Packages.Define("Doc.View", ["Class", "Doc.SymbolTree", "IO.Resource", "IO.Delay
         ShowTooltip: ShowTooltip,
         HideTooltip: HideTooltip,
         FindSymbolByOverloadKey: FindSymbolByOverloadKey,
+        IsValidOverloadKey: IsValidOverloadKey,
         OverloadKeyToUrl: OverloadKeyToUrl,
         OverloadKeyToDisplay: OverloadKeyToDisplay,
         CancelAndRunAfterDocViewReady: CancelAndRunAfterDocViewReady,
