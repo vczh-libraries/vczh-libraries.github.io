@@ -165,10 +165,10 @@ Packages.Define("Doc.View", ["Class", "Doc.SymbolTree", "IO.Resource", "IO.Delay
         }
 
         var index = key.indexOf("(");
-        if (index !== -1) {
+        if (index !== -1 && key[key.length - 1] === ")") {
             key = key.substring(0, index);
         }
-        return key.replace(/`\d+/, "<...>");
+        return key.replace(/`\d+(?=<)/, "").replace(/`\d+(?!<)/, "<...>");
     }
 
     /********************************************************************************
