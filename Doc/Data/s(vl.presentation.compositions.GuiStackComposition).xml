@@ -45,12 +45,22 @@ Represents a stack composition.
         <Children>
           <EnumItemDecl Access="Public" Name="Horizontal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::Direction::Horizontal" OverloadKey="::vl::presentation::compositions::GuiStackComposition::Direction::Horizontal">
             <Document>&lt;Document&gt;
-  &lt;summary&gt;Stack items is layouted horizontally.&lt;/summary&gt;
+  &lt;summary&gt;Stack items is layouted from left to right.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
           </EnumItemDecl>
           <EnumItemDecl Access="Public" Name="Vertical" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::Direction::Vertical" OverloadKey="::vl::presentation::compositions::GuiStackComposition::Direction::Vertical">
             <Document>&lt;Document&gt;
-  &lt;summary&gt;Stack items is layouted vertically.&lt;/summary&gt;
+  &lt;summary&gt;Stack items is layouted from top to bottom.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          </EnumItemDecl>
+          <EnumItemDecl Access="Public" Name="ReversedHorizontal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::Direction::ReversedHorizontal" OverloadKey="::vl::presentation::compositions::GuiStackComposition::Direction::ReversedHorizontal">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Stack items is layouted from right to left.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          </EnumItemDecl>
+          <EnumItemDecl Access="Public" Name="ReversedVertical" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::Direction::ReversedVertical" OverloadKey="::vl::presentation::compositions::GuiStackComposition::Direction::ReversedVertical">
+            <Document>&lt;Document&gt;
+  &lt;summary&gt;Stack items is layouted from bottom to top.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
           </EnumItemDecl>
         </Children>
@@ -69,6 +79,46 @@ Represents a stack composition.
           <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiStackComposition::ItemCompositionList" Name="ItemCompositionList">
             <ReferencingOverloadKeys>
               <Key Value="::vl::presentation::compositions::GuiStackComposition::ItemCompositionList@s:vl.presentation.compositions.GuiStackComposition" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="ensuringVisibleStackItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::ensuringVisibleStackItem" OverloadKey="::vl::presentation::compositions::GuiStackComposition::ensuringVisibleStackItem" Static="False">
+        <Type>
+          <DecorateTypeDecl Decoration="Pointer">
+            <Element>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiStackItemComposition" Name="GuiStackItemComposition">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::compositions::GuiStackItemComposition@s:vl.presentation.compositions.GuiStackItemComposition" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </Element>
+          </DecorateTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="padding" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::padding" OverloadKey="::vl::presentation::compositions::GuiStackComposition::padding" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::vint@s:vl.vint" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="adjustment" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::adjustment" OverloadKey="::vl::presentation::compositions::GuiStackComposition::adjustment" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::vint@s:vl.vint" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="extraMargin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::extraMargin" OverloadKey="::vl::presentation::compositions::GuiStackComposition::extraMargin" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::Margin@s:vl.presentation.Margin" />
             </ReferencingOverloadKeys>
           </RefTypeDecl>
         </Type>
@@ -109,15 +159,6 @@ Represents a stack composition.
           </RefTypeDecl>
         </Type>
       </VarDecl>
-      <VarDecl Access="Protected" Name="padding" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::padding" OverloadKey="::vl::presentation::compositions::GuiStackComposition::padding" Static="False">
-        <Type>
-          <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-            <ReferencingOverloadKeys>
-              <Key Value="::vl::vint@s:vl.vint" />
-            </ReferencingOverloadKeys>
-          </RefTypeDecl>
-        </Type>
-      </VarDecl>
       <VarDecl Access="Protected" Name="previousBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::previousBounds" OverloadKey="::vl::presentation::compositions::GuiStackComposition::previousBounds" Static="False">
         <Type>
           <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
@@ -125,28 +166,6 @@ Represents a stack composition.
               <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
             </ReferencingOverloadKeys>
           </RefTypeDecl>
-        </Type>
-      </VarDecl>
-      <VarDecl Access="Protected" Name="extraMargin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::extraMargin" OverloadKey="::vl::presentation::compositions::GuiStackComposition::extraMargin" Static="False">
-        <Type>
-          <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
-            <ReferencingOverloadKeys>
-              <Key Value="::vl::presentation::Margin@s:vl.presentation.Margin" />
-            </ReferencingOverloadKeys>
-          </RefTypeDecl>
-        </Type>
-      </VarDecl>
-      <VarDecl Access="Protected" Name="ensuringVisibleStackItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::ensuringVisibleStackItem" OverloadKey="::vl::presentation::compositions::GuiStackComposition::ensuringVisibleStackItem" Static="False">
-        <Type>
-          <DecorateTypeDecl Decoration="Pointer">
-            <Element>
-              <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiStackItemComposition" Name="GuiStackItemComposition">
-                <ReferencingOverloadKeys>
-                  <Key Value="::vl::presentation::compositions::GuiStackItemComposition@s:vl.presentation.compositions.GuiStackItemComposition" />
-                </ReferencingOverloadKeys>
-              </RefTypeDecl>
-            </Element>
-          </DecorateTypeDecl>
         </Type>
       </VarDecl>
       <FuncDecl Access="Protected" Name="UpdateStackItemBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::UpdateStackItemBounds" OverloadKey="::vl::presentation::compositions::GuiStackComposition::UpdateStackItemBounds()" Virtual="Normal" Function="Function">
@@ -159,7 +178,7 @@ Represents a stack composition.
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
-      <FuncDecl Access="Protected" Name="FixStackItemSizes" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::FixStackItemSizes" OverloadKey="::vl::presentation::compositions::GuiStackComposition::FixStackItemSizes()" Virtual="Normal" Function="Function">
+      <FuncDecl Access="Protected" Name="EnsureStackItemVisible" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiStackComposition::EnsureStackItemVisible" OverloadKey="::vl::presentation::compositions::GuiStackComposition::EnsureStackItemVisible()" Virtual="Normal" Function="Function">
         <Type>
           <FunctionTypeDecl CallingConvention="Default" Const="False">
             <ReturnType>
