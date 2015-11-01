@@ -5,6 +5,49 @@
   &lt;summary&gt;Document displayer control common interface for displaying &lt;links&gt;&lt;link cref="::vl::presentation::DocumentModel@s:vl.presentation.DocumentModel" /&gt;&lt;/links&gt;.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
     <Children>
+      <TypedefDecl Access="Private" Name="DocumentItemMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap">
+        <Type>
+          <GenericTypeDecl>
+            <Element>
+              <SubTypeDecl ReferencingNameKey="::vl::collections::Dictionary" Name="Dictionary">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::collections::Dictionary`4@s:vl.collections.Dictionary`4" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::collections@ns:vl.collections" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Element>
+            <TypeArguments>
+              <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::WString@s:vl.WString" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+              <GenericTypeDecl>
+                <Element>
+                  <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Element>
+                <TypeArguments>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiDocumentItem" Name="GuiDocumentItem">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::controls::GuiDocumentItem@s:vl.presentation.controls.GuiDocumentItem" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </TypeArguments>
+              </GenericTypeDecl>
+            </TypeArguments>
+          </GenericTypeDecl>
+        </Type>
+      </TypedefDecl>
       <EnumDecl Access="Public" Name="EditMode" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditMode" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditMode" EnumClass="False">
         <Document>&lt;Document&gt;
   &lt;summary&gt;Represents the edit mode.&lt;/summary&gt;
@@ -45,6 +88,15 @@
               </RefTypeDecl>
             </TypeArguments>
           </GenericTypeDecl>
+        </Type>
+      </VarDecl>
+      <VarDecl Access="Protected" Name="documentItems" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::documentItems" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::documentItems" Static="False">
+        <Type>
+          <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap" Name="DocumentItemMap">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap@s:vl.presentation.controls.GuiDocumentCommonInterface" />
+            </ReferencingOverloadKeys>
+          </RefTypeDecl>
         </Type>
       </VarDecl>
       <VarDecl Access="Protected" Name="documentControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::documentControl" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::documentControl" Static="False">
@@ -1085,6 +1137,75 @@
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnStartRender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnStartRender" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnStartRender()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnFinishRender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnFinishRender" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnFinishRender()" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters />
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Protected" Name="OnRenderEmbeddedObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject(&amp; const WString,&amp; const Rect)" Virtual="Normal" Function="Function">
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl ReferencingNameKey="::vl::presentation::Size" Name="Size">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::Size@s:vl.presentation.Size" />
+                </ReferencingOverloadKeys>
+              </RefTypeDecl>
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="name" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject::name" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject(&amp; const WString,&amp; const Rect)::name" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::WString@s:vl.WString" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+              <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject::location" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::OnRenderEmbeddedObject(&amp; const WString,&amp; const Rect)::location" Static="False">
+                <Type>
+                  <DecorateTypeDecl Decoration="LeftRef">
+                    <Element>
+                      <DecorateTypeDecl Decoration="Const">
+                        <Element>
+                          <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Element>
+                      </DecorateTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
       <FuncDecl Access="Public" Name="GuiDocumentCommonInterface" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::GuiDocumentCommonInterface" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::GuiDocumentCommonInterface(Ptr&lt;DocumentModel&gt;)" Virtual="Normal" Function="Constructor">
         <Type>
           <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -1244,6 +1365,104 @@
                 </Type>
               </VarDecl>
             </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="AddDocumentItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::AddDocumentItem" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::AddDocumentItem(Ptr&lt;GuiDocumentItem&gt;)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Add a document item. The name of the document item will display in the position of the &amp;lt;object&amp;gt; element with the same name in the document.&lt;/summary&gt;
+  &lt;param name="value"&gt;The document item.&lt;/param&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::AddDocumentItem::value" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::AddDocumentItem(Ptr&lt;GuiDocumentItem&gt;)::value" Static="False">
+                <Type>
+                  <GenericTypeDecl>
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                    <TypeArguments>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiDocumentItem" Name="GuiDocumentItem">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiDocumentItem@s:vl.presentation.controls.GuiDocumentItem" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </TypeArguments>
+                  </GenericTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="RemoveDocumentItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::RemoveDocumentItem" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::RemoveDocumentItem(Ptr&lt;GuiDocumentItem&gt;)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Remove a document item.&lt;/summary&gt;
+  &lt;param name="value"&gt;The document item.&lt;/param&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="bool" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::RemoveDocumentItem::value" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::RemoveDocumentItem(Ptr&lt;GuiDocumentItem&gt;)::value" Static="False">
+                <Type>
+                  <GenericTypeDecl>
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                    <TypeArguments>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiDocumentItem" Name="GuiDocumentItem">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiDocumentItem@s:vl.presentation.controls.GuiDocumentItem" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </TypeArguments>
+                  </GenericTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="GetDocumentItems" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::GetDocumentItems" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::GetDocumentItems()" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Get all document items.&lt;/summary&gt;
+  &lt;returns&gt;All document items.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <DecorateTypeDecl Decoration="LeftRef">
+                <Element>
+                  <DecorateTypeDecl Decoration="Const">
+                    <Element>
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap" Name="DocumentItemMap">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::presentation::controls::GuiDocumentCommonInterface::DocumentItemMap@s:vl.presentation.controls.GuiDocumentCommonInterface" />
+                        </ReferencingOverloadKeys>
+                      </RefTypeDecl>
+                    </Element>
+                  </DecorateTypeDecl>
+                </Element>
+              </DecorateTypeDecl>
+            </ReturnType>
+            <Parameters />
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
@@ -2490,6 +2709,29 @@ Set the end position of the selection area.
       </FuncDecl>
     </Children>
     <BaseTypes>
+      <BaseTypeDecl Access="Protected" Tags="x86, Windows">
+        <Type>
+          <SubTypeDecl ReferencingNameKey="::vl::presentation::elements::GuiDocumentElement::ICallback" Name="ICallback">
+            <ReferencingOverloadKeys>
+              <Key Value="::vl::presentation::elements::GuiDocumentElement::ICallback@s:vl.presentation.elements.GuiDocumentElement" />
+            </ReferencingOverloadKeys>
+            <Parent>
+              <SubTypeDecl ReferencingNameKey="::vl::presentation::elements::GuiDocumentElement" Name="GuiDocumentElement">
+                <ReferencingOverloadKeys>
+                  <Key Value="::vl::presentation::elements::GuiDocumentElement@s:vl.presentation.elements.GuiDocumentElement" />
+                </ReferencingOverloadKeys>
+                <Parent>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::elements" Name="elements">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::elements@ns:vl.presentation.elements" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
+                </Parent>
+              </SubTypeDecl>
+            </Parent>
+          </SubTypeDecl>
+        </Type>
+      </BaseTypeDecl>
       <BaseTypeDecl Access="Public" Tags="x86, Windows">
         <Type>
           <GenericTypeDecl>
