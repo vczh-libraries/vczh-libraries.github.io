@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GacLib - Home</title>
+    <title>GacUI - Home Page</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="./Home.css" />
+    <script src="./Script/Package.js"></script>
+    <script async src="./Script/Class.js"></script>
+    <script async src="./Script/Html/Navigation.js"></script>
+    <script async src="./Script/Html/Razor.js"></script>
+    <script async src="./Script/Html/MVC.js"></script>
+    <script async src="./Script/IO/Delay.js"></script>
+    <script async src="./Script/IO/Resource.js"></script>
+    <script async src="./Script/IO/Wildcard.js"></script>
 </head>
 <body>
-    <h1>This page is under construction, please <a href="./Document.html">CLICK HERE</a> to open the document page.</h1>
+    <script>
+        Packages.Define("Gaclib.HomePage", ["Html.Navigation", "Html.MVC"], function (__injection__) {
+            eval(__injection__);
+
+            InitializeMvc("~", "./Views/Root.razor.html", "./Views/Loading.razor.html");
+
+            var HomeController = CreateMvcControllerType("MvcTest.HomeController", "./Views/Home.razor.html");
+            RegisterNavigationPath("/", HomeController);
+            RegisterNavigationPath("/Home", HomeController);
+
+            var PostsController = CreateMvcControllerType("MvcTest.TutorialController", "./Views/Tutorial.razor.html");
+            RegisterNavigationPath("/Tutorial", PostsController);
+
+            var PostsController = CreateMvcControllerType("MvcTest.DemoController", "./Views/Demo.razor.html");
+            RegisterNavigationPath("/Demo", PostsController);
+
+            var PostsController = CreateMvcControllerType("MvcTest.DownloadController", "./Views/Download.razor.html");
+            RegisterNavigationPath("/Download", PostsController);
+
+            var PostsController = CreateMvcControllerType("MvcTest.ContactController", "./Views/Contact.razor.html");
+            RegisterNavigationPath("/Contact", PostsController);
+
+            StartNavigation("");
+
+            return {
+            }
+        })
+
+        Packages.Define("Gaclib.API", [], function (__injection__) {
+            eval(__injection__)
+
+            function SelectNavigationButton(button) {
+                navHome.classList.remove("Selected");
+                navTutorial.classList.remove("Selected");
+                navDemo.classList.remove("Selected");
+                navDownload.classList.remove("Selected");
+                navDocument.classList.remove("Selected");
+                navContact.classList.remove("Selected");
+                button.classList.add("Selected");
+            }
+
+            return {
+                SelectNavigationButton: SelectNavigationButton,
+            }
+        })
+    </script>
 </body>
 </html>
