@@ -6,8 +6,9 @@
 	Represents a precompiler for resources of a specified type.
 	Current resources that needs precompiling:
 		Pass 0: Script		(collect workflow scripts)
-		Pass 1: Script		(compile collected workflow scripts)
-		Pass 2: Instance
+		Pass 1: Script		(compile view model scripts)
+		Pass 2: Script		(compile shared scripts)
+		Pass 3: Instance
 &lt;/summary&gt;
 &lt;/Document&gt;</Document>
     <Children>
@@ -29,12 +30,11 @@
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
-      <FuncDecl Access="Public" Name="Precompile" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)" Virtual="Abstract" Function="Function">
+      <FuncDecl Access="Public" Name="Precompile" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;GuiResourceItem&gt;,&amp; GuiResourcePrecompileContext,&amp; collections::List&lt;WString&gt;)" Virtual="Abstract" Function="Function">
         <Document>&lt;Document&gt;
   &lt;summary&gt;Precompile the resource item.&lt;/summary&gt;
-  &lt;param name="resource"&gt;The resource.&lt;/param&gt;
-  &lt;param name="pass"&gt;Indicate the pass index of this precompiling pass.&lt;/param&gt;
-  &lt;param name="resolver"&gt;The path resolver. This is only for delay load resource.&lt;/param&gt;
+  &lt;param name="resource"&gt;The resource to precompile.&lt;/param&gt;
+  &lt;param name="context"&gt;The context for precompiling.&lt;/param&gt;
   &lt;param name="errors"&gt;All collected errors during loading a resource.&lt;/param&gt;
 &lt;/Document&gt;</Document>
         <Type>
@@ -43,7 +43,7 @@
               <RefTypeDecl Name="void" />
             </ReturnType>
             <Parameters>
-              <VarDecl Access="Public" Name="resource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::resource" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)::resource" Static="False">
+              <VarDecl Access="Public" Name="resource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::resource" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;GuiResourceItem&gt;,&amp; GuiResourcePrecompileContext,&amp; collections::List&lt;WString&gt;)::resource" Static="False">
                 <Type>
                   <GenericTypeDecl>
                     <Element>
@@ -54,58 +54,29 @@
                       </RefTypeDecl>
                     </Element>
                     <TypeArguments>
-                      <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject" Name="DescriptableObject">
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceItem" Name="GuiResourceItem">
                         <ReferencingOverloadKeys>
-                          <Key Value="::vl::reflection::DescriptableObject@s:vl.reflection.DescriptableObject" />
+                          <Key Value="::vl::presentation::GuiResourceItem@s:vl.presentation.GuiResourceItem" />
                         </ReferencingOverloadKeys>
                       </RefTypeDecl>
                     </TypeArguments>
                   </GenericTypeDecl>
                 </Type>
               </VarDecl>
-              <VarDecl Access="Public" Name="rootResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::rootResource" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)::rootResource" Static="False">
+              <VarDecl Access="Public" Name="context" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::context" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;GuiResourceItem&gt;,&amp; GuiResourcePrecompileContext,&amp; collections::List&lt;WString&gt;)::context" Static="False">
                 <Type>
-                  <DecorateTypeDecl Decoration="Pointer">
+                  <DecorateTypeDecl Decoration="LeftRef">
                     <Element>
-                      <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResource" Name="GuiResource">
+                      <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourcePrecompileContext" Name="GuiResourcePrecompileContext">
                         <ReferencingOverloadKeys>
-                          <Key Value="::vl::presentation::GuiResource@s:vl.presentation.GuiResource" />
+                          <Key Value="::vl::presentation::GuiResourcePrecompileContext@s:vl.presentation.GuiResourcePrecompileContext" />
                         </ReferencingOverloadKeys>
                       </RefTypeDecl>
                     </Element>
                   </DecorateTypeDecl>
                 </Type>
               </VarDecl>
-              <VarDecl Access="Public" Name="passIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::passIndex" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)::passIndex" Static="False">
-                <Type>
-                  <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                    <ReferencingOverloadKeys>
-                      <Key Value="::vl::vint@s:vl.vint" />
-                    </ReferencingOverloadKeys>
-                  </RefTypeDecl>
-                </Type>
-              </VarDecl>
-              <VarDecl Access="Public" Name="resolver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::resolver" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)::resolver" Static="False">
-                <Type>
-                  <GenericTypeDecl>
-                    <Element>
-                      <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                        <ReferencingOverloadKeys>
-                          <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                        </ReferencingOverloadKeys>
-                      </RefTypeDecl>
-                    </Element>
-                    <TypeArguments>
-                      <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourcePathResolver" Name="GuiResourcePathResolver">
-                        <ReferencingOverloadKeys>
-                          <Key Value="::vl::presentation::GuiResourcePathResolver@s:vl.presentation.GuiResourcePathResolver" />
-                        </ReferencingOverloadKeys>
-                      </RefTypeDecl>
-                    </TypeArguments>
-                  </GenericTypeDecl>
-                </Type>
-              </VarDecl>
-              <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::errors" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;DescriptableObject&gt;,* GuiResource,vint,Ptr&lt;GuiResourcePathResolver&gt;,&amp; collections::List&lt;WString&gt;)::errors" Static="False">
+              <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile::errors" OverloadKey="::vl::presentation::IGuiResourceTypeResolver_Precompile::Precompile(Ptr&lt;GuiResourceItem&gt;,&amp; GuiResourcePrecompileContext,&amp; collections::List&lt;WString&gt;)::errors" Static="False">
                 <Type>
                   <DecorateTypeDecl Decoration="LeftRef">
                     <Element>

@@ -5,49 +5,6 @@
   &lt;summary&gt;Resource. A resource is a root resource folder that does not have a name.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
     <Children>
-      <TypedefDecl Access="Private" Name="CacheMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::CacheMap" OverloadKey="::vl::presentation::GuiResource::CacheMap">
-        <Type>
-          <GenericTypeDecl>
-            <Element>
-              <SubTypeDecl ReferencingNameKey="::vl::collections::Dictionary" Name="Dictionary">
-                <ReferencingOverloadKeys>
-                  <Key Value="::vl::collections::Dictionary`4@s:vl.collections.Dictionary`4" />
-                </ReferencingOverloadKeys>
-                <Parent>
-                  <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
-                    <ReferencingOverloadKeys>
-                      <Key Value="::vl::collections@ns:vl.collections" />
-                    </ReferencingOverloadKeys>
-                  </RefTypeDecl>
-                </Parent>
-              </SubTypeDecl>
-            </Element>
-            <TypeArguments>
-              <RefTypeDecl ReferencingNameKey="::vl::presentation::GlobalStringKey" Name="GlobalStringKey">
-                <ReferencingOverloadKeys>
-                  <Key Value="::vl::presentation::GlobalStringKey@s:vl.presentation.GlobalStringKey" />
-                </ReferencingOverloadKeys>
-              </RefTypeDecl>
-              <GenericTypeDecl>
-                <Element>
-                  <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                    <ReferencingOverloadKeys>
-                      <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                    </ReferencingOverloadKeys>
-                  </RefTypeDecl>
-                </Element>
-                <TypeArguments>
-                  <RefTypeDecl ReferencingNameKey="::vl::presentation::IGuiResourceCache" Name="IGuiResourceCache">
-                    <ReferencingOverloadKeys>
-                      <Key Value="::vl::presentation::IGuiResourceCache@s:vl.presentation.IGuiResourceCache" />
-                    </ReferencingOverloadKeys>
-                  </RefTypeDecl>
-                </TypeArguments>
-              </GenericTypeDecl>
-            </TypeArguments>
-          </GenericTypeDecl>
-        </Type>
-      </TypedefDecl>
       <VarDecl Access="Protected" Name="workingDirectory" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::workingDirectory" OverloadKey="::vl::presentation::GuiResource::workingDirectory" Static="False">
         <Type>
           <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
@@ -132,15 +89,6 @@
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
-      <VarDecl Access="Public" Name="precompiledCaches" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::precompiledCaches" OverloadKey="::vl::presentation::GuiResource::precompiledCaches" Static="False">
-        <Type>
-          <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResource::CacheMap" Name="CacheMap">
-            <ReferencingOverloadKeys>
-              <Key Value="::vl::presentation::GuiResource::CacheMap@s:vl.presentation.GuiResource" />
-            </ReferencingOverloadKeys>
-          </RefTypeDecl>
-        </Type>
-      </VarDecl>
       <FuncDecl Access="Public" Name="GuiResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::GuiResource" OverloadKey="::vl::presentation::GuiResource::GuiResource()" Virtual="Normal" Function="Constructor">
         <Document>&lt;Document&gt;
   &lt;summary&gt;Create a resource.&lt;/summary&gt;
@@ -377,11 +325,10 @@
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
-      <FuncDecl Access="Public" Name="SaveToXml" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::SaveToXml" OverloadKey="::vl::presentation::GuiResource::SaveToXml(bool)" Virtual="Normal" Function="Function">
+      <FuncDecl Access="Public" Name="SaveToXml" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::SaveToXml" OverloadKey="::vl::presentation::GuiResource::SaveToXml()" Virtual="Normal" Function="Function">
         <Document>&lt;Document&gt;
   &lt;summary&gt;Save the resource to xml.&lt;/summary&gt;
   &lt;returns&gt;The xml.&lt;/returns&gt;
-  &lt;param name="serializePrecompiledResource"&gt;Set to true to serialize all resources (including image, compiled script, etc) in the xml.&lt;/param&gt;
 &lt;/Document&gt;</Document>
         <Type>
           <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -417,13 +364,7 @@
                 </TypeArguments>
               </GenericTypeDecl>
             </ReturnType>
-            <Parameters>
-              <VarDecl Access="Public" Name="serializePrecompiledResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::SaveToXml::serializePrecompiledResource" OverloadKey="::vl::presentation::GuiResource::SaveToXml(bool)::serializePrecompiledResource" Static="False">
-                <Type>
-                  <RefTypeDecl Name="bool" />
-                </Type>
-              </VarDecl>
-            </Parameters>
+            <Parameters />
           </FunctionTypeDecl>
         </Type>
       </FuncDecl>
@@ -585,6 +526,30 @@
                       </GenericTypeDecl>
                     </Element>
                   </DecorateTypeDecl>
+                </Type>
+              </VarDecl>
+            </Parameters>
+          </FunctionTypeDecl>
+        </Type>
+      </FuncDecl>
+      <FuncDecl Access="Public" Name="Initialize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage)" Virtual="Normal" Function="Function">
+        <Document>&lt;Document&gt;
+  &lt;summary&gt;Initialize a precompiled resource.&lt;/summary&gt;
+  &lt;param name="usage"&gt;In which role an application is initializing this resource.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+        <Type>
+          <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <ReturnType>
+              <RefTypeDecl Name="void" />
+            </ReturnType>
+            <Parameters>
+              <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize::usage" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage)::usage" Static="False">
+                <Type>
+                  <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceUsage" Name="GuiResourceUsage">
+                    <ReferencingOverloadKeys>
+                      <Key Value="::vl::presentation::GuiResourceUsage@s:vl.presentation.GuiResourceUsage" />
+                    </ReferencingOverloadKeys>
+                  </RefTypeDecl>
                 </Type>
               </VarDecl>
             </Parameters>

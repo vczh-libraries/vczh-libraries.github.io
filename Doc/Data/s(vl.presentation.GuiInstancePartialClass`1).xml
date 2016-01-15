@@ -10,14 +10,14 @@
         <Children>
           <VarDecl Access="Private" Name="className" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePartialClass::className" OverloadKey="::vl::presentation::GuiInstancePartialClass`1::className" Static="False">
             <Type>
-              <RefTypeDecl ReferencingNameKey="::vl::presentation::GlobalStringKey" Name="GlobalStringKey">
+              <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
                 <ReferencingOverloadKeys>
-                  <Key Value="::vl::presentation::GlobalStringKey@s:vl.presentation.GlobalStringKey" />
+                  <Key Value="::vl::WString@s:vl.WString" />
                 </ReferencingOverloadKeys>
               </RefTypeDecl>
             </Type>
           </VarDecl>
-          <VarDecl Access="Private" Name="scope" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePartialClass::scope" OverloadKey="::vl::presentation::GuiInstancePartialClass`1::scope" Static="False">
+          <VarDecl Access="Private" Name="context" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePartialClass::context" OverloadKey="::vl::presentation::GuiInstancePartialClass`1::context" Static="False">
             <Type>
               <GenericTypeDecl>
                 <Element>
@@ -28,11 +28,25 @@
                   </RefTypeDecl>
                 </Element>
                 <TypeArguments>
-                  <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstanceContextScope" Name="GuiInstanceContextScope">
+                  <SubTypeDecl ReferencingNameKey="::vl::workflow::runtime::WfRuntimeGlobalContext" Name="WfRuntimeGlobalContext">
                     <ReferencingOverloadKeys>
-                      <Key Value="::vl::presentation::GuiInstanceContextScope@s:vl.presentation.GuiInstanceContextScope" />
+                      <Key Value="::vl::workflow::runtime::WfRuntimeGlobalContext@s:vl.workflow.runtime.WfRuntimeGlobalContext" />
                     </ReferencingOverloadKeys>
-                  </RefTypeDecl>
+                    <Parent>
+                      <SubTypeDecl ReferencingNameKey="::vl::workflow::runtime" Name="runtime">
+                        <ReferencingOverloadKeys>
+                          <Key Value="::vl::workflow::runtime@ns:vl.workflow.runtime" />
+                        </ReferencingOverloadKeys>
+                        <Parent>
+                          <RefTypeDecl ReferencingNameKey="::vl::workflow" Name="workflow">
+                            <ReferencingOverloadKeys>
+                              <Key Value="::vl::workflow@ns:vl.workflow" />
+                            </ReferencingOverloadKeys>
+                          </RefTypeDecl>
+                        </Parent>
+                      </SubTypeDecl>
+                    </Parent>
+                  </SubTypeDecl>
                 </TypeArguments>
               </GenericTypeDecl>
             </Type>
@@ -138,43 +152,8 @@
               </FunctionTypeDecl>
             </Type>
           </FuncDecl>
-          <FuncDecl Access="Public" Name="GetScope" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePartialClass::GetScope" OverloadKey="::vl::presentation::GuiInstancePartialClass`1::GetScope()" Virtual="Normal" Function="Function">
-            <Type>
-              <FunctionTypeDecl CallingConvention="Default" Const="False">
-                <ReturnType>
-                  <GenericTypeDecl>
-                    <Element>
-                      <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                        <ReferencingOverloadKeys>
-                          <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                        </ReferencingOverloadKeys>
-                      </RefTypeDecl>
-                    </Element>
-                    <TypeArguments>
-                      <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstanceContextScope" Name="GuiInstanceContextScope">
-                        <ReferencingOverloadKeys>
-                          <Key Value="::vl::presentation::GuiInstanceContextScope@s:vl.presentation.GuiInstanceContextScope" />
-                        </ReferencingOverloadKeys>
-                      </RefTypeDecl>
-                    </TypeArguments>
-                  </GenericTypeDecl>
-                </ReturnType>
-                <Parameters />
-              </FunctionTypeDecl>
-            </Type>
-          </FuncDecl>
         </Children>
-        <BaseTypes>
-          <BaseTypeDecl Access="Public" Tags="x86, Windows">
-            <Type>
-              <RefTypeDecl ReferencingNameKey="::vl::presentation::IGuiInstancePartialClass" Name="IGuiInstancePartialClass">
-                <ReferencingOverloadKeys>
-                  <Key Value="::vl::presentation::IGuiInstancePartialClass@s:vl.presentation.IGuiInstancePartialClass" />
-                </ReferencingOverloadKeys>
-              </RefTypeDecl>
-            </Type>
-          </BaseTypeDecl>
-        </BaseTypes>
+        <BaseTypes />
       </ClassDecl>
     </Element>
   </TemplateDecl>
