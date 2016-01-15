@@ -166,16 +166,25 @@ Packages.Define("Doc.Document", ["Class", "XmlHelper", "Html.Razor", "IO.Resourc
         }),
 
         Deserialize: Public.Override(function (resource) {
-            var ns = resource.firstChild.getAttribute("NamespaceUrlName");
-            var parentMapping = {};
-            var mapXmls = GetDirectXmlChild(GetDirectXmlChild(resource.firstChild, "SymbolParentMapping")[0], "Map");
-            for (var i = 0; i < mapXmls.length; i++) {
-                var mapXml = mapXmls[i];
-                parentMapping[mapXml.getAttribute("From")] = mapXml.getAttribute("To");
-            }
+            var tree = {};
+            var overloadingSymbolTrees = GetDirectXmlChild(resource.firstChild, "OverloadingSymbolTree");
+            for (var i = 0; i < overloadingSymbolTrees.length; i++) {
+                var overloadingSymbolTreeXml = overloadingSymbolTrees[i];
+                var urlName = overloadingSymbolTreeXml.getAttribute("Key");
+                var symbolTreeXml = GetDirectXmlChild(overloadingSymbolTreeXml, "SymbolTree")[0];
 
-            var rootItem = this.CreateSymbol(GetDirectXmlChild(resource.firstChild, "Symbol")[0]);
-            return { parentMapping: parentMapping, rootItem: rootItem, namespaceUrlName: ns };
+                var ns = symbolTreeXml.getAttribute("NamespaceUrlName");
+                var parentMapping = {};
+                var mapXmls = GetDirectXmlChild(GetDirectXmlChild(symbolTreeXml, "SymbolParentMapping")[0], "Map");
+                for (var j = 0; j < mapXmls.length; j++) {
+                    var mapXml = mapXmls[j];
+                    parentMapping[mapXml.getAttribute("From")] = mapXml.getAttribute("To");
+                }
+
+                var rootItem = this.CreateSymbol(GetDirectXmlChild(symbolTreeXml, "Symbol")[0]);
+                tree[urlName] = { parentMapping: parentMapping, rootItem: rootItem, namespaceUrlName: ns };
+            }
+            return tree;
         }),
     });
     RegisterDeserializer(new TreeResourceDeserializer());
@@ -195,13 +204,46 @@ Packages.Define("Doc.Document", ["Class", "XmlHelper", "Html.Razor", "IO.Resourc
         }),
 
         Deserialize: Public.Override(function (resource) {
-            return GetDirectXmlChild(GetDirectXmlChild(resource, "Symbols")[0]).
-                filter(function (xml) { return xml.tagName !== undefined; }).
-                map(LoadSymbol);
+            var symbol = {};
+            var symbols = GetDirectXmlChild(resource.firstChild, "Symbols");
+            for (var i = 0; i < symbols.length; i++) {
+                var symbolsXml = symbols[i];
+                var urlName = symbolsXml.getAttribute("Key");
+                symbol[urlName] = GetDirectXmlChild(symbolsXml).
+                    filter(function (xml) { return xml.tagName !== undefined; }).
+                    map(LoadSymbol);
+            }
+            return symbol;
         }),
     });
     RegisterDeserializer(new SymbolResourceDeserializer());
     RegisterResource(WildcardToRegExp("s(*).xml"), "Symbol");
+
+    /********************************************************************************
+    GetUrlNameForKey
+    ********************************************************************************/
+
+    var charCode_a = "a".charCodeAt(0);
+    var charCode_z = "z".charCodeAt(0);
+    var charCode_A = "A".charCodeAt(0);
+    var charCode_Z = "Z".charCodeAt(0);
+    var charCode_0 = "0".charCodeAt(0);
+    var charCode_9 = "9".charCodeAt(0);
+
+    function GetUrlNameForKey(key) {
+        var length = 0;
+        while(length < key.length) {
+            var char = key[length];
+            var code = key.charCodeAt(length);
+            if (charCode_a <= code && code <= charCode_z || charCode_A <= code && code <= charCode_Z || charCode_0 <= code && code <= charCode_9 || char == '.' || char == '`' || char == '_') {
+                length++;
+            }
+            else {
+                break;
+            }
+        }
+        return key.substring(0, length);
+    }
 
     /********************************************************************************
     Package
@@ -210,5 +252,6 @@ Packages.Define("Doc.Document", ["Class", "XmlHelper", "Html.Razor", "IO.Resourc
     return {
         DocNamespaceItem: DocNamespaceItem,
         DocSymbolTreeItem: DocSymbolTreeItem,
+        GetUrlNameForKey: GetUrlNameForKey,
     }
 })

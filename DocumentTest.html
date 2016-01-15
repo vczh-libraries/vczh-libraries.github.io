@@ -53,14 +53,15 @@
             for (var j = 0; j < ns.names.length; j++) {
                 var symbols = ns.map[ns.names[j]];
                 for (var k = 0; k < symbols.length; k++) {
-                    var fileName = "t(" + symbols[k].UrlName + ").xml";
+                    var urlName = symbols[k].UrlName;
+                    var fileName = "t(" + GetUrlNameForKey(urlName) + ").xml";
                     try {
                         TestCase(fileName, function () {
                             var result = GetResourceAsync("./Doc/Data/" + fileName, false).Result;
                             if (result.hasOwnProperty("Exception")) {
                                 console.debug(fileName + " => " + result.Exception);
                             }
-                            var t = result.Tree;
+                            var t = result.Tree[urlName];
                             Assert(t.parentMapping !== undefined);
                         });
                     }
@@ -77,14 +78,15 @@
             for (var j = 0; j < ns.names.length; j++) {
                 var symbols = ns.map[ns.names[j]];
                 for (var k = 0; k < symbols.length; k++) {
-                    var fileName = "s(" + symbols[k].UrlName + ").xml";
+                    var urlName = symbols[k].UrlName;
+                    var fileName = "s(" + GetUrlNameForKey(urlName) + ").xml";
                     try {
                         TestCase(fileName, function () {
                             var result = GetResourceAsync("./Doc/Data/" + fileName, false).Result;
                             if (result.hasOwnProperty("Exception")) {
                                 console.debug(fileName + " => " + result.Exception);
                             }
-                            var s = result.Symbol;
+                            var s = result.Symbol[urlName];
                             Assert(s.length != 0 && SymbolDecl.TestType(s[0]));
                         });
                     }
