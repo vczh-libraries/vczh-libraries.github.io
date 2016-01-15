@@ -105,8 +105,9 @@
                                 var symbol = symbols[j];
                                 var hasChildren = displayName[1] === "class" || displayName[1] === "struct" || displayName[1] === "union";
 
-                                var indexFile = "./Doc/Data/t(" + symbol.UrlName + ").xml";
-                                var symbolIndexFile = "./Doc/Data/s(" + symbol.UrlName + ").xml";
+                                var urlName = GetUrlNameForKey(symbol.UrlName);
+                                var indexFile = "./Doc/Data/t(" + urlName + ").xml";
+                                var symbolIndexFile = "./Doc/Data/s(" + urlName + ").xml";
 
                                 var treeNode = new TreeNode(hasChildren, "Loading " + indexFile + " ...");
                                 treeNode.Title = displayName[0];
@@ -168,7 +169,7 @@
 
                     // t(symbol).xml
                     GetResourceAsync(tIndexFile, true).SucceededThen(function (result) {
-                        var rootSymbolItem = result.Tree.rootItem;
+                        var rootSymbolItem = result.Tree[urlName].rootItem;
                         FillSymbolTree(urlName, tTreeNode, rootSymbolItem, sIndexFile);
                         tTreeNode.RemoveLoadingText();
                     });
@@ -244,7 +245,7 @@
                     // s(Symbol).xml
                     GetResourceAsync(sIndexFile, true).SucceededThen(function (result) {
                         documentContent.innerHTML = "";
-                        var symbol = result.Symbol[0];
+                        var symbol = result.Symbol[urlName][0];
                         var targetChildSymbol = FindSymbolByOverloadKey(symbol, key);
                         CancelAndRunAfterDocViewReady(
                             function () {
@@ -258,8 +259,9 @@
                 }),
 
                 OnInstalled: Public.Override(function () {
-                    var tIndexFile = "./Doc/Data/t(" + this.UrlName + ").xml";
-                    var sIndexFile = "./Doc/Data/s(" + this.UrlName + ").xml";
+                    var urlName = GetUrlNameForKey(this.UrlName);
+                    var tIndexFile = "./Doc/Data/t(" + urlName + ").xml";
+                    var sIndexFile = "./Doc/Data/s(" + urlName + ").xml";
                     documentContent.innerHTML = "";
                     documentContent.appendChild(document.createTextNode("Loading " + sIndexFile + " ..."));
 
@@ -267,8 +269,9 @@
                     GetResourceAsync("./Doc/Data/nss.xml", true).SucceededThen(function (nssResult) {
                         EnsureNssLoaded(nssResult.Nss);
                         GetResourceAsync(tIndexFile, true).SucceededThen(function (tResult) {
-                            var tKey = tResult.Tree.rootItem.Key;
-                            var nsUrl = tResult.Tree.namespaceUrlName;
+                            var tree = tResult.Tree[self.UrlName];
+                            var tKey = tree.rootItem.Key;
+                            var nsUrl = tree.namespaceUrlName;
                             var nsKey = nssObject.nsUrlKeyMap[nsUrl];
                             var nsIndexFile = "./Doc/Data/ns(" + nsUrl + ").xml";
 
@@ -283,7 +286,7 @@
 
                                 var urlName = self.UrlName;
                                 var symbolKey = self.SymbolKey;
-                                var mappedSymbolKey = tResult.Tree.parentMapping[symbolKey];
+                                var mappedSymbolKey = tree.parentMapping[symbolKey];
                                 if (mappedSymbolKey !== undefined) {
                                     symbolKey = mappedSymbolKey;
                                 }
