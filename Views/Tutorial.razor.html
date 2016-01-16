@@ -4,11 +4,43 @@
     SelectNavigationButton(navTutorial);
 }
 
-<p>Any GacUI project is highly recommended to create using the XML resource. You can refer to the <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_HelloWorlds/CppXml" target="_blank"><b>CppXml</b></a> demo. Generally a GacUI project can be created by the following steps:</p>
+<h2>Getting started ...</h2>
+<p>Any GacUI project is highly recommended to create using XML resources. You can refer to the <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_HelloWorlds/CppXml" target="_blank"><b>CppXml</b></a> demo. Generally a GacUI project can be created by the following steps:</p>
 <ul>
     <li>Create a VC++ project using Visual Studio 2013 or higher version, and add all source codes from the <a href="https://github.com/vczh-libraries/Release/tree/master/Import" target="_blank"><b>Release folder</b></a> to your project.</li>
     <li>Prepare your XML resource.</li>
-    <li>Generate necessary C++ classes and the binary resource file from your XML resource using GacGen.exe.</li>
+    <li>Generate necessary C++ classes and the binary resource file from your XML resource using GacGen.exe. This command line tool is required to run when you modify your XML resource.</li>
     <li>Complete the WinMain and GuiMain functions, load the binary resource file, create the main window and run.</li>
 </ul>
 <p><b>Notes</b> : The binary resource file don't necessarly be a file. You can embed the file as a resource linking to your exe. After you load it in the memory, you can use MemoryStream instead of FileStream to load the resource.</p>
+
+<h2>Source code selection and dependencies</h2>
+<p>GacUI is designed to be linked with source files in <a href="https://github.com/vczh-libraries/Release/tree/master/Import" target="_blank"><b>Release folder</b></a>. You are suggested to link different source files for different purposes:</p>
+<table class="TutorialTable">
+    <thead>
+        <tr>
+            <td>You want ...</td>
+            <td>Source files to link with</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>To create a command line tools working with your GacUI project</td>
+        <td>Vlpp</td>
+    </tr>
+    <tr>
+        <td>To create a pure C++ GacUI project</td>
+        <td>Vlpp, GacUI</td>
+    </tr>
+    <tr>
+        <td>To create a GacUI project using XML resources and generated C++ code</td>
+        <td>Vlpp, Workflow, GacUI, GacUIReflection</td>
+    </tr>
+    <tr>
+        <td>To create a GacUI project using XML resources, but you don't need to load GUI objects dynamically</td>
+        <td>Vlpp, GacUI <br/> <i>(developing)</i></td>
+    </tr>
+    <tr>
+        <td>To run your GacUI project on Windows</td>
+        <td>Add GacUIWindows</td>
+    </tr>
+</table>
