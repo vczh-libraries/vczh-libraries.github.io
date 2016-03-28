@@ -3,7 +3,7 @@
   <Symbols Key="vl.workflow.analyzer.WfCodegenContext">
     <ClassDecl Access="Public" Name="WfCodegenContext" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext" OverloadKey="::vl::workflow::analyzer::WfCodegenContext" ClassType="Class">
       <Children>
-        <TypedefDecl Access="Private" Name="VariableIndexMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::VariableIndexMap" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::VariableIndexMap">
+        <TypedefDecl Access="Private" Name="SymbolIndexMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -39,7 +39,7 @@
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
-        <TypedefDecl Access="Private" Name="FunctionIndexMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::FunctionIndexMap" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::FunctionIndexMap">
+        <TypedefDecl Access="Private" Name="ConstructorIndexMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::ConstructorIndexMap" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::ConstructorIndexMap">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -59,9 +59,9 @@
               <TypeArguments>
                 <DecorateTypeDecl Decoration="Pointer">
                   <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfLexicalSymbol" Name="WfLexicalSymbol">
+                    <RefTypeDecl ReferencingNameKey="::vl::workflow::WfConstructorDeclaration" Name="WfConstructorDeclaration">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::workflow::analyzer::WfLexicalSymbol@s:vl.workflow.analyzer.WfLexicalSymbol" />
+                        <Key Value="::vl::workflow::WfConstructorDeclaration@s:vl.workflow.WfConstructorDeclaration" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
                   </Element>
@@ -125,6 +125,49 @@
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
+        <TypedefDecl Access="Private" Name="ThisStackCountMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::ThisStackCountMap" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::ThisStackCountMap">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <SubTypeDecl ReferencingNameKey="::vl::collections::Dictionary" Name="Dictionary">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::collections::Dictionary`4@s:vl.collections.Dictionary`4" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::collections@ns:vl.collections" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </Element>
+              <TypeArguments>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfLexicalFunctionConfig" Name="WfLexicalFunctionConfig">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::workflow::analyzer::WfLexicalFunctionConfig@s:vl.workflow.analyzer.WfLexicalFunctionConfig" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+                <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::vint@s:vl.vint" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </TypedefDecl>
         <VarDecl Access="Public" Name="assembly" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::assembly" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::assembly" Static="False">
           <Type>
             <GenericTypeDecl>
@@ -167,18 +210,36 @@
         </VarDecl>
         <VarDecl Access="Public" Name="globalVariables" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::globalVariables" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::globalVariables" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::VariableIndexMap" Name="VariableIndexMap">
+            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap" Name="SymbolIndexMap">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::workflow::analyzer::WfCodegenContext::VariableIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
+                <Key Value="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Public" Name="globalFunctions" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::globalFunctions" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::globalFunctions" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::FunctionIndexMap" Name="FunctionIndexMap">
+            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap" Name="SymbolIndexMap">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::workflow::analyzer::WfCodegenContext::FunctionIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
+                <Key Value="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="constructors" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::constructors" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::constructors" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::ConstructorIndexMap" Name="ConstructorIndexMap">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::workflow::analyzer::WfCodegenContext::ConstructorIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="closureFunctions" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::closureFunctions" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::closureFunctions" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap" Name="SymbolIndexMap">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::workflow::analyzer::WfCodegenContext::SymbolIndexMap@s:vl.workflow.analyzer.WfCodegenContext" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
@@ -217,6 +278,15 @@
             <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::NodePositionMap" Name="NodePositionMap">
               <ReferencingOverloadKeys>
                 <Key Value="::vl::workflow::analyzer::WfCodegenContext::NodePositionMap@s:vl.workflow.analyzer.WfCodegenContext" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="thisStackCounts" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::thisStackCounts" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::thisStackCounts" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfCodegenContext::ThisStackCountMap" Name="ThisStackCountMap">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::workflow::analyzer::WfCodegenContext::ThisStackCountMap@s:vl.workflow.analyzer.WfCodegenContext" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
@@ -411,6 +481,34 @@
                         </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetThisStackCount" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::GetThisStackCount" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::GetThisStackCount(* WfLexicalScope)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::vint@s:vl.vint" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="scope" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::WfCodegenContext::GetThisStackCount::scope" OverloadKey="::vl::workflow::analyzer::WfCodegenContext::GetThisStackCount(* WfLexicalScope)::scope" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfLexicalScope" Name="WfLexicalScope">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::workflow::analyzer::WfLexicalScope@s:vl.workflow.analyzer.WfLexicalScope" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

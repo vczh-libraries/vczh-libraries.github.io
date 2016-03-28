@@ -97,6 +97,33 @@
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
+        <VarDecl Access="Public" Name="constructorInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::constructorInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::constructorInfo" Static="False">
+          <Type>
+            <DecorateTypeDecl Decoration="Pointer">
+              <Element>
+                <SubTypeDecl ReferencingNameKey="::vl::reflection::description::IMethodInfo" Name="IMethodInfo">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::reflection::description::IMethodInfo@s:vl.reflection.description.IMethodInfo" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection@ns:vl.reflection" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </Element>
+            </DecorateTypeDecl>
+          </Type>
+        </VarDecl>
         <VarDecl Access="Public" Name="eventInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::eventInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::eventInfo" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
@@ -158,7 +185,7 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Public" Name="leftValueType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::leftValueType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::leftValueType" Static="False">
+        <VarDecl Access="Public" Name="writableType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::writableType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::writableType" Static="False">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -226,24 +253,38 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult()" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="GetFriendlyName" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName(bool)const" Virtual="Normal" Function="Function">
           <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
+            <FunctionTypeDecl CallingConvention="Default" Const="True">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::WString@s:vl.WString" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
-              <Parameters />
+              <Parameters>
+                <VarDecl Access="Public" Name="upperCase" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName::upperCase" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName(bool)const::upperCase" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalScopeName&gt;)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="ScopeName" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ScopeName" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ScopeName(Ptr&lt;WfLexicalScopeName&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_scopeName" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_scopeName" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalScopeName&gt;)::_scopeName" Static="False">
+                <VarDecl Access="Public" Name="_scopeName" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ScopeName::_scopeName" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ScopeName(Ptr&lt;WfLexicalScopeName&gt;)::_scopeName" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -267,93 +308,18 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="ReadonlySymbol" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlySymbol" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlySymbol(Ptr&lt;WfLexicalSymbol&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::reflection@ns:vl.reflection" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="_leftValueType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_leftValueType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_leftValueType" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::reflection@ns:vl.reflection" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalSymbol&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Normal" Function="Constructor">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="_symbol" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_symbol" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalSymbol&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_symbol" Static="False">
+                <VarDecl Access="Public" Name="_symbol" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlySymbol::_symbol" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlySymbol(Ptr&lt;WfLexicalSymbol&gt;)::_symbol" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -373,7 +339,22 @@
                     </GenericTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalSymbol&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="Symbol" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Symbol" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Symbol(Ptr&lt;WfLexicalSymbol&gt;)" Virtual="Static" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="_symbol" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Symbol::_symbol" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Symbol(Ptr&lt;WfLexicalSymbol&gt;)::_symbol" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -384,30 +365,31 @@
                         </RefTypeDecl>
                       </Element>
                       <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                        <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::WfLexicalSymbol" Name="WfLexicalSymbol">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
+                            <Key Value="::vl::workflow::analyzer::WfLexicalSymbol@s:vl.workflow.analyzer.WfLexicalSymbol" />
                           </ReferencingOverloadKeys>
-                          <Parent>
-                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::reflection@ns:vl.reflection" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
+                        </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="_leftValueType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_leftValueType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(Ptr&lt;WfLexicalSymbol&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_leftValueType" Static="False">
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="ReadonlyType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlyType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlyType(Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlyType::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ReadonlyType(Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -445,14 +427,67 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IPropertyInfo,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="WritableType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::WritableType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::WritableType(Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_propertyInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_propertyInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IPropertyInfo,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_propertyInfo" Static="False">
+                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::WritableType::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::WritableType(Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
+                  <Type>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                              </ReferencingOverloadKeys>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::reflection@ns:vl.reflection" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="Property" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Property" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Property(* reflection::description::IPropertyInfo)" Virtual="Static" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="_propertyInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Property::_propertyInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Property(* reflection::description::IPropertyInfo)::_propertyInfo" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -479,86 +514,22 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IPropertyInfo,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::reflection@ns:vl.reflection" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="_leftValueType" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_leftValueType" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IPropertyInfo,Ptr&lt;reflection::description::ITypeInfo&gt;,Ptr&lt;reflection::description::ITypeInfo&gt;)::_leftValueType" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::reflection" Name="reflection">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::reflection@ns:vl.reflection" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IMethodInfo,Ptr&lt;reflection::description::ITypeInfo&gt;)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="Method" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Method" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Method(* reflection::description::IMethodInfo)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_methodInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_methodInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IMethodInfo,Ptr&lt;reflection::description::ITypeInfo&gt;)::_methodInfo" Static="False">
+                <VarDecl Access="Public" Name="_methodInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Method::_methodInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Method(* reflection::description::IMethodInfo)::_methodInfo" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -585,20 +556,28 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="_type" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_type" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IMethodInfo,Ptr&lt;reflection::description::ITypeInfo&gt;)::_type" Static="False">
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="Constructor" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Constructor" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Constructor(* reflection::description::IMethodInfo)" Virtual="Static" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="_constructorInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Constructor::_constructorInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Constructor(* reflection::description::IMethodInfo)::_constructorInfo" Static="False">
                   <Type>
-                    <GenericTypeDecl>
+                    <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::IMethodInfo" Name="IMethodInfo">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
+                            <Key Value="::vl::reflection::description::IMethodInfo@s:vl.reflection.description.IMethodInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <SubTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -615,22 +594,26 @@
                             </SubTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ResolveExpressionResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IEventInfo)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="Event" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Event" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Event(* reflection::description::IEventInfo)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl ReferencingNameKey="::vl::workflow::analyzer::ResolveExpressionResult" Name="ResolveExpressionResult">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::workflow::analyzer::ResolveExpressionResult@s:vl.workflow.analyzer.ResolveExpressionResult" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_eventInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult::_eventInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::ResolveExpressionResult(* reflection::description::IEventInfo)::_eventInfo" Static="False">
+                <VarDecl Access="Public" Name="_eventInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::Event::_eventInfo" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::Event(* reflection::description::IEventInfo)::_eventInfo" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -658,20 +641,6 @@
                   </Type>
                 </VarDecl>
               </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="GetFriendlyName" Tags="x64, Windows;x86, Windows" NameKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName" OverloadKey="::vl::workflow::analyzer::ResolveExpressionResult::GetFriendlyName()const" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="True">
-              <ReturnType>
-                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::WString@s:vl.WString" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </ReturnType>
-              <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>

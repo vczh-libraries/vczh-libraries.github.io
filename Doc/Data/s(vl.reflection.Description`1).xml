@@ -185,34 +185,30 @@ Some of the predefined type has already been registered, if your types depend on
 		};
 
 		If you want this interface implementable by Workflow script, you should first add a proxy like this:
-		class IMyInterfaceProxy : public &lt;links&gt;&lt;link cref="::vl::reflection::description::ValueInterfaceRoot@s:vl.reflection.description.ValueInterfaceRoot" /&gt;&lt;/links&gt;, public virtual IMyInterface
-		{
-		public:
-			IMyInterfaceProxy(Ptr&amp;lt;IValueInterfaceProxy&amp;gt; proxy)
-				:ValueInterfaceRoot(proxy)
-			{
-			}
-
-			static Ptr&amp;lt;IMyInterface&amp;gt; Create(Ptr&amp;lt;IValueInterfaceProxy&amp;gt; proxy)
-			{
-				return new IMyInterfaceProxy(proxy);
-			}
-
+		#pragma warning(push)
+		#pragma warning(disable:4250)
+		BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)
+		 or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)
+		 or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)
+		 or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)
 			int GetX()override
 			{
-				return INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)
+				INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)
 			}
 
 			void SetX(int value)override
 			{
 				INVOKE_INTERFACE_PROXY(SetX, value)
 			}
-		};
+		END_INTERFACE_PROXY(IMyInterface)
+		#pragma warning(pop)
 
-		And then use this code to register the constructor:
-		CLASS_MEMBER_EXTERNALCTOR(Ptr&amp;lt;IMyInterface&amp;gt;(Ptr&amp;lt;IValueInterfaceProxy&amp;gt;), {L"proxy"}, &amp;amp;IMyInterfaceProxy::Create)
+		And then use this code to register the interface:
+		BEGIN_INTERFACE_MEMBER(IMyInterface)
+			...
+		END_INTERFACE_MEMBER(IMyInterface)
 
-		Everything else is the same as registering classes
+		Everything else is the same as registering classes. Use BEGIN_INTERFACE_MEMBER_NOPROXY to register an interface without a proxy, which means you cannot implement it in runtime dynamically.
 
 	#undef _
 
