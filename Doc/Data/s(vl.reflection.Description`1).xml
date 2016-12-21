@@ -40,7 +40,6 @@ Some of the predefined type has already been registered, if your types depend on
 
 	a) enum:
 		use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using "|".
-		if you want to provide a default value, use BEGIN_ENUM_ITEM_DEFAULT_VALUE(&amp;lt;your type&amp;gt;, &amp;lt;default value&amp;gt;)
 
 		BEGIN_ENUM_ITEM(Season)
 			ENUM_ITEM(Spring)
@@ -84,7 +83,9 @@ Some of the predefined type has already been registered, if your types depend on
 			CLASS_MEMBER_CONSTRUCTOR(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"})
 
 			VI) Inject a global function as a constructor
-			CLASS_MEMBER_EXTERNALCTOR(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, CreateMyClass)
+			CLASS_MEMBER_EXTERNALCTOR(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, mynamespace::CreateMyClass)
+			CLASS_MEMBER_EXTERNALCTOR_INVOKETEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, CreateMyClass, L"mynamespace::GetMyClass($Arguments)")
+			CLASS_MEMBER_EXTERNALCTOR_INVOKETEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(), NO_PARAMETER, []()-&amp;gt;Ptr&amp;lt;MyClass&amp;gt;{return nullptr;}, L"*")
 
 			VII) Add unoverloaded functions
 			CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)
@@ -105,8 +106,8 @@ Some of the predefined type has already been registered, if your types depend on
 			CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&amp;amp;))
 
 			X) Inject global functions as methods:
-			CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter"}, int(MyClass::*)(int), &amp;amp;AGlobalFunction)
-			CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&amp;amp;), [](MyClass* a, int b, const WString&amp;amp; c){return 0;})
+			CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)
+			CLASS_MEMBER_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&amp;amp;), [](MyClass* a, int b, const WString&amp;amp; c){return 0;}, L"*")
 
 			XI) Add unoverloaded static functions
 			CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)
@@ -118,8 +119,8 @@ Some of the predefined type has already been registered, if your types depend on
 			CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&amp;amp;))
 
 			XIII) Inject global functions as static methods:
-			CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L"parameter"}, int(*)(int), &amp;amp;AGlobalFunction2)
-			CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&amp;amp;), [](int b, const WString&amp;amp; c){return 0;})
+			CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L"parameter"}, int(*)(int), mynamespace::AGlobalFunction2)
+			CLASS_MEMBER_STATIC_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName6, {L"parameter1" _ L"parameter2"}, int(*)(int, const WString&amp;amp;), [](int b, const WString&amp;amp; c){return 0;}, L"*")
 
 			XIV) Add a getter function as a property
 			CLASS_MEMBER_PROPERTY_READONLY_FAST(X)

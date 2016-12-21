@@ -26,9 +26,9 @@
   &lt;summary&gt;The value stored using a smart pointer.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
             </EnumItemDecl>
-            <EnumItemDecl Access="Public" Name="Text" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::ValueType::Text" OverloadKey="::vl::reflection::description::Value::ValueType::Text">
+            <EnumItemDecl Access="Public" Name="BoxedValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::ValueType::BoxedValue" OverloadKey="::vl::reflection::description::Value::ValueType::BoxedValue">
               <Document>&lt;Document&gt;
-  &lt;summary&gt;The value stored using a string.&lt;/summary&gt;
+  &lt;summary&gt;The value stored using a boxed value.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
             </EnumItemDecl>
           </Children>
@@ -75,13 +75,24 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::text" OverloadKey="::vl::reflection::description::Value::text" Static="False">
+        <VarDecl Access="Protected" Name="boxedValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::boxedValue" OverloadKey="::vl::reflection::description::Value::boxedValue" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-              <ReferencingOverloadKeys>
-                <Key Value="::vl::WString@s:vl.WString" />
-              </ReferencingOverloadKeys>
-            </RefTypeDecl>
+            <GenericTypeDecl>
+              <Element>
+                <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Element>
+              <TypeArguments>
+                <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IBoxedValue" Name="IBoxedValue">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::reflection::description::IBoxedValue@s:vl.reflection.description.IBoxedValue" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::typeDescriptor" OverloadKey="::vl::reflection::description::Value::typeDescriptor" Static="False">
@@ -152,31 +163,34 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="Value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value" OverloadKey="::vl::reflection::description::Value::Value(&amp; const WString,* ITypeDescriptor)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Protected" Name="Value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value" OverloadKey="::vl::reflection::description::Value::Value(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)" Virtual="Normal" Function="Constructor">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value::value" OverloadKey="::vl::reflection::description::Value::Value(&amp; const WString,* ITypeDescriptor)::value" Static="False">
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value::value" OverloadKey="::vl::reflection::description::Value::Value(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)::value" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
+                    <GenericTypeDecl>
                       <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::WString@s:vl.WString" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
                       </Element>
-                    </DecorateTypeDecl>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IBoxedValue" Name="IBoxedValue">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::IBoxedValue@s:vl.reflection.description.IBoxedValue" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="associatedTypeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value::associatedTypeDescriptor" OverloadKey="::vl::reflection::description::Value::Value(&amp; const WString,* ITypeDescriptor)::associatedTypeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="associatedTypeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::Value::associatedTypeDescriptor" OverloadKey="::vl::reflection::description::Value::Value(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)::associatedTypeDescriptor" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -553,7 +567,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::GetText" OverloadKey="::vl::reflection::description::Value::GetText()const" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="GetBoxedValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::GetBoxedValue" OverloadKey="::vl::reflection::description::Value::GetBoxedValue()const" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Get the stored text if possible.&lt;/summary&gt;
   &lt;returns&gt;The stored text. Returns empty if failed.&lt;/returns&gt;
@@ -561,19 +575,22 @@
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="True">
               <ReturnType>
-                <DecorateTypeDecl Decoration="LeftRef">
+                <GenericTypeDecl>
                   <Element>
-                    <DecorateTypeDecl Decoration="Const">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::WString@s:vl.WString" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Element>
-                </DecorateTypeDecl>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IBoxedValue" Name="IBoxedValue">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::description::IBoxedValue@s:vl.reflection.description.IBoxedValue" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
               </ReturnType>
               <Parameters />
             </FunctionTypeDecl>
@@ -755,7 +772,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="From" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From" OverloadKey="::vl::reflection::description::Value::From(&amp; const WString,* ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="From" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From" OverloadKey="::vl::reflection::description::Value::From(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)" Virtual="Static" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Store a text.&lt;/summary&gt;
   &lt;returns&gt;The boxed value.&lt;/returns&gt;
@@ -772,24 +789,27 @@
                 </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From::value" OverloadKey="::vl::reflection::description::Value::From(&amp; const WString,* ITypeDescriptor)::value" Static="False">
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From::value" OverloadKey="::vl::reflection::description::Value::From(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)::value" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
+                    <GenericTypeDecl>
                       <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::WString@s:vl.WString" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
                       </Element>
-                    </DecorateTypeDecl>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IBoxedValue" Name="IBoxedValue">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::IBoxedValue@s:vl.reflection.description.IBoxedValue" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="type" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From::type" OverloadKey="::vl::reflection::description::Value::From(&amp; const WString,* ITypeDescriptor)::type" Static="False">
+                <VarDecl Access="Public" Name="type" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::Value::From::type" OverloadKey="::vl::reflection::description::Value::From(Ptr&lt;IBoxedValue&gt;,* ITypeDescriptor)::type" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
