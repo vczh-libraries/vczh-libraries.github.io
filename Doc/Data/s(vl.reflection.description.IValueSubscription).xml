@@ -3,7 +3,7 @@
   <Symbols Key="vl.reflection.description.IValueSubscription">
     <ClassDecl Access="Public" Name="IValueSubscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription" OverloadKey="::vl::reflection::description::IValueSubscription" ClassType="Class">
       <Children>
-        <FuncDecl Access="Public" Name="Subscribe" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (Value) : void&gt;)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="Subscribe" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (&amp; const Value) : void&gt;)" Virtual="Abstract" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -25,7 +25,7 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="callback" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe::callback" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (Value) : void&gt;)::callback" Static="False">
+                <VarDecl Access="Public" Name="callback" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe::callback" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (&amp; const Value) : void&gt;)::callback" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -48,11 +48,19 @@
                                   <Parameters>
                                     <VarDecl Access="Public" Static="False">
                                       <Type>
-                                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
-                                          <ReferencingOverloadKeys>
-                                            <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
-                                          </ReferencingOverloadKeys>
-                                        </RefTypeDecl>
+                                        <DecorateTypeDecl Decoration="LeftRef">
+                                          <Element>
+                                            <DecorateTypeDecl Decoration="Const">
+                                              <Element>
+                                                <RefTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                                                  <ReferencingOverloadKeys>
+                                                    <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                                                  </ReferencingOverloadKeys>
+                                                </RefTypeDecl>
+                                              </Element>
+                                            </DecorateTypeDecl>
+                                          </Element>
+                                        </DecorateTypeDecl>
                                       </Type>
                                     </VarDecl>
                                   </Parameters>

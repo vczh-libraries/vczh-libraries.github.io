@@ -84,8 +84,8 @@ Some of the predefined type has already been registered, if your types depend on
 
 			VI) Inject a global function as a constructor
 			CLASS_MEMBER_EXTERNALCTOR(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, mynamespace::CreateMyClass)
-			CLASS_MEMBER_EXTERNALCTOR_INVOKETEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, CreateMyClass, L"mynamespace::GetMyClass($Arguments)")
-			CLASS_MEMBER_EXTERNALCTOR_INVOKETEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(), NO_PARAMETER, []()-&amp;gt;Ptr&amp;lt;MyClass&amp;gt;{return nullptr;}, L"*")
+			CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(int, const WString&amp;amp;), {L"numberParameter" _ L"stringParameter"}, CreateMyClass, L"mynamespace::GetMyClass($Arguments)", L"::vl::Func&amp;lt;$Func&amp;gt;(&amp;amp;mynamespace::GetMyClass)")
+			CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr&amp;lt;MyClass&amp;gt;(), NO_PARAMETER, []()-&amp;gt;Ptr&amp;lt;MyClass&amp;gt;{return nullptr;}, L"*", L"*")
 
 			VII) Add unoverloaded functions
 			CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)
@@ -107,7 +107,7 @@ Some of the predefined type has already been registered, if your types depend on
 
 			X) Inject global functions as methods:
 			CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L"parameter"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)
-			CLASS_MEMBER_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&amp;amp;), [](MyClass* a, int b, const WString&amp;amp; c){return 0;}, L"*")
+			CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L"parameter1" _ L"parameter2"}, int(MyClass::*)(int, const WString&amp;amp;), [](MyClass* a, int b, const WString&amp;amp; c){return 0;}, L"*", L"*")
 
 			XI) Add unoverloaded static functions
 			CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)

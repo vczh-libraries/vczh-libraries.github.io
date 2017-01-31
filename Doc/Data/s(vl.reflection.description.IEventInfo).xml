@@ -5,28 +5,6 @@
       <Children>
         <ClassDecl Access="Public" Name="ICpp" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::ICpp" OverloadKey="::vl::reflection::description::IEventInfo::ICpp" ClassType="Class">
           <Children>
-            <FuncDecl Access="Public" Name="GetHandlerType" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::ICpp::GetHandlerType" OverloadKey="::vl::reflection::description::IEventInfo::ICpp::GetHandlerType()" Virtual="Abstract" Function="Function">
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::WString@s:vl.WString" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
             <FuncDecl Access="Public" Name="GetAttachTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::ICpp::GetAttachTemplate" OverloadKey="::vl::reflection::description::IEventInfo::ICpp::GetAttachTemplate()" Virtual="Abstract" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -269,14 +247,14 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Invoke" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,&amp; collections::Array&lt;Value&gt;)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="Detach" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Detach" OverloadKey="::vl::reflection::description::IEventInfo::Detach(&amp; const Value,Ptr&lt;IEventHandler&gt;)" Virtual="Abstract" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl Name="bool" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="thisObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke::thisObject" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,&amp; collections::Array&lt;Value&gt;)::thisObject" Static="False">
+                <VarDecl Access="Public" Name="thisObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Detach::thisObject" OverloadKey="::vl::reflection::description::IEventInfo::Detach(&amp; const Value,Ptr&lt;IEventHandler&gt;)::thisObject" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -293,35 +271,72 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke::arguments" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,&amp; collections::Array&lt;Value&gt;)::arguments" Static="False">
+                <VarDecl Access="Public" Name="handler" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Detach::handler" OverloadKey="::vl::reflection::description::IEventInfo::Detach(&amp; const Value,Ptr&lt;IEventHandler&gt;)::handler" Static="False">
+                  <Type>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IEventHandler" Name="IEventHandler">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::IEventHandler@s:vl.reflection.description.IEventHandler" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="Invoke" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,Ptr&lt;IValueList&gt;)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="thisObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke::thisObject" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,Ptr&lt;IValueList&gt;)::thisObject" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
-                        <GenericTypeDecl>
+                        <DecorateTypeDecl Decoration="Const">
                           <Element>
-                            <SubTypeDecl ReferencingNameKey="::vl::collections::Array" Name="Array">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::collections::Array`2@s:vl.collections.Array`2" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::collections@ns:vl.collections" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </Element>
-                          <TypeArguments>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
                               <ReferencingOverloadKeys>
                                 <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
                               </ReferencingOverloadKeys>
                             </RefTypeDecl>
-                          </TypeArguments>
-                        </GenericTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IEventInfo::Invoke::arguments" OverloadKey="::vl::reflection::description::IEventInfo::Invoke(&amp; const Value,Ptr&lt;IValueList&gt;)::arguments" Static="False">
+                  <Type>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IValueList" Name="IValueList">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::IValueList@s:vl.reflection.description.IValueList" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
