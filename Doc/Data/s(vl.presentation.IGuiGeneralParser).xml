@@ -6,7 +6,7 @@
   &lt;summary&gt;Represents a parser.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;WString&gt;)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)" Virtual="Abstract" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Parse a text.&lt;/summary&gt;
   &lt;returns&gt;The parsed object. Returns null if failed to parse.&lt;/returns&gt;
@@ -34,7 +34,7 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse::text" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;WString&gt;)::text" Static="False">
+                <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse::text" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::text" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -51,7 +51,7 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse::errors" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;WString&gt;)::errors" Static="False">
+                <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiGeneralParser::Parse::errors" OverloadKey="::vl::presentation::IGuiGeneralParser::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::errors" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -71,11 +71,29 @@
                             </SubTypeDecl>
                           </Element>
                           <TypeArguments>
-                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::WString@s:vl.WString" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                            <GenericTypeDecl>
+                              <Element>
+                                <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Element>
+                              <TypeArguments>
+                                <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingError" Name="ParsingError">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::parsing::ParsingError@s:vl.parsing.ParsingError" />
+                                  </ReferencingOverloadKeys>
+                                  <Parent>
+                                    <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
+                                      <ReferencingOverloadKeys>
+                                        <Key Value="::vl::parsing@ns:vl.parsing" />
+                                      </ReferencingOverloadKeys>
+                                    </RefTypeDecl>
+                                  </Parent>
+                                </SubTypeDecl>
+                              </TypeArguments>
+                            </GenericTypeDecl>
                           </TypeArguments>
                         </GenericTypeDecl>
                       </Element>
