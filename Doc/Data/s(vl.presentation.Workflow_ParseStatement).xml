@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <OverloadingSymbols>
-  <Symbols Key="vl.presentation.Workflow_ParseStatement(&amp; const WString,&amp; collections.List{Ptr{parsing.ParsingError}})">
-    <FuncDecl Access="Public" Name="Workflow_ParseStatement" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)" Virtual="Normal" Function="Function">
+  <Symbols Key="vl.presentation.Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections.List{GuiResourceError},parsing.ParsingTextPos)">
+    <FuncDecl Access="Public" Name="Workflow_ParseStatement" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)" Virtual="Normal" Function="Function">
       <Type>
         <FunctionTypeDecl CallingConvention="Default" Const="False">
           <ReturnType>
@@ -30,7 +30,29 @@
             </GenericTypeDecl>
           </ReturnType>
           <Parameters>
-            <VarDecl Access="Public" Name="code" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::code" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::code" Static="False">
+            <VarDecl Access="Public" Name="precompileContext" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::precompileContext" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::precompileContext" Static="False">
+              <Type>
+                <DecorateTypeDecl Decoration="LeftRef">
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourcePrecompileContext" Name="GuiResourcePrecompileContext">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::GuiResourcePrecompileContext@s:vl.presentation.GuiResourcePrecompileContext" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
+              </Type>
+            </VarDecl>
+            <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::location" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::location" Static="False">
+              <Type>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceLocation" Name="GuiResourceLocation">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::GuiResourceLocation@s:vl.presentation.GuiResourceLocation" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Type>
+            </VarDecl>
+            <VarDecl Access="Public" Name="code" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::code" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::code" Static="False">
               <Type>
                 <DecorateTypeDecl Decoration="LeftRef">
                   <Element>
@@ -47,7 +69,16 @@
                 </DecorateTypeDecl>
               </Type>
             </VarDecl>
-            <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::errors" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::errors" Static="False">
+            <VarDecl Access="Public" Name="position" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::position" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::position" Static="False">
+              <Type>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceTextPos" Name="GuiResourceTextPos">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::GuiResourceTextPos@s:vl.presentation.GuiResourceTextPos" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Type>
+            </VarDecl>
+            <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::errors" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::errors" Static="False">
               <Type>
                 <DecorateTypeDecl Decoration="LeftRef">
                   <Element>
@@ -67,33 +98,31 @@
                         </SubTypeDecl>
                       </Element>
                       <TypeArguments>
-                        <GenericTypeDecl>
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                          <TypeArguments>
-                            <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingError" Name="ParsingError">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::parsing::ParsingError@s:vl.parsing.ParsingError" />
-                              </ReferencingOverloadKeys>
-                              <Parent>
-                                <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::parsing@ns:vl.parsing" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Parent>
-                            </SubTypeDecl>
-                          </TypeArguments>
-                        </GenericTypeDecl>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
                   </Element>
                 </DecorateTypeDecl>
+              </Type>
+            </VarDecl>
+            <VarDecl Access="Public" Name="availableAfter" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::Workflow_ParseStatement::availableAfter" OverloadKey="::vl::presentation::Workflow_ParseStatement(&amp; GuiResourcePrecompileContext,GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;,parsing::ParsingTextPos)::availableAfter" Static="False">
+              <Type>
+                <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingTextPos" Name="ParsingTextPos">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::parsing::ParsingTextPos@s:vl.parsing.ParsingTextPos" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::parsing@ns:vl.parsing" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
               </Type>
             </VarDecl>
           </Parameters>

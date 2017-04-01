@@ -9,7 +9,52 @@
       <Element>
         <ClassDecl Access="Public" Name="IGuiParser" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser" OverloadKey="::vl::presentation::IGuiParser`1" ClassType="Class">
           <Children>
-            <FuncDecl Access="Public" Name="TypedParse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::TypedParse" OverloadKey="::vl::presentation::IGuiParser`1::TypedParse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)" Virtual="Abstract" Function="Function">
+            <TypedefDecl Access="Private" Name="ErrorList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::ErrorList" OverloadKey="::vl::presentation::IGuiParser`1::ErrorList">
+              <Type>
+                <GenericTypeDecl>
+                  <Element>
+                    <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::collections@ns:vl.collections" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingError" Name="ParsingError">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::parsing::ParsingError@s:vl.parsing.ParsingError" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::parsing@ns:vl.parsing" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </Type>
+            </TypedefDecl>
+            <FuncDecl Access="Public" Name="ParseInternal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::ParseInternal" OverloadKey="::vl::presentation::IGuiParser`1::ParseInternal(&amp; const WString,&amp; ErrorList)" Virtual="Abstract" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
@@ -32,7 +77,7 @@
                     </GenericTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::TypedParse::text" OverloadKey="::vl::presentation::IGuiParser`1::TypedParse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::text" Static="False">
+                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::ParseInternal::text" OverloadKey="::vl::presentation::IGuiParser`1::ParseInternal(&amp; const WString,&amp; ErrorList)::text" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="LeftRef">
                           <Element>
@@ -49,51 +94,15 @@
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::TypedParse::errors" OverloadKey="::vl::presentation::IGuiParser`1::TypedParse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::errors" Static="False">
+                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::ParseInternal::errors" OverloadKey="::vl::presentation::IGuiParser`1::ParseInternal(&amp; const WString,&amp; ErrorList)::errors" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="LeftRef">
                           <Element>
-                            <GenericTypeDecl>
-                              <Element>
-                                <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
-                                  </ReferencingOverloadKeys>
-                                  <Parent>
-                                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
-                                      <ReferencingOverloadKeys>
-                                        <Key Value="::vl::collections@ns:vl.collections" />
-                                      </ReferencingOverloadKeys>
-                                    </RefTypeDecl>
-                                  </Parent>
-                                </SubTypeDecl>
-                              </Element>
-                              <TypeArguments>
-                                <GenericTypeDecl>
-                                  <Element>
-                                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                                      <ReferencingOverloadKeys>
-                                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                                      </ReferencingOverloadKeys>
-                                    </RefTypeDecl>
-                                  </Element>
-                                  <TypeArguments>
-                                    <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingError" Name="ParsingError">
-                                      <ReferencingOverloadKeys>
-                                        <Key Value="::vl::parsing::ParsingError@s:vl.parsing.ParsingError" />
-                                      </ReferencingOverloadKeys>
-                                      <Parent>
-                                        <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
-                                          <ReferencingOverloadKeys>
-                                            <Key Value="::vl::parsing@ns:vl.parsing" />
-                                          </ReferencingOverloadKeys>
-                                        </RefTypeDecl>
-                                      </Parent>
-                                    </SubTypeDecl>
-                                  </TypeArguments>
-                                </GenericTypeDecl>
-                              </TypeArguments>
-                            </GenericTypeDecl>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::IGuiParser::ErrorList" Name="ErrorList">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::IGuiParser`1::ErrorList@s:vl.presentation.IGuiParser`1" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
@@ -102,7 +111,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse" OverloadKey="::vl::presentation::IGuiParser`1::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,&amp; collections::List&lt;GuiResourceError&gt;)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
@@ -115,16 +124,26 @@
                         </RefTypeDecl>
                       </Element>
                       <TypeArguments>
-                        <RefTypeDecl ReferencingNameKey="::vl::Object" Name="Object">
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject::T" Name="T">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::Object@s:vl.Object" />
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1(&amp; * T)::T@s:vl.reflection.DescriptableObject" />
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1()::T@s:vl.reflection.DescriptableObject" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::text" OverloadKey="::vl::presentation::IGuiParser`1::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::text" Static="False">
+                    <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::location" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,&amp; collections::List&lt;GuiResourceError&gt;)::location" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceLocation" Name="GuiResourceLocation">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceLocation@s:vl.presentation.GuiResourceLocation" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::text" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,&amp; collections::List&lt;GuiResourceError&gt;)::text" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="LeftRef">
                           <Element>
@@ -141,7 +160,7 @@
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::errors" OverloadKey="::vl::presentation::IGuiParser`1::Parse(&amp; const WString,&amp; collections::List&lt;Ptr&lt;parsing::ParsingError&gt;&gt;)::errors" Static="False">
+                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::errors" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,&amp; collections::List&lt;GuiResourceError&gt;)::errors" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="LeftRef">
                           <Element>
@@ -161,29 +180,204 @@
                                 </SubTypeDecl>
                               </Element>
                               <TypeArguments>
-                                <GenericTypeDecl>
-                                  <Element>
-                                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </TypeArguments>
+                            </GenericTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,parsing::ParsingTextPos,&amp; collections::List&lt;GuiResourceError&gt;)" Virtual="Normal" Function="Function">
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject::T" Name="T">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1(&amp; * T)::T@s:vl.reflection.DescriptableObject" />
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1()::T@s:vl.reflection.DescriptableObject" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::location" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,parsing::ParsingTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::location" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceLocation" Name="GuiResourceLocation">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceLocation@s:vl.presentation.GuiResourceLocation" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::text" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,parsing::ParsingTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::text" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="LeftRef">
+                          <Element>
+                            <DecorateTypeDecl Decoration="Const">
+                              <Element>
+                                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::WString@s:vl.WString" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Element>
+                            </DecorateTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="position" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::position" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,parsing::ParsingTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::position" Static="False">
+                      <Type>
+                        <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingTextPos" Name="ParsingTextPos">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::parsing::ParsingTextPos@s:vl.parsing.ParsingTextPos" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::parsing@ns:vl.parsing" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::errors" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,parsing::ParsingTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::errors" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="LeftRef">
+                          <Element>
+                            <GenericTypeDecl>
+                              <Element>
+                                <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
+                                  </ReferencingOverloadKeys>
+                                  <Parent>
+                                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
                                       <ReferencingOverloadKeys>
-                                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                                        <Key Value="::vl::collections@ns:vl.collections" />
                                       </ReferencingOverloadKeys>
                                     </RefTypeDecl>
-                                  </Element>
-                                  <TypeArguments>
-                                    <SubTypeDecl ReferencingNameKey="::vl::parsing::ParsingError" Name="ParsingError">
+                                  </Parent>
+                                </SubTypeDecl>
+                              </Element>
+                              <TypeArguments>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </TypeArguments>
+                            </GenericTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Public" Name="Parse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;)" Virtual="Normal" Function="Function">
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject::T" Name="T">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1(&amp; * T)::T@s:vl.reflection.DescriptableObject" />
+                            <Key Value="::vl::reflection::DescriptableObject::SafeAggregationCast`1()::T@s:vl.reflection.DescriptableObject" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::location" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::location" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceLocation" Name="GuiResourceLocation">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceLocation@s:vl.presentation.GuiResourceLocation" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="text" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::text" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::text" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="LeftRef">
+                          <Element>
+                            <DecorateTypeDecl Decoration="Const">
+                              <Element>
+                                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::WString@s:vl.WString" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Element>
+                            </DecorateTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="position" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::position" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::position" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceTextPos" Name="GuiResourceTextPos">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceTextPos@s:vl.presentation.GuiResourceTextPos" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiParser::Parse::errors" OverloadKey="::vl::presentation::IGuiParser`1::Parse(GuiResourceLocation,&amp; const WString,GuiResourceTextPos,&amp; collections::List&lt;GuiResourceError&gt;)::errors" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="LeftRef">
+                          <Element>
+                            <GenericTypeDecl>
+                              <Element>
+                                <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
+                                  </ReferencingOverloadKeys>
+                                  <Parent>
+                                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
                                       <ReferencingOverloadKeys>
-                                        <Key Value="::vl::parsing::ParsingError@s:vl.parsing.ParsingError" />
+                                        <Key Value="::vl::collections@ns:vl.collections" />
                                       </ReferencingOverloadKeys>
-                                      <Parent>
-                                        <RefTypeDecl ReferencingNameKey="::vl::parsing" Name="parsing">
-                                          <ReferencingOverloadKeys>
-                                            <Key Value="::vl::parsing@ns:vl.parsing" />
-                                          </ReferencingOverloadKeys>
-                                        </RefTypeDecl>
-                                      </Parent>
-                                    </SubTypeDecl>
-                                  </TypeArguments>
-                                </GenericTypeDecl>
+                                    </RefTypeDecl>
+                                  </Parent>
+                                </SubTypeDecl>
+                              </Element>
+                              <TypeArguments>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
                               </TypeArguments>
                             </GenericTypeDecl>
                           </Element>
