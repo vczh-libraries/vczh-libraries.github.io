@@ -118,6 +118,22 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
+        <TypedefDecl Access="Private" Name="HostRecord" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::HostRecord" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::HostRecord">
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition::GraphicsHostRecord" Name="GraphicsHostRecord">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiGraphicsComposition::GraphicsHostRecord@s:vl.presentation.compositions.GuiGraphicsComposition" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </TypedefDecl>
         <VarDecl Access="Public" Name="CaretInterval" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::CaretInterval" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::CaretInterval" Static="True">
           <Type>
             <DecorateTypeDecl Decoration="Const">
@@ -131,17 +147,23 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="nativeWindow" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::nativeWindow" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::nativeWindow" Static="False">
+        <VarDecl Access="Protected" Name="hostRecord" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::hostRecord" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::hostRecord" Static="False">
           <Type>
-            <DecorateTypeDecl Decoration="Pointer">
-              <Element>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::INativeWindow" Name="INativeWindow">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::INativeWindow@s:vl.presentation.INativeWindow" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Element>
-            </DecorateTypeDecl>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsHost::HostRecord" Name="HostRecord">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiGraphicsHost::HostRecord@s:vl.presentation.compositions.GuiGraphicsHost" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="supressPaint" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::supressPaint" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::supressPaint" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="needRender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::needRender" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::needRender" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="shortcutKeyManager" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::shortcutKeyManager" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::shortcutKeyManager" Static="False">
@@ -841,6 +863,16 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
+        <FuncDecl Access="Private" Name="Paint" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Paint" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Paint()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
         <FuncDecl Access="Private" Name="LeftButtonDown" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::LeftButtonDown" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::LeftButtonDown(&amp; const NativeWindowMouseInfo)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -1439,9 +1471,28 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Render" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Render" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Render()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="Render" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Render" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Render(bool)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Render the main composition and all content to the associated window.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forceUpdate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Render::forceUpdate" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Render(bool)::forceUpdate" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="RequestRender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::RequestRender" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::RequestRender()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Request a rendering&lt;/summary&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
