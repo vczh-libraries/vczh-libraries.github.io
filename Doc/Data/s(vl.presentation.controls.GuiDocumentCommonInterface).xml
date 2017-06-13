@@ -252,6 +252,26 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
+        <FuncDecl Access="Protected" Name="InvokeUndoRedoChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::InvokeUndoRedoChanged" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::InvokeUndoRedoChanged()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="InvokeModifiedChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::InvokeModifiedChanged" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::InvokeModifiedChanged()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
         <FuncDecl Access="Protected" Name="UpdateCaretPoint" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::UpdateCaretPoint" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::UpdateCaretPoint()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -1405,6 +1425,44 @@
             </SubTypeDecl>
           </Type>
         </VarDecl>
+        <VarDecl Access="Public" Name="UndoRedoChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::UndoRedoChanged" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::UndoRedoChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Undo redo status changed event.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="ModifiedChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::ModifiedChanged" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::ModifiedChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Modified status changed event.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
         <FuncDecl Access="Public" Name="GetDocument" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::GetDocument" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::GetDocument()" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Get the document.&lt;/summary&gt;
@@ -1757,12 +1815,13 @@ Set the end position of the selection area.
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="EditRun" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="EditRun" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;,bool)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Edit run in a specified range.&lt;/summary&gt;
   &lt;param name="begin"&gt;The begin position of the range.&lt;/param&gt;
   &lt;param name="end"&gt;The end position of the range.&lt;/param&gt;
   &lt;param name="model"&gt;The new run.&lt;/param&gt;
+  &lt;param name="copy"&gt;Set to true to copy the model before editing. Otherwise, objects inside the model will be used directly&lt;/param&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -1770,7 +1829,7 @@ Set the end position of the selection area.
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="begin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::begin" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;)::begin" Static="False">
+                <VarDecl Access="Public" Name="begin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::begin" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;,bool)::begin" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::TextPos" Name="TextPos">
                       <ReferencingOverloadKeys>
@@ -1779,7 +1838,7 @@ Set the end position of the selection area.
                     </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="end" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::end" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;)::end" Static="False">
+                <VarDecl Access="Public" Name="end" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::end" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;,bool)::end" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::TextPos" Name="TextPos">
                       <ReferencingOverloadKeys>
@@ -1788,7 +1847,7 @@ Set the end position of the selection area.
                     </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="model" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::model" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;)::model" Static="False">
+                <VarDecl Access="Public" Name="model" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::model" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;,bool)::model" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -1806,6 +1865,11 @@ Set the end position of the selection area.
                         </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="copy" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun::copy" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::EditRun(TextPos,TextPos,Ptr&lt;DocumentModel&gt;,bool)::copy" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
                   </Type>
                 </VarDecl>
               </Parameters>
@@ -2435,6 +2499,56 @@ Set the end position of the selection area.
                         </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SummarizeParagraphAlignment" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment(TextPos,TextPos)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Summarize the text alignment in a specified range.&lt;/summary&gt;
+  &lt;returns&gt;The text alignment summary.&lt;/returns&gt;
+  &lt;param name="begin"&gt;The begin position of the range.&lt;/param&gt;
+  &lt;param name="end"&gt;The end position of the range.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Nullable" Name="Nullable">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Nullable`1@s:vl.Nullable`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Alignment" Name="Alignment">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Alignment@s:vl.presentation.Alignment" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="begin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment::begin" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment(TextPos,TextPos)::begin" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::TextPos" Name="TextPos">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::TextPos@s:vl.presentation.TextPos" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="end" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment::end" OverloadKey="::vl::presentation::controls::GuiDocumentCommonInterface::SummarizeParagraphAlignment(TextPos,TextPos)::end" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::TextPos" Name="TextPos">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::TextPos@s:vl.presentation.TextPos" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

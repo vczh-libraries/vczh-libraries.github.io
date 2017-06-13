@@ -6,7 +6,54 @@
   &lt;summary&gt;Ranged item arranger. This arranger implements most of the common functionality for those arrangers that display a continuing subset of item at a time.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <TypedefDecl Access="Private" Name="StyleList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::StyleList" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::StyleList">
+        <TypedefDecl Access="Protected" Name="ItemStyleRecord" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <SubTypeDecl ReferencingNameKey="::vl::collections::Pair" Name="Pair">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::collections::Pair`2@s:vl.collections.Pair`2" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::collections@ns:vl.collections" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </Element>
+              <TypeArguments>
+                <DecorateTypeDecl Decoration="Pointer">
+                  <Element>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
+                <DecorateTypeDecl Decoration="Pointer">
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiSelectableButton" Name="GuiSelectableButton">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::GuiSelectableButton@s:vl.presentation.controls.GuiSelectableButton" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </TypedefDecl>
+        <TypedefDecl Access="Protected" Name="StyleList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::StyleList" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::StyleList">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -24,22 +71,11 @@
                 </SubTypeDecl>
               </Element>
               <TypeArguments>
-                <DecorateTypeDecl Decoration="Pointer">
-                  <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                      <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Parent>
-                    </SubTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </TypeArguments>
             </GenericTypeDecl>
           </Type>
@@ -95,6 +131,11 @@
                 </SubTypeDecl>
               </Element>
             </DecorateTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="suppressOnViewChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::suppressOnViewChanged" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::suppressOnViewChanged" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="viewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::viewBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::viewBounds" Static="False">
@@ -176,41 +217,96 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="ClearStyles" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ClearStyles" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::ClearStyles()" Virtual="Virtual" Function="Function">
+        <FuncDecl Access="Protected" Name="CreateStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle(vint)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnStylesCleared" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnStylesCleared" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnStylesCleared()" Virtual="Abstract" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnCalculateTotalSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnCalculateTotalSize" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnCalculateTotalSize()" Virtual="Abstract" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::Size" Name="Size">
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
                   <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::Size@s:vl.presentation.Size" />
+                    <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
                   </ReferencingOverloadKeys>
                 </RefTypeDecl>
               </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle::index" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle(vint)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="DeleteStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::DeleteStyle" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::DeleteStyle(ItemStyleRecord)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::DeleteStyle::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::DeleteStyle(ItemStyleRecord)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="GetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetStyleBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetStyleBounds(ItemStyleRecord)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <DecorateTypeDecl Decoration="Pointer">
+                  <Element>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetStyleBounds::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetStyleBounds(ItemStyleRecord)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="ClearStyles" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ClearStyles" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::ClearStyles()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
               <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnViewChangedInternal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnViewChangedInternal" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnViewChangedInternal(Rect,Rect)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Protected" Name="OnViewChangedInternal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnViewChangedInternal" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnViewChangedInternal(Rect,Rect)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -236,6 +332,228 @@
                   </Type>
                 </VarDecl>
               </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="RearrangeItemBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::RearrangeItemBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::RearrangeItemBounds()" Virtual="Virtual" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="BeginPlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem(bool,Rect,&amp; vint)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem(bool,Rect,&amp; vint)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem::newBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem(bool,Rect,&amp; vint)::newBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newStartIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem::newStartIndex" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::BeginPlaceItem(bool,Rect,&amp; vint)::newStartIndex" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="PlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::index" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="viewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::viewBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::viewBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::bounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::bounds" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="alignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem::alignmentToParent" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::alignmentToParent" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::Margin@s:vl.presentation.Margin" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="IsItemOutOfViewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds::index" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds::bounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::bounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="viewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds::viewBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::viewBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="EndPlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem(bool,Rect,vint)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem(bool,Rect,vint)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem::newBounds" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem(bool,Rect,vint)::newBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newStartIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem::newStartIndex" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::EndPlaceItem(bool,Rect,vint)::newStartIndex" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="InvalidateItemSizeCache" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::InvalidateItemSizeCache" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::InvalidateItemSizeCache()" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="OnCalculateTotalSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnCalculateTotalSize" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::OnCalculateTotalSize()" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::Size" Name="Size">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::Size@s:vl.presentation.Size" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
@@ -441,9 +759,9 @@
               <ReturnType>
                 <DecorateTypeDecl Decoration="Pointer">
                   <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                        <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                       </ReferencingOverloadKeys>
                       <Parent>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
@@ -470,7 +788,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetVisibleIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex(* GuiListControl::IItemStyleController)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="GetVisibleIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex(* GuiListControl::ItemStyle)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -481,13 +799,13 @@
                 </RefTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex(* GuiListControl::IItemStyleController)::style" Static="False">
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex::style" OverloadKey="::vl::presentation::controls::list::RangedItemArrangerBase::GetVisibleIndex(* GuiListControl::ItemStyle)::style" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">

@@ -6,6 +6,22 @@
   &lt;summary&gt;Base class for all data editors.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
+        <TypedefDecl Access="Private" Name="ItemTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::ItemTemplate" OverloadKey="::vl::presentation::controls::list::DataEditorBase::ItemTemplate">
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiGridEditorTemplate" Name="GuiGridEditorTemplate">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::templates::GuiGridEditorTemplate@s:vl.presentation.templates.GuiGridEditorTemplate" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </TypedefDecl>
         <VarDecl Access="Protected" Name="factory" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::factory" OverloadKey="::vl::presentation::controls::list::DataEditorBase::factory" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
@@ -19,31 +35,31 @@
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="callback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::callback" OverloadKey="::vl::presentation::controls::list::DataEditorBase::callback" Static="False">
+        <VarDecl Access="Protected" Name="dataGridContext" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::dataGridContext" OverloadKey="::vl::presentation::controls::list::DataEditorBase::dataGridContext" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
               <Element>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataEditorCallback" Name="IDataEditorCallback">
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataGridContext" Name="IDataGridContext">
                   <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::list::IDataEditorCallback@s:vl.presentation.controls.list.IDataEditorCallback" />
+                    <Key Value="::vl::presentation::controls::list::IDataGridContext@s:vl.presentation.controls.list.IDataGridContext" />
                   </ReferencingOverloadKeys>
                 </RefTypeDecl>
               </Element>
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="boundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::boundsComposition" OverloadKey="::vl::presentation::controls::list::DataEditorBase::boundsComposition" Static="False">
+        <VarDecl Access="Protected" Name="editorTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::editorTemplate" OverloadKey="::vl::presentation::controls::list::DataEditorBase::editorTemplate" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
               <Element>
-                <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiGridEditorTemplate" Name="GuiGridEditorTemplate">
                   <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                    <Key Value="::vl::presentation::templates::GuiGridEditorTemplate@s:vl.presentation.templates.GuiGridEditorTemplate" />
                   </ReferencingOverloadKeys>
                   <Parent>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                        <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
                   </Parent>
@@ -52,28 +68,54 @@
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
-        <FuncDecl Access="Protected" Name="CreateBoundsCompositionInternal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::CreateBoundsCompositionInternal" OverloadKey="::vl::presentation::controls::list::DataEditorBase::CreateBoundsCompositionInternal()" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Protected" Name="OnCellValueChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged" OverloadKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <DecorateTypeDecl Decoration="Pointer">
-                  <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
-                      </ReferencingOverloadKeys>
-                      <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Parent>
-                    </SubTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
+                <RefTypeDecl Name="void" />
               </ReturnType>
-              <Parameters />
+              <Parameters>
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged::sender" OverloadKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged::arguments" OverloadKey="::vl::presentation::controls::list::DataEditorBase::OnCellValueChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiEventArgs" Name="GuiEventArgs">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiEventArgs@s:vl.presentation.compositions.GuiEventArgs" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
@@ -118,20 +160,20 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::GetBoundsComposition" OverloadKey="::vl::presentation::controls::list::DataEditorBase::GetBoundsComposition()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="GetTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::GetTemplate" OverloadKey="::vl::presentation::controls::list::DataEditorBase::GetTemplate()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <DecorateTypeDecl Decoration="Pointer">
                   <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiGridEditorTemplate" Name="GuiGridEditorTemplate">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                        <Key Value="::vl::presentation::templates::GuiGridEditorTemplate@s:vl.presentation.templates.GuiGridEditorTemplate" />
                       </ReferencingOverloadKeys>
                       <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Parent>
@@ -143,27 +185,44 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="BeforeEditCell" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* IDataProvider,vint,vint)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="NotifyDeletedTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::NotifyDeletedTemplate" OverloadKey="::vl::presentation::controls::list::DataEditorBase::NotifyDeletedTemplate()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="BeforeEditCell" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* GuiListControl::IItemProvider,vint,vint)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="dataProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::dataProvider" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* IDataProvider,vint,vint)::dataProvider" Static="False">
+                <VarDecl Access="Public" Name="itemProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::itemProvider" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* GuiListControl::IItemProvider,vint,vint)::itemProvider" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataProvider" Name="IDataProvider">
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemProvider" Name="IItemProvider">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::list::IDataProvider@s:vl.presentation.controls.list.IDataProvider" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::IItemProvider@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
-                        </RefTypeDecl>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="row" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::row" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* IDataProvider,vint,vint)::row" Static="False">
+                <VarDecl Access="Public" Name="row" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::row" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* GuiListControl::IItemProvider,vint,vint)::row" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                       <ReferencingOverloadKeys>
@@ -172,7 +231,7 @@
                     </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::column" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* IDataProvider,vint,vint)::column" Static="False">
+                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell::column" OverloadKey="::vl::presentation::controls::list::DataEditorBase::BeforeEditCell(* GuiListControl::IItemProvider,vint,vint)::column" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                       <ReferencingOverloadKeys>
@@ -185,11 +244,11 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="ReinstallEditor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::ReinstallEditor" OverloadKey="::vl::presentation::controls::list::DataEditorBase::ReinstallEditor()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="GetCellValueSaved" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::DataEditorBase::GetCellValueSaved" OverloadKey="::vl::presentation::controls::list::DataEditorBase::GetCellValueSaved()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="void" />
+                <RefTypeDecl Name="bool" />
               </ReturnType>
               <Parameters />
             </FunctionTypeDecl>

@@ -6,6 +6,33 @@
   &lt;summary&gt;Fixed size multiple columns item arranger. This arranger adjust all items in multiple columns with the same height. The height is the maximum width of all minimum height of displayed items. Each item will displayed using its minimum width.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
+        <VarDecl Access="Private" Name="pi_currentWidth" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pi_currentWidth" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pi_currentWidth" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::vint@s:vl.vint" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Private" Name="pi_totalWidth" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pi_totalWidth" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pi_totalWidth" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::vint@s:vl.vint" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Private" Name="pim_itemHeight" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pim_itemHeight" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::pim_itemHeight" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::vint@s:vl.vint" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
         <VarDecl Access="Protected" Name="itemHeight" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::itemHeight" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::itemHeight" Static="False">
           <Type>
             <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
@@ -15,21 +42,6 @@
             </RefTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="suppressOnViewChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::suppressOnViewChanged" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::suppressOnViewChanged" Static="False">
-          <Type>
-            <RefTypeDecl Name="bool" />
-          </Type>
-        </VarDecl>
-        <FuncDecl Access="Protected" Name="RearrangeItemBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::RearrangeItemBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::RearrangeItemBounds()" Virtual="Virtual" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
         <FuncDecl Access="Protected" Name="CalculateRange" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::CalculateRange" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::CalculateRange(vint,Rect,&amp; vint,&amp; vint)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -85,7 +97,195 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnStylesCleared" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnStylesCleared" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnStylesCleared()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="BeginPlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem(bool,Rect,&amp; vint)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem(bool,Rect,&amp; vint)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem::newBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem(bool,Rect,&amp; vint)::newBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newStartIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem::newStartIndex" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::BeginPlaceItem(bool,Rect,&amp; vint)::newStartIndex" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="PlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::index" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::style" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="viewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::viewBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::viewBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::bounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::bounds" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="alignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem::alignmentToParent" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::PlaceItem(bool,vint,ItemStyleRecord,Rect,&amp; Rect,&amp; Margin)::alignmentToParent" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::Margin@s:vl.presentation.Margin" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="IsItemOutOfViewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds::index" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds::style" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::style" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord" Name="ItemStyleRecord">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord@s:vl.presentation.controls.list.RangedItemArrangerBase" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds::bounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::bounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="viewBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds::viewBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::IsItemOutOfViewBounds(vint,ItemStyleRecord,Rect,Rect)::viewBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="EndPlaceItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem(bool,Rect,vint)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="forMoving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem::forMoving" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem(bool,Rect,vint)::forMoving" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem::newBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem(bool,Rect,vint)::newBounds" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="newStartIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem::newStartIndex" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::EndPlaceItem(bool,Rect,vint)::newStartIndex" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="InvalidateItemSizeCache" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::InvalidateItemSizeCache" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::InvalidateItemSizeCache()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -106,35 +306,6 @@
                 </RefTypeDecl>
               </ReturnType>
               <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnViewChangedInternal" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal(Rect,Rect)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="oldBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal::oldBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal(Rect,Rect)::oldBounds" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="newBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal::newBounds" OverloadKey="::vl::presentation::controls::list::FixedHeightMultiColumnItemArranger::OnViewChangedInternal(Rect,Rect)::newBounds" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>

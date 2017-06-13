@@ -3,7 +3,7 @@
   <Symbols Key="vl.presentation.GuiInstancePropertyInfo">
     <ClassDecl Access="Public" Name="GuiInstancePropertyInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo" ClassType="Class">
       <Children>
-        <TypedefDecl Access="Private" Name="TypeDescriptorList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::TypeDescriptorList" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::TypeDescriptorList">
+        <TypedefDecl Access="Private" Name="TypeInfoList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::TypeInfoList" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::TypeInfoList">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -21,11 +21,18 @@
                 </SubTypeDecl>
               </Element>
               <TypeArguments>
-                <DecorateTypeDecl Decoration="Pointer">
+                <GenericTypeDecl>
                   <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                       </ReferencingOverloadKeys>
                       <Parent>
                         <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -35,8 +42,8 @@
                         </RefTypeDecl>
                       </Parent>
                     </SubTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
               </TypeArguments>
             </GenericTypeDecl>
           </Type>
@@ -50,11 +57,22 @@
             <EnumItemDecl Access="Public" Name="SupportSet" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Support::SupportSet" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Support::SupportSet" />
           </Children>
         </EnumDecl>
-        <EnumDecl Access="Public" Name="PropertyScope" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope" EnumClass="False">
+        <EnumDecl Access="Public" Name="PropertyUsage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage" EnumClass="False">
           <Children>
-            <EnumItemDecl Access="Public" Name="ViewModel" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::ViewModel" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::ViewModel" />
-            <EnumItemDecl Access="Public" Name="Constructor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::Constructor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::Constructor" />
-            <EnumItemDecl Access="Public" Name="Property" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::Property" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope::Property" />
+            <EnumItemDecl Access="Public" Name="ConstructorArgument" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage::ConstructorArgument" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage::ConstructorArgument" />
+            <EnumItemDecl Access="Public" Name="Property" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage::Property" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage::Property" />
+          </Children>
+        </EnumDecl>
+        <EnumDecl Access="Public" Name="PropertyBindability" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability" EnumClass="False">
+          <Children>
+            <EnumItemDecl Access="Public" Name="Bindable" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability::Bindable" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability::Bindable" />
+            <EnumItemDecl Access="Public" Name="NotBindable" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability::NotBindable" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability::NotBindable" />
+          </Children>
+        </EnumDecl>
+        <EnumDecl Access="Public" Name="PropertyMergability" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability" EnumClass="False">
+          <Children>
+            <EnumItemDecl Access="Public" Name="MergeWithParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability::MergeWithParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability::MergeWithParent" />
+            <EnumItemDecl Access="Public" Name="NotMerge" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability::NotMerge" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability::NotMerge" />
           </Children>
         </EnumDecl>
         <VarDecl Access="Public" Name="support" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::support" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::support" Static="False">
@@ -66,35 +84,38 @@
             </RefTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Public" Name="tryParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::tryParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::tryParent" Static="False">
+        <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::usage" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::usage" Static="False">
           <Type>
-            <RefTypeDecl Name="bool" />
-          </Type>
-        </VarDecl>
-        <VarDecl Access="Public" Name="required" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::required" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::required" Static="False">
-          <Type>
-            <RefTypeDecl Name="bool" />
-          </Type>
-        </VarDecl>
-        <VarDecl Access="Public" Name="bindable" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::bindable" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::bindable" Static="False">
-          <Type>
-            <RefTypeDecl Name="bool" />
-          </Type>
-        </VarDecl>
-        <VarDecl Access="Public" Name="scope" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::scope" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::scope" Static="False">
-          <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyScope" Name="PropertyScope">
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage" Name="PropertyUsage">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::GuiInstancePropertyInfo::PropertyScope@s:vl.presentation.GuiInstancePropertyInfo" />
+                <Key Value="::vl::presentation::GuiInstancePropertyInfo::PropertyUsage@s:vl.presentation.GuiInstancePropertyInfo" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="bindability" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::bindability" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::bindability" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability" Name="PropertyBindability">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::GuiInstancePropertyInfo::PropertyBindability@s:vl.presentation.GuiInstancePropertyInfo" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="mergability" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::mergability" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::mergability" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability" Name="PropertyMergability">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::GuiInstancePropertyInfo::PropertyMergability@s:vl.presentation.GuiInstancePropertyInfo" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Public" Name="acceptableTypes" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::acceptableTypes" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::acceptableTypes" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::TypeDescriptorList" Name="TypeDescriptorList">
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiInstancePropertyInfo::TypeInfoList" Name="TypeInfoList">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::GuiInstancePropertyInfo::TypeDescriptorList@s:vl.presentation.GuiInstancePropertyInfo" />
+                <Key Value="::vl::presentation::GuiInstancePropertyInfo::TypeInfoList@s:vl.presentation.GuiInstancePropertyInfo" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
@@ -124,7 +145,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Assign" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Assign" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Assign(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="Assign" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Assign" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Assign(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -146,13 +167,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Assign::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Assign(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Assign::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Assign(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -162,15 +190,15 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="AssignWithParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="AssignWithParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -192,13 +220,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::AssignWithParent(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -208,15 +243,15 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Collection" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Collection" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Collection(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="Collection" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Collection" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Collection(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -238,13 +273,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Collection::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Collection(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Collection::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Collection(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -254,15 +296,15 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="CollectionWithParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="CollectionWithParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -284,13 +326,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::CollectionWithParent(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -300,15 +349,15 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Set" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Set" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Set(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="Set" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Set" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Set(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -330,13 +379,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Set::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Set(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Set::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Set(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -346,15 +402,15 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Array" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Array" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Array(* description::ITypeDescriptor)" Virtual="Static" Function="Function">
+        <FuncDecl Access="Public" Name="Array" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Array" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Array(Ptr&lt;description::ITypeInfo&gt;)" Virtual="Static" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -376,13 +432,20 @@
                 </GenericTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="typeDescriptor" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Array::typeDescriptor" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Array(* description::ITypeDescriptor)::typeDescriptor" Static="False">
+                <VarDecl Access="Public" Name="typeInfo" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiInstancePropertyInfo::Array::typeInfo" OverloadKey="::vl::presentation::GuiInstancePropertyInfo::Array(Ptr&lt;description::ITypeInfo&gt;)::typeInfo" Static="False">
                   <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
+                    <GenericTypeDecl>
                       <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeDescriptor" Name="ITypeDescriptor">
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::ITypeDescriptor@s:vl.reflection.description.ITypeDescriptor" />
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::ITypeInfo" Name="ITypeInfo">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description::ITypeInfo@s:vl.reflection.description.ITypeInfo" />
                           </ReferencingOverloadKeys>
                           <Parent>
                             <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
@@ -392,8 +455,8 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

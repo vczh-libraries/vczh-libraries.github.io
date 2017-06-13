@@ -6,6 +6,49 @@
   &lt;summary&gt;Represents a list control. A list control automatically read data sources and creates corresponding data item control from the item template.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
+        <TypedefDecl Access="Public" Name="ItemStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemStyle" OverloadKey="::vl::presentation::controls::GuiListControl::ItemStyle">
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiListItemTemplate" Name="GuiListItemTemplate">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::templates::GuiListItemTemplate@s:vl.presentation.templates.GuiListItemTemplate" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </TypedefDecl>
+        <TypedefDecl Access="Public" Name="ItemStyleProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty" OverloadKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::TemplateProperty" Name="TemplateProperty">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::TemplateProperty`1@s:vl.presentation.TemplateProperty`1" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Element>
+              <TypeArguments>
+                <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiListItemTemplate" Name="GuiListItemTemplate">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::templates::GuiListItemTemplate@s:vl.presentation.templates.GuiListItemTemplate" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </TypedefDecl>
         <ClassDecl Access="Public" Name="IItemProviderCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProviderCallback" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProviderCallback" ClassType="Class">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Item provider callback. Item providers use this interface to notify item modification.&lt;/summary&gt;
@@ -123,27 +166,28 @@
   &lt;summary&gt;Item arranger callback. Item arrangers use this interface to communicate with the list control. When setting positions for item controls, functions in this callback object is suggested to call because they use the result from the &lt;links&gt;&lt;link cref="::vl::presentation::compositions::IGuiAxis@s:vl.presentation.compositions.IGuiAxis" /&gt;&lt;/links&gt;.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
           <Children>
-            <FuncDecl Access="Public" Name="RequestItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem(vint)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="RequestItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem(vint,* compositions::GuiBoundsComposition)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Request an item control representing an item in the item provider. This function is suggested to call when an item control gets into the visible area.&lt;/summary&gt;
   &lt;returns&gt;The item control.&lt;/returns&gt;
   &lt;param name="itemIndex"&gt;The index of the item in the item provider.&lt;/param&gt;
+  &lt;param name="itemComposition"&gt;The composition that represents the item. Set to null if the item style is expected to be put directly into the list control.&lt;/param&gt;
 &lt;/Document&gt;</Document>
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem(vint)::itemIndex" Static="False">
+                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem(vint,* compositions::GuiBoundsComposition)::itemIndex" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                           <ReferencingOverloadKeys>
@@ -152,11 +196,31 @@
                         </RefTypeDecl>
                       </Type>
                     </VarDecl>
+                    <VarDecl Access="Public" Name="itemComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem::itemComposition" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::RequestItem(vint,* compositions::GuiBoundsComposition)::itemComposition" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="Pointer">
+                          <Element>
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                              </ReferencingOverloadKeys>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
                   </Parameters>
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="ReleaseItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem(* IItemStyleController)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="ReleaseItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem(* ItemStyle)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Release an item control. This function is suggested to call when an item control gets out of the visible area.&lt;/summary&gt;
   &lt;param name="style"&gt;The item control.&lt;/param&gt;
@@ -167,13 +231,13 @@
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem(* ItemStyle)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                               </ReferencingOverloadKeys>
                             </RefTypeDecl>
                           </Element>
@@ -208,7 +272,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="GetStylePreferredSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize(* IItemStyleController)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="GetStylePreferredSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize(* compositions::GuiBoundsComposition)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Get the preferred size of an item control.&lt;/summary&gt;
   &lt;returns&gt;The preferred size of an item control.&lt;/returns&gt;
@@ -224,15 +288,22 @@
                     </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStylePreferredSize(* compositions::GuiBoundsComposition)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
@@ -241,7 +312,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="SetStyleAlignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="SetStyleAlignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Set the alignment of an item control.&lt;/summary&gt;
   &lt;param name="style"&gt;The item control.&lt;/param&gt;
@@ -253,20 +324,27 @@
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="margin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent::margin" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)::margin" Static="False">
+                    <VarDecl Access="Public" Name="margin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent::margin" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)::margin" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
                           <ReferencingOverloadKeys>
@@ -279,7 +357,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="GetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds(* IItemStyleController)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="GetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds(* compositions::GuiBoundsComposition)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Get the bounds of an item control.&lt;/summary&gt;
   &lt;returns&gt;The bounds of an item control.&lt;/returns&gt;
@@ -295,15 +373,22 @@
                     </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds(* compositions::GuiBoundsComposition)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
@@ -312,7 +397,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="SetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* IItemStyleController,Rect)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="SetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Set the bounds of an item control.&lt;/summary&gt;
   &lt;param name="style"&gt;The item control.&lt;/param&gt;
@@ -324,20 +409,27 @@
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* IItemStyleController,Rect)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds::bounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* IItemStyleController,Rect)::bounds" Static="False">
+                    <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds::bounds" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)::bounds" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
                           <ReferencingOverloadKeys>
@@ -427,216 +519,6 @@
             </BaseTypeDecl>
           </BaseTypes>
         </ClassDecl>
-        <ClassDecl Access="Public" Name="IItemPrimaryTextView" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView" ClassType="Class">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Primary text view for &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl::IItemProvider@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-          <Children>
-            <VarDecl Access="Public" Name="Identifier" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::Identifier" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::Identifier" Static="True">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;The identifier for this view.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <DecorateTypeDecl Decoration="Const">
-                  <Element>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl Name="wchar_t" />
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
-              </Type>
-            </VarDecl>
-            <FuncDecl Access="Public" Name="GetPrimaryTextViewText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::GetPrimaryTextViewText" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::GetPrimaryTextViewText(vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the text of an item.&lt;/summary&gt;
-  &lt;returns&gt;The text of an item.&lt;/returns&gt;
-  &lt;param name="itemIndex"&gt;The index of the item.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::WString@s:vl.WString" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::GetPrimaryTextViewText::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::GetPrimaryTextViewText(vint)::itemIndex" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="ContainsPrimaryText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::ContainsPrimaryText" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::ContainsPrimaryText(vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Test does an item contain a text.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if an item contains a text.&lt;/returns&gt;
-  &lt;param name="itemIndex"&gt;The index of the item.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="bool" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::ContainsPrimaryText::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView::ContainsPrimaryText(vint)::itemIndex" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-          </Children>
-          <BaseTypes>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfClassInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfClassInstance}" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfInterfaceInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfInterfaceInstance}" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView" Name="IItemPrimaryTextView">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-          </BaseTypes>
-        </ClassDecl>
-        <ClassDecl Access="Public" Name="IItemBindingView" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemBindingView" OverloadKey="::vl::presentation::controls::GuiListControl::IItemBindingView" ClassType="Class">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Binding view for &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl::IItemProvider@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-          <Children>
-            <VarDecl Access="Public" Name="Identifier" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemBindingView::Identifier" OverloadKey="::vl::presentation::controls::GuiListControl::IItemBindingView::Identifier" Static="True">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;The identifier for this view.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <DecorateTypeDecl Decoration="Const">
-                  <Element>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl Name="wchar_t" />
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
-              </Type>
-            </VarDecl>
-            <FuncDecl Access="Public" Name="GetBindingValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemBindingView::GetBindingValue" OverloadKey="::vl::presentation::controls::GuiListControl::IItemBindingView::GetBindingValue(vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the binding value of an item.&lt;/summary&gt;
-  &lt;returns&gt;The binding value of an item.&lt;/returns&gt;
-  &lt;param name="itemIndex"&gt;The index of the item.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
-                      </ReferencingOverloadKeys>
-                      <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Parent>
-                    </SubTypeDecl>
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemBindingView::GetBindingValue::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemBindingView::GetBindingValue(vint)::itemIndex" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-          </Children>
-          <BaseTypes>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfClassInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfClassInstance}" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfInterfaceInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfInterfaceInstance}" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView" Name="IItemPrimaryTextView">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemPrimaryTextView@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-          </BaseTypes>
-        </ClassDecl>
         <ClassDecl Access="Public" Name="IItemProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider" ClassType="Class">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Item provider for a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
@@ -700,6 +582,47 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
+            <FuncDecl Access="Public" Name="PushEditing" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::PushEditing" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::PushEditing()" Virtual="Abstract" Function="Function">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;Increase the editing counter indicating that an &lt;links&gt;&lt;link cref="::vl::presentation::templates::GuiListItemTemplate@s:vl.presentation.templates.GuiListItemTemplate" /&gt;&lt;/links&gt; is editing an item.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <RefTypeDecl Name="void" />
+                  </ReturnType>
+                  <Parameters />
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Public" Name="PopEditing" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::PopEditing" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::PopEditing()" Virtual="Abstract" Function="Function">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;Decrease the editing counter indicating that an &lt;links&gt;&lt;link cref="::vl::presentation::templates::GuiListItemTemplate@s:vl.presentation.templates.GuiListItemTemplate" /&gt;&lt;/links&gt; has stopped editing an item.&lt;/summary&gt;
+  &lt;returns&gt;Returns false if there is no supression before calling this function.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <RefTypeDecl Name="bool" />
+                  </ReturnType>
+                  <Parameters />
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Public" Name="IsEditing" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::IsEditing" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::IsEditing()" Virtual="Abstract" Function="Function">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if an &lt;links&gt;&lt;link cref="::vl::presentation::templates::GuiListItemTemplate@s:vl.presentation.templates.GuiListItemTemplate" /&gt;&lt;/links&gt; is editing an item.&lt;/summary&gt;
+  &lt;returns&gt;Returns false if there is no editing.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <RefTypeDecl Name="bool" />
+                  </ReturnType>
+                  <Parameters />
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
             <FuncDecl Access="Public" Name="Count" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::Count" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::Count()" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Get the number of items in this item proivder.&lt;/summary&gt;
@@ -718,9 +641,74 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
+            <FuncDecl Access="Public" Name="GetTextValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue(vint)" Virtual="Abstract" Function="Function">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the text representation of an item.&lt;/summary&gt;
+  &lt;returns&gt;The text representation of an item.&lt;/returns&gt;
+  &lt;param name="itemIndex"&gt;The index of the item.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::WString@s:vl.WString" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetTextValue(vint)::itemIndex" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Public" Name="GetBindingValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue(vint)" Virtual="Abstract" Function="Function">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the binding value of an item.&lt;/summary&gt;
+  &lt;returns&gt;The binding value of an item.&lt;/returns&gt;
+  &lt;param name="itemIndex"&gt;The index of the item.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue(vint)::itemIndex" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
             <FuncDecl Access="Public" Name="RequestView" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::RequestView" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::RequestView(&amp; const WString)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
-  &lt;summary&gt;Request a view for this item provider. If the specified view is not supported, it returns null. If you want to get a view of type IXXX, use IXXX::Identifier as the identifier. When the view object is no longer needed, Calling to the &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl::IItemProvider::ReleaseView(* IDescriptable)@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt; is needed.&lt;/summary&gt;
+  &lt;summary&gt;Request a view for this item provider. If the specified view is not supported, it returns null. If you want to get a view of type IXXX, use IXXX::Identifier as the identifier. When the view object is no longer needed, Calling to the [M:vl.presentation.controls.GuiListControl.IItemProvider.ReleaseView][M:vl.presentation.controls.GuiListControl.IItemProvider.ReleaseView] is needed.&lt;/summary&gt;
   &lt;returns&gt;The view object.&lt;/returns&gt;
   &lt;param name="identifier"&gt;The identifier for the requested view.&lt;/param&gt;
 &lt;/Document&gt;</Document>
@@ -759,34 +747,6 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="ReleaseView" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::ReleaseView" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::ReleaseView(* IDescriptable)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Release a requested view.&lt;/summary&gt;
-  &lt;param name="view"&gt;The view to release.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="view" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemProvider::ReleaseView::view" OverloadKey="::vl::presentation::controls::GuiListControl::IItemProvider::ReleaseView(* IDescriptable)::view" Static="False">
-                      <Type>
-                        <DecorateTypeDecl Decoration="Pointer">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
           </Children>
           <BaseTypes>
             <BaseTypeDecl Access="Public" Tags="x86, Windows">
@@ -814,416 +774,6 @@
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemProvider" Name="IItemProvider">
                       <ReferencingOverloadKeys>
                         <Key Value="::vl::presentation::controls::GuiListControl::IItemProvider@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-          </BaseTypes>
-        </ClassDecl>
-        <ClassDecl Access="Public" Name="IItemStyleController" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController" ClassType="Class">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Item style controller for a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;. Item style controller contains all information to render a binded item.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-          <Children>
-            <FuncDecl Access="Public" Name="GetStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetStyleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetStyleProvider()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the owner &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
-  &lt;returns&gt;The owner.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="GetItemStyleId" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetItemStyleId" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetItemStyleId()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the item style id for the binded item.&lt;/summary&gt;
-  &lt;returns&gt;The item style id.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetBoundsComposition" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::GetBoundsComposition()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the bounds composition that represnets the binded item.&lt;/summary&gt;
-  &lt;returns&gt;The bounds composition&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="IsCacheable" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::IsCacheable" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::IsCacheable()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Test is this item style controller cacheable.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this item style controller is cacheable.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="bool" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="IsInstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::IsInstalled" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::IsInstalled()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Test is there an item binded to this item style controller.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if an item is binded to this item style controller.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="bool" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="OnInstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::OnInstalled" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::OnInstalled()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Called when an item is binded to this item style controller.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="OnUninstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleController::OnUninstalled" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleController::OnUninstalled()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Called when an item is unbinded to this item style controller.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-          </Children>
-          <BaseTypes>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfClassInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfClassInstance}" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfInterfaceInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfInterfaceInstance}" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-          </BaseTypes>
-        </ClassDecl>
-        <ClassDecl Access="Public" Name="IItemStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" ClassType="Class">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Item style provider for a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;. When implementing an item style provider, the provider can require the item provider to support a specified view to access data for each item.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-          <Children>
-            <FuncDecl Access="Public" Name="AttachListControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::AttachListControl" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::AttachListControl(* GuiListControl)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Called when an item style provider in installed to a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
-  &lt;param name="value"&gt;The list control.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::AttachListControl::value" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::AttachListControl(* GuiListControl)::value" Static="False">
-                      <Type>
-                        <DecorateTypeDecl Decoration="Pointer">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="DetachListControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DetachListControl" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DetachListControl()" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Called when an item style provider in uninstalled from a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="GetItemStyleId" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::GetItemStyleId" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::GetItemStyleId(vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Get a item style id from an item index.&lt;/summary&gt;
-  &lt;returns&gt;The item style id.&lt;/returns&gt;
-  &lt;param name="itemIndex"&gt;The item index.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::GetItemStyleId::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::GetItemStyleId(vint)::itemIndex" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="CreateItemStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::CreateItemStyle" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::CreateItemStyle(vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Create an item style controller from an item style id.&lt;/summary&gt;
-  &lt;returns&gt;The created item style controller.&lt;/returns&gt;
-  &lt;param name="styleId"&gt;The item style id.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="styleId" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::CreateItemStyle::styleId" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::CreateItemStyle(vint)::styleId" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="DestroyItemStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DestroyItemStyle" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DestroyItemStyle(* IItemStyleController)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Destroy an item style controller.&lt;/summary&gt;
-  &lt;param name="style"&gt;The item style controller.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DestroyItemStyle::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::DestroyItemStyle(* IItemStyleController)::style" Static="False">
-                      <Type>
-                        <DecorateTypeDecl Decoration="Pointer">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="Install" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install(* IItemStyleController,vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Bind an item to an item style controller.&lt;/summary&gt;
-  &lt;param name="style"&gt;The item style controller.&lt;/param&gt;
-  &lt;param name="itemIndex"&gt;The item index.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install(* IItemStyleController,vint)::style" Static="False">
-                      <Type>
-                        <DecorateTypeDecl Decoration="Pointer">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Type>
-                    </VarDecl>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::Install(* IItemStyleController,vint)::itemIndex" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-            <FuncDecl Access="Public" Name="SetStyleIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex(* IItemStyleController,vint)" Virtual="Abstract" Function="Function">
-              <Document>&lt;Document&gt;
-  &lt;summary&gt;Update the visual affect of an item style controller to a new item index.&lt;/summary&gt;
-  &lt;param name="style"&gt;The item style controller.&lt;/param&gt;
-  &lt;param name="value"&gt;The new item index.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex(* IItemStyleController,vint)::style" Static="False">
-                      <Type>
-                        <DecorateTypeDecl Decoration="Pointer">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Type>
-                    </VarDecl>
-                    <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex::value" OverloadKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider::SetStyleIndex(* IItemStyleController,vint)::value" Static="False">
-                      <Type>
-                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::vint@s:vl.vint" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Type>
-                    </VarDecl>
-                  </Parameters>
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-          </Children>
-          <BaseTypes>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::reflection::Description" Name="Description">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::Description`1@s:vl.reflection.Description`1" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfClassInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfClassInstance}" />
-                        <Key Value="::vl::reflection::Description`0&lt;workflow::typeimpl::WfInterfaceInstance&gt;@s:vl.reflection.Description`0{workflow.typeimpl.WfInterfaceInstance}" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
                   </TypeArguments>
@@ -1357,9 +907,9 @@
                   <ReturnType>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -1379,7 +929,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="GetVisibleIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex(* IItemStyleController)" Virtual="Abstract" Function="Function">
+            <FuncDecl Access="Public" Name="GetVisibleIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex(* ItemStyle)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Get the item index for an visible item style controller. If an item is not visible, it returns -1.&lt;/summary&gt;
   &lt;returns&gt;The item index.&lt;/returns&gt;
@@ -1395,13 +945,13 @@
                     </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex::style" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::GetVisibleIndex(* ItemStyle)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                               </ReferencingOverloadKeys>
                             </RefTypeDecl>
                           </Element>
@@ -1573,6 +1123,22 @@
         </ClassDecl>
         <ClassDecl Access="Protected" Name="ItemCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback" ClassType="Class">
           <Children>
+            <TypedefDecl Access="Private" Name="BoundsChangedHandler" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler">
+              <Type>
+                <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiGraphicsEventHandler" Name="IGuiGraphicsEventHandler">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions::IGuiGraphicsEventHandler@s:vl.presentation.compositions.IGuiGraphicsEventHandler" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </Type>
+            </TypedefDecl>
             <TypedefDecl Access="Private" Name="StyleList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::StyleList" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::StyleList">
               <Type>
                 <GenericTypeDecl>
@@ -1593,9 +1159,9 @@
                   <TypeArguments>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -1624,9 +1190,9 @@
                   <TypeArguments>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -1640,18 +1206,11 @@
                         </RefTypeDecl>
                       </Element>
                       <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiGraphicsEventHandler" Name="IGuiGraphicsEventHandler">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler" Name="BoundsChangedHandler">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::IGuiGraphicsEventHandler@s:vl.presentation.compositions.IGuiGraphicsEventHandler" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
+                        </RefTypeDecl>
                       </TypeArguments>
                     </GenericTypeDecl>
                   </TypeArguments>
@@ -1684,15 +1243,6 @@
                 </DecorateTypeDecl>
               </Type>
             </VarDecl>
-            <VarDecl Access="Protected" Name="cachedStyles" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::cachedStyles" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::cachedStyles" Static="False">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemCallback::StyleList" Name="StyleList">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::GuiListControl::ItemCallback::StyleList@s:vl.presentation.controls.GuiListControl" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </VarDecl>
             <VarDecl Access="Protected" Name="installedStyles" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::installedStyles" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::installedStyles" Static="False">
               <Type>
                 <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstalledStyleMap" Name="InstalledStyleMap">
@@ -1702,6 +1252,102 @@
                 </RefTypeDecl>
               </Type>
             </VarDecl>
+            <FuncDecl Access="Protected" Name="InstallStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle(* ItemStyle,vint,* compositions::GuiBoundsComposition)" Virtual="Normal" Function="Function">
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler" Name="BoundsChangedHandler">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemCallback::BoundsChangedHandler@s:vl.presentation.controls.GuiListControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle(* ItemStyle,vint,* compositions::GuiBoundsComposition)::style" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="Pointer">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle(* ItemStyle,vint,* compositions::GuiBoundsComposition)::itemIndex" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                    <VarDecl Access="Public" Name="itemComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle::itemComposition" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::InstallStyle(* ItemStyle,vint,* compositions::GuiBoundsComposition)::itemComposition" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="Pointer">
+                          <Element>
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                              </ReferencingOverloadKeys>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
+            <FuncDecl Access="Protected" Name="UninstallStyle" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::UninstallStyle" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::UninstallStyle(vint)" Virtual="Normal" Function="Function">
+              <Type>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </ReturnType>
+                  <Parameters>
+                    <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::UninstallStyle::index" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::UninstallStyle(vint)::index" Static="False">
+                      <Type>
+                        <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::vint@s:vl.vint" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Type>
+                    </VarDecl>
+                  </Parameters>
+                </FunctionTypeDecl>
+              </Type>
+            </FuncDecl>
             <FuncDecl Access="Protected" Name="OnStyleBoundsChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::OnStyleBoundsChanged" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::OnStyleBoundsChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -1859,22 +1505,22 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="RequestItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem(vint)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="RequestItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem(vint,* compositions::GuiBoundsComposition)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem(vint)::itemIndex" Static="False">
+                    <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem(vint,* compositions::GuiBoundsComposition)::itemIndex" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                           <ReferencingOverloadKeys>
@@ -1883,24 +1529,44 @@
                         </RefTypeDecl>
                       </Type>
                     </VarDecl>
+                    <VarDecl Access="Public" Name="itemComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem::itemComposition" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::RequestItem(vint,* compositions::GuiBoundsComposition)::itemComposition" Static="False">
+                      <Type>
+                        <DecorateTypeDecl Decoration="Pointer">
+                          <Element>
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                              </ReferencingOverloadKeys>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Type>
+                    </VarDecl>
                   </Parameters>
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="ReleaseItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem(* IItemStyleController)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="ReleaseItem" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem(* ItemStyle)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::ReleaseItem(* ItemStyle)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                               </ReferencingOverloadKeys>
                             </RefTypeDecl>
                           </Element>
@@ -1931,7 +1597,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="GetStylePreferredSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize(* IItemStyleController)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="GetStylePreferredSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize(* compositions::GuiBoundsComposition)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
@@ -1942,15 +1608,22 @@
                     </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStylePreferredSize(* compositions::GuiBoundsComposition)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
@@ -1959,27 +1632,34 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="SetStyleAlignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="SetStyleAlignmentToParent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="margin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent::margin" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* IItemStyleController,Margin)::margin" Static="False">
+                    <VarDecl Access="Public" Name="margin" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent::margin" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleAlignmentToParent(* compositions::GuiBoundsComposition,Margin)::margin" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::Margin" Name="Margin">
                           <ReferencingOverloadKeys>
@@ -1992,7 +1672,7 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="GetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds(* IItemStyleController)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="GetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds(* compositions::GuiBoundsComposition)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
@@ -2003,15 +1683,22 @@
                     </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds(* IItemStyleController)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::GetStyleBounds(* compositions::GuiBoundsComposition)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
@@ -2020,27 +1707,34 @@
                 </FunctionTypeDecl>
               </Type>
             </FuncDecl>
-            <FuncDecl Access="Public" Name="SetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* IItemStyleController,Rect)" Virtual="Normal" Function="Function">
+            <FuncDecl Access="Public" Name="SetStyleBounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)" Virtual="Normal" Function="Function">
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
                     <RefTypeDecl Name="void" />
                   </ReturnType>
                   <Parameters>
-                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* IItemStyleController,Rect)::style" Static="False">
+                    <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds::style" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)::style" Static="False">
                       <Type>
                         <DecorateTypeDecl Decoration="Pointer">
                           <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
                               <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                                <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
                               </ReferencingOverloadKeys>
-                            </RefTypeDecl>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Type>
                     </VarDecl>
-                    <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds::bounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* IItemStyleController,Rect)::bounds" Static="False">
+                    <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds::bounds" OverloadKey="::vl::presentation::controls::GuiListControl::ItemCallback::SetStyleBounds(* compositions::GuiBoundsComposition,Rect)::bounds" Static="False">
                       <Type>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
                           <ReferencingOverloadKeys>
@@ -2150,24 +1844,13 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="itemStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::itemStyleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::itemStyleProvider" Static="False">
+        <VarDecl Access="Protected" Name="itemStyleProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::itemStyleProperty" OverloadKey="::vl::presentation::controls::GuiListControl::itemStyleProperty" Static="False">
           <Type>
-            <GenericTypeDecl>
-              <Element>
-                <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Element>
-              <TypeArguments>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </TypeArguments>
-            </GenericTypeDecl>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty" Name="ItemStyleProperty">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::controls::GuiListControl::ItemStyleProperty@s:vl.presentation.controls.GuiListControl" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="itemArranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::itemArranger" OverloadKey="::vl::presentation::controls::GuiListControl::itemArranger" Static="False">
@@ -2226,6 +1909,11 @@
             </RefTypeDecl>
           </Type>
         </VarDecl>
+        <VarDecl Access="Protected" Name="displayItemBackground" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::displayItemBackground" OverloadKey="::vl::presentation::controls::GuiListControl::displayItemBackground" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
+          </Type>
+        </VarDecl>
         <FuncDecl Access="Protected" Name="OnItemModified" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemModified" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemModified(vint,vint,vint)" Virtual="Virtual" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -2264,14 +1952,14 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnStyleInstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* IItemStyleController)" Virtual="Virtual" Function="Function">
+        <FuncDecl Access="Protected" Name="OnStyleInstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* ItemStyle)" Virtual="Virtual" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* IItemStyleController)::itemIndex" Static="False">
+                <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* ItemStyle)::itemIndex" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                       <ReferencingOverloadKeys>
@@ -2280,13 +1968,13 @@
                     </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* IItemStyleController)::style" Static="False">
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleInstalled(vint,* ItemStyle)::style" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -2297,20 +1985,20 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnStyleUninstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled(* IItemStyleController)" Virtual="Virtual" Function="Function">
+        <FuncDecl Access="Protected" Name="OnStyleUninstalled" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled(* ItemStyle)" Virtual="Virtual" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled(* IItemStyleController)::style" Static="False">
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnStyleUninstalled(* ItemStyle)::style" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -2447,34 +2135,23 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="SetStyleProviderAndArranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger(Ptr&lt;IItemStyleProvider&gt;,Ptr&lt;IItemArranger&gt;)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="SetStyleAndArranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger(ItemStyleProperty,Ptr&lt;IItemArranger&gt;)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="styleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger::styleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger(Ptr&lt;IItemStyleProvider&gt;,Ptr&lt;IItemArranger&gt;)::styleProvider" Static="False">
+                <VarDecl Access="Public" Name="styleProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger::styleProperty" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger(ItemStyleProperty,Ptr&lt;IItemArranger&gt;)::styleProperty" Static="False">
                   <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty" Name="ItemStyleProperty">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::GuiListControl::ItemStyleProperty@s:vl.presentation.controls.GuiListControl" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="arranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger::arranger" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleProviderAndArranger(Ptr&lt;IItemStyleProvider&gt;,Ptr&lt;IItemArranger&gt;)::arranger" Static="False">
+                <VarDecl Access="Public" Name="arranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger::arranger" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleAndArranger(ItemStyleProperty,Ptr&lt;IItemArranger&gt;)::arranger" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -2847,9 +2524,9 @@
               <TypeArguments>
                 <DecorateTypeDecl Decoration="Pointer">
                   <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                        <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
                   </Element>
@@ -2874,47 +2551,14 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <FuncDecl Access="Protected" Name="OnItemMouseEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="OnVisuallyEnabledChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged" OverloadKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="itemEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::itemEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::itemEvent" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiItemMouseEvent" Name="GuiItemMouseEvent">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiItemMouseEvent@s:vl.presentation.compositions.GuiItemMouseEvent" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::style" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::sender" Static="False">
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -2934,91 +2578,7 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::arguments" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiMouseEventArgs" Name="GuiMouseEventArgs">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiMouseEventArgs@s:vl.presentation.compositions.GuiMouseEventArgs" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnItemNotifyEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="itemEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::itemEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::itemEvent" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiItemNotifyEvent" Name="GuiItemNotifyEvent">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiItemNotifyEvent@s:vl.presentation.compositions.GuiItemNotifyEvent" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::style" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* IItemStyleController,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -3042,20 +2602,239 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="AttachItemEvents" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::AttachItemEvents" OverloadKey="::vl::presentation::controls::GuiListControl::AttachItemEvents(* IItemStyleController)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="OnFontChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::AttachItemEvents::style" OverloadKey="::vl::presentation::controls::GuiListControl::AttachItemEvents(* IItemStyleController)::style" Static="False">
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiEventArgs" Name="GuiEventArgs">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiEventArgs@s:vl.presentation.compositions.GuiEventArgs" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="OnItemMouseEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="itemEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::itemEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::itemEvent" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiItemMouseEvent" Name="GuiItemMouseEvent">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiItemMouseEvent@s:vl.presentation.compositions.GuiItemMouseEvent" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::style" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::sender" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemMouseEvent(&amp; compositions::GuiItemMouseEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiMouseEventArgs)::arguments" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiMouseEventArgs" Name="GuiMouseEventArgs">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiMouseEventArgs@s:vl.presentation.compositions.GuiMouseEventArgs" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="OnItemNotifyEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="itemEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::itemEvent" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::itemEvent" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiItemNotifyEvent" Name="GuiItemNotifyEvent">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiItemNotifyEvent@s:vl.presentation.compositions.GuiItemNotifyEvent" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::style" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::style" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnItemNotifyEvent(&amp; compositions::GuiItemNotifyEvent,* ItemStyle,* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiEventArgs" Name="GuiEventArgs">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiEventArgs@s:vl.presentation.compositions.GuiEventArgs" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="AttachItemEvents" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::AttachItemEvents" OverloadKey="::vl::presentation::controls::GuiListControl::AttachItemEvents(* ItemStyle)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::AttachItemEvents::style" OverloadKey="::vl::presentation::controls::GuiListControl::AttachItemEvents(* ItemStyle)::style" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -3066,20 +2845,20 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="DetachItemEvents" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::DetachItemEvents" OverloadKey="::vl::presentation::controls::GuiListControl::DetachItemEvents(* IItemStyleController)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="DetachItemEvents" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::DetachItemEvents" OverloadKey="::vl::presentation::controls::GuiListControl::DetachItemEvents(* ItemStyle)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::DetachItemEvents::style" OverloadKey="::vl::presentation::controls::GuiListControl::DetachItemEvents(* IItemStyleController)::style" Static="False">
+                <VarDecl Access="Public" Name="style" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::DetachItemEvents::style" OverloadKey="::vl::presentation::controls::GuiListControl::DetachItemEvents(* ItemStyle)::style" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleController" Name="IItemStyleController">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyle" Name="ItemStyle">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleController@s:vl.presentation.controls.GuiListControl" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::ItemStyle@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
@@ -3148,7 +2927,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <VarDecl Access="Public" Name="StyleProviderChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::StyleProviderChanged" OverloadKey="::vl::presentation::controls::GuiListControl::StyleProviderChanged" Static="False">
+        <VarDecl Access="Public" Name="ItemTemplateChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::ItemTemplateChanged" OverloadKey="::vl::presentation::controls::GuiListControl::ItemTemplateChanged" Static="False">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Style provider changed event.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
@@ -3474,7 +3253,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::GetStyleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::GetStyleProvider()" Virtual="Virtual" Function="Function">
+        <FuncDecl Access="Public" Name="GetItemTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::GetItemTemplate" OverloadKey="::vl::presentation::controls::GuiListControl::GetItemTemplate()" Virtual="Virtual" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Get the item style provider.&lt;/summary&gt;
   &lt;returns&gt;The item style provider.&lt;/returns&gt;
@@ -3482,21 +3261,17 @@
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <DecorateTypeDecl Decoration="Pointer">
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty" Name="ItemStyleProperty">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::controls::GuiListControl::ItemStyleProperty@s:vl.presentation.controls.GuiListControl" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
               </ReturnType>
               <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="SetStyleProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleProvider" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleProvider(Ptr&lt;IItemStyleProvider&gt;)" Virtual="Virtual" Function="Function">
+        <FuncDecl Access="Public" Name="SetItemTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetItemTemplate" OverloadKey="::vl::presentation::controls::GuiListControl::SetItemTemplate(ItemStyleProperty)" Virtual="Virtual" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Set the item style provider&lt;/summary&gt;
   &lt;returns&gt;The old item style provider&lt;/returns&gt;
@@ -3505,42 +3280,16 @@
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
+                <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetStyleProvider::value" OverloadKey="::vl::presentation::controls::GuiListControl::SetStyleProvider(Ptr&lt;IItemStyleProvider&gt;)::value" Static="False">
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetItemTemplate::value" OverloadKey="::vl::presentation::controls::GuiListControl::SetItemTemplate(ItemStyleProperty)::value" Static="False">
                   <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemStyleProvider" Name="IItemStyleProvider">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiListControl::IItemStyleProvider@s:vl.presentation.controls.GuiListControl" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::ItemStyleProperty" Name="ItemStyleProperty">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::GuiListControl::ItemStyleProperty@s:vl.presentation.controls.GuiListControl" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
@@ -3578,22 +3327,7 @@
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemArranger" Name="IItemArranger">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiListControl::IItemArranger@s:vl.presentation.controls.GuiListControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
+                <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
                 <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetArranger::value" OverloadKey="::vl::presentation::controls::GuiListControl::SetArranger(Ptr&lt;IItemArranger&gt;)::value" Static="False">
@@ -3658,29 +3392,7 @@
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiAxis" Name="IGuiAxis">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::compositions::IGuiAxis@s:vl.presentation.compositions.IGuiAxis" />
-                      </ReferencingOverloadKeys>
-                      <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Parent>
-                    </SubTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
+                <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
                 <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetAxis::value" OverloadKey="::vl::presentation::controls::GuiListControl::SetAxis(Ptr&lt;compositions::IGuiAxis&gt;)::value" Static="False">
@@ -3762,6 +3474,40 @@
                         <Key Value="::vl::presentation::Size@s:vl.presentation.Size" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetDisplayItemBackground" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::GetDisplayItemBackground" OverloadKey="::vl::presentation::controls::GuiListControl::GetDisplayItemBackground()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Test if the list control displays predefined item background.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if the list control displays predefined item background.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetDisplayItemBackground" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetDisplayItemBackground" OverloadKey="::vl::presentation::controls::GuiListControl::SetDisplayItemBackground(bool)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set if the list control displays predefined item background.&lt;/summary&gt;
+  &lt;param name="value"&gt;Set to true to display item background.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::SetDisplayItemBackground::value" OverloadKey="::vl::presentation::controls::GuiListControl::SetDisplayItemBackground(bool)::value" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
                   </Type>
                 </VarDecl>
               </Parameters>

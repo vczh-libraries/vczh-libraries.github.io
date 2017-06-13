@@ -3,70 +3,24 @@
   <Symbols Key="vl.reflection.description.IValueSubscription">
     <ClassDecl Access="Public" Name="IValueSubscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription" OverloadKey="::vl::reflection::description::IValueSubscription" ClassType="Class">
       <Children>
-        <FuncDecl Access="Public" Name="Subscribe" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (&amp; const Value) : void&gt;)" Virtual="Abstract" Function="Function">
+        <TypedefDecl Access="Private" Name="ValueChangedProc" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::ValueChangedProc" OverloadKey="::vl::reflection::description::IValueSubscription::ValueChangedProc">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <GenericTypeDecl>
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                  <TypeArguments>
-                    <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IValueListener" Name="IValueListener">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::reflection::description::IValueListener@s:vl.reflection.description.IValueListener" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </TypeArguments>
-                </GenericTypeDecl>
+                <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="callback" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Subscribe::callback" OverloadKey="::vl::reflection::description::IValueSubscription::Subscribe(&amp; const Func&lt;function (&amp; const Value) : void&gt;)::callback" Static="False">
+                <VarDecl Access="Public" Name="newValue" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
                         <DecorateTypeDecl Decoration="Const">
                           <Element>
-                            <GenericTypeDecl>
-                              <Element>
-                                <RefTypeDecl ReferencingNameKey="::vl::Func" Name="Func">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::Func`1@s:vl.Func`1" />
-                                    <Key Value="::vl::Func`2&lt;function (... TArgs) : R&gt;@s:vl.Func`2{function (... TArgs) # R}" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Element>
-                              <TypeArguments>
-                                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                                  <ReturnType>
-                                    <RefTypeDecl Name="void" />
-                                  </ReturnType>
-                                  <Parameters>
-                                    <VarDecl Access="Public" Static="False">
-                                      <Type>
-                                        <DecorateTypeDecl Decoration="LeftRef">
-                                          <Element>
-                                            <DecorateTypeDecl Decoration="Const">
-                                              <Element>
-                                                <RefTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
-                                                  <ReferencingOverloadKeys>
-                                                    <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
-                                                  </ReferencingOverloadKeys>
-                                                </RefTypeDecl>
-                                              </Element>
-                                            </DecorateTypeDecl>
-                                          </Element>
-                                        </DecorateTypeDecl>
-                                      </Type>
-                                    </VarDecl>
-                                  </Parameters>
-                                </FunctionTypeDecl>
-                              </TypeArguments>
-                            </GenericTypeDecl>
+                            <RefTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Element>
@@ -74,6 +28,37 @@
                   </Type>
                 </VarDecl>
               </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </TypedefDecl>
+        <VarDecl Access="Public" Name="ValueChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::ValueChanged" OverloadKey="::vl::reflection::description::IValueSubscription::ValueChanged" Static="False">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <RefTypeDecl ReferencingNameKey="::vl::Event" Name="Event">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::Event`1@s:vl.Event`1" />
+                    <Key Value="::vl::Event`1&lt;function (... TArgs) : void&gt;@s:vl.Event`1{function (... TArgs) # void}" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Element>
+              <TypeArguments>
+                <RefTypeDecl ReferencingNameKey="::vl::reflection::description::IValueSubscription::ValueChangedProc" Name="ValueChangedProc">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::reflection::description::IValueSubscription::ValueChangedProc@s:vl.reflection.description.IValueSubscription" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </VarDecl>
+        <FuncDecl Access="Public" Name="Open" Tags="x64, Windows;x86, Windows" NameKey="::vl::reflection::description::IValueSubscription::Open" OverloadKey="::vl::reflection::description::IValueSubscription::Open()" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>

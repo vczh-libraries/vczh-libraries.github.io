@@ -28,24 +28,24 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetBoundsComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::GetBoundsComposition" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::GetBoundsComposition()" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="GetTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::GetTemplate" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::GetTemplate()" Virtual="Abstract" Function="Function">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the composition that renders the data.. The data visualizer should maintain this bounds composition, and delete it when necessary.&lt;/summary&gt;
-  &lt;returns&gt;The composition.&lt;/returns&gt;
+  &lt;summary&gt;Get the template that renders the data. The data visualizer should maintain this template, and delete it when necessary.&lt;/summary&gt;
+  &lt;returns&gt;The template.&lt;/returns&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <DecorateTypeDecl Decoration="Pointer">
                   <Element>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiBoundsComposition" Name="GuiBoundsComposition">
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::templates::GuiGridVisualizerTemplate" Name="GuiGridVisualizerTemplate">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::compositions::GuiBoundsComposition@s:vl.presentation.compositions.GuiBoundsComposition" />
+                        <Key Value="::vl::presentation::templates::GuiGridVisualizerTemplate@s:vl.presentation.templates.GuiGridVisualizerTemplate" />
                       </ReferencingOverloadKeys>
                       <Parent>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::templates" Name="templates">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                            <Key Value="::vl::presentation::templates@ns:vl.presentation.templates" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Parent>
@@ -57,10 +57,23 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="BeforeVisualizeCell" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* IDataProvider,vint,vint)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="NotifyDeletedTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::NotifyDeletedTemplate" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::NotifyDeletedTemplate()" Virtual="Abstract" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Notify that the template has been deleted during the deconstruction of UI objects.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="BeforeVisualizeCell" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* GuiListControl::IItemProvider,vint,vint)" Virtual="Abstract" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Called before visualizing a cell.&lt;/summary&gt;
-  &lt;param name="dataProvider"&gt;The data provider.&lt;/param&gt;
+  &lt;param name="itemProvider"&gt;The item provider.&lt;/param&gt;
   &lt;param name="row"&gt;The row number of the cell.&lt;/param&gt;
   &lt;param name="column"&gt;The column number of the cell.&lt;/param&gt;
 &lt;/Document&gt;</Document>
@@ -70,20 +83,27 @@
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="dataProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::dataProvider" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* IDataProvider,vint,vint)::dataProvider" Static="False">
+                <VarDecl Access="Public" Name="itemProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::itemProvider" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* GuiListControl::IItemProvider,vint,vint)::itemProvider" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataProvider" Name="IDataProvider">
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::IItemProvider" Name="IItemProvider">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::list::IDataProvider@s:vl.presentation.controls.list.IDataProvider" />
+                            <Key Value="::vl::presentation::controls::GuiListControl::IItemProvider@s:vl.presentation.controls.GuiListControl" />
                           </ReferencingOverloadKeys>
-                        </RefTypeDecl>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl" Name="GuiListControl">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="row" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::row" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* IDataProvider,vint,vint)::row" Static="False">
+                <VarDecl Access="Public" Name="row" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::row" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* GuiListControl::IItemProvider,vint,vint)::row" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                       <ReferencingOverloadKeys>
@@ -92,7 +112,7 @@
                     </RefTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::column" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* IDataProvider,vint,vint)::column" Static="False">
+                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell::column" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell(* GuiListControl::IItemProvider,vint,vint)::column" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
                       <ReferencingOverloadKeys>
@@ -102,28 +122,6 @@
                   </Type>
                 </VarDecl>
               </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="GetDecoratedDataVisualizer" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::list::IDataVisualizer::GetDecoratedDataVisualizer" OverloadKey="::vl::presentation::controls::list::IDataVisualizer::GetDecoratedDataVisualizer()" Virtual="Abstract" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Get the decorated data visualizer inside the current data visualizer.&lt;/summary&gt;
-  &lt;returns&gt;The decorated data visualizer. Returns null if such a visualizer does not exists.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <DecorateTypeDecl Decoration="Pointer">
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataVisualizer" Name="IDataVisualizer">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::list::IDataVisualizer@s:vl.presentation.controls.list.IDataVisualizer" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
-              </ReturnType>
-              <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>

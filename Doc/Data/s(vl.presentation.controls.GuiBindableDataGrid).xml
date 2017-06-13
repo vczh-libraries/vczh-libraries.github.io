@@ -6,20 +6,13 @@
   &lt;summary&gt;A bindable Data grid control.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <VarDecl Access="Protected" Name="bindableDataProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::bindableDataProvider" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::bindableDataProvider" Static="False">
+        <VarDecl Access="Protected" Name="dataProvider" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::dataProvider" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::dataProvider" Static="False">
           <Type>
-            <GenericTypeDecl>
+            <DecorateTypeDecl Decoration="Pointer">
               <Element>
-                <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::DataProvider" Name="DataProvider">
                   <ReferencingOverloadKeys>
-                    <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Element>
-              <TypeArguments>
-                <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::BindableDataProvider" Name="BindableDataProvider">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::list::BindableDataProvider@s:vl.presentation.controls.list.BindableDataProvider" />
+                    <Key Value="::vl::presentation::controls::list::DataProvider@s:vl.presentation.controls.list.DataProvider" />
                   </ReferencingOverloadKeys>
                   <Parent>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
@@ -29,8 +22,8 @@
                     </RefTypeDecl>
                   </Parent>
                 </SubTypeDecl>
-              </TypeArguments>
-            </GenericTypeDecl>
+              </Element>
+            </DecorateTypeDecl>
           </Type>
         </VarDecl>
         <FuncDecl Access="Public" Name="GuiBindableDataGrid" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GuiBindableDataGrid" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GuiBindableDataGrid(* IStyleProvider,&amp; const description::Value)" Virtual="Normal" Function="Constructor">
@@ -91,6 +84,64 @@
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetDataColumns" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetDataColumns" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetDataColumns()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get all data columns indices in columns.&lt;/summary&gt;
+  &lt;returns&gt;All data columns indices in columns.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <DecorateTypeDecl Decoration="LeftRef">
+                  <Element>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::ListViewDataColumns" Name="ListViewDataColumns">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::ListViewDataColumns@s:vl.presentation.controls.list.ListViewDataColumns" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetColumns" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetColumns" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetColumns()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get all columns.&lt;/summary&gt;
+  &lt;returns&gt;All columns.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <DecorateTypeDecl Decoration="LeftRef">
+                  <Element>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::DataColumns" Name="DataColumns">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::list::DataColumns@s:vl.presentation.controls.list.DataColumns" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Element>
+                </DecorateTypeDecl>
               </ReturnType>
               <Parameters />
             </FunctionTypeDecl>
@@ -174,164 +225,10 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="InsertBindableColumn" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn(vint,Ptr&lt;list::BindableDataColumn&gt;)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="GetAdditionalFilter" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetAdditionalFilter" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetAdditionalFilter()" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;Insert a column.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="index"&gt;The column index.&lt;/param&gt;
-  &lt;param name="column"&gt;The column.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn::index" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn(vint,Ptr&lt;list::BindableDataColumn&gt;)::index" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn::column" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::InsertBindableColumn(vint,Ptr&lt;list::BindableDataColumn&gt;)::column" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::BindableDataColumn" Name="BindableDataColumn">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::list::BindableDataColumn@s:vl.presentation.controls.list.BindableDataColumn" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="AddBindableColumn" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::AddBindableColumn" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::AddBindableColumn(Ptr&lt;list::BindableDataColumn&gt;)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Add a column.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="column"&gt;The column.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::AddBindableColumn::column" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::AddBindableColumn(Ptr&lt;list::BindableDataColumn&gt;)::column" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::BindableDataColumn" Name="BindableDataColumn">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::list::BindableDataColumn@s:vl.presentation.controls.list.BindableDataColumn" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="RemoveBindableColumn" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::RemoveBindableColumn" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::RemoveBindableColumn(Ptr&lt;list::BindableDataColumn&gt;)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Remove a column.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="column"&gt;The column.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="column" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::RemoveBindableColumn::column" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::RemoveBindableColumn(Ptr&lt;list::BindableDataColumn&gt;)::column" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::BindableDataColumn" Name="BindableDataColumn">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::list::BindableDataColumn@s:vl.presentation.controls.list.BindableDataColumn" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ClearBindableColumns" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::ClearBindableColumns" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::ClearBindableColumns()" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Clear all columns.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="GetBindableColumn" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetBindableColumn" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetBindableColumn(vint)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Get a column.&lt;/summary&gt;
-  &lt;param name="index"&gt;The column index.&lt;/param&gt;
-  &lt;returns&gt;Returns the column of a specified index.&lt;/returns&gt;
+  &lt;summary&gt;Get the additional filter.&lt;/summary&gt;
+  &lt;returns&gt;The additional filter.&lt;/returns&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -345,9 +242,9 @@
                     </RefTypeDecl>
                   </Element>
                   <TypeArguments>
-                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::BindableDataColumn" Name="BindableDataColumn">
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataFilter" Name="IDataFilter">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::list::BindableDataColumn@s:vl.presentation.controls.list.BindableDataColumn" />
+                        <Key Value="::vl::presentation::controls::list::IDataFilter@s:vl.presentation.controls.list.IDataFilter" />
                       </ReferencingOverloadKeys>
                       <Parent>
                         <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
@@ -360,14 +257,272 @@
                   </TypeArguments>
                 </GenericTypeDecl>
               </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetAdditionalFilter" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetAdditionalFilter" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetAdditionalFilter(Ptr&lt;list::IDataFilter&gt;)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the additional filter. This filter will be composed with filters of all column to be the final filter.&lt;/summary&gt;
+  &lt;param name="value"&gt;The additional filter.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetBindableColumn::index" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetBindableColumn(vint)::index" Static="False">
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetAdditionalFilter::value" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetAdditionalFilter(Ptr&lt;list::IDataFilter&gt;)::value" Static="False">
                   <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::list::IDataFilter" Name="IDataFilter">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::list::IDataFilter@s:vl.presentation.controls.list.IDataFilter" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::list" Name="list">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::list@ns:vl.presentation.controls.list" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <VarDecl Access="Public" Name="LargeImagePropertyChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::LargeImagePropertyChanged" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::LargeImagePropertyChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Large image property name changed event.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Public" Name="SmallImagePropertyChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SmallImagePropertyChanged" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SmallImagePropertyChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Small image property name changed event.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
+        <FuncDecl Access="Public" Name="GetLargeImageProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetLargeImageProperty" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetLargeImageProperty()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the large image property name to get the large image from an item.&lt;/summary&gt;
+  &lt;returns&gt;The large image property name.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::ItemProperty" Name="ItemProperty">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
+                        <Key Value="::vl::presentation::ItemProperty`1@s:vl.presentation.ItemProperty`1" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiImageData" Name="GuiImageData">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiImageData@s:vl.presentation.GuiImageData" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetLargeImageProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetLargeImageProperty" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetLargeImageProperty(&amp; const ItemProperty&lt;Ptr&lt;GuiImageData&gt;&gt;)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the large image property name to get the large image from an item.&lt;/summary&gt;
+  &lt;param name="value"&gt;The large image property name.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetLargeImageProperty::value" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetLargeImageProperty(&amp; const ItemProperty&lt;Ptr&lt;GuiImageData&gt;&gt;)::value" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <GenericTypeDecl>
+                              <Element>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::ItemProperty" Name="ItemProperty">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::ItemProperty`1@s:vl.presentation.ItemProperty`1" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Element>
+                              <TypeArguments>
+                                <GenericTypeDecl>
+                                  <Element>
+                                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                                      <ReferencingOverloadKeys>
+                                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                                      </ReferencingOverloadKeys>
+                                    </RefTypeDecl>
+                                  </Element>
+                                  <TypeArguments>
+                                    <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiImageData" Name="GuiImageData">
+                                      <ReferencingOverloadKeys>
+                                        <Key Value="::vl::presentation::GuiImageData@s:vl.presentation.GuiImageData" />
+                                      </ReferencingOverloadKeys>
+                                    </RefTypeDecl>
+                                  </TypeArguments>
+                                </GenericTypeDecl>
+                              </TypeArguments>
+                            </GenericTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetSmallImageProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::GetSmallImageProperty" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::GetSmallImageProperty()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the small image property name to get the small image from an item.&lt;/summary&gt;
+  &lt;returns&gt;The small image property name.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::ItemProperty" Name="ItemProperty">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::ItemProperty`1@s:vl.presentation.ItemProperty`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiImageData" Name="GuiImageData">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiImageData@s:vl.presentation.GuiImageData" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetSmallImageProperty" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetSmallImageProperty" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetSmallImageProperty(&amp; const ItemProperty&lt;Ptr&lt;GuiImageData&gt;&gt;)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the small image property name to get the small image from an item.&lt;/summary&gt;
+  &lt;param name="value"&gt;The small image property name.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiBindableDataGrid::SetSmallImageProperty::value" OverloadKey="::vl::presentation::controls::GuiBindableDataGrid::SetSmallImageProperty(&amp; const ItemProperty&lt;Ptr&lt;GuiImageData&gt;&gt;)::value" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <GenericTypeDecl>
+                              <Element>
+                                <RefTypeDecl ReferencingNameKey="::vl::presentation::ItemProperty" Name="ItemProperty">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::presentation::ItemProperty`1@s:vl.presentation.ItemProperty`1" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Element>
+                              <TypeArguments>
+                                <GenericTypeDecl>
+                                  <Element>
+                                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                                      <ReferencingOverloadKeys>
+                                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                                      </ReferencingOverloadKeys>
+                                    </RefTypeDecl>
+                                  </Element>
+                                  <TypeArguments>
+                                    <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiImageData" Name="GuiImageData">
+                                      <ReferencingOverloadKeys>
+                                        <Key Value="::vl::presentation::GuiImageData@s:vl.presentation.GuiImageData" />
+                                      </ReferencingOverloadKeys>
+                                    </RefTypeDecl>
+                                  </TypeArguments>
+                                </GenericTypeDecl>
+                              </TypeArguments>
+                            </GenericTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

@@ -51,6 +51,35 @@
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
+        <VarDecl Access="Protected" Name="resourceResolver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::resourceResolver" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::resourceResolver" Static="False">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Element>
+              <TypeArguments>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourcePathResolver" Name="GuiResourcePathResolver">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::GuiResourcePathResolver@s:vl.presentation.GuiResourcePathResolver" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="subscriptions" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::subscriptions" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::subscriptions" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiInstanceRootObject::SubscriptionList" Name="SubscriptionList">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::controls::GuiInstanceRootObject::SubscriptionList@s:vl.presentation.controls.GuiInstanceRootObject" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
         <VarDecl Access="Protected" Name="components" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::components" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::components" Static="False">
           <Type>
             <GenericTypeDecl>
@@ -82,25 +111,11 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Protected" Name="subscriptions" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::subscriptions" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::subscriptions" Static="False">
+        <VarDecl Access="Protected" Name="finalized" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::finalized" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::finalized" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiInstanceRootObject::SubscriptionList" Name="SubscriptionList">
-              <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::controls::GuiInstanceRootObject::SubscriptionList@s:vl.presentation.controls.GuiInstanceRootObject" />
-              </ReferencingOverloadKeys>
-            </RefTypeDecl>
+            <RefTypeDecl Name="bool" />
           </Type>
         </VarDecl>
-        <FuncDecl Access="Protected" Name="FinalizeInstance" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance()" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
         <FuncDecl Access="Public" Name="GuiInstanceRootObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::GuiInstanceRootObject" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::GuiInstanceRootObject()" Virtual="Normal" Function="Constructor">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -118,6 +133,195 @@
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="FinalizeInstance" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Clear all subscriptions and components.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="IsFinalized" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::IsFinalized" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::IsFinalized()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Test has the object been finalized.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this object has been finalized.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="FinalizeInstanceRecursively" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively(* compositions::GuiGraphicsComposition)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="thisObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively::thisObject" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively(* compositions::GuiGraphicsComposition)::thisObject" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="FinalizeInstanceRecursively" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively(* GuiControl)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="thisObject" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively::thisObject" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively(* GuiControl)::thisObject" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetResourceResolver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::SetResourceResolver" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::SetResourceResolver(Ptr&lt;GuiResourcePathResolver&gt;)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the resource resolver to connect the current root object to the resource creating it.&lt;/summary&gt;
+  &lt;param name="resolver"&gt;The resource resolver&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="resolver" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::SetResourceResolver::resolver" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::SetResourceResolver(Ptr&lt;GuiResourcePathResolver&gt;)::resolver" Static="False">
+                  <Type>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourcePathResolver" Name="GuiResourcePathResolver">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourcePathResolver@s:vl.presentation.GuiResourcePathResolver" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="ResolveResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource(&amp; const WString,&amp; const WString,bool)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Resolve a resource using the current resource resolver.&lt;/summary&gt;
+  &lt;returns&gt;The loaded resource. Returns null if failed to load.&lt;/returns&gt;
+  &lt;param name="protocol"&gt;The protocol.&lt;/param&gt;
+  &lt;param name="path"&gt;The path.&lt;/param&gt;
+  &lt;param name="ensureExist"&gt;Set to true and it will throw an exception if the resource doesn't exist.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::reflection::DescriptableObject" Name="DescriptableObject">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::DescriptableObject@s:vl.reflection.DescriptableObject" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="protocol" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource::protocol" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource(&amp; const WString,&amp; const WString,bool)::protocol" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::WString@s:vl.WString" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="path" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource::path" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource(&amp; const WString,&amp; const WString,bool)::path" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::WString@s:vl.WString" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="ensureExist" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource::ensureExist" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ResolveResource(&amp; const WString,&amp; const WString,bool)::ensureExist" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
@@ -186,93 +390,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="RemoveSubscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveSubscription" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveSubscription(Ptr&lt;description::IValueSubscription&gt;)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Remove a subscription.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="subscription"&gt;The subscription to test.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="subscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveSubscription::subscription" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveSubscription(Ptr&lt;description::IValueSubscription&gt;)::subscription" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::IValueSubscription" Name="IValueSubscription">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::IValueSubscription@s:vl.reflection.description.IValueSubscription" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ContainsSubscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsSubscription" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsSubscription(Ptr&lt;description::IValueSubscription&gt;)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Test does the window contain the subscription.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if the window contains the subscription.&lt;/returns&gt;
-  &lt;param name="subscription"&gt;The subscription to test.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="subscription" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsSubscription::subscription" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsSubscription(Ptr&lt;description::IValueSubscription&gt;)::subscription" Static="False">
-                  <Type>
-                    <GenericTypeDecl>
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                      <TypeArguments>
-                        <SubTypeDecl ReferencingNameKey="::vl::reflection::description::IValueSubscription" Name="IValueSubscription">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::reflection::description::IValueSubscription@s:vl.reflection.description.IValueSubscription" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </TypeArguments>
-                    </GenericTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ClearSubscriptions" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ClearSubscriptions" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ClearSubscriptions()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="UpdateSubscriptions" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::UpdateSubscriptions" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::UpdateSubscriptions()" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Clear all subscriptions.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
@@ -340,77 +458,6 @@
                   </Type>
                 </VarDecl>
               </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="RemoveComponent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveComponent" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveComponent(* GuiComponent)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Remove a component.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="component"&gt;The component to remove.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="component" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveComponent::component" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::RemoveComponent(* GuiComponent)::component" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiComponent" Name="GuiComponent">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiComponent@s:vl.presentation.controls.GuiComponent" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ContainsComponent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsComponent" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsComponent(* GuiComponent)" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Test does the window contain the component.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if the window contains the component.&lt;/returns&gt;
-  &lt;param name="component"&gt;The component to test.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="component" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsComponent::component" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ContainsComponent(* GuiComponent)::component" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiComponent" Name="GuiComponent">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiComponent@s:vl.presentation.controls.GuiComponent" />
-                          </ReferencingOverloadKeys>
-                        </RefTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="ClearComponents" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiInstanceRootObject::ClearComponents" OverloadKey="::vl::presentation::controls::GuiInstanceRootObject::ClearComponents()" Virtual="Normal" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;Clear all components.&lt;/summary&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
