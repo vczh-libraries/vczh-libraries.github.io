@@ -169,6 +169,11 @@ Minimum size limitation.
             <RefTypeDecl Name="bool" />
           </Type>
         </VarDecl>
+        <VarDecl Access="Protected" Name="transparentToMouse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::transparentToMouse" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::transparentToMouse" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
+          </Type>
+        </VarDecl>
         <VarDecl Access="Protected" Name="minSizeLimitation" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::minSizeLimitation" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::minSizeLimitation" Static="False">
           <Type>
             <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation" Name="MinSizeLimitation">
@@ -978,11 +983,12 @@ Minimum size limitation.
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="FindComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition(Point)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="FindComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition(Point,bool)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Find a deepest composition that under a specified location. If the location is inside a compsition but not hit any sub composition, this function will return this composition.&lt;/summary&gt;
   &lt;returns&gt;The deepest composition that under a specified location.&lt;/returns&gt;
   &lt;param name="location"&gt;The specified location.&lt;/param&gt;
+  &lt;param name="forMouseEvent"&gt;Find a composition for mouse event, it will ignore all compositions that are transparent to mouse events.&lt;/param&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -998,13 +1004,52 @@ Minimum size limitation.
                 </DecorateTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition::location" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition(Point)::location" Static="False">
+                <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition::location" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition(Point,bool)::location" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::Point" Name="Point">
                       <ReferencingOverloadKeys>
                         <Key Value="::vl::presentation::Point@s:vl.presentation.Point" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="forMouseEvent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition::forMouseEvent" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::FindComposition(Point,bool)::forMouseEvent" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetTransparentToMouse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::GetTransparentToMouse" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::GetTransparentToMouse()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get is this composition transparent to mouse events.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this composition is transparent to mouse events, which means it just passes all mouse events to the composition under it.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetTransparentToMouse" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse(bool)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set is the composition transparent to mouse events.&lt;/summary&gt;
+  &lt;param name="value"&gt;Set to true to make this composition transparent to mouse events.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse::value" OverloadKey="::vl::presentation::compositions::GuiGraphicsComposition::SetTransparentToMouse(bool)::value" Static="False">
+                  <Type>
+                    <RefTypeDecl Name="bool" />
                   </Type>
                 </VarDecl>
               </Parameters>
