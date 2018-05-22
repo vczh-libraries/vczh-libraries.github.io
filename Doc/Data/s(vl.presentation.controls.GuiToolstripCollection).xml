@@ -6,44 +6,51 @@
   &lt;summary&gt;Toolstrip item collection.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <ClassDecl Access="Public" Name="IContentCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback" ClassType="Class">
-          <Children>
-            <FuncDecl Access="Public" Name="UpdateLayout" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback::UpdateLayout" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback::UpdateLayout()" Virtual="Abstract" Function="Function">
-              <Type>
-                <FunctionTypeDecl CallingConvention="Default" Const="False">
-                  <ReturnType>
-                    <RefTypeDecl Name="void" />
-                  </ReturnType>
-                  <Parameters />
-                </FunctionTypeDecl>
-              </Type>
-            </FuncDecl>
-          </Children>
-          <BaseTypes>
-            <BaseTypeDecl Access="Public" Tags="x86, Windows">
-              <Type>
-                <RefTypeDecl ReferencingNameKey="::vl::Interface" Name="Interface">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::Interface@s:vl.Interface" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Type>
-            </BaseTypeDecl>
-          </BaseTypes>
-        </ClassDecl>
-        <VarDecl Access="Protected" Name="contentCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::contentCallback" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::contentCallback" Static="False">
+        <TypedefDecl Access="Private" Name="EventHandlerList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::EventHandlerList" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::EventHandlerList">
           <Type>
-            <DecorateTypeDecl Decoration="Pointer">
+            <GenericTypeDecl>
               <Element>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback" Name="IContentCallback">
+                <SubTypeDecl ReferencingNameKey="::vl::collections::List" Name="List">
                   <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::GuiToolstripCollection::IContentCallback@s:vl.presentation.controls.GuiToolstripCollection" />
+                    <Key Value="::vl::collections::List`2@s:vl.collections.List`2" />
                   </ReferencingOverloadKeys>
-                </RefTypeDecl>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::collections@ns:vl.collections" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
               </Element>
-            </DecorateTypeDecl>
+              <TypeArguments>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::IGuiGraphicsEventHandler" Name="IGuiGraphicsEventHandler">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::compositions::IGuiGraphicsEventHandler@s:vl.presentation.compositions.IGuiGraphicsEventHandler" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
           </Type>
-        </VarDecl>
+        </TypedefDecl>
         <VarDecl Access="Protected" Name="stackComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::stackComposition" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::stackComposition" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
@@ -64,24 +71,56 @@
             </DecorateTypeDecl>
           </Type>
         </VarDecl>
-        <FuncDecl Access="Protected" Name="InvokeUpdateLayout" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::InvokeUpdateLayout" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::InvokeUpdateLayout()" Virtual="Normal" Function="Function">
+        <VarDecl Access="Protected" Name="eventHandlers" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::eventHandlers" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::eventHandlers" Static="False">
           <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters />
-            </FunctionTypeDecl>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection::EventHandlerList" Name="EventHandlerList">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::controls::GuiToolstripCollection::EventHandlerList@s:vl.presentation.controls.GuiToolstripCollection" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
           </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnInterestingMenuButtonPropertyChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
+        </VarDecl>
+        <FuncDecl Access="Protected" Name="UpdateItemVisibility" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility(vint,* GuiControl)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged::sender" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
+                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility::index" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility(vint,* GuiControl)::index" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="child" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility::child" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::UpdateItemVisibility(vint,* GuiControl)::child" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="OnItemVisibleChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged::sender" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -101,7 +140,7 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged::arguments" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnInterestingMenuButtonPropertyChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
+                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged::arguments" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::OnItemVisibleChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -117,129 +156,6 @@
                             </RefTypeDecl>
                           </Parent>
                         </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="QueryInsert" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert(vint,&amp; const * GuiControl)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert::index" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert(vint,&amp; const * GuiControl)::index" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="child" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert::child" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryInsert(vint,&amp; const * GuiControl)::child" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <DecorateTypeDecl Decoration="Pointer">
-                              <Element>
-                                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Element>
-                            </DecorateTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="QueryRemove" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove(vint,&amp; const * GuiControl)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove::index" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove(vint,&amp; const * GuiControl)::index" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="child" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove::child" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::QueryRemove(vint,&amp; const * GuiControl)::child" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <DecorateTypeDecl Decoration="Pointer">
-                              <Element>
-                                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Element>
-                            </DecorateTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="BeforeInsert" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert(vint,&amp; const * GuiControl)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="index" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert::index" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert(vint,&amp; const * GuiControl)::index" Static="False">
-                  <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::vint@s:vl.vint" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="child" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert::child" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::BeforeInsert(vint,&amp; const * GuiControl)::child" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <DecorateTypeDecl Decoration="Pointer">
-                              <Element>
-                                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
-                                  <ReferencingOverloadKeys>
-                                    <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
-                                  </ReferencingOverloadKeys>
-                                </RefTypeDecl>
-                              </Element>
-                            </DecorateTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
@@ -359,27 +275,27 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GuiToolstripCollection" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IContentCallback,* compositions::GuiStackComposition)" Virtual="Normal" Function="Constructor">
+        <FuncDecl Access="Public" Name="GuiToolstripCollection" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IToolstripUpdateLayout,* compositions::GuiStackComposition)" Virtual="Normal" Function="Constructor">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="_contentCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection::_contentCallback" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IContentCallback,* compositions::GuiStackComposition)::_contentCallback" Static="False">
+                <VarDecl Access="Public" Name="_contentCallback" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection::_contentCallback" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IToolstripUpdateLayout,* compositions::GuiStackComposition)::_contentCallback" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback" Name="IContentCallback">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::IToolstripUpdateLayout" Name="IToolstripUpdateLayout">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::controls::GuiToolstripCollection::IContentCallback@s:vl.presentation.controls.GuiToolstripCollection" />
+                            <Key Value="::vl::presentation::controls::IToolstripUpdateLayout@s:vl.presentation.controls.IToolstripUpdateLayout" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="_stackComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection::_stackComposition" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IContentCallback,* compositions::GuiStackComposition)::_stackComposition" Static="False">
+                <VarDecl Access="Public" Name="_stackComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection::_stackComposition" OverloadKey="::vl::presentation::controls::GuiToolstripCollection::GuiToolstripCollection(* IToolstripUpdateLayout,* compositions::GuiStackComposition)::_stackComposition" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -417,33 +333,11 @@
       <BaseTypes>
         <BaseTypeDecl Access="Public" Tags="x86, Windows">
           <Type>
-            <GenericTypeDecl>
-              <Element>
-                <SubTypeDecl ReferencingNameKey="::vl::collections::ObservableListBase" Name="ObservableListBase">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::collections::ObservableListBase`2@s:vl.collections.ObservableListBase`2" />
-                  </ReferencingOverloadKeys>
-                  <Parent>
-                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::collections@ns:vl.collections" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Parent>
-                </SubTypeDecl>
-              </Element>
-              <TypeArguments>
-                <DecorateTypeDecl Decoration="Pointer">
-                  <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
-                  </Element>
-                </DecorateTypeDecl>
-              </TypeArguments>
-            </GenericTypeDecl>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollectionBase" Name="GuiToolstripCollectionBase">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::controls::GuiToolstripCollectionBase@s:vl.presentation.controls.GuiToolstripCollectionBase" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
           </Type>
         </BaseTypeDecl>
       </BaseTypes>

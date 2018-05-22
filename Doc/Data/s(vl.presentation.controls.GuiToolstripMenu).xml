@@ -78,7 +78,7 @@
         </FuncDecl>
         <FuncDecl Access="Public" Name="GuiToolstripMenu" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiToolstripMenu::GuiToolstripMenu" OverloadKey="::vl::presentation::controls::GuiToolstripMenu::GuiToolstripMenu(theme::ThemeName,* GuiControl)" Virtual="Normal" Function="Constructor">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;Create a control with a specified style controller.&lt;/summary&gt;
+  &lt;summary&gt;Create a control with a specified default theme.&lt;/summary&gt;
   &lt;param name="themeName"&gt;The theme name for retriving a default control template.&lt;/param&gt;
   &lt;param name="_owner"&gt;The owner menu item of the parent menu.&lt;/param&gt;
 &lt;/Document&gt;</Document>
@@ -141,11 +141,33 @@
               <ReturnType>
                 <DecorateTypeDecl Decoration="LeftRef">
                   <Element>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection" Name="GuiToolstripCollection">
-                      <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::controls::GuiToolstripCollection@s:vl.presentation.controls.GuiToolstripCollection" />
-                      </ReferencingOverloadKeys>
-                    </RefTypeDecl>
+                    <GenericTypeDecl>
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::collections::ObservableListBase" Name="ObservableListBase">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::collections::ObservableListBase`2@s:vl.collections.ObservableListBase`2" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::collections@ns:vl.collections" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <DecorateTypeDecl Decoration="Pointer">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl" Name="GuiControl">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::GuiControl@s:vl.presentation.controls.GuiControl" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Element>
                 </DecorateTypeDecl>
               </ReturnType>
@@ -166,18 +188,11 @@
         </BaseTypeDecl>
         <BaseTypeDecl Access="Protected" Tags="x86, Windows">
           <Type>
-            <SubTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection::IContentCallback" Name="IContentCallback">
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::IToolstripUpdateLayout" Name="IToolstripUpdateLayout">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::controls::GuiToolstripCollection::IContentCallback@s:vl.presentation.controls.GuiToolstripCollection" />
+                <Key Value="::vl::presentation::controls::IToolstripUpdateLayout@s:vl.presentation.controls.IToolstripUpdateLayout" />
               </ReferencingOverloadKeys>
-              <Parent>
-                <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiToolstripCollection" Name="GuiToolstripCollection">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::presentation::controls::GuiToolstripCollection@s:vl.presentation.controls.GuiToolstripCollection" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
-              </Parent>
-            </SubTypeDecl>
+            </RefTypeDecl>
           </Type>
         </BaseTypeDecl>
         <BaseTypeDecl Access="Private" Tags="x86, Windows">

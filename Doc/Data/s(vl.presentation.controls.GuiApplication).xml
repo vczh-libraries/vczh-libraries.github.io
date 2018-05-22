@@ -147,6 +147,15 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
+        <VarDecl Access="Protected" Name="locale" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::locale" OverloadKey="::vl::presentation::controls::GuiApplication::locale" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::Locale" Name="Locale">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::Locale@s:vl.Locale" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
+          </Type>
+        </VarDecl>
         <VarDecl Access="Protected" Name="mainWindow" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::mainWindow" OverloadKey="::vl::presentation::controls::GuiApplication::mainWindow" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
@@ -541,6 +550,73 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
+        <VarDecl Access="Public" Name="LocaleChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::LocaleChanged" OverloadKey="::vl::presentation::controls::GuiApplication::LocaleChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Locale changed event.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <RefTypeDecl ReferencingNameKey="::vl::Event" Name="Event">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::Event`1@s:vl.Event`1" />
+                    <Key Value="::vl::Event`1&lt;function (... TArgs) : void&gt;@s:vl.Event`1{function (... TArgs) # void}" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Element>
+              <TypeArguments>
+                <FunctionTypeDecl CallingConvention="Default" Const="False">
+                  <ReturnType>
+                    <RefTypeDecl Name="void" />
+                  </ReturnType>
+                  <Parameters />
+                </FunctionTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </VarDecl>
+        <FuncDecl Access="Public" Name="GetLocale" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::GetLocale" OverloadKey="::vl::presentation::controls::GuiApplication::GetLocale()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Returns the selected locale for all windows.&lt;/summary&gt;
+  &lt;returns&gt;The selected locale.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl ReferencingNameKey="::vl::Locale" Name="Locale">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::Locale@s:vl.Locale" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetLocale" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::SetLocale" OverloadKey="::vl::presentation::controls::GuiApplication::SetLocale(Locale)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the locale for all windows.&lt;/summary&gt;
+  &lt;param name="value"&gt;The selected locale.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::SetLocale::value" OverloadKey="::vl::presentation::controls::GuiApplication::SetLocale(Locale)::value" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::Locale" Name="Locale">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Locale@s:vl.Locale" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
         <FuncDecl Access="Public" Name="Run" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::Run" OverloadKey="::vl::presentation::controls::GuiApplication::Run(* GuiWindow)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Run a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiWindow@s:vl.presentation.controls.GuiWindow" /&gt;&lt;/links&gt; as the main window and show it. This function can only be called once in the entry point. When the main window is closed or hiden, the Run function will finished, and the application should prepare for finalization.&lt;/summary&gt;
@@ -805,7 +881,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="IsInMainThread" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::IsInMainThread" OverloadKey="::vl::presentation::controls::GuiApplication::IsInMainThread()" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="IsInMainThread" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::IsInMainThread" OverloadKey="::vl::presentation::controls::GuiApplication::IsInMainThread(* GuiControlHost)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Test is the current thread the main thread for GUI.&lt;/summary&gt;
   &lt;returns&gt;Returns true if the current thread is the main thread for GUI.&lt;/returns&gt;
@@ -815,7 +891,21 @@
               <ReturnType>
                 <RefTypeDecl Name="bool" />
               </ReturnType>
-              <Parameters />
+              <Parameters>
+                <VarDecl Access="Public" Name="controlHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiApplication::IsInMainThread::controlHost" OverloadKey="::vl::presentation::controls::GuiApplication::IsInMainThread(* GuiControlHost)::controlHost" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="Pointer">
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControlHost" Name="GuiControlHost">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::controls::GuiControlHost@s:vl.presentation.controls.GuiControlHost" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>

@@ -11,7 +11,7 @@ The only way to remove a control from a parent control, is to remove the bounds 
 &lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <TypedefDecl Access="Private" Name="ControlList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlList" OverloadKey="::vl::presentation::controls::GuiControl::ControlList">
+        <TypedefDecl Access="Protected" Name="ControlList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlList" OverloadKey="::vl::presentation::controls::GuiControl::ControlList">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -42,7 +42,7 @@ The only way to remove a control from a parent control, is to remove the bounds 
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
-        <TypedefDecl Access="Private" Name="ControlTemplatePropertyType" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType" OverloadKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType">
+        <TypedefDecl Access="Protected" Name="ControlTemplatePropertyType" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType" OverloadKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType">
           <Type>
             <GenericTypeDecl>
               <Element>
@@ -234,6 +234,22 @@ The only way to remove a control from a parent control, is to remove the bounds 
                 <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="context" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::context" OverloadKey="::vl::presentation::controls::GuiControl::context" Static="False">
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="activatingAltHost" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::activatingAltHost" OverloadKey="::vl::presentation::controls::GuiControl::activatingAltHost" Static="False">
@@ -697,7 +713,7 @@ The only way to remove a control from a parent control, is to remove the bounds 
         </TypedefDecl>
         <FuncDecl Access="Public" Name="GuiControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GuiControl" OverloadKey="::vl::presentation::controls::GuiControl::GuiControl(theme::ThemeName)" Virtual="Normal" Function="Constructor">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;Create a control with a specified style controller.&lt;/summary&gt;
+  &lt;summary&gt;Create a control with a specified default theme.&lt;/summary&gt;
   &lt;param name="themeName"&gt;The theme name for retriving a default control template.&lt;/param&gt;
 &lt;/Document&gt;</Document>
           <Type>
@@ -736,6 +752,25 @@ The only way to remove a control from a parent control, is to remove the bounds 
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
+        <VarDecl Access="Public" Name="ControlThemeNameChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlThemeNameChanged" OverloadKey="::vl::presentation::controls::GuiControl::ControlThemeNameChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Theme name changed event. This event will be raised when the theme name is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
         <VarDecl Access="Public" Name="ControlTemplateChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlTemplateChanged" OverloadKey="::vl::presentation::controls::GuiControl::ControlTemplateChanged" Static="False">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Control template changed event. This event will be raised when the control template is changed.&lt;/summary&gt;
@@ -891,6 +926,25 @@ A control is rendered as disabled, not only when the control itself is disabled,
             </SubTypeDecl>
           </Type>
         </VarDecl>
+        <VarDecl Access="Public" Name="ContextChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ContextChanged" OverloadKey="::vl::presentation::controls::GuiControl::ContextChanged" Static="False">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Context changed event. This event will be raised when the font of the control is changed.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+              </ReferencingOverloadKeys>
+              <Parent>
+                <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+              </Parent>
+            </SubTypeDecl>
+          </Type>
+        </VarDecl>
         <FuncDecl Access="Public" Name="GetNotifyEventArguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetNotifyEventArguments" OverloadKey="::vl::presentation::controls::GuiControl::GetNotifyEventArguments()" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;A function to create the argument for notify events that raised by itself.&lt;/summary&gt;
@@ -913,6 +967,62 @@ A control is rendered as disabled, not only when the control itself is disabled,
                 </SubTypeDecl>
               </ReturnType>
               <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetControlThemeName" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetControlThemeName" OverloadKey="::vl::presentation::controls::GuiControl::GetControlThemeName()" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the associated theme name.&lt;/summary&gt;
+  &lt;returns&gt;The theme name.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <SubTypeDecl ReferencingNameKey="::vl::presentation::theme::ThemeName" Name="ThemeName">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::presentation::theme::ThemeName@s:vl.presentation.theme.ThemeName" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::theme" Name="theme">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::theme@ns:vl.presentation.theme" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetControlThemeName" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlThemeName" OverloadKey="::vl::presentation::controls::GuiControl::SetControlThemeName(theme::ThemeName)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the associated control theme name.&lt;/summary&gt;
+  &lt;param name="value"&gt;The theme name.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlThemeName::value" OverloadKey="::vl::presentation::controls::GuiControl::SetControlThemeName(theme::ThemeName)::value" Static="False">
+                  <Type>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::theme::ThemeName" Name="ThemeName">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::theme::ThemeName@s:vl.presentation.theme.ThemeName" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::theme" Name="theme">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::theme@ns:vl.presentation.theme" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
@@ -946,6 +1056,55 @@ A control is rendered as disabled, not only when the control itself is disabled,
               </ReturnType>
               <Parameters>
                 <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlTemplate::value" OverloadKey="::vl::presentation::controls::GuiControl::SetControlTemplate(&amp; const ControlTemplatePropertyType)::value" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType" Name="ControlTemplatePropertyType">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType@s:vl.presentation.controls.GuiControl" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetControlThemeNameAndTemplate" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate" OverloadKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate(theme::ThemeName,&amp; const ControlTemplatePropertyType)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the associated control theme name and template and the same time.&lt;/summary&gt;
+  &lt;param name="themeNameValue"&gt;The theme name.&lt;/param&gt;
+  &lt;param name="controlTemplateValue"&gt;The control template.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="themeNameValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate::themeNameValue" OverloadKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate(theme::ThemeName,&amp; const ControlTemplatePropertyType)::themeNameValue" Static="False">
+                  <Type>
+                    <SubTypeDecl ReferencingNameKey="::vl::presentation::theme::ThemeName" Name="ThemeName">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::theme::ThemeName@s:vl.presentation.theme.ThemeName" />
+                      </ReferencingOverloadKeys>
+                      <Parent>
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::theme" Name="theme">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::theme@ns:vl.presentation.theme" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Parent>
+                    </SubTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="controlTemplateValue" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate::controlTemplateValue" OverloadKey="::vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate(theme::ThemeName,&amp; const ControlTemplatePropertyType)::controlTemplateValue" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -1517,6 +1676,70 @@ A control is rendered as disabled, not only when the control itself is disabled,
                                 <Key Value="::vl::presentation::FontProperties@s:vl.presentation.FontProperties" />
                               </ReferencingOverloadKeys>
                             </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="GetContext" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::GetContext" OverloadKey="::vl::presentation::controls::GuiControl::GetContext()" Virtual="Virtual" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Get the context of this control. The control template and all item templates (if it has) will see this context property.&lt;/summary&gt;
+  &lt;returns&gt;The context of this context.&lt;/returns&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="SetContext" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetContext" OverloadKey="::vl::presentation::controls::GuiControl::SetContext(&amp; const description::Value)" Virtual="Virtual" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Set the context of this control.&lt;/summary&gt;
+  &lt;param name="value"&gt;The context of this control.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::SetContext::value" OverloadKey="::vl::presentation::controls::GuiControl::SetContext(&amp; const description::Value)::value" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <SubTypeDecl ReferencingNameKey="::vl::reflection::description::Value" Name="Value">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::reflection::description::Value@s:vl.reflection.description.Value" />
+                              </ReferencingOverloadKeys>
+                              <Parent>
+                                <RefTypeDecl ReferencingNameKey="::vl::reflection::description" Name="description">
+                                  <ReferencingOverloadKeys>
+                                    <Key Value="::vl::reflection::description@ns:vl.reflection.description" />
+                                  </ReferencingOverloadKeys>
+                                </RefTypeDecl>
+                              </Parent>
+                            </SubTypeDecl>
                           </Element>
                         </DecorateTypeDecl>
                       </Element>
