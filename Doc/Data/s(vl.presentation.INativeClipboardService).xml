@@ -8,74 +8,61 @@ Clipboard service. To access this service, use &lt;links&gt;&lt;link cref="::vl:
 &lt;/summary&gt;
 &lt;/Document&gt;</Document>
       <Children>
-        <FuncDecl Access="Public" Name="ContainsText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::ContainsText" OverloadKey="::vl::presentation::INativeClipboardService::ContainsText()" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="ReadClipboard" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::ReadClipboard" OverloadKey="::vl::presentation::INativeClipboardService::ReadClipboard()" Virtual="Abstract" Function="Function">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;
-Test is there a text in the clipboard.
-&lt;/summary&gt;
-  &lt;returns&gt;Returns true if there is a text in the clipboard.&lt;/returns&gt;
+  &lt;summary&gt;Read clipboard.&lt;/summary&gt;
+  &lt;returns&gt;The clipboard reader.&lt;/returns&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="bool" />
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::INativeClipboardReader" Name="INativeClipboardReader">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::INativeClipboardReader@s:vl.presentation.INativeClipboardReader" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
               </ReturnType>
               <Parameters />
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="GetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::GetText" OverloadKey="::vl::presentation::INativeClipboardService::GetText()" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="WriteClipboard" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::WriteClipboard" OverloadKey="::vl::presentation::INativeClipboardService::WriteClipboard()" Virtual="Abstract" Function="Function">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;
-Get the text in the clipboard.
-&lt;/summary&gt;
-  &lt;returns&gt;The text in the clipboard.&lt;/returns&gt;
+  &lt;summary&gt;Write clipboard.&lt;/summary&gt;
+  &lt;returns&gt;The clipboard writer.&lt;/returns&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                  <ReferencingOverloadKeys>
-                    <Key Value="::vl::WString@s:vl.WString" />
-                  </ReferencingOverloadKeys>
-                </RefTypeDecl>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::INativeClipboardWriter" Name="INativeClipboardWriter">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::INativeClipboardWriter@s:vl.presentation.INativeClipboardWriter" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
               </ReturnType>
               <Parameters />
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Public" Name="SetText" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::SetText" OverloadKey="::vl::presentation::INativeClipboardService::SetText(&amp; const WString)" Virtual="Abstract" Function="Function">
-          <Document>&lt;Document&gt;
-  &lt;summary&gt;
-Copy the text to the clipboard.
-&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
-  &lt;param name="value"&gt;The text to copy to the clipboard.&lt;/param&gt;
-&lt;/Document&gt;</Document>
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="bool" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::INativeClipboardService::SetText::value" OverloadKey="::vl::presentation::INativeClipboardService::SetText(&amp; const WString)::value" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <DecorateTypeDecl Decoration="Const">
-                          <Element>
-                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::WString@s:vl.WString" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Element>
-                        </DecorateTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
