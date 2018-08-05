@@ -42,6 +42,49 @@ The only way to remove a control from a parent control, is to remove the bounds 
             </GenericTypeDecl>
           </Type>
         </TypedefDecl>
+        <TypedefDecl Access="Protected" Name="ControlServiceMap" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlServiceMap" OverloadKey="::vl::presentation::controls::GuiControl::ControlServiceMap">
+          <Type>
+            <GenericTypeDecl>
+              <Element>
+                <SubTypeDecl ReferencingNameKey="::vl::collections::Dictionary" Name="Dictionary">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::collections::Dictionary`4@s:vl.collections.Dictionary`4" />
+                  </ReferencingOverloadKeys>
+                  <Parent>
+                    <RefTypeDecl ReferencingNameKey="::vl::collections" Name="collections">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::collections@ns:vl.collections" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Parent>
+                </SubTypeDecl>
+              </Element>
+              <TypeArguments>
+                <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                  <ReferencingOverloadKeys>
+                    <Key Value="::vl::WString@s:vl.WString" />
+                  </ReferencingOverloadKeys>
+                </RefTypeDecl>
+                <GenericTypeDecl>
+                  <Element>
+                    <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </Element>
+                  <TypeArguments>
+                    <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
+                  </TypeArguments>
+                </GenericTypeDecl>
+              </TypeArguments>
+            </GenericTypeDecl>
+          </Type>
+        </TypedefDecl>
         <TypedefDecl Access="Protected" Name="ControlTemplatePropertyType" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType" OverloadKey="::vl::presentation::controls::GuiControl::ControlTemplatePropertyType">
           <Type>
             <GenericTypeDecl>
@@ -270,6 +313,15 @@ The only way to remove a control from a parent control, is to remove the bounds 
                 </SubTypeDecl>
               </Element>
             </DecorateTypeDecl>
+          </Type>
+        </VarDecl>
+        <VarDecl Access="Protected" Name="controlServices" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::controlServices" OverloadKey="::vl::presentation::controls::GuiControl::controlServices" Static="False">
+          <Type>
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiControl::ControlServiceMap" Name="ControlServiceMap">
+              <ReferencingOverloadKeys>
+                <Key Value="::vl::presentation::controls::GuiControl::ControlServiceMap@s:vl.presentation.controls.GuiControl" />
+              </ReferencingOverloadKeys>
+            </RefTypeDecl>
           </Type>
         </VarDecl>
         <VarDecl Access="Protected" Name="parent" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::parent" OverloadKey="::vl::presentation::controls::GuiControl::parent" Static="False">
@@ -511,6 +563,16 @@ The only way to remove a control from a parent control, is to remove the bounds 
           </Type>
         </FuncDecl>
         <FuncDecl Access="Protected" Name="OnParentLineChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnParentLineChanged" OverloadKey="::vl::presentation::controls::GuiControl::OnParentLineChanged()" Virtual="Virtual" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Protected" Name="OnServiceAdded" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::OnServiceAdded" OverloadKey="::vl::presentation::controls::GuiControl::OnServiceAdded()" Virtual="Virtual" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -806,14 +868,14 @@ The only way to remove a control from a parent control, is to remove the bounds 
             </SubTypeDecl>
           </Type>
         </VarDecl>
-        <VarDecl Access="Public" Name="RenderTargetChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::RenderTargetChanged" OverloadKey="::vl::presentation::controls::GuiControl::RenderTargetChanged" Static="False">
+        <VarDecl Access="Public" Name="ControlSignalTrigerred" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::ControlSignalTrigerred" OverloadKey="::vl::presentation::controls::GuiControl::ControlSignalTrigerred" Static="False">
           <Document>&lt;Document&gt;
-  &lt;summary&gt;Render target changed event. This event will be raised when the render target of the control is changed.&lt;/summary&gt;
+  &lt;summary&gt;Control signal trigerred. This event will be raised because of multiple reason specified in the argument.&lt;/summary&gt;
 &lt;/Document&gt;</Document>
           <Type>
-            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiNotifyEvent" Name="GuiNotifyEvent">
+            <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiControlSignalEvent" Name="GuiControlSignalEvent">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::compositions::GuiNotifyEvent@s:vl.presentation.compositions.GuiNotifyEvent" />
+                <Key Value="::vl::presentation::compositions::GuiControlSignalEvent@s:vl.presentation.compositions.GuiControlSignalEvent" />
               </ReferencingOverloadKeys>
               <Parent>
                 <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
@@ -2050,6 +2112,60 @@ A control is rendered as disabled, not only when the control itself is disabled,
                         </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="AddService" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AddService" OverloadKey="::vl::presentation::controls::GuiControl::AddService(&amp; const WString,Ptr&lt;IDescriptable&gt;)" Virtual="Normal" Function="Function">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;Add a service to this control dynamically. The added service cannot override existing services.&lt;/summary&gt;
+  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+  &lt;param name="identifier"&gt;The identifier. You are suggested to fill this parameter using the value from the interface's GetIdentifier function, or &lt;see cref="QueryTypedService" /&gt; will not work on this service.&lt;/param&gt;
+  &lt;param name="value"&gt;The service.&lt;/param&gt;
+&lt;/Document&gt;</Document>
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="identifier" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AddService::identifier" OverloadKey="::vl::presentation::controls::GuiControl::AddService(&amp; const WString,Ptr&lt;IDescriptable&gt;)::identifier" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::WString" Name="WString">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::WString@s:vl.WString" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="value" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiControl::AddService::value" OverloadKey="::vl::presentation::controls::GuiControl::AddService(&amp; const WString,Ptr&lt;IDescriptable&gt;)::value" Static="False">
+                  <Type>
+                    <GenericTypeDecl>
+                      <Element>
+                        <RefTypeDecl ReferencingNameKey="::vl::Ptr" Name="Ptr">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::Ptr`1@s:vl.Ptr`1" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </Element>
+                      <TypeArguments>
+                        <RefTypeDecl ReferencingNameKey="::vl::reflection::IDescriptable" Name="IDescriptable">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::reflection::IDescriptable@s:vl.reflection.IDescriptable" />
+                          </ReferencingOverloadKeys>
+                        </RefTypeDecl>
+                      </TypeArguments>
+                    </GenericTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
