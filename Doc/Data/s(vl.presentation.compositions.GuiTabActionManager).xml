@@ -75,6 +75,11 @@
             <RefTypeDecl Name="bool" />
           </Type>
         </VarDecl>
+        <VarDecl Access="Protected" Name="supressTabOnce" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::supressTabOnce" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::supressTabOnce" Static="False">
+          <Type>
+            <RefTypeDecl Name="bool" />
+          </Type>
+        </VarDecl>
         <FuncDecl Access="Protected" Name="BuildControlList" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::BuildControlList" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::BuildControlList()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -85,7 +90,7 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Protected" Name="GetNextFocusControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl(* controls::GuiControl)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="GetNextFocusControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl(* controls::GuiControl,vint)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -107,7 +112,7 @@
                 </DecorateTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="focusedControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl::focusedControl" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl(* controls::GuiControl)::focusedControl" Static="False">
+                <VarDecl Access="Public" Name="focusedControl" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl::focusedControl" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl(* controls::GuiControl,vint)::focusedControl" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -125,6 +130,15 @@
                         </SubTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="offset" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl::offset" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::GetNextFocusControl(* controls::GuiControl,vint)::offset" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::vint" Name="vint">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::vint@s:vl.vint" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>
@@ -182,14 +196,14 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Execute" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::Execute" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::Execute(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="KeyDown" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="bool" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="info" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::Execute::info" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::Execute(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)::info" Static="False">
+                <VarDecl Access="Public" Name="info" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown::info" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)::info" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
@@ -206,7 +220,7 @@
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="focusedComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::Execute::focusedComposition" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::Execute(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)::focusedComposition" Static="False">
+                <VarDecl Access="Public" Name="focusedComposition" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown::focusedComposition" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::KeyDown(&amp; const NativeWindowKeyInfo,* GuiGraphicsComposition)::focusedComposition" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="Pointer">
                       <Element>
@@ -215,6 +229,34 @@
                             <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="Char" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::Char" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::Char(&amp; const NativeWindowCharInfo)" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="bool" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="info" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiTabActionManager::Char::info" OverloadKey="::vl::presentation::compositions::GuiTabActionManager::Char(&amp; const NativeWindowCharInfo)::info" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <DecorateTypeDecl Decoration="Const">
+                          <Element>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::NativeWindowCharInfo" Name="NativeWindowCharInfo">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::NativeWindowCharInfo@s:vl.presentation.NativeWindowCharInfo" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Element>
+                        </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
