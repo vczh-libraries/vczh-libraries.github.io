@@ -639,10 +639,11 @@
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Public" Name="Initialize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Public" Name="Initialize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage,&amp; GuiResourceError::List)" Virtual="Normal" Function="Function">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Initialize a precompiled resource.&lt;/summary&gt;
   &lt;param name="usage"&gt;In which role an application is initializing this resource.&lt;/param&gt;
+  &lt;param name="errors"&gt;All collected errors during initializing a resource.&lt;/param&gt;
 &lt;/Document&gt;</Document>
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -650,13 +651,33 @@
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize::usage" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage)::usage" Static="False">
+                <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize::usage" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage,&amp; GuiResourceError::List)::usage" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceUsage" Name="GuiResourceUsage">
                       <ReferencingOverloadKeys>
                         <Key Value="::vl::presentation::GuiResourceUsage@s:vl.presentation.GuiResourceUsage" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::GuiResource::Initialize::errors" OverloadKey="::vl::presentation::GuiResource::Initialize(GuiResourceUsage,&amp; GuiResourceError::List)::errors" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError::List" Name="List">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceError::List@s:vl.presentation.GuiResourceError" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

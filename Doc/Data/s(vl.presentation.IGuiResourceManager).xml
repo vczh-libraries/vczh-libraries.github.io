@@ -3,14 +3,14 @@
   <Symbols Key="vl.presentation.IGuiResourceManager">
     <ClassDecl Access="Public" Name="IGuiResourceManager" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager" OverloadKey="::vl::presentation::IGuiResourceManager" ClassType="Class">
       <Children>
-        <FuncDecl Access="Public" Name="SetResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,GuiResourceUsage)" Virtual="Abstract" Function="Function">
+        <FuncDecl Access="Public" Name="SetResource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,&amp; GuiResourceError::List,GuiResourceUsage)" Virtual="Abstract" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
-                <RefTypeDecl Name="bool" />
+                <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="resource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource::resource" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,GuiResourceUsage)::resource" Static="False">
+                <VarDecl Access="Public" Name="resource" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource::resource" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,&amp; GuiResourceError::List,GuiResourceUsage)::resource" Static="False">
                   <Type>
                     <GenericTypeDecl>
                       <Element>
@@ -30,7 +30,27 @@
                     </GenericTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource::usage" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,GuiResourceUsage)::usage" Static="False">
+                <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource::errors" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,&amp; GuiResourceError::List,GuiResourceUsage)::errors" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError::List" Name="List">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceError::List@s:vl.presentation.GuiResourceError" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::SetResource::usage" OverloadKey="::vl::presentation::IGuiResourceManager::SetResource(Ptr&lt;GuiResource&gt;,&amp; GuiResourceError::List,GuiResourceUsage)::usage" Static="False">
                   <Type>
                     <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceUsage" Name="GuiResourceUsage">
                       <ReferencingOverloadKeys>
@@ -151,6 +171,66 @@
                         </DecorateTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+              </Parameters>
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Public" Name="LoadResourceOrPending" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending" OverloadKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending(&amp; stream::IStream,&amp; GuiResourceError::List,GuiResourceUsage)" Virtual="Abstract" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters>
+                <VarDecl Access="Public" Name="stream" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending::stream" OverloadKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending(&amp; stream::IStream,&amp; GuiResourceError::List,GuiResourceUsage)::stream" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::stream::IStream" Name="IStream">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::stream::IStream@s:vl.stream.IStream" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::stream" Name="stream">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::stream@ns:vl.stream" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="errors" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending::errors" OverloadKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending(&amp; stream::IStream,&amp; GuiResourceError::List,GuiResourceUsage)::errors" Static="False">
+                  <Type>
+                    <DecorateTypeDecl Decoration="LeftRef">
+                      <Element>
+                        <SubTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError::List" Name="List">
+                          <ReferencingOverloadKeys>
+                            <Key Value="::vl::presentation::GuiResourceError::List@s:vl.presentation.GuiResourceError" />
+                          </ReferencingOverloadKeys>
+                          <Parent>
+                            <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceError" Name="GuiResourceError">
+                              <ReferencingOverloadKeys>
+                                <Key Value="::vl::presentation::GuiResourceError@s:vl.presentation.GuiResourceError" />
+                              </ReferencingOverloadKeys>
+                            </RefTypeDecl>
+                          </Parent>
+                        </SubTypeDecl>
+                      </Element>
+                    </DecorateTypeDecl>
+                  </Type>
+                </VarDecl>
+                <VarDecl Access="Public" Name="usage" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending::usage" OverloadKey="::vl::presentation::IGuiResourceManager::LoadResourceOrPending(&amp; stream::IStream,&amp; GuiResourceError::List,GuiResourceUsage)::usage" Static="False">
+                  <Type>
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::GuiResourceUsage" Name="GuiResourceUsage">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::GuiResourceUsage@s:vl.presentation.GuiResourceUsage" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </Type>
                 </VarDecl>
               </Parameters>

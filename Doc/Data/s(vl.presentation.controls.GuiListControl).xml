@@ -22,7 +22,7 @@
             </SubTypeDecl>
           </Type>
         </TypedefDecl>
-        <VarDecl Access="Private" Name="controlTemplateObject12061" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::controlTemplateObject12061" OverloadKey="::vl::presentation::controls::GuiListControl::controlTemplateObject12061" Static="False">
+        <VarDecl Access="Private" Name="controlTemplateObject12101" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::controlTemplateObject12101" OverloadKey="::vl::presentation::controls::GuiListControl::controlTemplateObject12101" Static="False">
           <Type>
             <DecorateTypeDecl Decoration="Pointer">
               <Element>
@@ -932,6 +932,28 @@
             </BaseTypeDecl>
           </BaseTypes>
         </ClassDecl>
+        <EnumDecl Access="Public" Name="EnsureItemVisibleResult" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult" OverloadKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult" EnumClass="True">
+          <Document>&lt;Document&gt;
+  &lt;summary&gt;EnsureItemVisible result for item arranger.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+          <Children>
+            <EnumItemDecl Access="Public" Name="ItemNotExists" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::ItemNotExists" OverloadKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::ItemNotExists">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;The requested item does not exist.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+            </EnumItemDecl>
+            <EnumItemDecl Access="Public" Name="Moved" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::Moved" OverloadKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::Moved">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;The view location is moved.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+            </EnumItemDecl>
+            <EnumItemDecl Access="Public" Name="NotMoved" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::NotMoved" OverloadKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult::NotMoved">
+              <Document>&lt;Document&gt;
+  &lt;summary&gt;The view location is not moved.&lt;/summary&gt;
+&lt;/Document&gt;</Document>
+            </EnumItemDecl>
+          </Children>
+        </EnumDecl>
         <ClassDecl Access="Public" Name="IItemArranger" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger" ClassType="Class">
           <Document>&lt;Document&gt;
   &lt;summary&gt;Item arranger for a &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt;. Item arranger decides how to arrange and item controls. When implementing an item arranger, &lt;links&gt;&lt;link cref="::vl::presentation::controls::GuiListControl::IItemArrangerCallback@s:vl.presentation.controls.GuiListControl" /&gt;&lt;/links&gt; is suggested to use when calculating locations and sizes for item controls.&lt;/summary&gt;
@@ -1198,13 +1220,17 @@
             <FuncDecl Access="Public" Name="EnsureItemVisible" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible(vint)" Virtual="Abstract" Function="Function">
               <Document>&lt;Document&gt;
   &lt;summary&gt;Adjust the view location to make an item visible.&lt;/summary&gt;
-  &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;
+  &lt;returns&gt;Returns the result of this operation.&lt;/returns&gt;
   &lt;param name="itemIndex"&gt;The item index of the item to be made visible.&lt;/param&gt;
 &lt;/Document&gt;</Document>
               <Type>
                 <FunctionTypeDecl CallingConvention="Default" Const="False">
                   <ReturnType>
-                    <RefTypeDecl Name="bool" />
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult" Name="EnsureItemVisibleResult">
+                      <ReferencingOverloadKeys>
+                        <Key Value="::vl::presentation::controls::GuiListControl::EnsureItemVisibleResult@s:vl.presentation.controls.GuiListControl" />
+                      </ReferencingOverloadKeys>
+                    </RefTypeDecl>
                   </ReturnType>
                   <Parameters>
                     <VarDecl Access="Public" Name="itemIndex" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible::itemIndex" OverloadKey="::vl::presentation::controls::GuiListControl::IItemArranger::EnsureItemVisible(vint)::itemIndex" Static="False">
@@ -2714,6 +2740,16 @@
             </GenericTypeDecl>
           </Type>
         </VarDecl>
+        <FuncDecl Access="Protected" Name="UpdateDisplayFont" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::UpdateDisplayFont" OverloadKey="::vl::presentation::controls::GuiListControl::UpdateDisplayFont()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
         <FuncDecl Access="Protected" Name="OnClientBoundsChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnClientBoundsChanged" OverloadKey="::vl::presentation::controls::GuiListControl::OnClientBoundsChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
@@ -2793,57 +2829,6 @@
                   </Type>
                 </VarDecl>
                 <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnVisuallyEnabledChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="LeftRef">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiEventArgs" Name="GuiEventArgs">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiEventArgs@s:vl.presentation.compositions.GuiEventArgs" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-              </Parameters>
-            </FunctionTypeDecl>
-          </Type>
-        </FuncDecl>
-        <FuncDecl Access="Protected" Name="OnFontChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)" Virtual="Normal" Function="Function">
-          <Type>
-            <FunctionTypeDecl CallingConvention="Default" Const="False">
-              <ReturnType>
-                <RefTypeDecl Name="void" />
-              </ReturnType>
-              <Parameters>
-                <VarDecl Access="Public" Name="sender" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged::sender" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::sender" Static="False">
-                  <Type>
-                    <DecorateTypeDecl Decoration="Pointer">
-                      <Element>
-                        <SubTypeDecl ReferencingNameKey="::vl::presentation::compositions::GuiGraphicsComposition" Name="GuiGraphicsComposition">
-                          <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::compositions::GuiGraphicsComposition@s:vl.presentation.compositions.GuiGraphicsComposition" />
-                          </ReferencingOverloadKeys>
-                          <Parent>
-                            <RefTypeDecl ReferencingNameKey="::vl::presentation::compositions" Name="compositions">
-                              <ReferencingOverloadKeys>
-                                <Key Value="::vl::presentation::compositions@ns:vl.presentation.compositions" />
-                              </ReferencingOverloadKeys>
-                            </RefTypeDecl>
-                          </Parent>
-                        </SubTypeDecl>
-                      </Element>
-                    </DecorateTypeDecl>
-                  </Type>
-                </VarDecl>
-                <VarDecl Access="Public" Name="arguments" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::controls::GuiListControl::OnFontChanged::arguments" OverloadKey="::vl::presentation::controls::GuiListControl::OnFontChanged(* compositions::GuiGraphicsComposition,&amp; compositions::GuiEventArgs)::arguments" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
