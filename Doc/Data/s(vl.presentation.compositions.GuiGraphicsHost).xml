@@ -313,9 +313,9 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
         </VarDecl>
         <VarDecl Access="Protected" Name="previousClientSize" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::previousClientSize" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::previousClientSize" Static="False">
           <Type>
-            <RefTypeDecl ReferencingNameKey="::vl::presentation::Size" Name="Size">
+            <RefTypeDecl ReferencingNameKey="::vl::presentation::NativeSize" Name="NativeSize">
               <ReferencingOverloadKeys>
-                <Key Value="::vl::presentation::Size@s:vl.presentation.Size" />
+                <Key Value="::vl::presentation::NativeSize@s:vl.presentation.NativeSize" />
               </ReferencingOverloadKeys>
             </RefTypeDecl>
           </Type>
@@ -725,7 +725,17 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Private" Name="HitTest" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest(Point)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Protected" Name="RecreateRenderTarget" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::RecreateRenderTarget" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::RecreateRenderTarget()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Private" Name="HitTest" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest(NativePoint)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
@@ -743,11 +753,11 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
                 </SubTypeDecl>
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest::location" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest(Point)::location" Static="False">
+                <VarDecl Access="Public" Name="location" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest::location" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::HitTest(NativePoint)::location" Static="False">
                   <Type>
-                    <RefTypeDecl ReferencingNameKey="::vl::presentation::Point" Name="Point">
+                    <RefTypeDecl ReferencingNameKey="::vl::presentation::NativePoint" Name="NativePoint">
                       <ReferencingOverloadKeys>
-                        <Key Value="::vl::presentation::Point@s:vl.presentation.Point" />
+                        <Key Value="::vl::presentation::NativePoint@s:vl.presentation.NativePoint" />
                       </ReferencingOverloadKeys>
                     </RefTypeDecl>
                   </Type>
@@ -756,27 +766,27 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
             </FunctionTypeDecl>
           </Type>
         </FuncDecl>
-        <FuncDecl Access="Private" Name="Moving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; Rect,bool)" Virtual="Normal" Function="Function">
+        <FuncDecl Access="Private" Name="Moving" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; NativeRect,bool)" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
                 <RefTypeDecl Name="void" />
               </ReturnType>
               <Parameters>
-                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving::bounds" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; Rect,bool)::bounds" Static="False">
+                <VarDecl Access="Public" Name="bounds" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving::bounds" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; NativeRect,bool)::bounds" Static="False">
                   <Type>
                     <DecorateTypeDecl Decoration="LeftRef">
                       <Element>
-                        <RefTypeDecl ReferencingNameKey="::vl::presentation::Rect" Name="Rect">
+                        <RefTypeDecl ReferencingNameKey="::vl::presentation::NativeRect" Name="NativeRect">
                           <ReferencingOverloadKeys>
-                            <Key Value="::vl::presentation::Rect@s:vl.presentation.Rect" />
+                            <Key Value="::vl::presentation::NativeRect@s:vl.presentation.NativeRect" />
                           </ReferencingOverloadKeys>
                         </RefTypeDecl>
                       </Element>
                     </DecorateTypeDecl>
                   </Type>
                 </VarDecl>
-                <VarDecl Access="Public" Name="fixSizeOnly" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving::fixSizeOnly" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; Rect,bool)::fixSizeOnly" Static="False">
+                <VarDecl Access="Public" Name="fixSizeOnly" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moving::fixSizeOnly" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moving(&amp; NativeRect,bool)::fixSizeOnly" Static="False">
                   <Type>
                     <RefTypeDecl Name="bool" />
                   </Type>
@@ -786,6 +796,16 @@ GuiGraphicsHost hosts an &lt;links&gt;&lt;link cref="::vl::presentation::composi
           </Type>
         </FuncDecl>
         <FuncDecl Access="Private" Name="Moved" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::Moved" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::Moved()" Virtual="Normal" Function="Function">
+          <Type>
+            <FunctionTypeDecl CallingConvention="Default" Const="False">
+              <ReturnType>
+                <RefTypeDecl Name="void" />
+              </ReturnType>
+              <Parameters />
+            </FunctionTypeDecl>
+          </Type>
+        </FuncDecl>
+        <FuncDecl Access="Private" Name="DpiChanged" Tags="x64, Windows;x86, Windows" NameKey="::vl::presentation::compositions::GuiGraphicsHost::DpiChanged" OverloadKey="::vl::presentation::compositions::GuiGraphicsHost::DpiChanged()" Virtual="Normal" Function="Function">
           <Type>
             <FunctionTypeDecl CallingConvention="Default" Const="False">
               <ReturnType>
