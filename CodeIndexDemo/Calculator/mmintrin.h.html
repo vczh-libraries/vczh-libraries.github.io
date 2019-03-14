@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mmintrin.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">/***
+*** Copyright (C) 1985-2015 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+****/</div>
+
+<div class="token cpp_comment ">/*
+ * Definitions and declarations for use with compiler intrinsics.
+ */</div>
+
+#pragma once
+<div class="disabled"/>#ifndef _MMINTRIN_H_INCLUDED</div>
+<div class="disabled"/>#define _MMINTRIN_H_INCLUDED</div>
+<div class="disabled"/>#ifndef __midl</div>
+
+<div class="disabled"/>#if !defined _M_IX86 &amp;&amp; !defined _M_X64</div>
+<div class="disabled"/>    #error This header is specific to X86 and X64 targets
+#endif</div>
+
+<div class="disabled"/>#if defined (_M_CEE_PURE)</div>
+<div class="disabled"/>        #error ERROR: MM intrinsics not supported in the pure mode!
+#else  /* defined (_M_CEE_PURE) */</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> { <div class="token cpp_comment ">/* Begin &quot;C&quot; */</div>
+<div class="token cpp_comment ">/* Intrinsics use C name-mangling.
+ */</div>
+<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">union</div> <div class="token cpp_keyword ">__declspec</div>(intrin_type) <div class="token cpp_keyword ">__declspec</div>(align(<div class="token cpp_number ">8</div>)) __m64
+{
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int64</div>    m64_u64;
+    <div class="token cpp_keyword ">float</div>               m64_f32[<div class="token cpp_number ">2</div>];
+    <div class="token cpp_keyword ">__int8</div>              m64_i8[<div class="token cpp_number ">8</div>];
+    <div class="token cpp_keyword ">__int16</div>             m64_i16[<div class="token cpp_number ">4</div>];
+    <div class="token cpp_keyword ">__int32</div>             m64_i32[<div class="token cpp_number ">2</div>];
+    <div class="token cpp_keyword ">__int64</div>             m64_i64;
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int8</div>     m64_u8[<div class="token cpp_number ">8</div>];
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int16</div>    m64_u16[<div class="token cpp_number ">4</div>];
+    <div class="token cpp_keyword ">unsigned</div> <div class="token cpp_keyword ">__int32</div>    m64_u32[<div class="token cpp_number ">2</div>];
+} __m64;
+
+<div class="disabled"/>#if defined(_M_IX86)</div>
+<div class="token cpp_comment ">/* General support intrinsics */</div>
+<div class="token cpp_keyword ">void</div>  _m_empty(<div class="token cpp_keyword ">void</div>);
+__m64 _m_from_int(<div class="token cpp_keyword ">int</div> _I);
+<div class="token cpp_keyword ">int</div>   _m_to_int(__m64 _M);
+__m64 _m_packsswb(__m64 _MM1, __m64 _MM2);
+__m64 _m_packssdw(__m64 _MM1, __m64 _MM2);
+__m64 _m_packuswb(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpckhbw(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpckhwd(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpckhdq(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpcklbw(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpcklwd(__m64 _MM1, __m64 _MM2);
+__m64 _m_punpckldq(__m64 _MM1, __m64 _MM2);
+
+<div class="token cpp_comment ">/* Packed arithmetic intrinsics */</div>
+__m64 _m_paddb(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddw(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddd(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddsb(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddsw(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddusb(__m64 _MM1, __m64 _MM2);
+__m64 _m_paddusw(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubb(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubw(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubd(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubsb(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubsw(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubusb(__m64 _MM1, __m64 _MM2);
+__m64 _m_psubusw(__m64 _MM1, __m64 _MM2);
+__m64 _m_pmaddwd(__m64 _MM1, __m64 _MM2);
+__m64 _m_pmulhw(__m64 _MM1, __m64 _MM2);
+__m64 _m_pmullw(__m64 _MM1, __m64 _MM2);
+
+<div class="token cpp_comment ">/* Shift intrinsics */</div>
+__m64 _m_psllw(__m64 _M, __m64 _Count);
+__m64 _m_psllwi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_pslld(__m64 _M, __m64 _Count);
+__m64 _m_pslldi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psllq(__m64 _M, __m64 _Count);
+__m64 _m_psllqi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psraw(__m64 _M, __m64 _Count);
+__m64 _m_psrawi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psrad(__m64 _M, __m64 _Count);
+__m64 _m_psradi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psrlw(__m64 _M, __m64 _Count);
+__m64 _m_psrlwi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psrld(__m64 _M, __m64 _Count);
+__m64 _m_psrldi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+__m64 _m_psrlq(__m64 _M, __m64 _Count);
+__m64 _m_psrlqi(__m64 _M, <div class="token cpp_keyword ">int</div> _Count);
+
+<div class="token cpp_comment ">/* Logical intrinsics */</div>
+__m64 _m_pand(__m64 _MM1, __m64 _MM2);
+__m64 _m_pandn(__m64 _MM1, __m64 _MM2);
+__m64 _m_por(__m64 _MM1, __m64 _MM2);
+__m64 _m_pxor(__m64 _MM1, __m64 _MM2);
+
+<div class="token cpp_comment ">/* Comparison intrinsics */</div>
+__m64 _m_pcmpeqb(__m64 _MM1, __m64 _MM2);
+__m64 _m_pcmpeqw(__m64 _MM1, __m64 _MM2);
+__m64 _m_pcmpeqd(__m64 _MM1, __m64 _MM2);
+__m64 _m_pcmpgtb(__m64 _MM1, __m64 _MM2);
+__m64 _m_pcmpgtw(__m64 _MM1, __m64 _MM2);
+__m64 _m_pcmpgtd(__m64 _MM1, __m64 _MM2);
+
+<div class="token cpp_comment ">/* Utility intrinsics */</div>
+__m64 _mm_setzero_si64(<div class="token cpp_keyword ">void</div>);
+__m64 _mm_set_pi32(<div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I0);
+__m64 _mm_set_pi16(<div class="token cpp_keyword ">short</div> _S3, <div class="token cpp_keyword ">short</div> _S2, <div class="token cpp_keyword ">short</div> _S1, <div class="token cpp_keyword ">short</div> _S0);
+__m64 _mm_set_pi8(<div class="token cpp_keyword ">char</div> _B7, <div class="token cpp_keyword ">char</div> _B6, <div class="token cpp_keyword ">char</div> _B5, <div class="token cpp_keyword ">char</div> _B4,
+                  <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
+__m64 _mm_set1_pi32(<div class="token cpp_keyword ">int</div> _I);
+__m64 _mm_set1_pi16(<div class="token cpp_keyword ">short</div> _S);
+__m64 _mm_set1_pi8(<div class="token cpp_keyword ">char</div> _B);
+__m64 _mm_setr_pi32(<div class="token cpp_keyword ">int</div> _I1, <div class="token cpp_keyword ">int</div> _I0);
+__m64 _mm_setr_pi16(<div class="token cpp_keyword ">short</div> _S3, <div class="token cpp_keyword ">short</div> _S2, <div class="token cpp_keyword ">short</div> _S1, <div class="token cpp_keyword ">short</div> _S0);
+__m64 _mm_setr_pi8(<div class="token cpp_keyword ">char</div> _B7, <div class="token cpp_keyword ">char</div> _B6, <div class="token cpp_keyword ">char</div> _B5, <div class="token cpp_keyword ">char</div> _B4,
+                   <div class="token cpp_keyword ">char</div> _B3, <div class="token cpp_keyword ">char</div> _B2, <div class="token cpp_keyword ">char</div> _B1, <div class="token cpp_keyword ">char</div> _B0);
+
+<div class="token cpp_comment ">/* Alternate intrinsic name definitions */</div>
+<div class="disabled"/>#define _mm_empty         _m_empty</div>
+<div class="disabled"/>#define _mm_cvtsi32_si64  _m_from_int</div>
+<div class="disabled"/>#define _mm_cvtsi64_si32  _m_to_int</div>
+<div class="disabled"/>#define _mm_packs_pi16    _m_packsswb</div>
+<div class="disabled"/>#define _mm_packs_pi32    _m_packssdw</div>
+<div class="disabled"/>#define _mm_packs_pu16    _m_packuswb</div>
+<div class="disabled"/>#define _mm_unpackhi_pi8  _m_punpckhbw</div>
+<div class="disabled"/>#define _mm_unpackhi_pi16 _m_punpckhwd</div>
+<div class="disabled"/>#define _mm_unpackhi_pi32 _m_punpckhdq</div>
+<div class="disabled"/>#define _mm_unpacklo_pi8  _m_punpcklbw</div>
+<div class="disabled"/>#define _mm_unpacklo_pi16 _m_punpcklwd</div>
+<div class="disabled"/>#define _mm_unpacklo_pi32 _m_punpckldq</div>
+<div class="disabled"/>#define _mm_add_pi8       _m_paddb</div>
+<div class="disabled"/>#define _mm_add_pi16      _m_paddw</div>
+<div class="disabled"/>#define _mm_add_pi32      _m_paddd</div>
+<div class="disabled"/>#define _mm_adds_pi8      _m_paddsb</div>
+<div class="disabled"/>#define _mm_adds_pi16     _m_paddsw</div>
+<div class="disabled"/>#define _mm_adds_pu8      _m_paddusb</div>
+<div class="disabled"/>#define _mm_adds_pu16     _m_paddusw</div>
+<div class="disabled"/>#define _mm_sub_pi8       _m_psubb</div>
+<div class="disabled"/>#define _mm_sub_pi16      _m_psubw</div>
+<div class="disabled"/>#define _mm_sub_pi32      _m_psubd</div>
+<div class="disabled"/>#define _mm_subs_pi8      _m_psubsb</div>
+<div class="disabled"/>#define _mm_subs_pi16     _m_psubsw</div>
+<div class="disabled"/>#define _mm_subs_pu8      _m_psubusb</div>
+<div class="disabled"/>#define _mm_subs_pu16     _m_psubusw</div>
+<div class="disabled"/>#define _mm_madd_pi16     _m_pmaddwd</div>
+<div class="disabled"/>#define _mm_mulhi_pi16    _m_pmulhw</div>
+<div class="disabled"/>#define _mm_mullo_pi16    _m_pmullw</div>
+<div class="disabled"/>#define _mm_sll_pi16      _m_psllw</div>
+<div class="disabled"/>#define _mm_slli_pi16     _m_psllwi</div>
+<div class="disabled"/>#define _mm_sll_pi32      _m_pslld</div>
+<div class="disabled"/>#define _mm_slli_pi32     _m_pslldi</div>
+<div class="disabled"/>#define _mm_sll_si64      _m_psllq</div>
+<div class="disabled"/>#define _mm_slli_si64     _m_psllqi</div>
+<div class="disabled"/>#define _mm_sra_pi16      _m_psraw</div>
+<div class="disabled"/>#define _mm_srai_pi16     _m_psrawi</div>
+<div class="disabled"/>#define _mm_sra_pi32      _m_psrad</div>
+<div class="disabled"/>#define _mm_srai_pi32     _m_psradi</div>
+<div class="disabled"/>#define _mm_srl_pi16      _m_psrlw</div>
+<div class="disabled"/>#define _mm_srli_pi16     _m_psrlwi</div>
+<div class="disabled"/>#define _mm_srl_pi32      _m_psrld</div>
+<div class="disabled"/>#define _mm_srli_pi32     _m_psrldi</div>
+<div class="disabled"/>#define _mm_srl_si64      _m_psrlq</div>
+<div class="disabled"/>#define _mm_srli_si64     _m_psrlqi</div>
+<div class="disabled"/>#define _mm_and_si64      _m_pand</div>
+<div class="disabled"/>#define _mm_andnot_si64   _m_pandn</div>
+<div class="disabled"/>#define _mm_or_si64       _m_por</div>
+<div class="disabled"/>#define _mm_xor_si64      _m_pxor</div>
+<div class="disabled"/>#define _mm_cmpeq_pi8     _m_pcmpeqb</div>
+<div class="disabled"/>#define _mm_cmpeq_pi16    _m_pcmpeqw</div>
+<div class="disabled"/>#define _mm_cmpeq_pi32    _m_pcmpeqd</div>
+<div class="disabled"/>#define _mm_cmpgt_pi8     _m_pcmpgtb</div>
+<div class="disabled"/>#define _mm_cmpgt_pi16    _m_pcmpgtw</div>
+<div class="disabled"/>#define _mm_cmpgt_pi32    _m_pcmpgtd
+#endif // defined(_M_IX86)</div>
+
+<div class="disabled"/>#if defined __cplusplus</div>
+}; <div class="token cpp_comment ">/* End &quot;C&quot; */</div>
+<div class="disabled"/>#endif  /* defined __cplusplus */</div>
+
+<div class="disabled"/>#endif  /* defined (_M_CEE_PURE) */
+#endif  /* __midl */
+#endif  /* _MMINTRIN_H_INCLUDED */
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+};
+symbolToFiles = {
+
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

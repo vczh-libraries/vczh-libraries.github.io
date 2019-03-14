@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled"/>#include &lt;assert.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;Calculator.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="Forward[3]$calculator"><div class="ref" onclick="jumpToSymbol([], ['calculator'])">calculator</div></div>
+{
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="Forward[0]$calculator::ParseExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr'])"><div class="token cpp_function">ParseExpr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>*&amp; input);
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="Decl$calculator::ParseTerm"><div><div class="token cpp_function">ParseTerm</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>*&amp; <div class="def" id="Decl$calculator::ParseTerm::input"><div><div class="token cpp_argument">input</div></div></div>)
+	{
+		<div class="token cpp_keyword ">if</div> (*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;(&apos;</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>++;
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseTerm::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseExpr'], ['calculator::ParseExpr'], [])"><div class="token cpp_function">ParseExpr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>);
+<div class="expandable"/><div class="disabled"/>			assert(*input == &apos;)&apos;);</div>
+<div class="expanded">			(<div class="token cpp_keyword ">void</div>)( (!!(*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;)&apos;</div>)) || (<div class="ref" onclick="jumpToSymbol(['_wassert'], ['_wassert'], [])"><div class="token cpp_function">_wassert</div></div>(<div class="token cpp_string ">L&quot;*input == &apos;)&apos;&quot;</div>, <div class="token cpp_string ">L&quot;c:\\code\\vczhlibraries\\document\\tools\\cppdoc\\unittest_cases\\calculator\\calculator.cpp&quot;</div>, (<div class="token cpp_keyword ">unsigned</div>)(<div class="token cpp_number ">15</div>)), <div class="token cpp_number ">0</div>) );</div></div>
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>++;
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr'], [])">expr</div>;
+		}
+		<div class="token cpp_keyword ">else</div> <div class="token cpp_keyword ">if</div> (*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;-&apos;</div>)
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>++;
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseTerm::expr2"><div>expr</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'], [])"><div class="token cpp_type">UnaryExpr</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr2'], [])">expr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::op'], [])"><div class="token cpp_field">op</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator'], [])"><div class="token cpp_type">UnaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator::Neg'], [])"><div class="token cpp_enum">Neg</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr2'], [])">expr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::operand'], [])"><div class="token cpp_field">operand</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator =2'], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::ParseTerm'], ['calculator::ParseTerm'], [])"><div class="token cpp_function">ParseTerm</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>);
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr2'], [])">expr</div>;
+		}
+		<div class="token cpp_keyword ">else</div>
+		{
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseTerm::expr3"><div>expr</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'], [])"><div class="token cpp_type">NumberExpr</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr3'], [])">expr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::number'], [])"><div class="token cpp_field">number</div></div> = <div class="ref" onclick="jumpToSymbol(['strtod'], ['strtod'], [])"><div class="token cpp_function">strtod</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>, (<div class="token cpp_keyword ">char</div>**)&amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::input'], [])"><div class="token cpp_argument">input</div></div>);
+			<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseTerm::expr3'], [])">expr</div>;
+		}
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="Decl$calculator::ParseFactor"><div><div class="token cpp_function">ParseFactor</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>*&amp; <div class="def" id="Decl$calculator::ParseFactor::input"><div><div class="token cpp_argument">input</div></div></div>)
+	{
+		<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseFactor::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseTerm'], ['calculator::ParseTerm'], [])"><div class="token cpp_function">ParseTerm</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::input'], [])"><div class="token cpp_argument">input</div></div>);
+		<div class="token cpp_keyword ">while</div> (*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;*&apos;</div> || *<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;/&apos;</div>)
+		{
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseFactor::binaryExpr"><div>binaryExpr</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'], [])"><div class="token cpp_type">BinaryExpr</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::left'], [])"><div class="token cpp_field">left</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator ='], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::expr'], [])">expr</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::op'], [])"><div class="token cpp_field">op</div></div> = *<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::input'], [])"><div class="token cpp_argument">input</div></div>++ == <div class="token cpp_string ">&apos;*&apos;</div> ? <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Mul'], [])"><div class="token cpp_enum">Mul</div></div> : <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Div'], [])"><div class="token cpp_enum">Div</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::right'], [])"><div class="token cpp_field">right</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator =2'], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::ParseTerm'], ['calculator::ParseTerm'], [])"><div class="token cpp_function">ParseTerm</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::input'], [])"><div class="token cpp_argument">input</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::expr'], [])">expr</div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator ='], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::binaryExpr'], [])">binaryExpr</div>;
+		}
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseFactor::expr'], [])">expr</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="Decl$calculator::ParseExpr"><div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr'])"><div class="token cpp_function">ParseExpr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>*&amp; <div class="def" id="Decl$calculator::ParseExpr::input"><div><div class="token cpp_argument">input</div></div></div>)
+	{
+		<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseExpr::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseFactor'], ['calculator::ParseFactor'], [])"><div class="token cpp_function">ParseFactor</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::input'], [])"><div class="token cpp_argument">input</div></div>);
+		<div class="token cpp_keyword ">while</div> (*<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;+&apos;</div> || *<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::input'], [])"><div class="token cpp_argument">input</div></div> == <div class="token cpp_string ">&apos;-&apos;</div>)
+		{
+			<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::ParseExpr::binaryExpr"><div>binaryExpr</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'], [])"><div class="token cpp_type">BinaryExpr</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::left'], [])"><div class="token cpp_field">left</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator ='], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::expr'], [])">expr</div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::op'], [])"><div class="token cpp_field">op</div></div> = *<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::input'], [])"><div class="token cpp_argument">input</div></div>++ == <div class="token cpp_string ">&apos;+&apos;</div> ? <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Add'], [])"><div class="token cpp_enum">Add</div></div> : <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Sub'], [])"><div class="token cpp_enum">Sub</div></div>;
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::binaryExpr'], [])">binaryExpr</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::right'], [])"><div class="token cpp_field">right</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator =2'], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol(['calculator::ParseFactor'], ['calculator::ParseFactor'], [])"><div class="token cpp_function">ParseFactor</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::input'], [])"><div class="token cpp_argument">input</div></div>);
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::expr'], [])">expr</div> <div class="ref" onclick="jumpToSymbol(['calculator::Expr::Ptr::operator ='], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::binaryExpr'], [])">binaryExpr</div>;
+		}
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::ParseExpr::expr'], [])">expr</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div> <div class="def" id="Decl$calculator::Parse"><div class="ref" onclick="jumpToSymbol([], ['calculator::Parse'])"><div class="token cpp_function">Parse</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="token cpp_keyword ">char</div>* <div class="def" id="Decl$calculator::Parse::input"><div><div class="token cpp_argument">input</div></div></div>)
+	{
+		<div class="token cpp_keyword ">auto</div> <div class="def" id="Decl$calculator::Parse::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['calculator::ParseExpr'], ['calculator::ParseExpr'], [])"><div class="token cpp_function">ParseExpr</div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::Parse::input'], [])"><div class="token cpp_argument">input</div></div>);
+<div class="expandable"/><div class="disabled"/>		assert(!*input);</div>
+<div class="expanded">		(<div class="token cpp_keyword ">void</div>)( (!!(!*<div class="ref" onclick="jumpToSymbol([], ['calculator::Parse::input'], [])"><div class="token cpp_argument">input</div></div>)) || (<div class="ref" onclick="jumpToSymbol(['_wassert'], ['_wassert'], [])"><div class="token cpp_function">_wassert</div></div>(<div class="token cpp_string ">L&quot;!*input&quot;</div>, <div class="token cpp_string ">L&quot;c:\\code\\vczhlibraries\\document\\tools\\cppdoc\\unittest_cases\\calculator\\calculator.cpp&quot;</div>, (<div class="token cpp_keyword ">unsigned</div>)(<div class="token cpp_number ">66</div>)), <div class="token cpp_number ">0</div>) );</div></div>
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Parse::expr'], [])">expr</div>;
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'strtod': { 'displayNameInHtml': '<span class="cpp_function">strtod</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">char</span> * *)', 'definition': false, 'declarations': 1},
+    'calculator': { 'displayNameInHtml': 'calculator', 'definition': false, 'declarations': 4},
+    'calculator::UnaryExpr': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::BinaryExpr': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::NumberExpr': { 'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::operator =': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::operator =2': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span> &&)', 'definition': true, 'declarations': 1},
+    'calculator::Expr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Mul': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Mul</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::op': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">op</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Add': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Add</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryOperator': { 'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>', 'definition': true, 'declarations': 0},
+    'calculator::NumberExpr::number': { 'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>::<span class="cpp_field">number</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryOperator::Neg': { 'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>::<span class="cpp_enum">Neg</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryExpr::op': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>::<span class="cpp_field">op</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryExpr::operand': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>::<span class="cpp_field">operand</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Div': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Div</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Sub': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Sub</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::right': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">right</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::left': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">left</span>', 'definition': true, 'declarations': 0},
+    '_wassert': { 'displayNameInHtml': '<span class="cpp_function">_wassert</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">unsigned</span><span class="cpp_keyword">int</span>)', 'definition': false, 'declarations': 1},
+    'calculator::ParseExpr': { 'displayNameInHtml': '<span class="cpp_function">ParseExpr</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> * &)', 'definition': true, 'declarations': 1},
+    'calculator::ParseFactor::input': { 'displayNameInHtml': 'input', 'definition': true, 'declarations': 0},
+    'calculator::Parse': { 'displayNameInHtml': '<span class="cpp_function">Parse</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *)', 'definition': true, 'declarations': 1},
+    'calculator::ParseTerm': { 'displayNameInHtml': '<span class="cpp_function">ParseTerm</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> * &)', 'definition': true, 'declarations': 0},
+    'calculator::Parse::input': { 'displayNameInHtml': 'input', 'definition': true, 'declarations': 0},
+    'calculator::ParseFactor': { 'displayNameInHtml': '<span class="cpp_function">ParseFactor</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> * &)', 'definition': true, 'declarations': 0},
+    'calculator::ParseTerm::input': { 'displayNameInHtml': 'input', 'definition': true, 'declarations': 0},
+    'calculator::ParseExpr::input': { 'displayNameInHtml': 'input', 'definition': true, 'declarations': 0},
+    'calculator::ParseTerm::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::ParseFactor::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::ParseFactor::binaryExpr': { 'displayNameInHtml': 'binaryExpr', 'definition': true, 'declarations': 0},
+    'calculator::ParseTerm::expr3': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::ParseExpr::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::Parse::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::ParseTerm::expr2': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::ParseExpr::binaryExpr': { 'displayNameInHtml': 'binaryExpr', 'definition': true, 'declarations': 0}
+};
+symbolToFiles = {
+    'Forward[0]$strtod': { 'htmlFileName': 'stdlib.h', 'displayName': 'stdlib.h' },
+    'Forward[0]$calculator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[1]$calculator': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'Forward[2]$calculator': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
+    'Forward[3]$calculator': null,
+    'Decl$calculator::UnaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::UnaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::BinaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::NumberExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::NumberExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::operator =': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'Forward[0]$calculator::Expr::Ptr::operator =': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::operator =2': { 'htmlFileName': 'Expr.cpp', 'displayName': 'Expr.cpp' },
+    'Forward[0]$calculator::Expr::Ptr::operator =2': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Mul': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::op': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Add': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryOperator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::NumberExpr::number': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryOperator::Neg': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::op': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::operand': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Div': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Sub': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::right': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::left': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$_wassert': { 'htmlFileName': 'assert.h', 'displayName': 'assert.h' },
+    'Decl$calculator::ParseExpr': null,
+    'Forward[0]$calculator::ParseExpr': null,
+    'Decl$calculator::ParseFactor::input': null,
+    'Decl$calculator::Parse': null,
+    'Forward[0]$calculator::Parse': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
+    'Decl$calculator::ParseTerm': null,
+    'Decl$calculator::Parse::input': null,
+    'Decl$calculator::ParseFactor': null,
+    'Decl$calculator::ParseTerm::input': null,
+    'Decl$calculator::ParseExpr::input': null,
+    'Decl$calculator::ParseTerm::expr': null,
+    'Decl$calculator::ParseFactor::expr': null,
+    'Decl$calculator::ParseFactor::binaryExpr': null,
+    'Decl$calculator::ParseTerm::expr3': null,
+    'Decl$calculator::ParseExpr::expr': null,
+    'Decl$calculator::Parse::expr': null,
+    'Decl$calculator::ParseTerm::expr2': null,
+    'Decl$calculator::ParseExpr::binaryExpr': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

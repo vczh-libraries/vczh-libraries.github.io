@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expr.cpp</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="disabled"/>#include &lt;intrin.h&gt;
+#include &lt;stdio.h&gt;
+#include &quot;Expr.h&quot;</div>
+
+<div class="token cpp_keyword ">namespace</div> <div class="def" id="Forward[1]$calculator"><div class="ref" onclick="jumpToSymbol([], ['calculator'])">calculator</div></div>
+{
+<div class="disabled"/>#define EXPR_ACCEPT_VISITOR_IMPL(TYPE)\</div>
+<div class="disabled"/>	void TYPE::Accept(IExprVisitor* visitor)\</div>
+<div class="disabled"/>	{\</div>
+<div class="disabled"/>		visitor-&gt;Visit(this);\</div>
+<div class="disabled"/>	}\</div>
+
+<div class="expandable"/><div class="disabled"/>	EXPR_TYPES(EXPR_ACCEPT_VISITOR_IMPL)</div>
+<div class="expanded">	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'], [])"><div class="token cpp_type">NumberExpr</div></div>::<div class="def" id="Decl$calculator::NumberExpr::Accept"><div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'], [])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="Decl$calculator::NumberExpr::Accept::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::Accept::visitor'], [])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'], [])"><div class="token cpp_function">Visit</div></div>(<div class="token cpp_keyword ">this</div>); } <div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'], [])"><div class="token cpp_type">UnaryExpr</div></div>::<div class="def" id="Decl$calculator::UnaryExpr::Accept"><div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'], [])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="Decl$calculator::UnaryExpr::Accept::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::Accept::visitor'], [])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit2'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'], [])"><div class="token cpp_function">Visit</div></div>(<div class="token cpp_keyword ">this</div>); } <div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'], [])"><div class="token cpp_type">BinaryExpr</div></div>::<div class="def" id="Decl$calculator::BinaryExpr::Accept"><div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::Accept'])"><div class="token cpp_function">Accept</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'], [])"><div class="token cpp_type">IExprVisitor</div></div>* <div class="def" id="Decl$calculator::BinaryExpr::Accept::visitor"><div><div class="token cpp_argument">visitor</div></div></div>) { <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::Accept::visitor'], [])"><div class="token cpp_argument">visitor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::IExprVisitor::Visit3'], ['calculator::IExprVisitor::Visit', 'calculator::IExprVisitor::Visit2', 'calculator::IExprVisitor::Visit3'], [])"><div class="token cpp_function">Visit</div></div>(<div class="token cpp_keyword ">this</div>); }</div></div>
+<div class="disabled"/>#undef EXPR_ACCEPT_VISITOR_IMPL</div>
+
+	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::Inc"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Inc'])"><div class="token cpp_function">Inc</div></div></div>()
+	{
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>)
+		{
+			<div class="ref" onclick="jumpToSymbol(['_InterlockedIncrement'], ['_InterlockedIncrement'], [])"><div class="token cpp_function">_InterlockedIncrement</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::counter'], [])"><div class="token cpp_field">counter</div></div>);
+		}
+	}
+
+	<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::Dec"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Dec'])"><div class="token cpp_function">Dec</div></div></div>()
+	{
+		<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>)
+		{
+			<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['_InterlockedDecrement'], ['_InterlockedDecrement'], [])"><div class="token cpp_function">_InterlockedDecrement</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::counter'], [])"><div class="token cpp_field">counter</div></div>) == <div class="token cpp_number ">0</div>)
+			{
+				<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+			}
+		}
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::$__ctor"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor'])"><div class="token cpp_function">Ptr</div></div></div>()
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Inc'], [])"><div class="token cpp_function">Inc</div></div>();
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::$__ctor2"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor2'])"><div class="token cpp_function">Ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>* <div class="def" id="Decl$calculator::Expr::Ptr::$__ctor2::_expr"><div><div class="token cpp_argument">_expr</div></div></div>)
+		:expr(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor2::_expr'], [])"><div class="token cpp_argument">_expr</div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Inc'], [])"><div class="token cpp_function">Inc</div></div>();
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::$__ctor3"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor3'])"><div class="token cpp_function">Ptr</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="def" id="Decl$calculator::Expr::Ptr::$__ctor3::ptr"><div><div class="token cpp_argument">ptr</div></div></div>)
+		:expr(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor3::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Inc'], [])"><div class="token cpp_function">Inc</div></div>();
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::$__ctor4"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor4'])"><div class="token cpp_function">Ptr</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp;&amp; <div class="def" id="Decl$calculator::Expr::Ptr::$__ctor4::ptr"><div><div class="token cpp_argument">ptr</div></div></div>)
+		:expr(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor4::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::$__ctor4::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::~Ptr"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::~Ptr'])"><div class="token cpp_function">~</div><div class="token cpp_function">Ptr</div></div></div>()
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Dec'], [])"><div class="token cpp_function">Dec</div></div>();
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::operator ="><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator ='])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="def" id="Decl$calculator::Expr::Ptr::operator =::ptr"><div><div class="token cpp_argument">ptr</div></div></div>)
+	{
+		<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> == &amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =::ptr'], [])"><div class="token cpp_argument">ptr</div></div>) <div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Dec'], [])"><div class="token cpp_function">Dec</div></div>();
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Inc'], [])"><div class="token cpp_function">Inc</div></div>();
+		<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+	}
+
+	<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>::<div class="def" id="Decl$calculator::Expr::Ptr::operator =2"><div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =2'])"><div class="token cpp_keyword ">operator</div><div class="token cpp_function">=</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp;&amp; <div class="def" id="Decl$calculator::Expr::Ptr::operator =2::ptr"><div><div class="token cpp_argument">ptr</div></div></div>)
+	{
+		<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">this</div> == &amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =2::ptr'], [])"><div class="token cpp_argument">ptr</div></div>) <div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::Dec'], [])"><div class="token cpp_function">Dec</div></div>();
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =2::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::operator =2::ptr'], [])"><div class="token cpp_argument">ptr</div></div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr::expr'], [])"><div class="token cpp_field">expr</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+		<div class="token cpp_keyword ">return</div> *<div class="token cpp_keyword ">this</div>;
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Evaluation
+***********************************************************************/</div>
+
+	<div class="token cpp_keyword ">class</div> <div class="def" id="Decl$calculator::PrintVisitor"><div><div class="token cpp_type">PrintVisitor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'], [])"><div class="token cpp_type">IExprVisitor</div></div>
+	{
+	<div class="token cpp_keyword ">public</div>:
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::PrintVisitor::Visit"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'], [])"><div class="token cpp_type">NumberExpr</div></div>* <div class="def" id="Decl$calculator::PrintVisitor::Visit::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;%g&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::number'], [])"><div class="token cpp_field">number</div></div>);
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::PrintVisitor::Visit2"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'], [])"><div class="token cpp_type">UnaryExpr</div></div>* <div class="def" id="Decl$calculator::PrintVisitor::Visit2::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="token cpp_keyword ">switch</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit2::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::op'], [])"><div class="token cpp_field">op</div></div>)
+			{
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator'], [])"><div class="token cpp_type">UnaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator::Neg'], [])"><div class="token cpp_enum">Neg</div></div>: <div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;-&quot;</div>); <div class="token cpp_keyword ">break</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit2::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::operand'], [])"><div class="token cpp_field">operand</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>);
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::PrintVisitor::Visit3"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'], [])"><div class="token cpp_type">BinaryExpr</div></div>* <div class="def" id="Decl$calculator::PrintVisitor::Visit3::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;(&quot;</div>);
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::left'], [])"><div class="token cpp_field">left</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>);
+			<div class="token cpp_keyword ">switch</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::op'], [])"><div class="token cpp_field">op</div></div>)
+			{
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Add'], [])"><div class="token cpp_enum">Add</div></div>: <div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;+&quot;</div>); <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Sub'], [])"><div class="token cpp_enum">Sub</div></div>: <div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;-&quot;</div>); <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Mul'], [])"><div class="token cpp_enum">Mul</div></div>: <div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;*&quot;</div>); <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Div'], [])"><div class="token cpp_enum">Div</div></div>: <div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;/&quot;</div>); <div class="token cpp_keyword ">break</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::right'], [])"><div class="token cpp_field">right</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>);
+			<div class="ref" onclick="jumpToSymbol(['printf'], ['printf'], [])"><div class="token cpp_function">printf</div></div>(<div class="token cpp_string ">&quot;)&quot;</div>);
+		}
+	};
+
+	<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::Print"><div class="ref" onclick="jumpToSymbol([], ['calculator::Print'])"><div class="token cpp_function">Print</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="def" id="Decl$calculator::Print::expr"><div><div class="token cpp_argument">expr</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::PrintVisitor'], [])"><div class="token cpp_type">PrintVisitor</div></div> <div class="def" id="Decl$calculator::Print::visitor"><div>visitor</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Print::expr'], [])"><div class="token cpp_argument">expr</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Print::visitor'], [])">visitor</div>);
+	}
+
+<div class="token cpp_comment ">/***********************************************************************
+Evaluation
+***********************************************************************/</div>
+
+	<div class="token cpp_keyword ">class</div> <div class="def" id="Decl$calculator::EvaluateVisitor"><div><div class="token cpp_type">EvaluateVisitor</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::IExprVisitor'], [])"><div class="token cpp_type">IExprVisitor</div></div>
+	{
+	<div class="token cpp_keyword ">public</div>:
+		<div class="token cpp_keyword ">double</div>			<div class="def" id="Decl$calculator::EvaluateVisitor::result"><div><div class="token cpp_field">result</div></div></div>;
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::EvaluateVisitor::Visit"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr'], [])"><div class="token cpp_type">NumberExpr</div></div>* <div class="def" id="Decl$calculator::EvaluateVisitor::Visit::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::NumberExpr::number'], [])"><div class="token cpp_field">number</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::EvaluateVisitor::Visit2"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr'], [])"><div class="token cpp_type">UnaryExpr</div></div>* <div class="def" id="Decl$calculator::EvaluateVisitor::Visit2::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit2::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::operand'], [])"><div class="token cpp_field">operand</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>);
+			<div class="token cpp_keyword ">switch</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit2::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryExpr::op'], [])"><div class="token cpp_field">op</div></div>)
+			{
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator'], [])"><div class="token cpp_type">UnaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::UnaryOperator::Neg'], [])"><div class="token cpp_enum">Neg</div></div>: <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = -<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div>; <div class="token cpp_keyword ">break</div>;
+			}
+			<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = -<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div>;
+		}
+
+		<div class="token cpp_keyword ">void</div> <div class="def" id="Decl$calculator::EvaluateVisitor::Visit3"><div><div class="token cpp_function">Visit</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr'], [])"><div class="token cpp_type">BinaryExpr</div></div>* <div class="def" id="Decl$calculator::EvaluateVisitor::Visit3::self"><div><div class="token cpp_argument">self</div></div></div>) <div class="token cpp_keyword ">override</div>
+		{
+			<div class="token cpp_keyword ">double</div> <div class="def" id="Decl$calculator::EvaluateVisitor::Visit3::left"><div>left</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::left'], [])"><div class="token cpp_field">left</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>), <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div>);
+			<div class="token cpp_keyword ">double</div> <div class="def" id="Decl$calculator::EvaluateVisitor::Visit3::right"><div>right</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::right'], [])"><div class="token cpp_field">right</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(<div class="token cpp_keyword ">this</div>), <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div>);
+			<div class="token cpp_keyword ">switch</div> (<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::self'], [])"><div class="token cpp_argument">self</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryExpr::op'], [])"><div class="token cpp_field">op</div></div>)
+			{
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Add'], [])"><div class="token cpp_enum">Add</div></div>: <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::left'], [])">left</div> + <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::right'], [])">right</div>; <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Sub'], [])"><div class="token cpp_enum">Sub</div></div>: <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::left'], [])">left</div> - <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::right'], [])">right</div>; <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Mul'], [])"><div class="token cpp_enum">Mul</div></div>: <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::left'], [])">left</div> * <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::right'], [])">right</div>; <div class="token cpp_keyword ">break</div>;
+			<div class="token cpp_keyword ">case</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator'], [])"><div class="token cpp_type">BinaryOperator</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::BinaryOperator::Div'], [])"><div class="token cpp_enum">Div</div></div>: <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div> = <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::left'], [])">left</div> / <div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::Visit3::right'], [])">right</div>; <div class="token cpp_keyword ">break</div>;
+			}
+		}
+	};
+
+	<div class="token cpp_keyword ">double</div> <div class="def" id="Decl$calculator::Evaluate"><div class="ref" onclick="jumpToSymbol([], ['calculator::Evaluate'])"><div class="token cpp_function">Evaluate</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Expr'], [])"><div class="token cpp_type">Expr</div></div>::<div class="ref" onclick="jumpToSymbol([], ['calculator::Expr::Ptr'], [])"><div class="token cpp_type">Ptr</div></div>&amp; <div class="def" id="Decl$calculator::Evaluate::expr"><div><div class="token cpp_argument">expr</div></div></div>)
+	{
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor'], [])"><div class="token cpp_type">EvaluateVisitor</div></div> <div class="def" id="Decl$calculator::Evaluate::visitor"><div>visitor</div></div>;
+		<div class="ref" onclick="jumpToSymbol([], ['calculator::Evaluate::expr'], [])"><div class="token cpp_argument">expr</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['calculator::Expr::Accept'], ['calculator::Expr::Accept'], [])"><div class="token cpp_function">Accept</div></div>(&amp;<div class="ref" onclick="jumpToSymbol([], ['calculator::Evaluate::visitor'], [])">visitor</div>);
+		<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['calculator::Evaluate::visitor'], [])">visitor</div>.<div class="ref" onclick="jumpToSymbol([], ['calculator::EvaluateVisitor::result'], [])"><div class="token cpp_field">result</div></div>;
+	}
+}
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    '_InterlockedIncrement': { 'displayNameInHtml': '<span class="cpp_function">_InterlockedIncrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)', 'definition': false, 'declarations': 1},
+    '_InterlockedDecrement': { 'displayNameInHtml': '<span class="cpp_function">_InterlockedDecrement</span>(<span class="cpp_keyword">long</span><span class="cpp_keyword"> volatile</span> *)', 'definition': false, 'declarations': 1},
+    'printf': { 'displayNameInHtml': '<span class="cpp_function">printf</span>(<span class="cpp_keyword">char</span><span class="cpp_keyword"> const</span> *<span class="cpp_keyword"> const</span> ...)', 'definition': true, 'declarations': 0},
+    'calculator': { 'displayNameInHtml': 'calculator', 'definition': false, 'declarations': 4},
+    'calculator::UnaryExpr': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::BinaryExpr': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::IExprVisitor::Visit': { 'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>::<span class="cpp_function">Visit</span>(<span class="cpp_type">NumberExpr</span> *)', 'definition': false, 'declarations': 1},
+    'calculator::NumberExpr': { 'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::$__ctor': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">$__ctor</span>()', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::Dec': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">Dec</span>()', 'definition': true, 'declarations': 1},
+    'calculator::Expr::counter': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_field">counter</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::$__ctor2': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Expr</span> *)', 'definition': true, 'declarations': 1},
+    'calculator::IExprVisitor': { 'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::$__ctor3': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::$__ctor4': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span> &&)', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::~Ptr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">~Ptr</span>()', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::operator =': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::operator =2': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span> &&)', 'definition': true, 'declarations': 1},
+    'calculator::Expr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>', 'definition': true, 'declarations': 0},
+    'calculator::IExprVisitor::Visit3': { 'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>::<span class="cpp_function">Visit</span>(<span class="cpp_type">BinaryExpr</span> *)', 'definition': false, 'declarations': 1},
+    'calculator::IExprVisitor::Visit2': { 'displayNameInHtml': '<span class="cpp_type">IExprVisitor</span>::<span class="cpp_function">Visit</span>(<span class="cpp_type">UnaryExpr</span> *)', 'definition': false, 'declarations': 1},
+    'calculator::Expr::Ptr::expr': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_field">expr</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::Inc': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span>::<span class="cpp_function">Inc</span>()', 'definition': true, 'declarations': 1},
+    'calculator::NumberExpr::Accept': { 'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>::<span class="cpp_function">Accept</span>(<span class="cpp_type">IExprVisitor</span> *)', 'definition': true, 'declarations': 1},
+    'calculator::UnaryExpr::Accept': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>::<span class="cpp_function">Accept</span>(<span class="cpp_type">IExprVisitor</span> *)', 'definition': true, 'declarations': 1},
+    'calculator::BinaryOperator::Mul': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Mul</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::op': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">op</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Add': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Add</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryOperator': { 'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>', 'definition': true, 'declarations': 0},
+    'calculator::NumberExpr::number': { 'displayNameInHtml': '<span class="cpp_type">NumberExpr</span>::<span class="cpp_field">number</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Accept': { 'displayNameInHtml': '<span class="cpp_type">Expr</span>::<span class="cpp_function">Accept</span>(<span class="cpp_type">IExprVisitor</span> *)', 'definition': false, 'declarations': 1},
+    'calculator::UnaryOperator::Neg': { 'displayNameInHtml': '<span class="cpp_type">UnaryOperator</span>::<span class="cpp_enum">Neg</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryExpr::op': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>::<span class="cpp_field">op</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryExpr::operand': { 'displayNameInHtml': '<span class="cpp_type">UnaryExpr</span>::<span class="cpp_field">operand</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Div': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Div</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryOperator::Sub': { 'displayNameInHtml': '<span class="cpp_type">BinaryOperator</span>::<span class="cpp_enum">Sub</span>', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::Accept': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_function">Accept</span>(<span class="cpp_type">IExprVisitor</span> *)', 'definition': true, 'declarations': 1},
+    'calculator::Evaluate': { 'displayNameInHtml': '<span class="cpp_function">Evaluate</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)', 'definition': true, 'declarations': 1},
+    'calculator::Expr::Ptr::$__ctor4::ptr': { 'displayNameInHtml': 'ptr', 'definition': true, 'declarations': 0},
+    'calculator::NumberExpr::Accept::visitor': { 'displayNameInHtml': 'visitor', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::operator =::ptr': { 'displayNameInHtml': 'ptr', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::operator =2::ptr': { 'displayNameInHtml': 'ptr', 'definition': true, 'declarations': 0},
+    'calculator::PrintVisitor': { 'displayNameInHtml': '<span class="cpp_type">PrintVisitor</span>', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::$__ctor2::_expr': { 'displayNameInHtml': '_expr', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::right': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">right</span>', 'definition': true, 'declarations': 0},
+    'calculator::UnaryExpr::Accept::visitor': { 'displayNameInHtml': 'visitor', 'definition': true, 'declarations': 0},
+    'calculator::Print': { 'displayNameInHtml': '<span class="cpp_function">Print</span>(<span class="cpp_type">Expr</span>::<span class="cpp_type">Ptr</span><span class="cpp_keyword"> const</span> &)', 'definition': true, 'declarations': 1},
+    'calculator::BinaryExpr::Accept::visitor': { 'displayNameInHtml': 'visitor', 'definition': true, 'declarations': 0},
+    'calculator::Expr::Ptr::$__ctor3::ptr': { 'displayNameInHtml': 'ptr', 'definition': true, 'declarations': 0},
+    'calculator::BinaryExpr::left': { 'displayNameInHtml': '<span class="cpp_type">BinaryExpr</span>::<span class="cpp_field">left</span>', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::result': { 'displayNameInHtml': '<span class="cpp_type">EvaluateVisitor</span>::<span class="cpp_field">result</span>', 'definition': true, 'declarations': 0},
+    'calculator::PrintVisitor::Visit2::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::Visit3::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor': { 'displayNameInHtml': '<span class="cpp_type">EvaluateVisitor</span>', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::Visit::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::PrintVisitor::Visit3::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::Print::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::PrintVisitor::Visit::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::Visit2::self': { 'displayNameInHtml': 'self', 'definition': true, 'declarations': 0},
+    'calculator::Evaluate::expr': { 'displayNameInHtml': 'expr', 'definition': true, 'declarations': 0},
+    'calculator::Print::visitor': { 'displayNameInHtml': 'visitor', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::Visit3::left': { 'displayNameInHtml': 'left', 'definition': true, 'declarations': 0},
+    'calculator::EvaluateVisitor::Visit3::right': { 'displayNameInHtml': 'right', 'definition': true, 'declarations': 0},
+    'calculator::Evaluate::visitor': { 'displayNameInHtml': 'visitor', 'definition': true, 'declarations': 0}
+};
+symbolToFiles = {
+    'Forward[0]$_InterlockedIncrement': { 'htmlFileName': 'intrin0.h', 'displayName': 'intrin0.h' },
+    'Forward[0]$_InterlockedDecrement': { 'htmlFileName': 'intrin0.h', 'displayName': 'intrin0.h' },
+    'Decl$printf': { 'htmlFileName': 'stdio.h', 'displayName': 'stdio.h' },
+    'Forward[0]$calculator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[1]$calculator': null,
+    'Forward[2]$calculator': { 'htmlFileName': 'Calculator.h', 'displayName': 'Calculator.h' },
+    'Forward[3]$calculator': { 'htmlFileName': 'Calculator.cpp2', 'displayName': 'Calculator.cpp' },
+    'Decl$calculator::UnaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::UnaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::BinaryExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::IExprVisitor::Visit': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::NumberExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::NumberExpr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::$__ctor': null,
+    'Forward[0]$calculator::Expr::Ptr::$__ctor': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::Dec': null,
+    'Forward[0]$calculator::Expr::Ptr::Dec': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::counter': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::$__ctor2': null,
+    'Forward[0]$calculator::Expr::Ptr::$__ctor2': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::IExprVisitor': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::$__ctor3': null,
+    'Forward[0]$calculator::Expr::Ptr::$__ctor3': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::$__ctor4': null,
+    'Forward[0]$calculator::Expr::Ptr::$__ctor4': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::~Ptr': null,
+    'Forward[0]$calculator::Expr::Ptr::~Ptr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::operator =': null,
+    'Forward[0]$calculator::Expr::Ptr::operator =': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::operator =2': null,
+    'Forward[0]$calculator::Expr::Ptr::operator =2': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::IExprVisitor::Visit3': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::IExprVisitor::Visit2': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::expr': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::Inc': null,
+    'Forward[0]$calculator::Expr::Ptr::Inc': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::NumberExpr::Accept': null,
+    'Forward[0]$calculator::NumberExpr::Accept': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::Accept': null,
+    'Forward[0]$calculator::UnaryExpr::Accept': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Mul': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::op': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Add': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryOperator': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::NumberExpr::number': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Forward[0]$calculator::Expr::Accept': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryOperator::Neg': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::op': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::operand': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Div': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryOperator::Sub': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::Accept': null,
+    'Forward[0]$calculator::BinaryExpr::Accept': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Evaluate': null,
+    'Forward[0]$calculator::Evaluate': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::Expr::Ptr::$__ctor4::ptr': null,
+    'Decl$calculator::NumberExpr::Accept::visitor': null,
+    'Decl$calculator::Expr::Ptr::operator =::ptr': null,
+    'Decl$calculator::Expr::Ptr::operator =2::ptr': null,
+    'Decl$calculator::PrintVisitor': null,
+    'Decl$calculator::Expr::Ptr::$__ctor2::_expr': null,
+    'Decl$calculator::BinaryExpr::right': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::UnaryExpr::Accept::visitor': null,
+    'Decl$calculator::Print': null,
+    'Forward[0]$calculator::Print': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::BinaryExpr::Accept::visitor': null,
+    'Decl$calculator::Expr::Ptr::$__ctor3::ptr': null,
+    'Decl$calculator::BinaryExpr::left': { 'htmlFileName': 'Expr.h', 'displayName': 'Expr.h' },
+    'Decl$calculator::EvaluateVisitor::result': null,
+    'Decl$calculator::PrintVisitor::Visit2::self': null,
+    'Decl$calculator::EvaluateVisitor::Visit3::self': null,
+    'Decl$calculator::EvaluateVisitor': null,
+    'Decl$calculator::EvaluateVisitor::Visit::self': null,
+    'Decl$calculator::PrintVisitor::Visit3::self': null,
+    'Decl$calculator::Print::expr': null,
+    'Decl$calculator::PrintVisitor::Visit::self': null,
+    'Decl$calculator::EvaluateVisitor::Visit2::self': null,
+    'Decl$calculator::Evaluate::expr': null,
+    'Decl$calculator::Print::visitor': null,
+    'Decl$calculator::EvaluateVisitor::Visit3::left': null,
+    'Decl$calculator::EvaluateVisitor::Visit3::right': null,
+    'Decl$calculator::Evaluate::visitor': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>

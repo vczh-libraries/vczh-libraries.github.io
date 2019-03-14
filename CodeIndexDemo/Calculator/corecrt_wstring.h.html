@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>corecrt_wstring.h</title>
+    <link rel="stylesheet" href="../Cpp.css" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type="text/javascript" src="../Cpp.js" ></script>
+</head>
+<body>
+<a class="button" href="./FileIndex.html">File Index</a>
+<a class="button" href="./SymbolIndex.html">Symbol Index</a>
+<br>
+<br>
+<div class="codebox"><div class="cpp_default"><div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// corecrt_wstring.h</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//      Copyright (c) Microsoft Corporation. All rights reserved.</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// This file declares the wide character (wchar_t) string functionality, shared</div>
+<div class="token cpp_comment ">// by &lt;string.h&gt; and &lt;wchar.h&gt;.</div>
+<div class="token cpp_comment ">//</div>
+#pragma once
+
+<div class="disabled"/>#include &lt;corecrt.h&gt;</div>
+<div class="disabled"/>#include &lt;vcruntime_string.h&gt;</div>
+
+<div class="disabled"/>#ifndef __midl</div>
+
+<div class="expandable"/><div class="disabled"/>_CRT_BEGIN_C_HEADER</div>
+<div class="expanded"><div class="token cpp_keyword ">__pragma</div>(pack(push, <div class="token cpp_number ">8</div>)) <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C&quot;</div> {</div></div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Secure Alternatives</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#if __STDC_WANT_SECURE_LIB__</div>
+
+<div class="disabled"/>    _Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP errno_t __cdecl wcscat_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscat_s"><div><div class="token cpp_function">wcscat_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_updates_z_(_SizeInWords) wchar_t* _Destination,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_ rsize_t _SizeInWords,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div> _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _Source</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source</div></div>
+        );
+
+<div class="disabled"/>    _Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP errno_t __cdecl wcscpy_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscpy_s"><div><div class="token cpp_function">wcscpy_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Out_writes_z_(_SizeInWords) wchar_t* _Destination,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_ rsize_t _SizeInWords,</div>
+<div class="expanded">          <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div> _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _Source</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source</div></div>
+        );
+
+<div class="disabled"/>    _Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP errno_t __cdecl wcsncat_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsncat_s"><div><div class="token cpp_function">wcsncat_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_updates_z_(_SizeInWords) wchar_t*       _Destination,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>*       _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                            rsize_t        _SizeInWords,</div>
+<div class="expanded">                                     <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div>        _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_reads_or_z_(_MaxCount)      wchar_t const* _Source,</div>
+<div class="expanded">               <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                            rsize_t        _MaxCount</div>
+<div class="expanded">                                     <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div>        _MaxCount</div></div>
+        );
+
+<div class="disabled"/>    _Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP errno_t __cdecl wcsncpy_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsncpy_s"><div><div class="token cpp_function">wcsncpy_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Out_writes_z_(_SizeInWords) wchar_t*       _Destination,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>*       _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                         rsize_t        _SizeInWords,</div>
+<div class="expanded">                                  <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div>        _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_reads_or_z_(_MaxCount)   wchar_t const* _Source,</div>
+<div class="expanded">            <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                         rsize_t        _MaxCount</div>
+<div class="expanded">                                  <div class="ref" onclick="jumpToSymbol([], ['rsize_t'], [])"><div class="token cpp_type">rsize_t</div></div>        _MaxCount</div></div>
+        );
+
+<div class="disabled"/>    _Check_return_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcstok_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcstok_s"><div><div class="token cpp_function">wcstok_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_opt_z_                 wchar_t*       _String,</div>
+<div class="expanded">                          <div class="token cpp_keyword ">wchar_t</div>*       _String,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_                        wchar_t const* _Delimiter,</div>
+<div class="expanded">                                 <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Delimiter,</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_ _Deref_prepost_opt_z_ wchar_t**      _Context</div>
+<div class="expanded">            <div class="token cpp_keyword ">wchar_t</div>**      _Context</div></div>
+        );
+
+<div class="disabled"/>#endif // __STDC_WANT_SECURE_LIB__</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Wide-Character &lt;string.h&gt; Functions</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled"/>    #pragma push_macro(&quot;_wcsdup&quot;)</div>
+<div class="disabled"/>    #undef _wcsdup
+#endif</div>
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP _CRTALLOCATOR wchar_t* __cdecl _wcsdup(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">__declspec</div>(allocator) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsdup"><div><div class="token cpp_function">_wcsdup</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String</div></div>
+    );
+
+<div class="disabled"/>#if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled"/>    #pragma pop_macro(&quot;_wcsdup&quot;)
+#endif</div>
+
+
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, wcscat_s,
+           wchar_t,        _Destination,
+    _In_z_ wchar_t const*, _Source
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> wcscat_s(<div class="token cpp_keyword ">wchar_t</div> (&amp;_Destination)[_Size],   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> wcscat_s(_Destination, _Size, _Source); } }</div></div>
+
+<div class="disabled"/>#ifndef RC_INVOKED</div>
+
+#pragma warning(push)
+<div class="expandable"/><div class="disabled"/>#pragma warning(disable: 28719) // __WARNING_BANNED_API_USAGE</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">28719</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>#pragma warning(disable: 28726) // __WARNING_BANNED_API_USAGEL2</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">28726</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>    __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1(
+        wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, wcscat,
+        _Inout_updates_z_(_String_length_(_Destination) + _String_length_(_Source) + 1), wchar_t,        _Destination,
+        _In_z_                                                                           wchar_t const*, _Source
+        )</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcscat_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscat"><div><div class="token cpp_function">wcscat</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *_Destination,  <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source);</div></div>
+#pragma warning(pop)
+<div class="disabled"/>#endif</div>
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl wcscmp(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscmp"><div><div class="token cpp_function">wcscmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String2</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, wcscpy_s,
+           wchar_t,        _Destination,
+    _In_z_ wchar_t const*, _Source
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> wcscpy_s(<div class="token cpp_keyword ">wchar_t</div> (&amp;_Destination)[_Size],   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> wcscpy_s(_Destination, _Size, _Source); } }</div></div>
+
+#pragma warning(push)
+<div class="expandable"/><div class="disabled"/>#pragma warning(disable: 28719) // __WARNING_BANNED_API_USAGE</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">28719</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>#pragma warning(disable: 28726) // __WARNING_BANNED_API_USAGEL2</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">28726</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, wcscpy,
+    _Out_writes_z_(_String_length_(_Source) + 1), wchar_t,        _Destination,
+    _In_z_                                        wchar_t const*, _Source
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcscpy_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscpy"><div><div class="token cpp_function">wcscpy</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *_Destination,  <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source);</div></div>
+#pragma warning(pop)
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl wcscspn(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscspn"><div><div class="token cpp_function">wcscspn</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Control</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Control</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl wcslen(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcslen"><div><div class="token cpp_function">wcslen</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="disabled"/>_When_(
+    _MaxCount &gt; _String_length_(_Source),
+    _Post_satisfies_(return == _String_length_(_Source))
+)</div>
+<div class="disabled"/>_When_(
+    _MaxCount &lt;= _String_length_(_Source),
+    _Post_satisfies_(return == _MaxCount)
+)</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl wcsnlen(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsnlen"><div><div class="token cpp_function">wcsnlen</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _Source,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="disabled"/>#if __STDC_WANT_SECURE_LIB__ &amp;&amp; !defined(__midl)</div>
+
+<div class="disabled"/>    _Check_return_</div>
+<div class="disabled"/>    _When_(
+        _MaxCount &gt; _String_length_(_Source),
+        _Post_satisfies_(return == _String_length_(_Source))
+    )</div>
+<div class="disabled"/>    _When_(
+        _MaxCount &lt;= _String_length_(_Source),
+        _Post_satisfies_(return == _MaxCount)
+    )</div>
+<div class="expandable"/><div class="disabled"/>    static __inline size_t __CRTDECL wcsnlen_s(</div>
+<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcsnlen_s"><div><div class="token cpp_function">wcsnlen_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_reads_or_z_(_MaxCount) wchar_t const* _Source,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="Decl$wcsnlen_s::_Source"><div><div class="token cpp_argument">_Source</div></div></div>,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                       size_t         _MaxCount</div>
+<div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         <div class="def" id="Decl$wcsnlen_s::_MaxCount"><div><div class="token cpp_argument">_MaxCount</div></div></div></div></div>
+        )
+    {
+        <div class="token cpp_keyword ">return</div> (<div class="ref" onclick="jumpToSymbol([], ['wcsnlen_s::_Source'], [])"><div class="token cpp_argument">_Source</div></div> == <div class="token cpp_number ">0</div>) ? <div class="token cpp_number ">0</div> : <div class="ref" onclick="jumpToSymbol(['wcsnlen'], ['wcsnlen'], [])"><div class="token cpp_function">wcsnlen</div></div>(<div class="ref" onclick="jumpToSymbol([], ['wcsnlen_s::_Source'], [])"><div class="token cpp_argument">_Source</div></div>, <div class="ref" onclick="jumpToSymbol([], ['wcsnlen_s::_MaxCount'], [])"><div class="token cpp_argument">_MaxCount</div></div>);
+    }
+
+<div class="disabled"/>#endif // __STDC_WANT_SECURE_LIB__ &amp;&amp; !defined(__midl)</div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2(
+    errno_t, wcsncat_s,
+    _Prepost_z_             wchar_t,        _Destination,
+    _In_reads_or_z_(_Count) wchar_t const*, _Source,
+    _In_                    size_t,         _Count
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> wcsncat_s(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_Destination)[_Size],   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,   size_t _Count) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> wcsncat_s(_Destination, _Size, _Source, _Count); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, wcsncat, wcsncat_s,
+    _Inout_updates_z_(_Size)   wchar_t,
+    _Inout_updates_z_(_Count), wchar_t,        _Destination,
+    _In_reads_or_z_(_Count)    wchar_t const*, _Source,
+    _In_                       size_t,         _Count
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcsncat_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsncat"><div><div class="token cpp_function">wcsncat</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> *_Destination,   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,   <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Count);</div></div>
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl wcsncmp(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsncmp"><div><div class="token cpp_function">wcsncmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2(
+    errno_t, wcsncpy_s,
+                            wchar_t,        _Destination,
+    _In_reads_or_z_(_Count) wchar_t const*, _Source,
+    _In_                    size_t,         _Count
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> wcsncpy_s(<div class="token cpp_keyword ">wchar_t</div> (&amp;_Destination)[_Size],   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,   size_t _Count) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> wcsncpy_s(_Destination, _Size, _Source, _Count); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, wcsncpy, wcsncpy_s,
+    _Pre_notnull_ _Post_maybez_         wchar_t,
+    _Out_writes_(_Count) _Post_maybez_, wchar_t,        _Destination,
+    _In_reads_or_z_(_Count)             wchar_t const*, _Source,
+    _In_                                size_t,         _Count
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcsncpy_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsncpy"><div><div class="token cpp_function">wcsncpy</div></div></div>(    <div class="token cpp_keyword ">wchar_t</div> *_Destination,   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,   <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Count);</div></div>
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP wchar_t _CONST_RETURN* __cdecl wcspbrk(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcspbrk"><div><div class="token cpp_function">wcspbrk</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Control</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Control</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl wcsspn(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsspn"><div><div class="token cpp_function">wcsspn</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _Control</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Control</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_ _CRT_INSECURE_DEPRECATE(wcstok_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcstok_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP wchar_t* __cdecl wcstok(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcstok"><div><div class="token cpp_function">wcstok</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_opt_z_                     wchar_t*       _String,</div>
+<div class="expanded">                          <div class="token cpp_keyword ">wchar_t</div>*       _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_                            wchar_t const* _Delimiter,</div>
+<div class="expanded">                                 <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Delimiter,</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_opt_ _Deref_prepost_opt_z_ wchar_t**      _Context</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>**      _Context</div></div>
+    );
+
+<div class="disabled"/>#if !defined RC_INVOKED &amp;&amp; !defined __midl</div>
+
+<div class="disabled"/>    #if defined _CRT_NON_CONFORMING_WCSTOK</div>
+<div class="disabled"/>        #define _WCSTOK_DEPRECATED _CRT_INSECURE_DEPRECATE(wcstok_s)
+    #else</div>
+<div class="disabled"/>        #define _WCSTOK_DEPRECATED _CRT_DEPRECATE_TEXT(                           \</div>
+<div class="disabled"/>                &quot;wcstok has been changed to conform with the ISO C standard, &quot;    \</div>
+<div class="disabled"/>                &quot;adding an extra context parameter. To use the legacy Microsoft &quot; \</div>
+<div class="disabled"/>                &quot;wcstok, define _CRT_NON_CONFORMING_WCSTOK.&quot;)
+    #endif</div>
+
+<div class="expandable"/><div class="disabled"/>    #pragma warning(push)</div>
+<div class="expanded">#pragma warning(push)</div></div>
+<div class="expandable"/><div class="disabled"/>    #pragma warning(disable: 4141 4996) // Deprecated function use</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">4141</div> <div class="token cpp_number ">4996</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>    #pragma warning(disable: 28719 28726 28727) // wcstok is banned by dontuse.h</div>
+<div class="expanded">#pragma warning(disable: <div class="token cpp_number ">28719</div> <div class="token cpp_number ">28726</div> <div class="token cpp_number ">28727</div>) </div></div>
+<div class="expandable"/><div class="disabled"/>    _Check_return_ _CRT_INSECURE_DEPRECATE(wcstok_s)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;wcstok_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>    static __inline wchar_t* __CRTDECL _wcstok(</div>
+<div class="expanded">    <div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">__inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$_wcstok"><div><div class="token cpp_function">_wcstok</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_opt_z_ wchar_t*       const _String,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>*       <div class="token cpp_keyword ">const</div> <div class="def" id="Decl$_wcstok::_String"><div><div class="token cpp_argument">_String</div></div></div>,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_        wchar_t const* const _Delimiter</div>
+<div class="expanded">                 <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="token cpp_keyword ">const</div> <div class="def" id="Decl$_wcstok::_Delimiter"><div><div class="token cpp_argument">_Delimiter</div></div></div></div></div>
+        )
+    {
+        <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['wcstok'], ['wcstok', 'wcstok2'], [])"><div class="token cpp_function">wcstok</div></div>(<div class="ref" onclick="jumpToSymbol([], ['_wcstok::_String'], [])"><div class="token cpp_argument">_String</div></div>, <div class="ref" onclick="jumpToSymbol([], ['_wcstok::_Delimiter'], [])"><div class="token cpp_argument">_Delimiter</div></div>, <div class="token cpp_number ">0</div>);
+    }
+
+<div class="disabled"/>    #if defined _CRT_NON_CONFORMING_WCSTOK &amp;&amp; !defined __cplusplus</div>
+<div class="disabled"/>        #define wcstok _wcstok
+    #endif</div>
+
+<div class="disabled"/>    #if defined __cplusplus &amp;&amp; !defined _CRT_NO_INLINE_DEPRECATED_WCSTOK</div>
+<div class="expandable"/><div class="disabled"/>        extern &quot;C++&quot; _Check_return_ _WCSTOK_DEPRECATED</div>
+<div class="expanded">        <div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div>   <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;wcstok has been changed to conform with the ISO C standard, &quot;</div> <div class="token cpp_string ">&quot;adding an extra context parameter. To use the legacy Microsoft &quot;</div> <div class="token cpp_string ">&quot;wcstok, define _CRT_NON_CONFORMING_WCSTOK.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>        inline wchar_t* __CRTDECL wcstok(</div>
+<div class="expanded">        <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcstok2"><div><div class="token cpp_function">wcstok</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>            _Inout_opt_z_ wchar_t*       _String,</div>
+<div class="expanded">              <div class="token cpp_keyword ">wchar_t</div>*       <div class="def" id="Decl$wcstok2::_String"><div><div class="token cpp_argument">_String</div></div></div>,</div></div>
+<div class="expandable"/><div class="disabled"/>            _In_z_        wchar_t const* _Delimiter</div>
+<div class="expanded">                     <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="Decl$wcstok2::_Delimiter"><div><div class="token cpp_argument">_Delimiter</div></div></div></div></div>
+            ) <div class="token cpp_keyword ">throw</div>()
+        {
+            <div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['wcstok'], ['wcstok', 'wcstok2'], [])"><div class="token cpp_function">wcstok</div></div>(<div class="ref" onclick="jumpToSymbol([], ['wcstok2::_String'], [])"><div class="token cpp_argument">_String</div></div>, <div class="ref" onclick="jumpToSymbol([], ['wcstok2::_Delimiter'], [])"><div class="token cpp_argument">_Delimiter</div></div>, <div class="token cpp_number ">0</div>);
+        }
+<div class="disabled"/>    #endif</div>
+
+<div class="expandable"/><div class="disabled"/>    #pragma warning(pop)</div>
+<div class="expanded">#pragma warning(pop)</div></div>
+
+<div class="disabled"/>#endif // !defined RC_INVOKED &amp;&amp; !defined __midl</div>
+
+
+
+<div class="disabled"/>_Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>_Check_return_ _CRT_INSECURE_DEPRECATE(_wcserror_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcserror_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP wchar_t* __cdecl _wcserror(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcserror"><div><div class="token cpp_function">_wcserror</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_ int _ErrorNumber</div>
+<div class="expanded">      <div class="token cpp_keyword ">int</div> _ErrorNumber</div></div>
+    );
+
+<div class="disabled"/>_Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP errno_t __cdecl _wcserror_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcserror_s"><div><div class="token cpp_function">_wcserror_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Out_writes_opt_z_(_SizeInWords) wchar_t* _Buffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _Buffer,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                             size_t   _SizeInWords,</div>
+<div class="expanded">                                  <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                             int      _ErrorNumber</div>
+<div class="expanded">                                  <div class="token cpp_keyword ">int</div>      _ErrorNumber</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wcserror_s,
+         wchar_t, _Buffer,
+    _In_ int,     _Error
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcserror_s(<div class="token cpp_keyword ">wchar_t</div> (&amp;_Buffer)[_Size],   <div class="token cpp_keyword ">int</div> _Error) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcserror_s(_Buffer, _Size, _Error); } }</div></div>
+
+<div class="disabled"/>_Ret_z_</div>
+<div class="disabled"/>_Success_(return != 0)</div>
+<div class="expandable"/><div class="disabled"/>_Check_return_ _CRT_INSECURE_DEPRECATE(__wcserror_s)</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;__wcserror_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP wchar_t* __cdecl __wcserror(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$__wcserror"><div><div class="token cpp_function">__wcserror</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_z_ wchar_t const* _String</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_wat_ _ACRTIMP_ALT errno_t __cdecl __wcserror_s(</div>
+<div class="expanded"> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$__wcserror_s"><div><div class="token cpp_function">__wcserror_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Out_writes_opt_z_(_SizeInWords) wchar_t*       _Buffer,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>*       _Buffer,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                             size_t         _SizeInWords,</div>
+<div class="expanded">                                  <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_                           wchar_t const* _ErrorMessage</div>
+<div class="expanded">                                <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _ErrorMessage</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, __wcserror_s,
+           wchar_t,        _Buffer,
+    _In_z_ wchar_t const*, _ErrorMessage
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> __wcserror_s(<div class="token cpp_keyword ">wchar_t</div> (&amp;_Buffer)[_Size],   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _ErrorMessage) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> __wcserror_s(_Buffer, _Size, _ErrorMessage); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>_Check_return_ _ACRTIMP int __cdecl _wcsicmp(</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsicmp"><div><div class="token cpp_function">_wcsicmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String2</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_ _ACRTIMP int __cdecl _wcsicmp_l(</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsicmp_l"><div><div class="token cpp_function">_wcsicmp_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String1,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String2,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_ _locale_t      _Locale</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_ _ACRTIMP int __cdecl _wcsnicmp(</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnicmp"><div><div class="token cpp_function">_wcsnicmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_ _ACRTIMP int __cdecl _wcsnicmp_l(</div>
+<div class="expanded">  <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnicmp_l"><div><div class="token cpp_function">_wcsnicmp_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount,</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                   _locale_t      _Locale</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_wat_ _ACRTIMP errno_t __cdecl _wcsnset_s(</div>
+<div class="expanded"> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnset_s"><div><div class="token cpp_function">_wcsnset_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_SizeInWords) wchar_t* _Destination,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            size_t   _SizeInWords,</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            wchar_t  _Value,</div>
+<div class="expanded">                                 <div class="token cpp_keyword ">wchar_t</div>  _Value,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            size_t   _MaxCount</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _MaxCount</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_2(
+    errno_t, _wcsnset_s,
+    _Prepost_z_ wchar_t, _Destination,
+    _In_        wchar_t, _Value,
+    _In_         size_t, _MaxCount
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcsnset_s(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_Destination)[_Size],   <div class="token cpp_keyword ">wchar_t</div> _Value,   size_t _MaxCount) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcsnset_s(_Destination, _Size, _Value, _MaxCount); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_NFUNC_0_2_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcsnset, _wcsnset_s,
+    _Inout_updates_z_(_Size)      wchar_t,
+    _Inout_updates_z_(_MaxCount), wchar_t, _String,
+    _In_                          wchar_t, _Value,
+    _In_                          size_t,  _MaxCount
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcsnset_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnset"><div><div class="token cpp_function">_wcsnset</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> *_String,   <div class="token cpp_keyword ">wchar_t</div> _Value,   <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _MaxCount);</div></div>
+
+<div class="expandable"/><div class="disabled"/>_ACRTIMP wchar_t* __cdecl _wcsrev(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsrev"><div><div class="token cpp_function">_wcsrev</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_z_ wchar_t* _String</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _String</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>_Check_return_wat_ _ACRTIMP errno_t __cdecl _wcsset_s(</div>
+<div class="expanded"> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsset_s"><div><div class="token cpp_function">_wcsset_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_SizeInWords) wchar_t* _Destination,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            size_t   _SizeInWords,</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            wchar_t  _Value</div>
+<div class="expanded">                                 <div class="token cpp_keyword ">wchar_t</div>  _Value</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wcsset_s,
+    _Prepost_z_ wchar_t, _String,
+    _In_        wchar_t, _Value
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcsset_s(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_String)[_Size],   <div class="token cpp_keyword ">wchar_t</div> _Value) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcsset_s(_String, _Size, _Value); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcsset, _wcsset_s,
+    _Inout_updates_z_(_Size) wchar_t,
+    _Inout_z_,               wchar_t, _String,
+    _In_                     wchar_t, _Value
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcsset_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsset"><div><div class="token cpp_function">_wcsset</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> *_String,   <div class="token cpp_keyword ">wchar_t</div> _Value);</div></div>
+
+<div class="expandable"/><div class="disabled"/>_Check_return_wat_ _ACRTIMP errno_t __cdecl _wcslwr_s(</div>
+<div class="expanded"> <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcslwr_s"><div><div class="token cpp_function">_wcslwr_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_SizeInWords) wchar_t* _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            size_t   _SizeInWords</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _SizeInWords</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(
+    errno_t, _wcslwr_s,
+    _Prepost_z_ wchar_t, _String
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcslwr_s(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_String)[_Size]) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcslwr_s(_String, _Size); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcslwr,
+    _Inout_z_, wchar_t, _String
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcslwr_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcslwr"><div><div class="token cpp_function">_wcslwr</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *_String);</div></div>
+
+<div class="disabled"/>_Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP errno_t __cdecl _wcslwr_s_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcslwr_s_l"><div><div class="token cpp_function">_wcslwr_s_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_SizeInWords) wchar_t*  _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>*  _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                            size_t    _SizeInWords,</div>
+<div class="expanded">                                 <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>    _SizeInWords,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                        _locale_t _Locale</div>
+<div class="expanded">                             <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div> _Locale</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wcslwr_s_l,
+    _Prepost_z_ wchar_t,   _String,
+    _In_opt_    _locale_t, _Locale
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcslwr_s_l(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_String)[_Size],   _locale_t _Locale) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcslwr_s_l(_String, _Size, _Locale); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcslwr_l, _wcslwr_s_l,
+    _Inout_updates_z_(_Size) wchar_t,
+    _Inout_z_,               wchar_t,   _String,
+    _In_opt_                 _locale_t, _Locale
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcslwr_s_l&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcslwr_l"><div><div class="token cpp_function">_wcslwr_l</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> *_String,   <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div> _Locale);</div></div>
+
+<div class="disabled"/>_Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP errno_t __cdecl _wcsupr_s(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsupr_s"><div><div class="token cpp_function">_wcsupr_s</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_Size) wchar_t* _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                     size_t   _Size</div>
+<div class="expanded">                          <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _Size</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_0(
+    errno_t, _wcsupr_s,
+    _Prepost_z_ wchar_t, _String
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcsupr_s(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_String)[_Size]) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcsupr_s(_String, _Size); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_0(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcsupr,
+    _Inout_z_, wchar_t, _String
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcsupr_s&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsupr"><div><div class="token cpp_function">_wcsupr</div></div></div>( <div class="token cpp_keyword ">wchar_t</div> *_String);</div></div>
+
+<div class="disabled"/>_Check_return_wat_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP errno_t __cdecl _wcsupr_s_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['errno_t'], [])"><div class="token cpp_type">errno_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsupr_s_l"><div><div class="token cpp_function">_wcsupr_s_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Inout_updates_z_(_Size) wchar_t*  _String,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div>*  _String,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                     size_t    _Size,</div>
+<div class="expanded">                          <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>    _Size,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                 _locale_t _Locale</div>
+<div class="expanded">                      <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div> _Locale</div></div>
+    );
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_SECURE_FUNC_0_1(
+    errno_t, _wcsupr_s_l,
+    _Prepost_z_ wchar_t,   _String,
+    _In_opt_    _locale_t, _Locale
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> { <div class="token cpp_keyword ">template</div> &lt;<div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> _Size&gt; <div class="token cpp_keyword ">inline</div> errno_t <div class="token cpp_keyword ">__cdecl</div> _wcsupr_s_l(  <div class="token cpp_keyword ">wchar_t</div> (&amp;_String)[_Size],   _locale_t _Locale) <div class="token cpp_keyword ">throw</div>() { <div class="token cpp_keyword ">return</div> _wcsupr_s_l(_String, _Size, _Locale); } }</div></div>
+
+<div class="expandable"/><div class="disabled"/>__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_0_1_EX(
+    wchar_t*, __RETURN_POLICY_DST, _ACRTIMP, _wcsupr_l, _wcsupr_s_l,
+    _Inout_updates_z_(_Size) wchar_t,
+    _Inout_z_,               wchar_t,   _String,
+    _In_opt_                 _locale_t, _Locale
+    )</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;This function or variable may be unsafe. Consider using &quot;</div> <div class="token cpp_string ">&quot;_wcsupr_s_l&quot;</div> <div class="token cpp_string ">&quot; instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. &quot;</div> <div class="token cpp_string ">&quot;See online help for details.&quot;</div>)) <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsupr_l"><div><div class="token cpp_function">_wcsupr_l</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div> *_String,   <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div> _Locale);</div></div>
+
+<div class="disabled"/>_Success_(return &lt; _MaxCount)</div>
+<div class="disabled"/>_Check_return_opt_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl wcsxfrm(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsxfrm"><div><div class="token cpp_function">wcsxfrm</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Out_writes_opt_(_MaxCount) _Post_maybez_ wchar_t*       _Destination,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>*       _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_                                    wchar_t const* _Source,</div>
+<div class="expanded">                                         <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_ _In_range_(&lt;= ,_CRT_INT_MAX)         size_t         _MaxCount</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="disabled"/>_Success_(return &lt; _MaxCount)</div>
+<div class="disabled"/>_Check_return_opt_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP size_t __cdecl _wcsxfrm_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsxfrm_l"><div><div class="token cpp_function">_wcsxfrm_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _Out_writes_opt_(_MaxCount) _Post_maybez_ wchar_t*       _Destination,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div>*       _Destination,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_                                    wchar_t const* _Source,</div>
+<div class="expanded">                                         <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _Source,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_ _In_range_(&lt;= ,_CRT_INT_MAX)         size_t         _MaxCount,</div>
+<div class="expanded">                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                                  _locale_t      _Locale</div>
+<div class="expanded">                                       <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl wcscoll(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcscoll"><div><div class="token cpp_function">wcscoll</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String2</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcscoll_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcscoll_l"><div><div class="token cpp_function">_wcscoll_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String1,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String2,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_ _locale_t      _Locale</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsicoll(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsicoll"><div><div class="token cpp_function">_wcsicoll</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_ wchar_t const* _String2</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsicoll_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsicoll_l"><div><div class="token cpp_function">_wcsicoll_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String1,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_z_   wchar_t const* _String2,</div>
+<div class="expanded">        <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_ _locale_t      _Locale</div>
+<div class="expanded">      <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsncoll(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsncoll"><div><div class="token cpp_function">_wcsncoll</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsncoll_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsncoll_l"><div><div class="token cpp_function">_wcsncoll_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount,</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                   _locale_t      _Locale</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsnicoll(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnicoll"><div><div class="token cpp_function">_wcsnicoll</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+    );
+
+<div class="disabled"/>_Check_return_</div>
+<div class="expandable"/><div class="disabled"/>_ACRTIMP int __cdecl _wcsnicoll_l(</div>
+<div class="expanded"><div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$_wcsnicoll_l"><div><div class="token cpp_function">_wcsnicoll_l</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">      <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_                       size_t         _MaxCount,</div>
+<div class="expanded">                            <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount,</div></div>
+<div class="expandable"/><div class="disabled"/>    _In_opt_                   _locale_t      _Locale</div>
+<div class="expanded">                        <div class="ref" onclick="jumpToSymbol([], ['_locale_t'], [])"><div class="token cpp_type">_locale_t</div></div>      _Locale</div></div>
+    );
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Inline C++ Overloads</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#ifdef __cplusplus</div>
+<div class="token cpp_keyword ">extern</div> <div class="token cpp_string ">&quot;C++&quot;</div> {
+
+<div class="disabled"/>    _Check_return_</div>
+<div class="disabled"/>    _When_(return != NULL, _Ret_range_(_String, _String+_String_length_(_String)-1))</div>
+<div class="expandable"/><div class="disabled"/>    inline wchar_t* __CRTDECL wcschr(_In_z_ wchar_t* _String, wchar_t _C)</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcschr2"><div><div class="token cpp_function">wcschr</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="Decl$wcschr2::_String"><div><div class="token cpp_argument">_String</div></div></div>, <div class="token cpp_keyword ">wchar_t</div> <div class="def" id="Decl$wcschr2::_C"><div><div class="token cpp_argument">_C</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">const_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div>*&gt;(<div class="ref" onclick="jumpToSymbol(['wcschr'], ['wcschr', 'wcschr2'], [])"><div class="token cpp_function">wcschr</div></div>(<div class="token cpp_keyword ">static_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['wcschr2::_String'], [])"><div class="token cpp_argument">_String</div></div>), <div class="ref" onclick="jumpToSymbol([], ['wcschr2::_C'], [])"><div class="token cpp_argument">_C</div></div>));
+    }
+
+<div class="disabled"/>    _Check_return_</div>
+<div class="expandable"/><div class="disabled"/>    inline wchar_t* __CRTDECL wcspbrk(_In_z_ wchar_t* _String, _In_z_ wchar_t const* _Control)</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcspbrk2"><div><div class="token cpp_function">wcspbrk</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="Decl$wcspbrk2::_String"><div><div class="token cpp_argument">_String</div></div></div>,   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* <div class="def" id="Decl$wcspbrk2::_Control"><div><div class="token cpp_argument">_Control</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">const_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div>*&gt;(<div class="ref" onclick="jumpToSymbol(['wcspbrk'], ['wcspbrk', 'wcspbrk2'], [])"><div class="token cpp_function">wcspbrk</div></div>(<div class="token cpp_keyword ">static_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['wcspbrk2::_String'], [])"><div class="token cpp_argument">_String</div></div>), <div class="ref" onclick="jumpToSymbol([], ['wcspbrk2::_Control'], [])"><div class="token cpp_argument">_Control</div></div>));
+    }
+
+<div class="disabled"/>    _Check_return_</div>
+<div class="expandable"/><div class="disabled"/>    inline wchar_t* __CRTDECL wcsrchr(_In_z_ wchar_t* _String, _In_ wchar_t _C)</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcsrchr2"><div><div class="token cpp_function">wcsrchr</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="Decl$wcsrchr2::_String"><div><div class="token cpp_argument">_String</div></div></div>,   <div class="token cpp_keyword ">wchar_t</div> <div class="def" id="Decl$wcsrchr2::_C"><div><div class="token cpp_argument">_C</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">const_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div>*&gt;(<div class="ref" onclick="jumpToSymbol(['wcsrchr'], ['wcsrchr', 'wcsrchr2'], [])"><div class="token cpp_function">wcsrchr</div></div>(<div class="token cpp_keyword ">static_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['wcsrchr2::_String'], [])"><div class="token cpp_argument">_String</div></div>), <div class="ref" onclick="jumpToSymbol([], ['wcsrchr2::_C'], [])"><div class="token cpp_argument">_C</div></div>));
+    }
+
+<div class="disabled"/>    _Check_return_ _Ret_maybenull_</div>
+<div class="disabled"/>    _When_(return != NULL, _Ret_range_(_String, _String+_String_length_(_String)-1))</div>
+<div class="expandable"/><div class="disabled"/>    inline wchar_t* __CRTDECL wcsstr(_In_z_ wchar_t* _String, _In_z_ wchar_t const*_SubStr)</div>
+<div class="expanded">    <div class="token cpp_keyword ">inline</div> <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Decl$wcsstr2"><div><div class="token cpp_function">wcsstr</div></div></div>(  <div class="token cpp_keyword ">wchar_t</div>* <div class="def" id="Decl$wcsstr2::_String"><div><div class="token cpp_argument">_String</div></div></div>,   <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*<div class="def" id="Decl$wcsstr2::_SubStr"><div><div class="token cpp_argument">_SubStr</div></div></div>)</div></div>
+    {
+        <div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">const_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div>*&gt;(<div class="ref" onclick="jumpToSymbol(['wcsstr'], ['wcsstr', 'wcsstr2'], [])"><div class="token cpp_function">wcsstr</div></div>(<div class="token cpp_keyword ">static_cast</div>&lt;<div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['wcsstr2::_String'], [])"><div class="token cpp_argument">_String</div></div>), <div class="ref" onclick="jumpToSymbol([], ['wcsstr2::_SubStr'], [])"><div class="token cpp_argument">_SubStr</div></div>));
+    }
+
+}
+<div class="disabled"/>#endif // __cplusplus</div>
+
+
+
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">// Non-Standard Names</div>
+<div class="token cpp_comment ">//</div>
+<div class="token cpp_comment ">//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</div>
+<div class="disabled"/>#if _CRT_INTERNAL_NONSTDC_NAMES</div>
+<div class="disabled"/>    #if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled"/>        #pragma push_macro(&quot;wcsdup&quot;)</div>
+<div class="disabled"/>        #undef wcsdup
+    #endif</div>
+
+<div class="expandable"/><div class="disabled"/>    _Check_return_ _CRT_NONSTDC_DEPRECATE(_wcsdup)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsdup&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcsdup(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsdup"><div><div class="token cpp_function">wcsdup</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _String</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String</div></div>
+        );
+
+<div class="disabled"/>    #if defined _DEBUG &amp;&amp; defined _CRTDBG_MAP_ALLOC</div>
+<div class="disabled"/>        #pragma pop_macro(&quot;wcsdup&quot;)
+    #endif</div>
+
+    <div class="token cpp_comment ">// Declarations of functions defined in oldnames.lib:</div>
+<div class="disabled"/>    #define wcswcs wcsstr</div>
+
+<div class="expandable"/><div class="disabled"/>    _Check_return_ _CRT_NONSTDC_DEPRECATE(_wcsicmp)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsicmp&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP int __cdecl wcsicmp(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsicmp"><div><div class="token cpp_function">wcsicmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _String2</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _Check_return_ _CRT_NONSTDC_DEPRECATE(_wcsnicmp)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsnicmp&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP int __cdecl wcsnicmp(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsnicmp"><div><div class="token cpp_function">wcsnicmp</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_reads_or_z_(_MaxCount) wchar_t const* _String1,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_reads_or_z_(_MaxCount) wchar_t const* _String2,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                       size_t         _MaxCount</div>
+<div class="expanded">                                <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>         _MaxCount</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _CRT_NONSTDC_DEPRECATE(_wcsnset)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsnset&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="disabled"/>    _Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcsnset(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsnset"><div><div class="token cpp_function">wcsnset</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_updates_z_(_MaxCount) wchar_t* _String,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                         wchar_t  _Value,</div>
+<div class="expanded">                                  <div class="token cpp_keyword ">wchar_t</div>  _Value,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_                         size_t   _MaxCount</div>
+<div class="expanded">                                  <div class="ref" onclick="jumpToSymbol([], ['size_t'], [])"><div class="token cpp_type">size_t</div></div>   _MaxCount</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _CRT_NONSTDC_DEPRECATE(_wcsrev)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsrev&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="disabled"/>    _Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcsrev(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsrev"><div><div class="token cpp_function">wcsrev</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_z_ wchar_t* _String</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _String</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _CRT_NONSTDC_DEPRECATE(_wcsset)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsset&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="disabled"/>    _Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcsset(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsset"><div><div class="token cpp_function">wcsset</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_z_ wchar_t* _String,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _String,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_      wchar_t  _Value</div>
+<div class="expanded">               <div class="token cpp_keyword ">wchar_t</div>  _Value</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _CRT_NONSTDC_DEPRECATE(_wcslwr)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcslwr&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="disabled"/>    _Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcslwr(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcslwr"><div><div class="token cpp_function">wcslwr</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_z_ wchar_t* _String</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _String</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _CRT_NONSTDC_DEPRECATE(_wcsupr)</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsupr&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="disabled"/>    _Ret_z_</div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP wchar_t* __cdecl wcsupr(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">wchar_t</div>* <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsupr"><div><div class="token cpp_function">wcsupr</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _Inout_z_ wchar_t* _String</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div>* _String</div></div>
+        );
+
+<div class="expandable"/><div class="disabled"/>    _Check_return_ _CRT_NONSTDC_DEPRECATE(_wcsicoll)</div>
+<div class="expanded">      <div class="token cpp_keyword ">__declspec</div>(deprecated(<div class="token cpp_string ">&quot;The POSIX name for this item is deprecated. Instead, use the ISO C &quot;</div> <div class="token cpp_string ">&quot;and C++ conformant name: &quot;</div> <div class="token cpp_string ">&quot;_wcsicoll&quot;</div> <div class="token cpp_string ">&quot;. See online help for details.&quot;</div>))</div></div>
+<div class="expandable"/><div class="disabled"/>    _ACRTIMP int __cdecl wcsicoll(</div>
+<div class="expanded">    <div class="token cpp_keyword ">__declspec</div>(dllimport) <div class="token cpp_keyword ">int</div> <div class="token cpp_keyword ">__cdecl</div> <div class="def" id="Forward[0]$wcsicoll"><div><div class="token cpp_function">wcsicoll</div></div></div>(</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _String1,</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String1,</div></div>
+<div class="expandable"/><div class="disabled"/>        _In_z_ wchar_t const* _String2</div>
+<div class="expanded">          <div class="token cpp_keyword ">wchar_t</div> <div class="token cpp_keyword ">const</div>* _String2</div></div>
+        );
+
+<div class="disabled"/>#endif // _CRT_INTERNAL_NONSTDC_NAMES</div>
+
+
+
+<div class="expandable"/><div class="disabled"/>_CRT_END_C_HEADER</div>
+<div class="expanded">} <div class="token cpp_keyword ">__pragma</div>(pack(pop))</div></div>
+
+<div class="disabled"/>#endif // !__midl
+</div>
+</div></div>
+<script type="text/javascript">
+referencedSymbols = {
+    'rsize_t': { 'displayNameInHtml': '<span class="cpp_type">rsize_t</span>', 'definition': true, 'declarations': 0},
+    '_locale_t': { 'displayNameInHtml': '<span class="cpp_type">_locale_t</span>', 'definition': true, 'declarations': 0},
+    'errno_t': { 'displayNameInHtml': '<span class="cpp_type">errno_t</span>', 'definition': true, 'declarations': 0},
+    'size_t': { 'displayNameInHtml': '<span class="cpp_type">size_t</span>', 'definition': true, 'declarations': 0},
+    'wcschr': { 'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)', 'definition': false, 'declarations': 1},
+    'wcsstr': { 'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)', 'definition': false, 'declarations': 1},
+    'wcsrchr': { 'displayNameInHtml': '<span class="cpp_function">wcsrchr</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span>)', 'definition': false, 'declarations': 1},
+    'wcstok': { 'displayNameInHtml': '<span class="cpp_function">wcstok</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span> * *)', 'definition': false, 'declarations': 1},
+    'wcsnlen': { 'displayNameInHtml': '<span class="cpp_function">wcsnlen</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_type">size_t</span>)', 'definition': false, 'declarations': 1},
+    '_wcstok::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    '_wcstok::_Delimiter': { 'displayNameInHtml': '_Delimiter', 'definition': true, 'declarations': 0},
+    'wcstok2::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    'wcsnlen_s::_MaxCount': { 'displayNameInHtml': '_MaxCount', 'definition': true, 'declarations': 0},
+    'wcsnlen_s::_Source': { 'displayNameInHtml': '_Source', 'definition': true, 'declarations': 0},
+    'wcspbrk': { 'displayNameInHtml': '<span class="cpp_function">wcspbrk</span>(<span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)', 'definition': false, 'declarations': 1},
+    'wcstok2': { 'displayNameInHtml': '<span class="cpp_function">wcstok</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)', 'definition': true, 'declarations': 0},
+    'wcstok2::_Delimiter': { 'displayNameInHtml': '_Delimiter', 'definition': true, 'declarations': 0},
+    'wcschr2::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    'wcschr2::_C': { 'displayNameInHtml': '_C', 'definition': true, 'declarations': 0},
+    'wcspbrk2': { 'displayNameInHtml': '<span class="cpp_function">wcspbrk</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)', 'definition': true, 'declarations': 0},
+    'wcspbrk2::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    'wcspbrk2::_Control': { 'displayNameInHtml': '_Control', 'definition': true, 'declarations': 0},
+    'wcsrchr2': { 'displayNameInHtml': '<span class="cpp_function">wcsrchr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)', 'definition': true, 'declarations': 0},
+    'wcschr2': { 'displayNameInHtml': '<span class="cpp_function">wcschr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span>)', 'definition': true, 'declarations': 0},
+    'wcsrchr2::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    'wcsstr2': { 'displayNameInHtml': '<span class="cpp_function">wcsstr</span>(<span class="cpp_keyword">wchar_t</span> *, <span class="cpp_keyword">wchar_t</span><span class="cpp_keyword"> const</span> *)', 'definition': true, 'declarations': 0},
+    'wcsrchr2::_C': { 'displayNameInHtml': '_C', 'definition': true, 'declarations': 0},
+    'wcsstr2::_String': { 'displayNameInHtml': '_String', 'definition': true, 'declarations': 0},
+    'wcsstr2::_SubStr': { 'displayNameInHtml': '_SubStr', 'definition': true, 'declarations': 0}
+};
+symbolToFiles = {
+    'Decl$rsize_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'Decl$_locale_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'Decl$errno_t': { 'htmlFileName': 'corecrt.h', 'displayName': 'corecrt.h' },
+    'Decl$size_t': { 'htmlFileName': 'vcruntime.h', 'displayName': 'vcruntime.h' },
+    'Forward[0]$wcschr': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'Forward[0]$wcsstr': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'Forward[0]$wcsrchr': { 'htmlFileName': 'vcruntime_string.h', 'displayName': 'vcruntime_string.h' },
+    'Forward[0]$wcstok': null,
+    'Forward[0]$wcsnlen': null,
+    'Decl$_wcstok::_String': null,
+    'Decl$_wcstok::_Delimiter': null,
+    'Decl$wcstok2::_String': null,
+    'Decl$wcsnlen_s::_MaxCount': null,
+    'Decl$wcsnlen_s::_Source': null,
+    'Forward[0]$wcspbrk': null,
+    'Decl$wcstok2': null,
+    'Decl$wcstok2::_Delimiter': null,
+    'Decl$wcschr2::_String': null,
+    'Decl$wcschr2::_C': null,
+    'Decl$wcspbrk2': null,
+    'Decl$wcspbrk2::_String': null,
+    'Decl$wcspbrk2::_Control': null,
+    'Decl$wcsrchr2': null,
+    'Decl$wcschr2': null,
+    'Decl$wcsrchr2::_String': null,
+    'Decl$wcsstr2': null,
+    'Decl$wcsrchr2::_C': null,
+    'Decl$wcsstr2::_String': null,
+    'Decl$wcsstr2::_SubStr': null
+};
+turnOnSymbol();
+</script>
+</body>
+</html>
