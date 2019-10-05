@@ -1,64 +1,1608 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GacUI - Home Page</title>
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="./Home.css" />
-    <script src="./Script/Package.js"></script>
-    <script async src="./Script/Class.js"></script>
-    <script async src="./Script/Html/Navigation.js"></script>
-    <script async src="./Script/Html/Razor.js"></script>
-    <script async src="./Script/Html/MVC.js"></script>
-    <script async src="./Script/IO/Delay.js"></script>
-    <script async src="./Script/IO/Resource.js"></script>
-    <script async src="./Script/IO/Wildcard.js"></script>
+<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="global.css">
+<link rel="stylesheet" type="text/css" href="navigation.css">
+<script src="scripts/rootView.js"></script>
+<script src="scripts/articleView.js"></script>
+
 </head>
 <body>
-    <script>
-        Packages.Define("Gaclib.HomePage", ["Html.Navigation", "Html.MVC"], function (__injection__) {
-            eval(__injection__);
-
-            InitializeMvc("~", "./Views/Root.razor.html", "./Views/Loading.razor.html");
-
-            var HomeController = CreateMvcControllerType("MvcTest.HomeController", "./Views/Home.razor.html");
-            RegisterNavigationPath("/", HomeController);
-            RegisterNavigationPath("/Home", HomeController);
-
-            var PostsController = CreateMvcControllerType("MvcTest.TutorialController", "./Views/Tutorial.razor.html");
-            RegisterNavigationPath("/Tutorial", PostsController);
-
-            var PostsController = CreateMvcControllerType("MvcTest.DemoController", "./Views/Demo.razor.html");
-            RegisterNavigationPath("/Demo", PostsController);
-
-            var PostsController = CreateMvcControllerType("MvcTest.DownloadController", "./Views/Download.razor.html");
-            RegisterNavigationPath("/Download", PostsController);
-
-            var PostsController = CreateMvcControllerType("MvcTest.ContactController", "./Views/Contact.razor.html");
-            RegisterNavigationPath("/Contact", PostsController);
-
-            StartNavigation("");
-
-            return {
-            }
-        })
-
-        Packages.Define("Gaclib.API", [], function (__injection__) {
-            eval(__injection__)
-
-            function SelectNavigationButton(button) {
-                navHome.classList.remove("Selected");
-                navTutorial.classList.remove("Selected");
-                navDemo.classList.remove("Selected");
-                navDownload.classList.remove("Selected");
-                navDocument.classList.remove("Selected");
-                navContact.classList.remove("Selected");
-                button.classList.add("Selected");
-            }
-
-            return {
-                SelectNavigationButton: SelectNavigationButton,
-            }
-        })
-    </script>
-</body>
+<div id="MVC-ViewContainer">
+<script lang="javascript">
+{
+  const mvcModel = {};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const activeButton = "Home";
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Welcome to Gaclib!",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Gaclib is a GPU accelerated C++ User Interface library.\r\n            You can find it at "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "github"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            This library provide many useful features.\r\n            If you don't need all features,\r\n            you can just use a subset of released C++ files to reduce the size of the executable.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            More and more developers are using this library to create their applications!\r\n            You could check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "http://www.majorav.com",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "majorav.com"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is a very impressive example.\r\n            Scroll to the end to see screenshots!\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Basic C++ Construction",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Vlpp.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Much more easier to deal with data.\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "shared pointer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "functional constructions"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "containers and Linq"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "simple console read/write operations"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "simple unit test framework"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "OS Abstraction",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppOS.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Access basic OS features easily:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system locale access"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "threading and synchronization"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HTTP client (Windows only)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "file access"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "text encoding detection, serialization and deserialization"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "streaming and redirection"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Regular Expression",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppRegex.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A fast C++ regular expression implementation:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "No backtracking at all regardless how you write the regular expression, if no capturing is required."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Matching multiple regular expressions at the same time, if no capturing is required."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Easy to build your lexical analyzer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Anonymous capturing and named capturing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Sub-expression renaming"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT:"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This regular expression library has little but critical differences about character escaping,\r\n                comparing to other regular expression implementation:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\".\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches the \".\" character"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"\\.\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches any character"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "both \"\\\" and \"/\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " starts a character escaping,\r\n                        which means "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"\\d+\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"/d+\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " are exactly the same.\r\n                        This helps a lot when a regular expression is written in C++ string literal.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Parser Generator",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppParser.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A GLR parser generator for C++.\r\n                This library will be re-shaped in GacUI 2.0.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You are able to write the syntax in a text file,\r\n                and then run "
+              },
+              {
+                "kind": "Name",
+                "text": "ParserGen.exe"
+              },
+              {
+                "kind": "Text",
+                "text": " to generated parser, AST with traverse algorithms in C++.\r\n                You also automatically get predefined parsers and printers for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "XML and JSON"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Reflection",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppReflection.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                C++ Reflection supports.\r\n                Reflection supports\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "primitive types"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "strings"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "functions"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "raw or shared pointers"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "containers"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "structs"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "classes"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "interfaces"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "enums"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For classes, you need to inherit "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::reflection::Description<YourClass>"
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::reflection::AggregatableDescription<YourClass>"
+              },
+              {
+                "kind": "Text",
+                "text": " to enable reflection.\r\n                For interfaces, you need to inherit "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::reflection::IDescriptable"
+              },
+              {
+                "kind": "Text",
+                "text": " to enable reflection.\r\n                At the end, a set of macros need to be called to register all reflectable types and members.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "The Workflow Script Language",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppWorkflowLibrary.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppWorkflowRuntime.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppWorkflowCompiler.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Workflow is a script language that target on C++ inter-operation.\r\n                After compiling the script, you are able to:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Call reflectable C++ classes natively from the script."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Execute the script directly."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Save or load the compiled binary."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Generate the script to C++ code to get a significant performance improvement,\r\n                        without having to take the runtime.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GacUI: Cross platform GPU Accelerated UI Library",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacUI.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacUIWindows.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacUIReflection.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacUICompiler.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DarkSkin.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DarkSkinReflection.h/cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI has a high performance and extensible framework,\r\n                to enable porting to different platform using different rendering engine.\r\n                Windows is ready, macOS and Linux support will be done in 2.0.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI also has a rich set of layouts, controls, skins and data bindings.\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Layouts\r\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Bounds"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Stick to some or all sides of the parent layout,\r\n                                with the ability to do absolute layout.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Stack"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Stack sub-layouts together in different directions.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Flow"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Place sub-layouts in one line, and when the space of the parent layout is not enough,\r\n                                new lines will be created automatically.\r\n                                This can be done in different directions.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Table"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Place sub-layouts in a table,\r\n                                with different row/column configurations to perform a very flexible layout.\r\n                                Table is used widely in GacUI,\r\n                                and the performance is super high,\r\n                                you don't even need to worry about slowing down your application by putting too many layouts in nested tables.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Side and PartialView"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Place sub-layouts and expand them to a specified percentage of the space of the parent layout.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "SharedSizeItem and SharedSizeRoot"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Control sub-layouts in different layouts to have the same width or height.\r\n                                It is very useful when you need to align icons, texts and shortcuts in a menu,\r\n                                but they cannot just be put in a table,\r\n                                because icon, text and shortcut are grouped by menu item controls.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RepeatStack and RepeatFlow"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Bindable Stack and Flow layout.\r\n                            "
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Responsive"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Place sub-layouts in a Responsive layout,\r\n                                and when the size of the responsive layout get changed,\r\n                                sub-layouts will be organized differently with different appearance,\r\n                                according to how large the space is given.\r\n                                Ribbon controls are a very good example of using Responsive layout.\r\n                            "
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            Controls:\r\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Window, Tooltip, CustomControl"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Button, CheckBox, RadioButton, GroupBox, Label"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Scroll, Tracker, ScrollView, ProgressBar, Tab"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DatePicker, DateComboBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "TextList, CheckList, RadioList, ListView, TreeView, DataGrid, ComboBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "SinglelineTextBox, MultilineTextBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DocumentLabel, DocumentTextBox, DocumentViewer"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripMenuBar, ToolstripToolBar, ToolstripButton, ToolstripDropDownButton, ToolstripSplitButton, ToolstripSplitter"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonTab, RibbonGroup, RibbonButtons, RibbonToolstrips, RibbonToolstripMenu"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonIconLabel, RibbonSmallIconLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonGallery, RibbonGalleryList, RibbonGalleryItemList"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonSmallButton, RibbonSmallDropdownButton, RibbonSmallSplitButton, RibbonLargeButton, RibbonLargeDropdownButton, RibbonLargeSplitButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonSplitter, RibbonToolstripHeader"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            Controls and applications are able to be separated into multiple resource files.\r\n                            Here is a demo showing how to share code between two RichEdit application using traditional tool bars and ribbon controls:\r\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "PageLink",
+                                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditor",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Shared code"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": a customized control providing RichEdit features."
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Using "
+                                  },
+                                  {
+                                    "kind": "PageLink",
+                                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorToolstrip",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "traditional tool bars"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " to create a RichEdit application using the first project."
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Using "
+                                  },
+                                  {
+                                    "kind": "PageLink",
+                                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorRibbon",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "ribbon controls"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " to create a RichEdit application using the first project."
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Image",
+                            "src": "/demo_DET.png"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Image",
+                            "src": "/demo_DER.png"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            Skins: GacUI is released with DarkSkin as a default skin.\r\n                            You could create your own skin, or just use DarkSkin to create your application.\r\n                            Please note that a GacUI application has to start with a skin.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            Both control and list item accept skins, called ControlTemplate and ItemTemplate.\r\n                            For example, you are able to customize how data is displayed in a list control using ItemTemplate.\r\n                            You are also able to customize how the control itself renderers using ControlTemplate.\r\n                            ItemTemplate and ControlTemplate can be created using XML, just like normal UI components.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "https://github.com/vczh-libraries/GacUI/tree/master/Source/Skins/DarkSkin",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Here"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is the source code of the built-in skin: DarkSkin.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/TriplePhaseImageButton",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Here"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is the demo showing\r\n                            how to use image resource, control template and customized control together\r\n                            to create a new control: triple-phase image button.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Image",
+                            "src": "/demo_TPIB.png"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            Data Bindings: GacUI has a very powerful data binding feature.\r\n                            You are able to\r\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "create windows, layouts, controls and skins in XML"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "define view models in Workflow"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "bind view model properties to GacUI controls bidirectionally using complex expressions that you could even not imagine"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "implement view models in C++"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            and finally bring them together to work.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            In GacUI controls, there are two kind of properties that accept data binding:\r\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Normal properties that accepts reflectable types"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                                    Some of type "
+                                  },
+                                  {
+                                    "kind": "Name",
+                                    "text": "vl::reflection::descriptions::Value"
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ".\r\n                                    These properties accepts container types, usually called "
+                                  },
+                                  {
+                                    "kind": "Name",
+                                    "text": "ItemSource"
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " in bindable list controls.\r\n                                    If you assign a "
+                                  },
+                                  {
+                                    "kind": "Name",
+                                    "text": "vl::reflection::descriptions::IValueObservableList"
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " object to this property,\r\n                                    which can be obtained by calling "
+                                  },
+                                  {
+                                    "kind": "Name",
+                                    "text": "GetWrapper"
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " of a "
+                                  },
+                                  {
+                                    "kind": "Name",
+                                    "text": "vl::collections::ObservableList"
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " object,\r\n                                    list items will change when the list object is changed.\r\n                                "
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/AddressBook",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Here"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is a demo showing\r\n                            how to bind a object model to a tree view control, a list view control with customized items.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Image",
+                            "src": "/demo_AB.png"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Demoes of full GacUI features can be found "
+              },
+              {
+                "kind": "PageLink",
+                "href": "./demo.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "here"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.activeButton"] = activeButton;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</div></body>
 </html>

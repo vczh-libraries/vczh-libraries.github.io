@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gaclib -- Article</title>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="global.css">
+<link rel="stylesheet" type="text/css" href="navigation.css">
+<script src="scripts/rootView.js"></script>
+<script src="scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer">
+<script lang="javascript">
+{
+  const mvcModel = {};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const activeButton = "Contact";
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Contact Developers",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Gaclib team members:\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vczh (Zihan Chen)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " : Develops everything"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/darkfall",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "darkfall (Ruiwei Bu)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " : Ports GacUI to OSX"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/milizhang",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MiliMeow (Yi Zhang)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " : Ports GacUI to Linux"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.activeButton"] = activeButton;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</div></body>
+</html>
