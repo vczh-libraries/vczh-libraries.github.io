@@ -137,17 +137,17 @@ function promptTooltipDropdownData(dropdownData, underElement) {
  * }[]
  *
  * referencedSymbols: {
- *   [key: string]: {
- *     displayNameInHtml: string,
- *     impls: string[],
- *     decls: string[]
+ *   [key: string]: {               // key: SymbolId
+ *     displayNameInHtml: string,   // rendered as HTML
+ *     impls: string[],             // implementation DeclIds
+ *     decls: string[]              // forward declaration DeclIds
  *   }
  * }
  *
  * symbolToFiles: {
- *   [key: string]: null | {
- *     htmlFileName: string,
- *     displayName: string
+ *   [key: string]: null | {        // key: DeclId (element id in the specified HTML file), value: null -> current file
+ *     htmlFileName: string,        // generated HTML file name (without ".html")
+ *     displayName: string          // display name of source file
  *   }
  * }
  */
@@ -252,11 +252,13 @@ function toggleSymbolDropdown(symbolExpanding) {
 
     let status = containerElement.getAttribute('data-status');
     if (status == 'empty' && symbolExpanding.textContent == '-') {
+        let categoryId = containerElement.getAttribute('data-categoryId');
         let uniqueId = containerElement.getAttribute('data-uniqueId');
         let dropdownElement = containerElement.getElementsByClassName('symbol_dropdown')[0];
 
         containerElement.setAttribute('data-status', 'loading');
-        let url = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'SymbolIndexFragments/' + uniqueId + '.html';
+        let baseUrl = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
+        let url = `${baseUrl}/SymbolIndexFragments/${categoryId}/${uniqueId}.html`;
 
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
