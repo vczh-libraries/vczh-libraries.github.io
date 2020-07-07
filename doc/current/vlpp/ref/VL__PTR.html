@@ -72,24 +72,6 @@
                   ]
                 },
                 {
-                  "name": "function Combine",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__COMBINE@__VL__FUNC___VL__FUNCTION_COMBINING__COMBINING@_[R1]"
-                  ]
-                },
-                {
-                  "name": "function Combiner",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__COMBINER@__VL__FUNC___VL__FUNC_[T]_(__VL__FUNC_[T]_,___VL__F"
-                  ]
-                },
-                {
                   "name": "function Curry",
                   "selected": false,
                   "path": [
@@ -195,15 +177,6 @@
                   ]
                 },
                 {
-                  "name": "function InitializeGlobalStorage",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__INITIALIZEGLOBALSTORAGE@VOID()"
-                  ]
-                },
-                {
                   "name": "class Interface",
                   "selected": false,
                   "path": [
@@ -228,6 +201,60 @@
                     "vlpp",
                     "ref",
                     "VL__LAZY"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsum",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUM@__VL__WSTRING(__VL__VINT,___VL__LOREMIPSUMCASING)"
+                  ]
+                },
+                {
+                  "name": "enum class LoremIpsumCasing",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMCASING"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumParagraph",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMPARAGRAPH@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumSentence",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMSENTENCE@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumTitle",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMTITLE@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "class NotCopyable",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__NOTCOPYABLE"
                   ]
                 },
                 {
@@ -925,21 +952,39 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "A smart pointer. It is always safe to convert a pointer to an object to a smart pointer once. If you do it multiple times, it may be wrong due to different implementation of"
+                "text": "A shared pointer."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "It maintains a reference counter to the object."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "When no"
               },
               {
                 "kind": "PageLink",
-                "href": "/doc/current/vlpp/ref/VL__REFERENCECOUNTEROPERATOR.html",
+                "href": "/doc/current/vlpp/ref/VL__PTR.html",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "ReferenceCounterOperator"
+                    "text": "Ptr"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": ". In case of wrong, disposing the smart pointer will cause an access violation."
+                "text": "is referencing the object, the object will be deleted automatically."
               }
             ]
           }
@@ -961,6 +1006,90 @@
                     "text": "The type of the object."
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "It is safe to convert the same pointer to an object to a shared pointer once."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "If you do it multiple times, it depends on"
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlpp/ref/VL__REFERENCECOUNTEROPERATOR.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReferenceCounterOperator"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "For built-in strategies, only pointer to"
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppreflection/ref/VL__REFLECTION__DESCRIPTABLEOBJECT.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DescriptableObject"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "or its derived classes can be safely converted to a shared pointer for multiple times."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "For any other object, it will crash on the destructor of"
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlpp/ref/VL__PTR.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
               }
             ]
           }

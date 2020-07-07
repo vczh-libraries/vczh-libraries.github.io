@@ -72,24 +72,6 @@
                   ]
                 },
                 {
-                  "name": "function Combine",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__COMBINE@__VL__FUNC___VL__FUNCTION_COMBINING__COMBINING@_[R1]"
-                  ]
-                },
-                {
-                  "name": "function Combiner",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__COMBINER@__VL__FUNC___VL__FUNC_[T]_(__VL__FUNC_[T]_,___VL__F"
-                  ]
-                },
-                {
                   "name": "function Curry",
                   "selected": false,
                   "path": [
@@ -195,15 +177,6 @@
                   ]
                 },
                 {
-                  "name": "function InitializeGlobalStorage",
-                  "selected": false,
-                  "path": [
-                    "vlpp",
-                    "ref",
-                    "VL__INITIALIZEGLOBALSTORAGE@VOID()"
-                  ]
-                },
-                {
                   "name": "class Interface",
                   "selected": false,
                   "path": [
@@ -228,6 +201,60 @@
                     "vlpp",
                     "ref",
                     "VL__LAZY"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsum",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUM@__VL__WSTRING(__VL__VINT,___VL__LOREMIPSUMCASING)"
+                  ]
+                },
+                {
+                  "name": "enum class LoremIpsumCasing",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMCASING"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumParagraph",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMPARAGRAPH@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumSentence",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMSENTENCE@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "function LoremIpsumTitle",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__LOREMIPSUMTITLE@__VL__WSTRING(__VL__VINT)"
+                  ]
+                },
+                {
+                  "name": "class NotCopyable",
+                  "selected": false,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__NOTCOPYABLE"
                   ]
                 },
                 {
@@ -797,7 +824,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Base type of all global storages. A global storage is a value with a key to store some information. In order to create a global storage, you should do the following in a cpp file:"
+                "text": "Base type of all global storages."
               }
             ]
           },
@@ -806,7 +833,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "BEGIN_GLOBAL_STOREGE_CLASS(<put the key here, it should be a legal C++ identifier>)"
+                "text": "A global storage stores multiple values using a name."
               }
             ]
           },
@@ -815,75 +842,22 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "<put all variables here>"
+                "text": "The \"BEGIN_GLOBAL_STOREGE_CLASS\" macro is recommended to create a global storage."
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
           {
             "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "INITIALIZE_GLOBAL_STORAGE_CLASS"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "<initialize all variables>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "FINALIZE_GLOBAL_STORAGE_CLASS"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "<clear all resources because the program is about to exit>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_GLOBAL_STORAGE_CLASS"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Then you have a global storage. You can only use this global storage in the current cpp file."
-              },
-              {
-                "kind": "PageLink",
-                "href": "/doc/current/vlpp/ref/VL__INITIALIZEGLOBALSTORAGE@VOID().html",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "InitializeGlobalStorage"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": "should be called before using any global storage."
+                "text": "All values are shared like global variables, but they are created at the first time when they need to be accessed."
               },
               {
                 "kind": "PageLink",
@@ -897,16 +871,22 @@
               },
               {
                 "kind": "Text",
-                "text": "is encouraged to call if you think you will not use any global storages anymore. It will reduce noices when you want to detect memory leaks."
+                "text": "is recommended after you don't need any global storages any more, it frees memory."
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
           {
             "kind": "Paragraph",
             "content": [
               {
-                "kind": "Text",
-                "text": "If the key of the global variable is called Key, and the variable you want to access is called Variable, then you can use GetKey()->Variable to access that variable. The GetKey function is created in the macro calls before."
+                "kind": "Program",
+                "code": "\r\n BEGIN_GLOBAL_STOREGE_CLASS(MyStorage)\r\n     Ptr<vint> data;\r\n INITIALIZE_GLOBAL_STORAGE_CLASS\r\n     data = new vint(100);\r\n FINALIZE_GLOBAL_STORAGE_CLASS\r\n     data = nullptr;\r\n END_GLOBAL_STORAGE_CLASS(MyStorage)\r\n\r\r\n int main()\r\n {\r\n     // GetMyStorage is generated by defining MyStorage\r\n     Console::WriteLine(itow(*GetMyStorage().data.Obj()));\r\n     FinalizeGlobalStorage();\r\n }\r\n "
               }
             ]
           }
@@ -928,7 +908,7 @@
                     "content": [
                       {
                         "kind": "PageLink",
-                        "href": "/CodeIndexDemo/Gaclib/SourceFiles/Basic.h.html#NI$vl::NotCopyable",
+                        "href": "/doc/current/vlpp/ref/VL__NOTCOPYABLE.html",
                         "content": [
                           {
                             "kind": "Text",

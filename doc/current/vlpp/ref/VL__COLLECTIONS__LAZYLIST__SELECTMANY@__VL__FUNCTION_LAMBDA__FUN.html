@@ -198,6 +198,15 @@
                       ]
                     },
                     {
+                      "name": "function Evaluate",
+                      "selected": false,
+                      "path": [
+                        "vlpp",
+                        "ref",
+                        "VL__COLLECTIONS__LAZYLIST__EVALUATE@__VL__COLLECTIONS__LAZYLIST_"
+                      ]
+                    },
+                    {
                       "name": "function Except",
                       "selected": false,
                       "path": [
@@ -470,7 +479,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the lambda expression."
+                    "text": "Type of the transformer."
                   }
                 ]
               }
@@ -491,7 +500,25 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "The lambda expression as a transformation function to transform one element to multiple elements."
+                    "text": "The transformer."
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The first argument is any element in this lazy list."
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Returns the transformed lazy list from this argument."
                   }
                 ]
               }
@@ -509,6 +536,21 @@
               {
                 "kind": "Text",
                 "text": "The created lazy list."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "\r\n int main()\r\n {\r\n     vint xs[] = {1, 2, 3, 4, 5};\r\n     auto ys = From(xs).SelectMany([](vint x)\r\n     {\r\n         vint factors[] = {1, 10, 100};\r\n         return From(factors).Select([](vint f){ return f * x; }).Evaluate(true);\r\n     });\r\n     FOREACH(vint, y, ys) Console::Write(itow(y) + L\" \");\r\n }\r\n "
               }
             ]
           }

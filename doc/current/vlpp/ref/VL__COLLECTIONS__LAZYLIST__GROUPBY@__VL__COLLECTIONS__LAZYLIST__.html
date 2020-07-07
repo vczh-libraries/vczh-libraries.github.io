@@ -198,6 +198,15 @@
                       ]
                     },
                     {
+                      "name": "function Evaluate",
+                      "selected": false,
+                      "path": [
+                        "vlpp",
+                        "ref",
+                        "VL__COLLECTIONS__LAZYLIST__EVALUATE@__VL__COLLECTIONS__LAZYLIST_"
+                      ]
+                    },
+                    {
                       "name": "function Except",
                       "selected": false,
                       "path": [
@@ -451,7 +460,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Create a new lazy list, whose elements are groupd by from elements in this lazy list."
+                "text": "Create a new lazy list, with elements from this lazy list grouped by a key function."
               }
             ]
           }
@@ -470,7 +479,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the lambda expression."
+                    "text": "Type of the key function."
                   }
                 ]
               }
@@ -491,7 +500,34 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "The lambda expression as a key retriver to calcuate a key from an element."
+                    "text": "The key function."
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The first argument is any element in this lazy list."
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Returns a key calculated from this argument."
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Elements that have the same key will be grouped together."
                   }
                 ]
               }
@@ -509,6 +545,21 @@
               {
                 "kind": "Text",
                 "text": "The created lazy list."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "\r\n int main()\r\n {\r\n     vint xs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};\r\n     auto ys = From(xs).GroupBy([](vint x){ return x % 3; });\r\n     using TY = Pair<vint, LazyList<vint>>;\r\n     FOREACH(TY, y, ys)\r\n     {\r\n         Console::Write(itow(y.key) + L\":\");\r\n         FOREACH(vint, z, y.value) Console::Write(L\" \" + itow(z));\r\n         Console::WriteLine(L\"\");\r\n     }\r\n }\r\n "
               }
             ]
           }
