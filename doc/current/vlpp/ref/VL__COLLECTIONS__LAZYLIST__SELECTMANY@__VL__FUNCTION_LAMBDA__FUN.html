@@ -550,7 +550,10 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "\r\n int main()\r\n {\r\n     vint xs[] = {1, 2, 3, 4, 5};\r\n     auto ys = From(xs).SelectMany([](vint x)\r\n     {\r\n         vint factors[] = {1, 10, 100};\r\n         return From(factors).Select([](vint f){ return f * x; }).Evaluate(true);\r\n     });\r\n     FOREACH(vint, y, ys) Console::Write(itow(y) + L\" \");\r\n }\r\n "
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nint main()\r\n{\r\n    vint xs[] = {1, 2, 3, 4, 5};\r\n    auto ys = From(xs).SelectMany([](vint x)\r\n    {\r\n        vint factors[] = {1, 10, 100};\r\n        return From(factors).Select([=](vint f){ return f * x; }).Evaluate(true);\r\n    });\r\n    FOREACH(vint, y, ys) Console::Write(itow(y) + L\" \");\r\n}",
+                "output": [
+                  "1 10 100 2 20 200 3 30 300 4 40 400 5 50 500 "
+                ]
               }
             ]
           }

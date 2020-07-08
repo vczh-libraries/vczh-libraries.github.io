@@ -640,7 +640,20 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "\r\n TEST_FILE\r\n {\r\n     TEST_CATEGORY(L\"This is a test category)\r\n     {\r\n         TEST_CASE(L\"This is a test case\")\r\n         {\r\n             TEST_ASSERT(true);\r\n             TEST_ERROR({WString::Empty[0];});\r\n             TEST_EXCEPTION({throw Exception();}, Exception, [](const Exception&){});\r\n         }\r\n         TEST_CASE_ASSERT(true);\r\n     }\r\n\r\r\n     TEST_CATEGORY(L\"This is another test category\")\r\n     {\r\n         TEST_PRINT(L\"some information\");\r\n         TEST_CASE_ASSERT(true);\r\n     }\r\n }\r\n\r\r\n int main(int argc, wchar_t* argv[])\r\n {\r\n     // in Linux or macOS, argv must be char*[]\r\n     return unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n }\r\n "
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nTEST_FILE\r\n{\r\n    TEST_CATEGORY(L\"This is a test category\")\r\n    {\r\n        TEST_CASE(L\"This is a test case\")\r\n        {\r\n            TEST_ASSERT(true);\r\n            TEST_ERROR({WString::Empty[0];});\r\n            TEST_EXCEPTION({throw Exception();}, Exception, [](const Exception&){});\r\n        });\r\n        TEST_CASE_ASSERT(true);\r\n    });\r\n\r\n    TEST_CATEGORY(L\"This is another test category\")\r\n    {\r\n        TEST_PRINT(L\"some information\");\r\n        TEST_CASE_ASSERT(true);\r\n    });\r\n}\r\n\r\nint main(int argc, wchar_t* argv[])\r\n{\r\n    // in Linux or macOS, argv must be char*[]\r\n    return unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n}",
+                "output": [
+                  "Failures are suppressed.\r",
+                  "c:\\code\\vczhlibraries\\document\\tools\\examples\\vlpp\\example.h\r",
+                  "    This is a test category\r",
+                  "        This is a test case\r",
+                  "        true\r",
+                  "    This is another test category\r",
+                  "        some information\r",
+                  "        true\r",
+                  "Passed test files: 1/1\r",
+                  "Passed test cases: 3/3\r",
+                  ""
+                ]
               }
             ]
           }
