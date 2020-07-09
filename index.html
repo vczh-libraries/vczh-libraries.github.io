@@ -5,8 +5,10 @@
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="stylesheet" type="text/css" href="global.css">
 <link rel="stylesheet" type="text/css" href="navigation.css">
+<link rel="stylesheet" type="text/css" href="category.css">
 <script src="scripts/rootView.js"></script>
-<script src="scripts/articleView.js"></script>
+<script src="scripts/homeView.js"></script>
+<script src="scripts/homeCategoryView.js"></script>
 
 </head>
 <body>
@@ -21,12 +23,17 @@
   },
   {
     "targetObject": "rootViewContainer",
-    "viewName": "Gaclib-ArticleView"
+    "viewName": "Gaclib-HomeView"
+  },
+  {
+    "targetObject": "homeViewContainer",
+    "viewName": "Gaclib-HomeCategoryView"
   }
 ];
   const activeButton = "Home";
-  const article = {
-  "index": true,
+  const activeCategory = "Hello";
+  const homeArticle = {
+  "index": false,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -77,434 +84,23 @@
             "text": ",\r\n            which is a very impressive example.\r\n            Scroll to the end to see screenshots!\r\n        "
           }
         ]
-      },
+      }
+    ]
+  }
+};
+  const categoryArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Hello, world!",
+    "content": [
       {
-        "kind": "Topic",
-        "title": "GacUI!",
+        "kind": "Paragraph",
         "content": [
           {
-            "kind": "Topic",
-            "title": "Rich controls and flexible layout",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Image",
-                    "src": "/demo_AB.png",
-                    "caption": "List controls"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Image",
-                    "src": "/demo_DER.png",
-                    "caption": "Ribbon and editor controls"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Easy syntax",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <Window Text=\"Hello, world!\">\r\n        <Label Text=\"Welcome to GacUI Library!\"/>\r\n    </Window>\r\n</Instance>",
-                    "language": "Xml"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Localization",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Resource: stores strings and their translations"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<LocalizedStrings ref.Class=\"helloworld::StringResource\" DefaultLocale=\"en-US\">\r\n    <Strings Locales=\"en-US\">\r\n        <String Name=\"Title\" Text=\"Hello, world!\"/>\r\n        <String Name=\"Button\" Text=\"Good morning!\"/>\r\n    </Strings>\r\n    <Strings Locales=\"zh-CN\">\r\n        <String Name=\"Title\" Text=\"你好，世界！\"/>\r\n        <String Name=\"Button\" Text=\"早上好！\"/>\r\n    </Strings>\r\n</LocalizedStrings>",
-                    "language": "Xml"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "UI: use strings from resource"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.LocalizedStrings Name=\"Strings\" helloworld=\"demo::StringResource\" Default=\"true\"/>\r\n    <Window Text-str=\"Title()\">\r\n        <Button Text-str=\"Button()\">\r\n    </Window>\r\n</Instance>",
-                    "language": "Xml"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Styling",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Styles: set properties by selector"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<Styles>\r\n    <Style ref.Path=\"//Cell/Button\" Font=\"fontFamily:'Segoe UI' size: 24 antialias:true\">\r\n        <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n    </Style>\r\n</Styles>",
-                    "language": "Xml"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "UI: applies styles on multiple controls"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <Window Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:1 column:1 columnSpan:2\">\r\n                <Button Text=\"OK\"/>\r\n            </Cell>\r\n\r\n            <Cell Site=\"row:1 column:2 columnSpan:2\">\r\n                <Button Text=\"Cancel\"/>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-                    "language": "Xml"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "MVVM and Data binding",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Script: defines the interface for view model"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "module script;\r\n\r\nnamespace helloworld\r\n{\r\n    interface IViewModel\r\n    {\r\n        prop Title : string {GetTitle, SetTitle : TitleChanged}\r\n        func Submit() : void;\r\n    }\r\n}",
-                    "language": "Xml"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "UI: binds view model to text box and button"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.Parameter Name=\"ViewModel\" Class=\"helloworld::IViewModel\"/>\r\n    <Window ref.Name=\"self\" Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:0 column:0\">\r\n                <SolidLabel Text=\"Title: \" Font-bind=\"self.Font\"/>\r\n            </Cell>\r\n            <Cell Site=\"row:0 column:1\">\r\n                <SinglelineTextBox Text-bind=\"ViewModel.Title\">\r\n                    <att.BoundsComposition-set\r\n                        AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"\r\n                        PreferredMinSize=\"x:0 y:24\"/>\r\n                </SinglelineTextBox>\r\n            </Cell>\r\n            <Cell Site=\"row:2 column:0 columnSpan:2\">\r\n                <Button Text=\"Submit\" ev.Clicked-eval=\"ViewModel.Submit()\">\r\n                    <att.BoundsComposition-set AlignmentToParent=\"left:-1 top:0 right:0 bottom:0\"/>\r\n                </Button>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-                    "language": "Xml"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Application: implement the view model"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "class ViewModel : public Object, public virtual helloworld::IViewModel\r\n{\r\nprivate:\r\n    WString title;\r\n\r\npublic:\r\n\r\n    WString GetTitle()override\r\n    {\r\n        return title;\r\n    }\r\n\r\n    void SetTitle(const WString& value)override\r\n    {\r\n        title = value;\r\n        TitleChanged();\r\n    }\r\n\r\n    void Submit()override\r\n    {\r\n        // do something\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"MVVM.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    auto viewModel = MakePtr<ViewModel>();\r\n    auto window = new helloworld::MainWindow(viewModel);\r\n    window->MoveToScreenCenter();\r\n    GetApplication()->Run(window);\r\n    delete window;\r\n}",
-                    "language": "Xml"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Data processing",
-        "content": [
-          {
-            "kind": "Topic",
-            "title": "Containers",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "Group<vint, WString> xs;\r\nxs.Add(1, L\"C++\");\r\nxs.Add(1, L\"C#\");\r\nxs.Add(1, L\"TypeScript\");\r\nxs.Add(2, L\"Java\");\r\nconst List<WString>& ones = xs.Get[1];",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Rich collection operations",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "vint numbers[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\r\nvint sumOfSquares = From(numbers)\r\n    .Select([](vint i) { return i * i; })\r\n    .Aggregate([](vint a, vint b) { return a + b; });",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Files and streams",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "Folder folder(L\"C:/MyProjects/\");\r\nList<File> files;\r\nfolder.GetFiles(files);\r\n\r\nWString fileNames = GenerateToStream([&](const TextWriter& writer)\r\n{\r\n    FOREACH(File, file, files)\r\n    {\r\n        writer.WriteLine(file.GetFilePath().GetName());\r\n    }\r\n});\r\nFile(L\"C:/MyProjects/index.txt\")\r\n    .WriteAllText(fileNames, false, BomEncoder::Utf8);",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Http client",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "HttpRequest request;\r\nrequest.SetHost(L\"http://gaclib.net\");\r\n\r\nHttpResponse response;\r\nHttpQuery(request, response);\r\n\r\nConsole::WriteLine(itow(response.statusCode));\r\nConsole::WriteLine(response.GetBodyUtf8());",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Threading and synchronozation",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "EventObject event;\r\nevent.CreateAutoUnsignal(false);\r\n\r\nThread::CreateAndStart([&]()\r\n{\r\n    DoSomething();\r\n    event.Signal();\r\n});\r\n\r\nevent.Wait();",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "String processing",
-        "content": [
-          {
-            "kind": "Topic",
-            "title": "Regular expression",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "Regex regex(L\"^(<name>\\w+):(<adj>\\w+)\");\r\nPtr<RegexMatch> match = regex.Match(L\"GacUI:great\");\r\nConsole::WriteLine(\r\n    L\"Hey, \" +\r\n    match->Groups()[L\"name\"][0].Value() +\r\n    L\" is \" +\r\n    match->Groups()[L\"adj\"][0].Value() +\r\n    L\"!\"\r\n);",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "GLR parser generation",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Grammar:"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "include:<VlppParser.h>\r\nnamespace:calculator\r\nreflection:calculator\r\nclassPrefix:Cal\r\nclassRoot:Expression\r\nguard:CALCULATOR_PARSER\r\nparser:Parse(Exp)\r\nfilePrefix:Calculator\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token value;\r\n}\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    enum BinaryOperator\r\n    {\r\n        Add,\r\n        Sub,\r\n        Mul,\r\n        Div,\r\n    }\r\n\r\n    Expression firstOperand;\r\n    Expression secondOperand;\r\n    BinaryOperator binaryOperator;\r\n}\r\n\r\nclass FunctionExpression : Expression\r\n{\r\n    token functionName;\r\n    Expression[] arguments;\r\n}\r\n\r\ntoken NAME = \"[a-zA-Z_]/w*\";\r\ntoken NUMBER = \"/d+(./d+)?\";\r\ntoken ADD = \"/+\";\r\ntoken SUB = \"-\";\r\ntoken MUL = \"/*\";\r\ntoken DIV = \"//\";\r\ntoken LEFT = \"/(\";\r\ntoken RIGHT = \"/)\";\r\ntoken COMMA = \",\";\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule NumberExpression Number\r\n        = NUMBER : value as NumberExpression\r\n        ;\r\nrule FunctionExpression Call\r\n        = NAME : functionName \"(\" [ Exp : arguments { \",\" Exp : arguments } ] \")\" as FunctionExpression\r\n        ;\r\nrule Expression Factor\r\n        = !Number | !Call\r\n        = \"(\" !Exp \")\"\r\n        ;\r\nrule Expression Term\r\n        = !Factor\r\n        = Term : firstOperand \"*\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Mul\" }\r\n        = Term : firstOperand \"/\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Div\" }\r\n        ;\r\nrule Expression Exp\r\n        = !Term\r\n        = Exp : firstOperand \"+\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Add\" }\r\n        = Exp : firstOperand \"-\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Sub\" }\r\n        ;",
-                    "language": "C++"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "And what you get from generated C++ code:"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "auto table = CalLoadTable();\r\nPtr<CalExpression> expr = CalParse(L\"max(1, 2) * 3 - 4\", table);",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "C++ reflection and scripting",
-        "content": [
-          {
-            "kind": "Topic",
-            "title": "Easy registration",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "namespace myapi\r\n{\r\n    class App : public Object, public Description<App>\r\n    {\r\n    public:\r\n        void Print(const WString& text) { Console::WriteLine(text); }\r\n        WString Get() { return Console::Read(); }\r\n    };\r\n}\r\n\r\nusing namespace myapi;\r\n\r\n#define TYPE_LIST(F) F(myapi::App)\r\n\r\nBEGIN_TYPE_INFO_NAMESPACE\r\n\r\n    TYPE_LIST(DECL_TYPE_INFO)\r\n    TYPE_LIST(IMPL_CPP_TYPE_INFO)\r\n\r\n    BEGIN_CLASS_MEMBER(App)\r\n        CLASS_MEMBER_CONSTRUCTOR(Ptr<App>(), NO_PARAMETER)\r\n        CLASS_MEMBER_METHOD(Print, {L\"text\"})\r\n        CLASS_MEMBER_METHOD(Get, NO_PARAMETER)\r\n    END_CLASS_MEMBER(App)\r\n\r\n    class MyTypeLoader : public Object, public ITypeLoader\r\n    {\r\n    public:\r\n        void Load(ITypeManager* manager)override\r\n        {\r\n            TYPE_LIST(ADD_TYPE_INFO)\r\n        }\r\n        \r\n        void Unload(ITypeManager* manager)override\r\n        {\r\n        }\r\n    };\r\n\r\nEND_TYPE_INFO_NAMESPACE",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Dynamic invoking",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "LoadPredefinedTypes();\r\n\r\nauto tm = GetGlobalTypeManager();\r\ntm->AddTypeLoader(new MyTypeLoader);\r\ntm->Load();\r\n\r\nauto td = tm->GetTypeDescriptor(L\"myapi::App\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto print = td->GetMethodGroupByName(L\"Print\");\r\n\r\nValue app = ctor->Invoke(Value(), Value_xs());\r\n\r\narguments.Add(BoxValue<WString>(L\"Hello, world!\"));\r\nprint->Invoke(app, (Value_xs(), WString(L\"Hello, world!\")));\r\n\r\nResetGlobalTypeManager();",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "Scripting and native code interoperability",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "module myscript;\r\nusing myapp::*;\r\n\r\nclass MyScript\r\n{\r\n    new()\r\n    {\r\n    }\r\n\r\n    func Main() : void\r\n    {\r\n        var app = new App^();\r\n        var name = app.Get();\r\n        app.Print($\"Hello, $(name)!\");\r\n    }\r\n}",
-                    "language": "Workflow"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "C++ code generation",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Compile the script and generate C++ code, call it in C++!"
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Program",
-                    "code": "#include \"MyScript.h\"\r\n\r\nint main()\r\n{\r\n    MakePtr<MyScript>()->Main();\r\n}",
-                    "language": "C++"
-                  }
-                ]
-              }
-            ]
+            "kind": "Image",
+            "src": "/resources/home/xml_HelloWorld.png"
           }
         ]
       }
@@ -514,7 +110,9 @@
   window["MVC-Resources.mvcModel"] = mvcModel;
   window["MVC-Resources.mvcViews"] = mvcViews;
   window["MVC-Resources.activeButton"] = activeButton;
-  window["MVC-Resources.article"] = article;
+  window["MVC-Resources.activeCategory"] = activeCategory;
+  window["MVC-Resources.homeArticle"] = homeArticle;
+  window["MVC-Resources.categoryArticle"] = categoryArticle;
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }

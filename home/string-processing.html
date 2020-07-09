@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../navigation.css">
+<link rel="stylesheet" type="text/css" href="../category.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/homeView.js"></script>
+<script src="../scripts/homeCategoryView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer">
+<script lang="javascript">
+{
+  const mvcModel = {
+  "page": "string-processing"
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-HomeView"
+  },
+  {
+    "targetObject": "homeViewContainer",
+    "viewName": "Gaclib-HomeCategoryView"
+  }
+];
+  const activeButton = "Home";
+  const activeCategory = "String";
+  const homeArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Welcome to Gaclib!",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Gaclib is a GPU accelerated C++ User Interface library.\r\n            You can find it at "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "github"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            This library provide many useful features.\r\n            If you don't need all features,\r\n            you can just use a subset of released C++ files to reduce the size of the executable.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            More and more developers are using this library to create their applications!\r\n            You could check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "http://www.majorav.com",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "majorav.com"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is a very impressive example.\r\n            Scroll to the end to see screenshots!\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  const categoryArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "String processing",
+    "content": [
+      {
+        "kind": "Topic",
+        "title": "Regular expression",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "Regex regex(L\"^(<name>\\w+):(<adj>\\w+)\");\r\nPtr<RegexMatch> match = regex.Match(L\"GacUI:great\");\r\nConsole::WriteLine(\r\n    L\"Hey, \" +\r\n    match->Groups()[L\"name\"][0].Value() +\r\n    L\" is \" +\r\n    match->Groups()[L\"adj\"][0].Value() +\r\n    L\"!\"\r\n);",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GLR parser generation",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Grammar:"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "include:<VlppParser.h>\r\nnamespace:calculator\r\nreflection:calculator\r\nclassPrefix:Cal\r\nclassRoot:Expression\r\nguard:CALCULATOR_PARSER\r\nparser:Parse(Exp)\r\nfilePrefix:Calculator\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token value;\r\n}\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    enum BinaryOperator\r\n    {\r\n        Add,\r\n        Sub,\r\n        Mul,\r\n        Div,\r\n    }\r\n\r\n    Expression firstOperand;\r\n    Expression secondOperand;\r\n    BinaryOperator binaryOperator;\r\n}\r\n\r\nclass FunctionExpression : Expression\r\n{\r\n    token functionName;\r\n    Expression[] arguments;\r\n}\r\n\r\ntoken NAME = \"[a-zA-Z_]/w*\";\r\ntoken NUMBER = \"/d+(./d+)?\";\r\ntoken ADD = \"/+\";\r\ntoken SUB = \"-\";\r\ntoken MUL = \"/*\";\r\ntoken DIV = \"//\";\r\ntoken LEFT = \"/(\";\r\ntoken RIGHT = \"/)\";\r\ntoken COMMA = \",\";\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule NumberExpression Number\r\n        = NUMBER : value as NumberExpression\r\n        ;\r\nrule FunctionExpression Call\r\n        = NAME : functionName \"(\" [ Exp : arguments { \",\" Exp : arguments } ] \")\" as FunctionExpression\r\n        ;\r\nrule Expression Factor\r\n        = !Number | !Call\r\n        = \"(\" !Exp \")\"\r\n        ;\r\nrule Expression Term\r\n        = !Factor\r\n        = Term : firstOperand \"*\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Mul\" }\r\n        = Term : firstOperand \"/\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Div\" }\r\n        ;\r\nrule Expression Exp\r\n        = !Term\r\n        = Exp : firstOperand \"+\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Add\" }\r\n        = Exp : firstOperand \"-\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Sub\" }\r\n        ;",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "And what you get from generated C++ code:"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "auto table = CalLoadTable();\r\nPtr<CalExpression> expr = CalParse(L\"max(1, 2) * 3 - 4\", table);",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.activeButton"] = activeButton;
+  window["MVC-Resources.activeCategory"] = activeCategory;
+  window["MVC-Resources.homeArticle"] = homeArticle;
+  window["MVC-Resources.categoryArticle"] = categoryArticle;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</div></body>
+</html>

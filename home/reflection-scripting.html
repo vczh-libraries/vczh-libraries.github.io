@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../navigation.css">
+<link rel="stylesheet" type="text/css" href="../category.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/homeView.js"></script>
+<script src="../scripts/homeCategoryView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer">
+<script lang="javascript">
+{
+  const mvcModel = {
+  "page": "reflection-scripting"
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-HomeView"
+  },
+  {
+    "targetObject": "homeViewContainer",
+    "viewName": "Gaclib-HomeCategoryView"
+  }
+];
+  const activeButton = "Home";
+  const activeCategory = "Scripting";
+  const homeArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Welcome to Gaclib!",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Gaclib is a GPU accelerated C++ User Interface library.\r\n            You can find it at "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "github"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            This library provide many useful features.\r\n            If you don't need all features,\r\n            you can just use a subset of released C++ files to reduce the size of the executable.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            More and more developers are using this library to create their applications!\r\n            You could check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "http://www.majorav.com",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "majorav.com"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is a very impressive example.\r\n            Scroll to the end to see screenshots!\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  const categoryArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "C++ reflection and scripting",
+    "content": [
+      {
+        "kind": "Topic",
+        "title": "Easy registration",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "namespace myapi\r\n{\r\n    class App : public Object, public Description<App>\r\n    {\r\n    public:\r\n        void Print(const WString& text) { Console::WriteLine(text); }\r\n        WString Get() { return Console::Read(); }\r\n    };\r\n}\r\n\r\nusing namespace myapi;\r\n\r\n#define TYPE_LIST(F) F(myapi::App)\r\n\r\nBEGIN_TYPE_INFO_NAMESPACE\r\n\r\n    TYPE_LIST(DECL_TYPE_INFO)\r\n    TYPE_LIST(IMPL_CPP_TYPE_INFO)\r\n\r\n    BEGIN_CLASS_MEMBER(App)\r\n        CLASS_MEMBER_CONSTRUCTOR(Ptr<App>(), NO_PARAMETER)\r\n        CLASS_MEMBER_METHOD(Print, {L\"text\"})\r\n        CLASS_MEMBER_METHOD(Get, NO_PARAMETER)\r\n    END_CLASS_MEMBER(App)\r\n\r\n    class MyTypeLoader : public Object, public ITypeLoader\r\n    {\r\n    public:\r\n        void Load(ITypeManager* manager)override\r\n        {\r\n            TYPE_LIST(ADD_TYPE_INFO)\r\n        }\r\n        \r\n        void Unload(ITypeManager* manager)override\r\n        {\r\n        }\r\n    };\r\n\r\nEND_TYPE_INFO_NAMESPACE",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Dynamic invoking",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "LoadPredefinedTypes();\r\n\r\nauto tm = GetGlobalTypeManager();\r\ntm->AddTypeLoader(new MyTypeLoader);\r\ntm->Load();\r\n\r\nauto td = tm->GetTypeDescriptor(L\"myapi::App\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto print = td->GetMethodGroupByName(L\"Print\");\r\n\r\nValue app = ctor->Invoke(Value(), Value_xs());\r\n\r\narguments.Add(BoxValue<WString>(L\"Hello, world!\"));\r\nprint->Invoke(app, (Value_xs(), WString(L\"Hello, world!\")));\r\n\r\nResetGlobalTypeManager();",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Scripting and native code interoperability",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module myscript;\r\nusing myapp::*;\r\n\r\nclass MyScript\r\n{\r\n    new()\r\n    {\r\n    }\r\n\r\n    func Main() : void\r\n    {\r\n        var app = new App^();\r\n        var name = app.Get();\r\n        app.Print($\"Hello, $(name)!\");\r\n    }\r\n}",
+                "language": "Workflow"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "C++ code generation",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Compile the script and generate C++ code, call it in C++!"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include \"MyScript.h\"\r\n\r\nint main()\r\n{\r\n    MakePtr<MyScript>()->Main();\r\n}",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Or run the script directly",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Compile, serialize and run the script on-the-fly!"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "List<Ptr<ParsingError>> errors;\r\nList<WString> codes;\r\ncodes.Add(THE_WORKFLOW_SCRIPT);\r\n\r\nauto table = WfLoadTable();\r\nauto assembly = Compile(table, codes, errors);\r\n\r\n// saving the compiled assembly to a file is optional\r\n{\r\n    FileStream stream(L\"C:/script.bin\", FileStream::WriteOnly);\r\n    assembly->Serialize(stream);\r\n}\r\n{\r\n    WfAssemblyLoadErrors loadErrors;\r\n    FileStream stream(L\"C:/script.bin\", FileStream::ReadOnly);\r\n    assembly = WfAssembly::Deserialize(stream, loadErrors);\r\n}\r\n\r\n// initialize\r\nglobalContext = MakePtr<WfRuntimeGlobalContext>(assembly);\r\nLoadFunction<void()>(globalContext, L\"<initialize>\")();\r\n\r\n// load and run MyScript::Main\r\nauto td = tm->GetTypeDescriptor(L\"MyScript\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto main = td->GetMethodGroupByName(L\"Main\");\r\n\r\nValue myScript = ctor->Invoke(Value(), Value_xs());\r\nmain->Invoke(myScript, Value_xs());",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.activeButton"] = activeButton;
+  window["MVC-Resources.activeCategory"] = activeCategory;
+  window["MVC-Resources.homeArticle"] = homeArticle;
+  window["MVC-Resources.categoryArticle"] = categoryArticle;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</div></body>
+</html>
