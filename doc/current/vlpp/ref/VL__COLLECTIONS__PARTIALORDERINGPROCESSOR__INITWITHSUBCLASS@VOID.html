@@ -190,7 +190,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Initialize the processor, specifying dependency relationships and sub class classification as two groups."
+                "text": "Set data for sorting, by providing a list for objects, and a group for their relationship, and a dictionary for sub classing objects."
               }
             ]
           }
@@ -209,7 +209,49 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the first parameter."
+                    "text": "Type of the list for objects. "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__ARRAY.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Array"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__LIST.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "List"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__SORTEDLIST.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SortedList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are recommended."
                   }
                 ]
               }
@@ -224,7 +266,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the sub class."
+                    "text": "Type of a sub class."
                   }
                 ]
               }
@@ -245,7 +287,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Items."
+                    "text": "List of objects for sorting."
                   }
                 ]
               }
@@ -260,7 +302,21 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Dependences. If a depends on b, then depGroups[a].Contains(b) == true."
+                    "text": "Relationship of objects for sorting in "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__GROUP.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Group"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". Both keys and values are elements in \"items\". To say that a depends on b, do depGroup.Add(a, b)."
                   }
                 ]
               }
@@ -275,8 +331,106 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "To put multiple items in a node to represent a sub class, use these items as keys, use a unique value as a value, and put them in subClasses."
+                    "text": "Sub classing objects. Keys are elements in \"items\". If multiple keys have the same value in this dictionary, then these objects are in the same sub class."
                   }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Relationships are defined on objects."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "By sub classing objects,"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "relationships of sub classes are calculated from \"depGroup\"."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "If object A in sub class X depends on object B in sub class Y, then sub class X depends on sub class Y."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "It is allowed that relatipnships on sub classes are not completely partial ordered,"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "in this case, some components may contain multiple sub classes."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nint main()\r\n{\r\n    //         apple\r\n    //           ^\r\n    //           |\r\n    //         ball\r\n    //         ^  \\\r\n    //        /    V\r\n    //     cat <-- dog\r\n    //       ^     ^\r\n    //      /       \\\r\n    //  elephant   fish\r\n\r\n    List<WString> items;\r\n    for (vint i = 1; i <= 2; i++)\r\n    {\r\n        items.Add(L\"apple_\" + itow(i));\r\n        items.Add(L\"ball_\" + itow(i));\r\n        items.Add(L\"cat_\" + itow(i));\r\n        items.Add(L\"dog_\" + itow(i));\r\n        items.Add(L\"elephant_\" + itow(i));\r\n        items.Add(L\"fish_\" + itow(i));\r\n    }\r\n\r\n    Group<WString, WString> depGroup;\r\n    depGroup.Add(L\"ball_2\", L\"apple_1\");\r\n    depGroup.Add(L\"cat_2\", L\"ball_1\");\r\n    depGroup.Add(L\"ball_2\", L\"dog_1\");\r\n    depGroup.Add(L\"dog_2\", L\"cat_1\");\r\n    depGroup.Add(L\"elephant_2\", L\"cat_1\");\r\n    depGroup.Add(L\"fish_2\", L\"dog_1\");\r\n\r\n    Dictionary<WString, vint> subClass;\r\n    for (vint i = 1; i <= 2; i++)\r\n    {\r\n        subClass.Add(L\"apple_\" + itow(i), 1);\r\n        subClass.Add(L\"ball_\" + itow(i), 2);\r\n        subClass.Add(L\"cat_\" + itow(i), 3);\r\n        subClass.Add(L\"dog_\" + itow(i), 4);\r\n        subClass.Add(L\"elephant_\" + itow(i), 5);\r\n        subClass.Add(L\"fish_\" + itow(i), 6);\r\n    }\r\n\r\n    PartialOrderingProcessor pop;\r\n    pop.InitWithSubClass(items, depGroup, subClass);\r\n    pop.Sort();\r\n\r\n    for (vint i = 0; i < pop.components.Count(); i++)\r\n    {\r\n        auto& c = pop.components[i];\r\n        Console::WriteLine(\r\n            L\"Component \" + itow(i) + L\": sub classes\" +\r\n            Range<vint>(0, c.nodeCount)\r\n                .Select([&](vint ni) { return c.firstNode[ni]; })\r\n                .Aggregate<WString>(L\"\", [](const WString& a, vint b) { return a + L\" \" + itow(b); })\r\n        );\r\n    }\r\n\r\n    for (vint i = 0; i < pop.nodes.Count(); i++)\r\n    {\r\n        auto& n = pop.nodes[i];\r\n        Console::WriteLine(L\"Sub class \" + itow(i));\r\n\r\n        Console::WriteLine(\r\n            Range<vint>(0, n.subClassItemCount)\r\n                .Select([&](vint si) { return n.firstSubClassItem[si]; })\r\n                .Aggregate<WString>(L\"    :\", [&](const WString& a, vint b) { return a + L\" \" + items[b]; })\r\n        );\r\n\r\n        if (n.outs->Count() > 0)\r\n        {\r\n            Console::WriteLine(\r\n                From(*n.outs)\r\n                    .Aggregate<WString>(L\"    <- sub classes\", [](const WString& a, vint b) { return a + L\" \" + itow(b); })\r\n            );\r\n        }\r\n    }\r\n}",
+                "output": [
+                  "Component 0: sub classes 0\r",
+                  "Component 1: sub classes 3 2 1\r",
+                  "Component 2: sub classes 4\r",
+                  "Component 3: sub classes 5\r",
+                  "Sub class 0\r",
+                  "    : apple_1 apple_2\r",
+                  "    <- sub classes 1\r",
+                  "Sub class 1\r",
+                  "    : ball_1 ball_2\r",
+                  "    <- sub classes 2\r",
+                  "Sub class 2\r",
+                  "    : cat_1 cat_2\r",
+                  "    <- sub classes 3 4\r",
+                  "Sub class 3\r",
+                  "    : dog_1 dog_2\r",
+                  "    <- sub classes 1 5\r",
+                  "Sub class 4\r",
+                  "    : elephant_1 elephant_2\r",
+                  "Sub class 5\r",
+                  "    : fish_1 fish_2\r",
+                  ""
                 ]
               }
             ]

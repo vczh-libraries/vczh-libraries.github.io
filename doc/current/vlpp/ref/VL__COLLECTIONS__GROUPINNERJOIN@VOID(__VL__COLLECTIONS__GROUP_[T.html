@@ -629,11 +629,11 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nint main()\r\n{\r\n    auto printList = [](const List<WString>& values)\r\n    {\r\n        return L\"[\" + From(values).Aggregate([](const WString& a, const WString& b) { return a + L\", \" + b; }) + L\"]\";\r\n    };\r\n\r\n    Group<vint, WString> as, bs;\r\n    as.Add(1 ,L\"A\"); as.Add(1 ,L\"B\"); as.Add(2 ,L\"C\"); as.Add(2 ,L\"D\");\r\n    bs.Add(1 ,L\"X\"); bs.Add(1 ,L\"Y\"); as.Add(3 ,L\"Z\"); as.Add(3 ,L\"W\");\r\n    GroupInnerJoin(\r\n        as,\r\n        bs,\r\n        [&](vint key, const List<WString>& values) { Console::WriteLine(L\"Discarded in as: \" + itow(key) + printList(values)); },\r\n        [&](vint key, const List<WString>& values) { Console::WriteLine(L\"Discarded in bs: \" + itow(key) + printList(values)); },\r\n        [&](vint key, const List<WString>& values1, const List<WString>& values2) { Console::WriteLine(L\"Accepted: \" + itow(key) + printList(values1) + printList(values2)); }\r\n        );\r\n}",
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nint main()\r\n{\r\n    auto printList = [](const List<WString>& values)\r\n    {\r\n        return L\"[\" + From(values).Aggregate([](const WString& a, const WString& b) { return a + L\", \" + b; }) + L\"]\";\r\n    };\r\n\r\n    Group<vint, WString> as, bs;\r\n    as.Add(1 ,L\"A\"); as.Add(1 ,L\"B\"); as.Add(2 ,L\"C\"); as.Add(2 ,L\"D\");\r\n    bs.Add(1 ,L\"X\"); bs.Add(1 ,L\"Y\"); bs.Add(3 ,L\"Z\"); bs.Add(3 ,L\"W\");\r\n    GroupInnerJoin(\r\n        as,\r\n        bs,\r\n        [&](vint key, const List<WString>& values) { Console::WriteLine(L\"Discarded in as: \" + itow(key) + printList(values)); },\r\n        [&](vint key, const List<WString>& values) { Console::WriteLine(L\"Discarded in bs: \" + itow(key) + printList(values)); },\r\n        [&](vint key, const List<WString>& values1, const List<WString>& values2) { Console::WriteLine(L\"Accepted: \" + itow(key) + printList(values1) + printList(values2)); }\r\n        );\r\n}",
                 "output": [
                   "Accepted: 1[A, B][X, Y]\r",
                   "Discarded in as: 2[C, D]\r",
-                  "Discarded in as: 3[Z, W]\r",
+                  "Discarded in bs: 3[Z, W]\r",
                   ""
                 ]
               }

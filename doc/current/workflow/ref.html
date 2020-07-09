@@ -102,11 +102,393 @@
     "title": "API References for Workflow",
     "content": [
       {
-        "kind": "Paragraph",
+        "kind": "Topic",
+        "title": "Resources",
         "content": [
           {
-            "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/tutorial.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": build your first GacUI application."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/download.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": download this library."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you don't need runtime reflection on C++ classes,\r\n                it is recommended to add "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definitions",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "preprocessor definitions"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                By doing this, unnecessary code are eliminated, which significantly reduces both executable size and object sizes.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Source Files for Workflow",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "VlppWorkflowLibrary.h and VlppWorkflowLibrary.cpp",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    They are needed for using Workflow. They contain.\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Predefined libraries for Workflow script."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Helper functions for C++ code that generated from Workflow script."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VlppWorkflowRuntime.h and VlppWorkflowRuntime.cpp",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    They are needed for executing compiled binaries from Workflow script.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    There are 2 ways to run Workflow script:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Generate C++ code from Workflow script, and add them to your project. This is highly recommended especially for running GacUI applications."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Load compiled binaries from Workflow script and run classes at runtime."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VlppWorkflowCompiler.h and VlppWorkflowCompiler.cpp",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    They are needed for compiling Workflow script.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    There is no IO or other data exchange functionalities in predefined libraries.\r\n                    In order to make Workflow script works,\r\n                    usually you need to provide your own API to your script.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Typically, this is done by writing reflectable C++ class,\r\n                    loading type information and then running the compiler in the same process.\r\n                    And then you get a binary from compiled scripts,\r\n                    all classes defined in scripts are accessible.\r\n                    You can use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppReflection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to run classes in scripts.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The Workflow compiler can also generate C++ code.\r\n                    Using generated C++ code directly is always highly recommended when possible.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Dependencies",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Vlpp.h"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Vlpp.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppOS.h"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppOS.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppRegex.h"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppRegex.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppReflection.h"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppReflection.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppParser.h"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VlppParser.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

@@ -190,7 +190,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Initialize the processor, specifying dependency relationships as a callback function."
+                "text": "Set data for sorting, by providing a list for objects, and a function for their relationship."
               }
             ]
           }
@@ -209,7 +209,49 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the first parameter."
+                    "text": "Type of the list for objects. "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__ARRAY.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Array"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__LIST.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "List"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/doc/current/vlpp/ref/VL__COLLECTIONS__SORTEDLIST.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SortedList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are recommended."
                   }
                 ]
               }
@@ -224,7 +266,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of the second parameter."
+                    "text": "Type of the function that defines relationships of objects."
                   }
                 ]
               }
@@ -245,7 +287,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Items."
+                    "text": "List of objects for sorting."
                   }
                 ]
               }
@@ -260,8 +302,34 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Dependences. If a depends on b, then depFunc(a, b) == true."
+                    "text": "Relationship of objects for sorting, both arguments are elements in \"items\". To say that a depends on b, depFunc(a, b) must returns true."
                   }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nint main()\r\n{\r\n    //         apple\r\n    //           ^\r\n    //           |\r\n    //         ball\r\n    //         ^  \\\r\n    //        /    V\r\n    //     cat <-- dog\r\n    //       ^     ^\r\n    //      /       \\\r\n    //  elephant   fish\r\n\r\n    List<WString> items;\r\n    items.Add(L\"elephant\");\r\n    items.Add(L\"fish\");\r\n    items.Add(L\"ball\");\r\n    items.Add(L\"cat\");\r\n    items.Add(L\"dog\");\r\n    items.Add(L\"apple\");\r\n\r\n    auto depFunc = [](const WString& a, const WString& b)\r\n    {\r\n        return\r\n            (a == L\"ball\" && b == L\"apple\") ||\r\n            (a == L\"cat\" && b == L\"ball\") ||\r\n            (a == L\"ball\" && b == L\"dog\") ||\r\n            (a == L\"dog\" && b == L\"cat\") ||\r\n            (a == L\"elephant\" && b == L\"cat\") ||\r\n            (a == L\"fish\" && b == L\"dog\")\r\n            ;\r\n    };\r\n\r\n    PartialOrderingProcessor pop;\r\n    pop.InitWithFunc(items, depFunc);\r\n    pop.Sort();\r\n\r\n    for (vint i = 0; i < pop.components.Count(); i++)\r\n    {\r\n        auto& c = pop.components[i];\r\n        Console::WriteLine(\r\n            L\"Component \" + itow(i) + L\": \" +\r\n            Range<vint>(0, c.nodeCount)\r\n                .Select([&](vint ni){ return items[c.firstNode[ni]]; })\r\n                .Aggregate([](const WString& a, const WString& b){ return a + L\" \" + b; })\r\n        );\r\n    }\r\n\r\n    for (vint i = 0; i < pop.nodes.Count(); i++)\r\n    {\r\n        auto& n = pop.nodes[i];\r\n        if(n.outs->Count() > 0)\r\n        {\r\n            Console::WriteLine(\r\n                L\"Node \" + items[i] + L\" <- \" +\r\n                From(*n.outs)\r\n                    .Select([&](vint ni){ return items[ni]; })\r\n                    .Aggregate([](const WString& a, const WString& b){ return a + L\" \" + b; })\r\n            );\r\n        }\r\n    }\r\n}",
+                "output": [
+                  "Component 0: apple\r",
+                  "Component 1: ball dog cat\r",
+                  "Component 2: fish\r",
+                  "Component 3: elephant\r",
+                  "Node ball <- cat\r",
+                  "Node cat <- dog elephant\r",
+                  "Node dog <- ball fish\r",
+                  "Node apple <- ball\r",
+                  ""
                 ]
               }
             ]
