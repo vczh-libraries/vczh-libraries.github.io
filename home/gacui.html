@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
+<meta charset="utf-8">
+<title>Gaclib -- Home -- GacUI!</title>
 <link rel="shortcut icon" href="../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../global.css">
 <link rel="stylesheet" type="text/css" href="../navigation.css">
 <link rel="stylesheet" type="text/css" href="../category.css">
 <script src="../scripts/rootView.js"></script>
 <script src="../scripts/homeView.js"></script>
-<script src="../scripts/homeCategoryView.js"></script>
+<script src="../scripts/homeCategoryFeatureView.js"></script>
 
 </head>
 <body>
-<div id="MVC-ViewContainer">
+<div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
   const mvcModel = {
-  "page": "gacui"
+  "path": "gacui"
 };
   const mvcViews = [
   {
@@ -29,7 +30,7 @@
   },
   {
     "targetObject": "homeViewContainer",
-    "viewName": "Gaclib-HomeCategoryView"
+    "viewName": "Gaclib-HomeCategoryFeatureView"
   }
 ];
   const activeButton = "Home";
@@ -46,7 +47,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            Gaclib is a GPU accelerated C++ User Interface library.\r\n            You can find it at "
+            "text": "\r\n            Gaclib is a GPU accelerated C++ User Interface library.\r\n            It is flexible, customizable with rich amount of built-in layout and controls.\r\n            It also supports control templates, list item templates, MVVM, localization, animation, etc.\r\n            More importantly, even if the UI is very complex, it still has good performance in interaction.\r\n            You can find it at "
           },
           {
             "kind": "PageLink",
@@ -90,231 +91,109 @@
     ]
   }
 };
-  const categoryArticle = {
-  "index": false,
-  "numberBeforeTitle": false,
-  "topic": {
-    "kind": "Topic",
-    "title": "GacUI!",
-    "content": [
-      {
-        "kind": "Topic",
-        "title": "Rich controls and flexible layout",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "List controls:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Image",
-                "src": "/resources/home/demo_AB.png"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Ribbon and editor controls:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Image",
-                "src": "/resources/home/demo_DER.png"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Easy syntax",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <Window Text=\"Hello, world!\">\r\n        <Label Text=\"Welcome to GacUI Library!\"/>\r\n    </Window>\r\n</Instance>",
-                "language": "Xml"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Localization",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Resource: stores strings and their translations"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<LocalizedStrings ref.Class=\"helloworld::StringResource\" DefaultLocale=\"en-US\">\r\n    <Strings Locales=\"en-US\">\r\n        <String Name=\"Title\" Text=\"Hello, world!\"/>\r\n        <String Name=\"Button\" Text=\"Good morning!\"/>\r\n    </Strings>\r\n    <Strings Locales=\"zh-CN\">\r\n        <String Name=\"Title\" Text=\"你好，世界！\"/>\r\n        <String Name=\"Button\" Text=\"早上好！\"/>\r\n    </Strings>\r\n</LocalizedStrings>",
-                "language": "Xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "UI: use strings from resource"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.LocalizedStrings Name=\"Strings\" helloworld=\"demo::StringResource\" Default=\"true\"/>\r\n    <Window Text-str=\"Title()\">\r\n        <Button Text-str=\"Button()\">\r\n    </Window>\r\n</Instance>",
-                "language": "Xml"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Styling",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Styles: set properties by selector"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<Styles>\r\n    <Style ref.Path=\"//Cell/Button\" Font=\"fontFamily:'Segoe UI' size: 24 antialias:true\">\r\n        <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n    </Style>\r\n</Styles>",
-                "language": "Xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "UI: applies styles on multiple controls"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <Window Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:1 column:1 columnSpan:2\">\r\n                <Button Text=\"OK\"/>\r\n            </Cell>\r\n\r\n            <Cell Site=\"row:1 column:2 columnSpan:2\">\r\n                <Button Text=\"Cancel\"/>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-                "language": "Xml"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "MVVM and Data binding",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Script: defines the interface for view model"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "module script;\r\n\r\nnamespace helloworld\r\n{\r\n    interface IViewModel\r\n    {\r\n        prop Title : string {GetTitle, SetTitle : TitleChanged}\r\n        func Submit() : void;\r\n    }\r\n}",
-                "language": "Xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "UI: binds view model to text box and button"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.Parameter Name=\"ViewModel\" Class=\"helloworld::IViewModel\"/>\r\n    <Window ref.Name=\"self\" Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:0 column:0\">\r\n                <SolidLabel Text=\"Title: \" Font-bind=\"self.Font\"/>\r\n            </Cell>\r\n            <Cell Site=\"row:0 column:1\">\r\n                <SinglelineTextBox Text-bind=\"ViewModel.Title\">\r\n                    <att.BoundsComposition-set\r\n                        AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"\r\n                        PreferredMinSize=\"x:0 y:24\"/>\r\n                </SinglelineTextBox>\r\n            </Cell>\r\n            <Cell Site=\"row:2 column:0 columnSpan:2\">\r\n                <Button Text=\"Submit\" ev.Clicked-eval=\"ViewModel.Submit()\">\r\n                    <att.BoundsComposition-set AlignmentToParent=\"left:-1 top:0 right:0 bottom:0\"/>\r\n                </Button>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-                "language": "Xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Application: implement the view model"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "class ViewModel : public Object, public virtual helloworld::IViewModel\r\n{\r\nprivate:\r\n    WString title;\r\n\r\npublic:\r\n\r\n    WString GetTitle()override\r\n    {\r\n        return title;\r\n    }\r\n\r\n    void SetTitle(const WString& value)override\r\n    {\r\n        title = value;\r\n        TitleChanged();\r\n    }\r\n\r\n    void Submit()override\r\n    {\r\n        // do something\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"MVVM.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    auto viewModel = MakePtr<ViewModel>();\r\n    auto window = new helloworld::MainWindow(viewModel);\r\n    window->MoveToScreenCenter();\r\n    GetApplication()->Run(window);\r\n    delete window;\r\n}",
-                "language": "Xml"
-              }
-            ]
-          }
-        ]
+  const featureList = {
+  "title": "GacUI!",
+  "features": [
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "gacui/rich.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Rich controls and flexible layout",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Built-in layouts, controls and templates."
+                }
+              ]
+            }
+          ]
+        }
       }
-    ]
-  }
+    },
+    {
+      "image": "/resources/home/cat_gacui_localization.png",
+      "href": "gacui/localization.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Localization",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Display text in different languages with the ability to switch language at runtime."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "image": "/resources/home/cat_gacui_styling.png",
+      "href": "gacui/styling.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Styling",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Control any properties of multiple controls centrally using XPath selector."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "image": "/resources/home/cat_gacui_mvvm.png",
+      "href": "gacui/mvvm.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "MVVM and Data binding",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Model-View-ViewModel with virtual mode in controls makes UI be easily updated, testable and scalable."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
 };
   window["MVC-Resources.mvcModel"] = mvcModel;
   window["MVC-Resources.mvcViews"] = mvcViews;
   window["MVC-Resources.activeButton"] = activeButton;
   window["MVC-Resources.activeCategory"] = activeCategory;
   window["MVC-Resources.homeArticle"] = homeArticle;
-  window["MVC-Resources.categoryArticle"] = categoryArticle;
+  window["MVC-Resources.featureList"] = featureList;
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }
@@ -326,5 +205,5 @@
   }
 }
 </script>
-</div></body>
+</body>
 </html>
