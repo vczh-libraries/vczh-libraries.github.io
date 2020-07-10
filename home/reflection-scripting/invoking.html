@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Dynamic invoking</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "reflection-scripting",
+    "invoking"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "Scripting";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Dynamic invoking",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "Call the registered C++ class via reflection API."
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "LoadPredefinedTypes();\r\n\r\nauto tm = GetGlobalTypeManager();\r\ntm->AddTypeLoader(new MyTypeLoader);\r\ntm->Load();\r\n\r\nauto td = tm->GetTypeDescriptor(L\"myapi::App\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto print = td->GetMethodGroupByName(L\"Print\");\r\n\r\nValue app = ctor->Invoke(Value(), Value_xs());\r\n\r\narguments.Add(BoxValue<WString>(L\"Hello, world!\"));\r\nprint->Invoke(app, (Value_xs(), WString(L\"Hello, world!\")));\r\n\r\nResetGlobalTypeManager();",
+            "language": "C++"
           }
         ]
       }

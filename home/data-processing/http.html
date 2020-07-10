@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Http client</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "data-processing",
+    "http"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "Data";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Http client",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "Download the HTML code from the home page."
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "HttpRequest request;\r\nrequest.SetHost(L\"http://gaclib.net\");\r\n\r\nHttpResponse response;\r\nHttpQuery(request, response);\r\n\r\nConsole::WriteLine(itow(response.statusCode));\r\nConsole::WriteLine(response.GetBodyUtf8());",
+            "language": "C++"
           }
         ]
       }

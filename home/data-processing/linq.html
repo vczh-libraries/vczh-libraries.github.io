@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Rich collection operations</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "data-processing",
+    "linq"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "Data";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Rich collection operations",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "Calculate the sum of squares of numbers in a method chain."
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "vint numbers[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\r\nvint sumOfSquares = From(numbers)\r\n    .Select([](vint i) { return i * i; })\r\n    .Aggregate([](vint a, vint b) { return a + b; });",
+            "language": "C++"
           }
         ]
       }

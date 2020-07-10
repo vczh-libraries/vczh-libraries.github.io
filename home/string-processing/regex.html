@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Regular expression</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "string-processing",
+    "regex"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "String";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Regular expression",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "Extract information from a string using regular expression."
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "Regex regex(L\"^(<name>\\w+):(<adj>\\w+)\");\r\nPtr<RegexMatch> match = regex.Match(L\"GacUI:great\");\r\nConsole::WriteLine(\r\n    L\"Hey, \" +\r\n    match->Groups()[L\"name\"][0].Value() +\r\n    L\" is \" +\r\n    match->Groups()[L\"adj\"][0].Value() +\r\n    L\"!\"\r\n);",
+            "language": "C++"
           }
         ]
       }

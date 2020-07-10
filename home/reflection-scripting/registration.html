@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Easy registration</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "reflection-scripting",
+    "registration"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "Scripting";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Easy registration",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "Register a C++ class, so that it can be accessed by both C++ reflection API or Workflow script."
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "namespace myapi\r\n{\r\n    class App : public Object, public Description<App>\r\n    {\r\n    public:\r\n        void Print(const WString& text) { Console::WriteLine(text); }\r\n        WString Get() { return Console::Read(); }\r\n    };\r\n}\r\n\r\nusing namespace myapi;\r\n\r\n#define TYPE_LIST(F) F(myapi::App)\r\n\r\nBEGIN_TYPE_INFO_NAMESPACE\r\n\r\n    TYPE_LIST(DECL_TYPE_INFO)\r\n    TYPE_LIST(IMPL_CPP_TYPE_INFO)\r\n\r\n    BEGIN_CLASS_MEMBER(App)\r\n        CLASS_MEMBER_CONSTRUCTOR(Ptr<App>(), NO_PARAMETER)\r\n        CLASS_MEMBER_METHOD(Print, {L\"text\"})\r\n        CLASS_MEMBER_METHOD(Get, NO_PARAMETER)\r\n    END_CLASS_MEMBER(App)\r\n\r\n    class MyTypeLoader : public Object, public ITypeLoader\r\n    {\r\n    public:\r\n        void Load(ITypeManager* manager)override\r\n        {\r\n            TYPE_LIST(ADD_TYPE_INFO)\r\n        }\r\n        \r\n        void Unload(ITypeManager* manager)override\r\n        {\r\n        }\r\n    };\r\n\r\nEND_TYPE_INFO_NAMESPACE",
+            "language": "C++"
           }
         ]
       }

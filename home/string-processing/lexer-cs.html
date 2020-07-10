@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- Home -- MVVM and Data binding</title>
+<title>Gaclib -- Home -- Lexical analyzer with non-regex tokens</title>
 <link rel="shortcut icon" href="../../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../../global.css">
 <link rel="stylesheet" type="text/css" href="../../navigation.css">
@@ -18,8 +18,8 @@
 {
   const mvcModel = {
   "path": [
-    "gacui",
-    "mvvm"
+    "string-processing",
+    "lexer-cs"
   ]
 };
   const mvcViews = [
@@ -37,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "GacUI";
+  const activeCategory = "String";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -76,24 +76,14 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "MVVM and Data binding",
+    "title": "Lexical analyzer with non-regex tokens",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
             "kind": "Text",
-            "text": "Script: defines the interface for view model"
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Program",
-            "code": "module script;\r\n\r\nnamespace helloworld\r\n{\r\n    interface IViewModel\r\n    {\r\n        prop Title : string {GetTitle, SetTitle : TitleChanged}\r\n        func Submit() : void;\r\n    }\r\n}",
-            "language": "Xml"
+            "text": "\r\n            When regular expression is not enough to define a token,\r\n            you can register a callback to modify the token,\r\n            it is called on every recognized token.\r\n            For colorization, a token could be provided in multiple line buffers,\r\n            the callback is also given the information to handle such case.\r\n        "
           }
         ]
       },
@@ -102,26 +92,20 @@
         "content": [
           {
             "kind": "Text",
-            "text": "UI: binds view model to text box and button"
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
+            "text": "\r\n            Context sensitive colorization is also a very powerful feature provided by "
+          },
           {
-            "kind": "Program",
-            "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.Parameter Name=\"ViewModel\" Class=\"helloworld::IViewModel\"/>\r\n    <Window ref.Name=\"self\" Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:0 column:0\">\r\n                <SolidLabel Text=\"Title: \" Font-bind=\"self.Font\"/>\r\n            </Cell>\r\n            <Cell Site=\"row:0 column:1\">\r\n                <SinglelineTextBox Text-bind=\"ViewModel.Title\">\r\n                    <att.BoundsComposition-set\r\n                        AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"\r\n                        PreferredMinSize=\"x:0 y:24\"/>\r\n                </SinglelineTextBox>\r\n            </Cell>\r\n            <Cell Site=\"row:2 column:0 columnSpan:2\">\r\n                <Button Text=\"Submit\" ev.Clicked-eval=\"ViewModel.Submit()\">\r\n                    <att.BoundsComposition-set AlignmentToParent=\"left:-1 top:0 right:0 bottom:0\"/>\r\n                </Button>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-            "language": "Xml"
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RegexLexer"
+              }
+            ]
+          },
           {
             "kind": "Text",
-            "text": "Application: implement the view model"
+            "text": ".\r\n        "
           }
         ]
       },
@@ -130,8 +114,8 @@
         "content": [
           {
             "kind": "Program",
-            "code": "class ViewModel : public Object, public virtual helloworld::IViewModel\r\n{\r\nprivate:\r\n    WString title;\r\n\r\npublic:\r\n\r\n    WString GetTitle()override\r\n    {\r\n        return title;\r\n    }\r\n\r\n    void SetTitle(const WString& value)override\r\n    {\r\n        title = value;\r\n        TitleChanged();\r\n    }\r\n\r\n    void Submit()override\r\n    {\r\n        // do something\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"MVVM.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    auto viewModel = MakePtr<ViewModel>();\r\n    auto window = new helloworld::MainWindow(viewModel);\r\n    window->MoveToScreenCenter();\r\n    GetApplication()->Run(window);\r\n    delete window;\r\n}",
-            "language": "Xml"
+            "code": "struct InterTokenState\r\n{\r\n    WString postfix;\r\n};\r\n\r\nvoid Deleter(void* interStateDeleter)\r\n{\r\n    delete (InterTokenState*)interStateDeleter;\r\n}\r\n\r\nvoid ExtendProc(void* argument, const wchar_t* reading, vint length, bool completeText, RegexProcessingToken& processingToken)\r\n{\r\n    WString readingBuffer = length == -1 ? WString(reading, false) : WString(reading, length);\r\n    reading = readingBuffer.Buffer();\r\n\r\n    if (processingToken.token == 2 || processingToken.token == 3)\r\n    {\r\n        WString postfix;\r\n        if (processingToken.interTokenState)\r\n        {\r\n            postfix = ((InterTokenState*)processingToken.interTokenState)->postfix;\r\n        }\r\n        else\r\n        {\r\n            postfix = L\")\" + WString(reading + 2, processingToken.length - 3) + L\"\\\"\";\r\n        }\r\n\r\n        auto find = wcsstr(reading, postfix.Buffer());\r\n        if (find)\r\n        {\r\n            processingToken.length = (vint)(find - reading) + postfix.Length();\r\n            processingToken.completeToken = true;\r\n            processingToken.interTokenState = nullptr;\r\n        }\r\n        else\r\n        {\r\n            processingToken.length = readingBuffer.Length();\r\n            processingToken.token = 3;\r\n            processingToken.completeToken = false;\r\n\r\n            if (!completeText && !processingToken.interTokenState)\r\n            {\r\n                auto state = new InterTokenState;\r\n                state->postfix = postfix;\r\n                processingToken.interTokenState = state;\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nint main()\r\n{\r\nList<WString> codes;\r\ncodes.Add(L\"/d+\");\r\ncodes.Add(L\"\\\"[^\\\"]*\\\"\");\r\ncodes.Add(L\"/$\\\"=*/(\");\r\n\r\nRegexProc proc;\r\nproc.deleter = Deleter;\r\nproc.extendProc = ExtendProc;\r\nRegexLexer lexer(codes, proc);\r\n\r\nWString input = LR\"test_input(\r\n    123 456\r\n    \"simple text\"\r\n    $\"===(\r\n    abcde\r\n    )===\"\r\n)test_input\";\r\n\r\nList<RegexToken> tokens;\r\nCopyFrom(tokens, lexer.Parse(input));\r\n}",
+            "language": "C++"
           }
         ]
       }

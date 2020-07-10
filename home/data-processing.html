@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="../category.css">
 <script src="../scripts/rootView.js"></script>
 <script src="../scripts/homeView.js"></script>
-<script src="../scripts/homeCategoryArticleView.js"></script>
+<script src="../scripts/homeCategoryFeatureView.js"></script>
 
 </head>
 <body>
@@ -17,9 +17,7 @@
 <script lang="javascript">
 {
   const mvcModel = {
-  "path": [
-    "data-processing"
-  ]
+  "path": "data-processing"
 };
   const mvcViews = [
   {
@@ -32,7 +30,7 @@
   },
   {
     "targetObject": "homeViewContainer",
-    "viewName": "Gaclib-HomeCategoryArticleView"
+    "viewName": "Gaclib-HomeCategoryFeatureView"
   }
 ];
   const activeButton = "Home";
@@ -66,129 +64,136 @@
             "text": ".\r\n            This library provide many useful features.\r\n            If you don't need all features,\r\n            you can just use a subset of released C++ files to reduce the size of the executable.\r\n        "
           }
         ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Text",
-            "text": "\r\n            More and more developers are using this library to create their applications!\r\n            You could check out "
-          },
-          {
-            "kind": "PageLink",
-            "href": "http://www.majorav.com",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "majorav.com"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ",\r\n            which is a very impressive example.\r\n            Scroll to the end to see screenshots!\r\n        "
-          }
-        ]
       }
     ]
   }
 };
-  const categoryArticle = {
-  "index": false,
-  "numberBeforeTitle": false,
-  "topic": {
-    "kind": "Topic",
-    "title": "Data processing",
-    "content": [
-      {
-        "kind": "Topic",
-        "title": "Containers",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "Group<vint, WString> xs;\r\nxs.Add(1, L\"C++\");\r\nxs.Add(1, L\"C#\");\r\nxs.Add(1, L\"TypeScript\");\r\nxs.Add(2, L\"Java\");\r\nconst List<WString>& ones = xs.Get[1];",
-                "language": "C++"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Rich collection operations",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "vint numbers[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\r\nvint sumOfSquares = From(numbers)\r\n    .Select([](vint i) { return i * i; })\r\n    .Aggregate([](vint a, vint b) { return a + b; });",
-                "language": "C++"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Files and streams",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "Folder folder(L\"C:/MyProjects/\");\r\nList<File> files;\r\nfolder.GetFiles(files);\r\n\r\nWString fileNames = GenerateToStream([&](const TextWriter& writer)\r\n{\r\n    FOREACH(File, file, files)\r\n    {\r\n        writer.WriteLine(file.GetFilePath().GetName());\r\n    }\r\n});\r\nFile(L\"C:/MyProjects/index.txt\")\r\n    .WriteAllText(fileNames, false, BomEncoder::Utf8);",
-                "language": "C++"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Http client",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "HttpRequest request;\r\nrequest.SetHost(L\"http://gaclib.net\");\r\n\r\nHttpResponse response;\r\nHttpQuery(request, response);\r\n\r\nConsole::WriteLine(itow(response.statusCode));\r\nConsole::WriteLine(response.GetBodyUtf8());",
-                "language": "C++"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Threading and synchronozation",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Program",
-                "code": "EventObject event;\r\nevent.CreateAutoUnsignal(false);\r\n\r\nThread::CreateAndStart([&]()\r\n{\r\n    DoSomething();\r\n    event.Signal();\r\n});\r\n\r\nevent.Wait();",
-                "language": "C++"
-              }
-            ]
-          }
-        ]
+  const featureList = {
+  "title": "Data processing",
+  "features": [
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "data-processing/containers.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Containers",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Array, List, SortedList, Dictionary, Group, and more..."
+                }
+              ]
+            }
+          ]
+        }
       }
-    ]
-  }
+    },
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "data-processing/linq.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Rich collection operations",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "All collection operations you need have already been built in."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "data-processing/filesystem.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Files and streams",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Basic access from file system, file IO and streaming."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "data-processing/http.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Http client",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Query data from the internet by one function call."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "image": "/resources/home/cat_gacui_rich.png",
+      "href": "data-processing/threading.html",
+      "article": {
+        "index": false,
+        "numberBeforeTitle": false,
+        "topic": {
+          "kind": "Topic",
+          "title": "Threading and synchronozation",
+          "content": [
+            {
+              "kind": "Paragraph",
+              "content": [
+                {
+                  "kind": "Text",
+                  "text": "Thread, thread pool, locks, and syntax sugar."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
 };
   window["MVC-Resources.mvcModel"] = mvcModel;
   window["MVC-Resources.mvcViews"] = mvcViews;
   window["MVC-Resources.activeButton"] = activeButton;
   window["MVC-Resources.activeCategory"] = activeCategory;
   window["MVC-Resources.homeArticle"] = homeArticle;
-  window["MVC-Resources.categoryArticle"] = categoryArticle;
+  window["MVC-Resources.featureList"] = featureList;
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }

@@ -2,21 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="global.css">
-<link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
-<script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<title>Gaclib -- Home -- Run the script directly</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../navigation.css">
+<link rel="stylesheet" type="text/css" href="../../category.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/homeView.js"></script>
+<script src="../../scripts/homeCategoryArticleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "path": [
+    "reflection-scripting",
+    "executing"
+  ]
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -32,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
+  const activeCategory = "Scripting";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -71,14 +76,24 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Hello, world!",
+    "title": "Run the script directly",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
+            "kind": "Text",
+            "text": "\r\n            Compile, serialize and run the script on-the-fly!\r\n            You can also save the compiled Workflow script as a binary file.\r\n            By doing this, you don't need to link the compiler code for running the script.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "List<Ptr<ParsingError>> errors;\r\nList<WString> codes;\r\ncodes.Add(THE_WORKFLOW_SCRIPT);\r\n\r\nauto table = WfLoadTable();\r\nauto assembly = Compile(table, codes, errors);\r\n\r\n// saving the compiled assembly to a file is optional\r\n{\r\n    FileStream stream(L\"C:/script.bin\", FileStream::WriteOnly);\r\n    assembly->Serialize(stream);\r\n}\r\n{\r\n    WfAssemblyLoadErrors loadErrors;\r\n    FileStream stream(L\"C:/script.bin\", FileStream::ReadOnly);\r\n    assembly = WfAssembly::Deserialize(stream, loadErrors);\r\n}\r\n\r\n// initialize\r\nglobalContext = MakePtr<WfRuntimeGlobalContext>(assembly);\r\nLoadFunction<void()>(globalContext, L\"<initialize>\")();\r\n\r\n// load and run MyScript::Main\r\nauto td = tm->GetTypeDescriptor(L\"MyScript\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto main = td->GetMethodGroupByName(L\"Main\");\r\n\r\nValue myScript = ctor->Invoke(Value(), Value_xs());\r\nmain->Invoke(myScript, Value_xs());",
+            "language": "C++"
           }
         ]
       }

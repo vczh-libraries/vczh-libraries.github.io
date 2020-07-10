@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- Home -- MVVM and Data binding</title>
+<title>Gaclib -- Home -- GLR parser generation</title>
 <link rel="shortcut icon" href="../../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../../global.css">
 <link rel="stylesheet" type="text/css" href="../../navigation.css">
@@ -18,8 +18,8 @@
 {
   const mvcModel = {
   "path": [
-    "gacui",
-    "mvvm"
+    "string-processing",
+    "parser"
   ]
 };
   const mvcViews = [
@@ -37,7 +37,7 @@
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "GacUI";
+  const activeCategory = "String";
   const homeArticle = {
   "index": false,
   "numberBeforeTitle": false,
@@ -76,14 +76,14 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "MVVM and Data binding",
+    "title": "GLR parser generation",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
             "kind": "Text",
-            "text": "Script: defines the interface for view model"
+            "text": "Grammar: an expression parser for numbers, binary operators and function calls"
           }
         ]
       },
@@ -92,8 +92,8 @@
         "content": [
           {
             "kind": "Program",
-            "code": "module script;\r\n\r\nnamespace helloworld\r\n{\r\n    interface IViewModel\r\n    {\r\n        prop Title : string {GetTitle, SetTitle : TitleChanged}\r\n        func Submit() : void;\r\n    }\r\n}",
-            "language": "Xml"
+            "code": "include:<VlppParser.h>\r\nnamespace:calculator\r\nreflection:calculator\r\nclassPrefix:Cal\r\nclassRoot:Expression\r\nguard:CALCULATOR_PARSER\r\nparser:Parse(Exp)\r\nfilePrefix:Calculator\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token value;\r\n}\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    enum BinaryOperator\r\n    {\r\n        Add,\r\n        Sub,\r\n        Mul,\r\n        Div,\r\n    }\r\n\r\n    Expression firstOperand;\r\n    Expression secondOperand;\r\n    BinaryOperator binaryOperator;\r\n}\r\n\r\nclass FunctionExpression : Expression\r\n{\r\n    token functionName;\r\n    Expression[] arguments;\r\n}\r\n\r\ntoken NAME = \"[a-zA-Z_]/w*\";\r\ntoken NUMBER = \"/d+(./d+)?\";\r\ntoken ADD = \"/+\";\r\ntoken SUB = \"-\";\r\ntoken MUL = \"/*\";\r\ntoken DIV = \"//\";\r\ntoken LEFT = \"/(\";\r\ntoken RIGHT = \"/)\";\r\ntoken COMMA = \",\";\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule NumberExpression Number\r\n        = NUMBER : value as NumberExpression\r\n        ;\r\nrule FunctionExpression Call\r\n        = NAME : functionName \"(\" [ Exp : arguments { \",\" Exp : arguments } ] \")\" as FunctionExpression\r\n        ;\r\nrule Expression Factor\r\n        = !Number | !Call\r\n        = \"(\" !Exp \")\"\r\n        ;\r\nrule Expression Term\r\n        = !Factor\r\n        = Term : firstOperand \"*\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Mul\" }\r\n        = Term : firstOperand \"/\" Factor : secondOperand as BinaryExpression with { binaryOperator = \"Div\" }\r\n        ;\r\nrule Expression Exp\r\n        = !Term\r\n        = Exp : firstOperand \"+\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Add\" }\r\n        = Exp : firstOperand \"-\" Term : secondOperand as BinaryExpression with { binaryOperator = \"Sub\" }\r\n        ;",
+            "language": "C++"
           }
         ]
       },
@@ -102,7 +102,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "UI: binds view model to text box and button"
+            "text": "\r\n            And what you get from generated C++ code.\r\n            The GLR parser generator also generate visitors for each root AST types.\r\n            Different kinds of AST visitors with boilerplate code are also available.\r\n        "
           }
         ]
       },
@@ -111,27 +111,8 @@
         "content": [
           {
             "kind": "Program",
-            "code": "<Instance ref.Class=\"helloworld::MainWindow\">\r\n    <ref.Parameter Name=\"ViewModel\" Class=\"helloworld::IViewModel\"/>\r\n    <Window ref.Name=\"self\" Text=\"Hello, world!\">\r\n        <Table CellPadding=\"5\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n            <att.Rows>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n            </att.Rows>\r\n            <att.Columns>\r\n                <CellOption>composeType:MinSize</CellOption>\r\n                <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n            </att.Columns>\r\n\r\n            <Cell Site=\"row:0 column:0\">\r\n                <SolidLabel Text=\"Title: \" Font-bind=\"self.Font\"/>\r\n            </Cell>\r\n            <Cell Site=\"row:0 column:1\">\r\n                <SinglelineTextBox Text-bind=\"ViewModel.Title\">\r\n                    <att.BoundsComposition-set\r\n                        AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"\r\n                        PreferredMinSize=\"x:0 y:24\"/>\r\n                </SinglelineTextBox>\r\n            </Cell>\r\n            <Cell Site=\"row:2 column:0 columnSpan:2\">\r\n                <Button Text=\"Submit\" ev.Clicked-eval=\"ViewModel.Submit()\">\r\n                    <att.BoundsComposition-set AlignmentToParent=\"left:-1 top:0 right:0 bottom:0\"/>\r\n                </Button>\r\n            </Cell>\r\n        </Table>\r\n    </Window>\r\n</Instance>",
-            "language": "Xml"
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Text",
-            "text": "Application: implement the view model"
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Program",
-            "code": "class ViewModel : public Object, public virtual helloworld::IViewModel\r\n{\r\nprivate:\r\n    WString title;\r\n\r\npublic:\r\n\r\n    WString GetTitle()override\r\n    {\r\n        return title;\r\n    }\r\n\r\n    void SetTitle(const WString& value)override\r\n    {\r\n        title = value;\r\n        TitleChanged();\r\n    }\r\n\r\n    void Submit()override\r\n    {\r\n        // do something\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"MVVM.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    auto viewModel = MakePtr<ViewModel>();\r\n    auto window = new helloworld::MainWindow(viewModel);\r\n    window->MoveToScreenCenter();\r\n    GetApplication()->Run(window);\r\n    delete window;\r\n}",
-            "language": "Xml"
+            "code": "auto table = CalLoadTable();\r\nPtr<CalExpression> expr = CalParse(L\"max(1, 2) * 3 - 4\", table);",
+            "language": "C++"
           }
         ]
       }
