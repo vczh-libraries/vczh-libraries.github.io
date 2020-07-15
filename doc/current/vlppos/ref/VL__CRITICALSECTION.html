@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>class CriticalSection -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="../../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
 <script src="../../scripts/rootView.js"></script>
 <script src="../../scripts/directoryView.js"></script>
 <script src="../../scripts/documentView.js"></script>
 
 </head>
 <body>
-<div id="MVC-ViewContainer">
+<div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
   const mvcModel = {
@@ -325,16 +327,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Critical section. It is similar to mutex, but in Windows, enter a owned critical section will not cause dead lock."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "The macro \"CS_LOCK\" is encouraged to use instead of calling "
+                "text": "\r\n Critical section.\r\n The macro \"CS_LOCK\" is recommended instead of calling "
               },
               {
                 "kind": "PageLink",
@@ -362,7 +355,26 @@
               },
               {
                 "kind": "Text",
-                "text": " like this:"
+                "text": " like this:\r\n "
+              },
+              {
+                "kind": "Program",
+                "code": " CS_LOCK(yourCriticalSection)\r\n {\r\n     // do something\r\n }"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In Windows, enter a owned critical section will not result in dead lock."
               }
             ]
           },
@@ -371,34 +383,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "CS_LOCK(yourCriticalSection)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "<code>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
+                "text": "In Linux and macOS, it works like a mutex."
               }
             ]
           }
@@ -469,5 +454,5 @@
   }
 }
 </script>
-</div></body>
+</body>
 </html>

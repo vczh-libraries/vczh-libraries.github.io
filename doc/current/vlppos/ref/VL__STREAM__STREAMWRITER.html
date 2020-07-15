@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>class StreamWriter -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="../../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
 <script src="../../scripts/rootView.js"></script>
 <script src="../../scripts/directoryView.js"></script>
 <script src="../../scripts/documentView.js"></script>
 
 </head>
 <body>
-<div id="MVC-ViewContainer">
+<div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
   const mvcModel = {
@@ -117,12 +119,39 @@
                   ]
                 },
                 {
+                  "name": "function CompressStream",
+                  "selected": false,
+                  "path": [
+                    "vlppos",
+                    "ref",
+                    "VL__STREAM__COMPRESSSTREAM@VOID(__VL__STREAM__ISTREAM_&,___VL__S"
+                  ]
+                },
+                {
+                  "name": "function CopyStream",
+                  "selected": false,
+                  "path": [
+                    "vlppos",
+                    "ref",
+                    "VL__STREAM__COPYSTREAM@__VL__VINT(__VL__STREAM__ISTREAM_&,___VL_"
+                  ]
+                },
+                {
                   "name": "class DecoderStream",
                   "selected": false,
                   "path": [
                     "vlppos",
                     "ref",
                     "VL__STREAM__DECODERSTREAM"
+                  ]
+                },
+                {
+                  "name": "function DecompressStream",
+                  "selected": false,
+                  "path": [
+                    "vlppos",
+                    "ref",
+                    "VL__STREAM__DECOMPRESSSTREAM@VOID(__VL__STREAM__ISTREAM_&,___VL_"
                   ]
                 },
                 {
@@ -141,6 +170,15 @@
                     "vlppos",
                     "ref",
                     "VL__STREAM__FILESTREAM"
+                  ]
+                },
+                {
+                  "name": "function GenerateToStream",
+                  "selected": false,
+                  "path": [
+                    "vlppos",
+                    "ref",
+                    "VL__STREAM__GENERATETOSTREAM@__VL__WSTRING([TCALLBACK]_CONST_&,_"
                   ]
                 },
                 {
@@ -415,7 +453,153 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Text writer to a stream."
+                "text": "Text reader from a stream storing characters in wchar_t."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "To specify the encoding in the input stream,"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "you are recommended to create a "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__ENCODERSTREAM.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "EncoderStream"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with a "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__CHARENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CharEncoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ","
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "like "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__BOMENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BomEncoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__MBCSENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MbcsEncoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__UTF16ENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Utf16Encoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__UTF16BEENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Utf16BEEncoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppos/ref/VL__STREAM__UTF8ENCODER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Utf8Encoder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppOS.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\nusing namespace vl::stream;\r\nusing namespace vl::filesystem;\r\n\r\nint main()\r\n{\r\n    FileStream fileStream(L\"C:/a.txt\", FileStream::WriteOnly);\r\n    Utf8Encoder encoder;\r\n    EncoderStream encoderStream(fileStream, encoder);\r\n    StreamWriter writer(encoderStream);\r\n    writer.Write(L\"Hello, world!\");\r\n}"
               }
             ]
           }
@@ -471,5 +655,5 @@
   }
 }
 </script>
-</div></body>
+</body>
 </html>
