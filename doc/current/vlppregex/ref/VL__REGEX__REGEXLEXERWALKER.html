@@ -273,7 +273,70 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Lexical walker."
+                "text": "A type for walking through a text against a "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXLEXER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RegexLexer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ". Call "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXLEXER__WALK@__VL__REGEX__REGEXLEXERWALKER().html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Walk"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to create this object."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppRegex.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::console;\r\nusing namespace vl::regex;\r\n\r\nint main()\r\n{\r\n    List<WString> tokenDefs;\r\n    tokenDefs.Add(L\"/d+./d+\");\r\n    tokenDefs.Add(L\"/d+\");\r\n    tokenDefs.Add(L\"/w+\");\r\n    tokenDefs.Add(L\"/s+\");\r\n\r\n    RegexLexer lexer(tokenDefs, {});\r\n    RegexLexerWalker walker = lexer.Walk();\r\n\r\n    WString input = L\"This book costs 2.5. That book costs 2.\";\r\n    const wchar_t* reading = input.Buffer();\r\n\r\n    const wchar_t* tokenBegin = reading;\r\n    const wchar_t* tokenEnd = nullptr;\r\n    vint tokenId = -1;\r\n\r\n    vint state = walker.GetStartState();\r\n    while (*reading)\r\n    {\r\n        vint token = -1;\r\n        bool finalState = false;\r\n        bool previousTokenStop = false;\r\n        walker.Walk(*reading++, state, token, finalState, previousTokenStop);\r\n\r\n        if (previousTokenStop || !*reading)\r\n        {\r\n            if (tokenEnd)\r\n            {\r\n                if (tokenBegin == tokenEnd)\r\n                {\r\n                    Console::WriteLine(L\"Recognized token: \" + itow(tokenId) + L\": <\" + WString(*tokenBegin) + L\">\");\r\n                    tokenBegin = reading;\r\n                    tokenEnd = nullptr;\r\n                    tokenId = -1;\r\n                    state = walker.GetStartState();\r\n                }\r\n                else\r\n                {\r\n                    Console::WriteLine(L\"Recognized token: \" + itow(tokenId) + L\": <\" + WString(tokenBegin, tokenEnd - tokenBegin) + L\">\");\r\n                    tokenBegin = reading = tokenEnd;\r\n                    tokenEnd = nullptr;\r\n                    tokenId = -1;\r\n                    state = walker.GetStartState();\r\n                }\r\n            }\r\n            else\r\n            {\r\n                Console::WriteLine(L\"Unrecognized character: <\" + WString(*tokenBegin) + L\">\");\r\n                tokenBegin++;\r\n                state = walker.GetStartState();\r\n            }\r\n        }\r\n        else if (finalState)\r\n        {\r\n            tokenEnd = reading;\r\n            tokenId = token;\r\n        }\r\n    }\r\n}",
+                "output": [
+                  "Recognized token: 2: <This>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 2: <book>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 2: <costs>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 0: <2.5>\r",
+                  "Unrecognized character: <.>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 2: <That>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 2: <book>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 2: <costs>\r",
+                  "Recognized token: 3: < >\r",
+                  "Recognized token: 1: <2>\r",
+                  "Unrecognized character: <.>\r",
+                  ""
+                ]
               }
             ]
           }

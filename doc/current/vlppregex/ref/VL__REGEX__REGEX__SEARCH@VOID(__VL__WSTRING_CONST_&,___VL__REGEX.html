@@ -228,7 +228,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Find all matched fragments of the text, returning all matched fragments."
+                "text": "Find all matched fragments in the given text, returning all matched sub strings."
               }
             ]
           }
@@ -262,8 +262,28 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "All successful matches."
+                    "text": "Returns all succeeded matches."
                   }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppRegex.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::console;\r\nusing namespace vl::regex;\r\n\r\nint main()\r\n{\r\n    Regex regex(L\"C/S+\");\r\n    RegexMatch::List matches;\r\n    regex.Search(L\"C++ and C# are my favorite programing languages\", matches);\r\n    FOREACH(Ptr<RegexMatch>, match, matches)\r\n    {\r\n        Console::WriteLine(match->Result().Value());\r\n    }\r\n}",
+                "output": [
+                  "C++\r",
+                  "C#\r",
+                  ""
                 ]
               }
             ]

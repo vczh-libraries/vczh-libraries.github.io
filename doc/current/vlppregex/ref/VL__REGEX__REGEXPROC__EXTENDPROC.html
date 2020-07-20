@@ -209,6 +209,246 @@
       },
       {
         "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n This is very useful to recognize any token that cannot be expressed using a regular expression.\r\n For example, a C++ literal string R\"tag(the conteng)tag\".\r\n It is recommended to add a token for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "R\"tag("
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n and then use this extend proc to search for a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": ")tag\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to complete the token.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Important"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n when colorizing a text line by line,\r\n a cross-line token could be incomplete at the end of the line.\r\n Because a given buffer ends at the end of that line,\r\n the extend proc is not able to know right now about what is going on in the future.\r\n Here is what "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXPROCESSINGTOKEN__INTERTOKENSTATE.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "interTokenState"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is designed for,\r\n the extend proc can store anything it wants using that pointer.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The caller can get this pointer from the return value of "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXLEXERCOLORIZER__COLORIZE@VOID__(WCHAR_T_CONST__,.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Colorize"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n This pointer only available for cross-line tokens, it is obvious that one line produces at most one such pointer.\r\n Then the caller keeps calling that function to walk throught the whole string.\r\n When the return value is changed, the pointer is no longer used, and it can be deleted by calling "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXPROC__DELETER.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "deleter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " manually.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The first argument is "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/doc/current/vlppregex/ref/VL__REGEX__REGEXPROC__ARGUMENT.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "argument"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The second argument is a pointer to the buffer of the first character in this token.\r\n If the previous token is incomplete, then the buffer begins at the first character of the new buffer.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The third argument is the length of the recognized token in characters.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The fourth character indicates if the token is completed.\r\n Even if a token is completed, but the extend proc found that, the extend exceeds the end of the buffer,\r\n then it can update the value to make it incomplete.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n The fifth contains the context for this token. Fields except \"start\" are allowed to be updated by the extend proc.\r\n "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppRegex.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::console;\r\nusing namespace vl::regex;\r\n\r\nint main()\r\n{\r\n    List<WString> tokenDefs;\r\n    tokenDefs.Add(L\"/d+\");\r\n    tokenDefs.Add(L\"[a-zA-Z_]/w*\");\r\n    tokenDefs.Add(L\"\\\"([^\\\"/\\\\]|/\\\\/.)*\\\"\");\r\n    tokenDefs.Add(L\"R\\\"[^(]*/(\");\r\n    tokenDefs.Add(L\"[(){};]\");\r\n    tokenDefs.Add(L\"/s+\");\r\n    tokenDefs.Add(L\"///*+([^//*]|/*+[^//])*/*+//\");\r\n\r\n    const wchar_t* lines[] = {\r\n        L\"/*********************\",\r\n        L\"MAIN.CPP\",\r\n        L\"*********************/\",\r\n        L\"\",\r\n        L\"int main()\",\r\n        L\"{\",\r\n        L\"    printf(\\\"This is a \\\\\\\"simple\\\\\\\" text.\\\");\",\r\n        L\"    printf(R\\\"____(This is a\",\r\n        L\"\\\"multiple lined\\\"\",\r\n        L\"literal text)____\\\");\",\r\n        L\"    return 0;\",\r\n        L\"}\",\r\n    };\r\n\r\n    struct Argument\r\n    {\r\n        // for a real colorizer, you can put a color buffer here.\r\n        // the buffer is reused for every line of code.\r\n        // but for the demo, I put the current processing text instead.\r\n        // so that I am able to print what is processed.\r\n        const wchar_t* processingText = nullptr;\r\n    } argument;\r\n\r\n    struct InterTokenState\r\n    {\r\n        WString postfix;\r\n    };\r\n\r\n    RegexProc proc;\r\n    proc.argument = &argument;\r\n    proc.colorizeProc = [](void* argument, vint start, vint length, vint token)\r\n    {\r\n        // this is guaranteed by \"proc.argument = &argument;\"\r\n        auto text = reinterpret_cast<Argument*>(argument)->processingText;\r\n        Console::WriteLine(itow(token) + L\": <\" + WString(text + start, length) + L\">\");\r\n    };\r\n    proc.deleter = [](void* interTokenState)\r\n    {\r\n        delete reinterpret_cast<InterTokenState*>(interTokenState);\r\n    };\r\n    proc.extendProc = [](void* argument, const wchar_t* reading, vint length, bool completeText, RegexProcessingToken& processingToken)\r\n    {\r\n        // 3 is R\"[^(]*/(\r\n        // 7 is not used in tokenDefs, it is occupied to represent an extended literal string\r\n        if (processingToken.token == 3 || processingToken.token == 7)\r\n        {\r\n            // for calling wcsstr, create a buffer that is zero terminated\r\n            WString readingBuffer = length == -1 ? WString(reading, false) : WString(reading, length);\r\n            reading = readingBuffer.Buffer();\r\n\r\n            // get the postfix, which is )____\" in this case\r\n            WString postfix;\r\n            if (processingToken.interTokenState)\r\n            {\r\n                postfix = reinterpret_cast<InterTokenState*>(processingToken.interTokenState)->postfix;\r\n            }\r\n            else\r\n            {\r\n                postfix = L\")\" + WString(reading + 2, processingToken.length - 3) + L\"\\\"\";\r\n            }\r\n\r\n            // try to find if the postfix, which is )____\" in this case, appear in the given buffer\r\n            auto find = wcsstr(reading, postfix.Buffer());\r\n            if (find)\r\n            {\r\n                // if we find the postfix, it means we find the end of the literal string\r\n                // here processingToken.token automatically becomes 7\r\n                // interTokenState needs to be nullptr to indicate this\r\n                processingToken.length = (vint)(find - reading) + postfix.Length();\r\n                processingToken.completeToken = true;\r\n                processingToken.interTokenState = nullptr;\r\n            }\r\n            else\r\n            {\r\n                // if we don't find the postfix, it means the end of the literal string is in future lines\r\n                // we need to set the token to 7, which is the real token id for literal strings\r\n                // since we change any token from 3 to 7, 3 will never be passed to colorizeProc in \"token\" argument\r\n                processingToken.length = readingBuffer.Length();\r\n                processingToken.token = 7;\r\n                processingToken.completeToken = false;\r\n\r\n                // we need to ensure that interTokenState is not nullptr, and we can save the postfix here\r\n                if (!completeText && !processingToken.interTokenState)\r\n                {\r\n                    auto state = new InterTokenState;\r\n                    state->postfix = postfix;\r\n                    processingToken.interTokenState = state;\r\n                }\r\n            }\r\n        }\r\n    };\r\n\r\n    RegexLexer lexer(tokenDefs, proc);\r\n    RegexLexerColorizer colorizer = lexer.Colorize();\r\n\r\n    void* lastInterTokenState = nullptr;\r\n    FOREACH_INDEXER(const wchar_t*, line, index, From(lines))\r\n    {\r\n        Console::WriteLine(L\"Begin line \" + itow(index));\r\n        argument.processingText = line;\r\n        void* interTokenState = colorizer.Colorize(line, wcslen(line));\r\n        \r\n        if (lastInterTokenState && lastInterTokenState != interTokenState)\r\n        {\r\n            // call the deleter manually\r\n            proc.deleter(lastInterTokenState);\r\n        }\r\n        lastInterTokenState = interTokenState;\r\n\r\n        argument.processingText = nullptr;\r\n        colorizer.Pass(L'\\r');\r\n        colorizer.Pass(L'\\n');\r\n        Console::WriteLine(L\"\");\r\n    }\r\n}",
+                "output": [
+                  "Begin line 0\r",
+                  "6: </*********************>\r",
+                  "\r",
+                  "Begin line 1\r",
+                  "6: <MAIN.CPP>\r",
+                  "\r",
+                  "Begin line 2\r",
+                  "6: <*********************/>\r",
+                  "\r",
+                  "Begin line 3\r",
+                  "\r",
+                  "Begin line 4\r",
+                  "1: <int>\r",
+                  "5: < >\r",
+                  "1: <main>\r",
+                  "4: <(>\r",
+                  "4: <)>\r",
+                  "\r",
+                  "Begin line 5\r",
+                  "4: <{>\r",
+                  "\r",
+                  "Begin line 6\r",
+                  "5: <    >\r",
+                  "1: <printf>\r",
+                  "4: <(>\r",
+                  "2: <\"This is a \\\"simple\\\" text.\">\r",
+                  "4: <)>\r",
+                  "4: <;>\r",
+                  "\r",
+                  "Begin line 7\r",
+                  "5: <    >\r",
+                  "1: <printf>\r",
+                  "4: <(>\r",
+                  "7: <R\"____(This is a>\r",
+                  "\r",
+                  "Begin line 8\r",
+                  "7: <\"multiple lined\">\r",
+                  "\r",
+                  "Begin line 9\r",
+                  "7: <literal text)____\">\r",
+                  "4: <)>\r",
+                  "4: <;>\r",
+                  "\r",
+                  "Begin line 10\r",
+                  "5: <    >\r",
+                  "1: <return>\r",
+                  "5: < >\r",
+                  "0: <0>\r",
+                  "4: <;>\r",
+                  "\r",
+                  "Begin line 11\r",
+                  "4: <}>\r",
+                  "\r",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
         "title": "See Also",
         "content": [
           {

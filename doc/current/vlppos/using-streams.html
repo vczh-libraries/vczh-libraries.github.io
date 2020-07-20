@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Using Streams -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppos",
+    "using-streams"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const directoryInfo = {
+  "pathPrefix": "/doc/current",
+  "subNodes": [
+    {
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "name": "Using Streams",
+          "selected": true,
+          "path": [
+            "vlppos",
+            "using-streams"
+          ]
+        },
+        {
+          "name": "Using Threads and Locks",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-threads"
+          ]
+        },
+        {
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Using Streams",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Streams in this library are composable.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Let's say we need to read a file, it has a BOM at the beginning of the file to indicate the text encoding.\r\n            Now we need to print the file line by line to the screen,\r\n            and save the file in UTF-8 and UTF-16 without BOM, in two separated files.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here is what we need:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "FileStream"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for accessing files."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BroadcastStream"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for copy content to multiple streams."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RecorderStream"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for reading data from a stream, and save what is read to another stream."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "EncoderStream"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DecoderStream"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for handling text encoding."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            We compose these streams in this way:\r\n            "
+          },
+          {
+            "kind": "Image",
+            "src": "/doc/current/vlppos/using-streams.png"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When we read text from the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "StreamReader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "StreamReader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " reads data from the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RecorderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which reads data from the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DecoderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            At the same time, the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RecorderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " write all bytes that is read to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "BroadcastStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which writes data to two "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "EncoderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DecoderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " uses the assigned decoder to convert raw bytes from the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "FileStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "wchar_t"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "EncoderStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " uses the assigned encoder to convert "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "wchar_t"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to raw bytes and write to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "FileStream"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            By composing all streams together,\r\n            what we need to do is just read text line by line from the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "StreamReader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            and everything else will be done by all these connected streams.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "#include <vlppos.h>\r\n\r\nusing namespace vl::console;\r\nusing namespace vl::stream;\r\n\r\nint main()\r\n{\r\n    FileStream inputFileStream(L\"C:/bom.txt\", FileStream::ReadOnly);\r\n    BomDecoder bomDecoder;\r\n    DecoderStream inputDecoderStream(inputFileStream, bomDecoder);\r\n\r\n    FileStream utf8FileStream(L\"C:/utf8.txt\", FileStream::WriteOnly);\r\n    Utf8Encoder utf8Encoder;\r\n    EncoderStream utf8EncoderStream(utf8FileStream, utf8Encoder);\r\n\r\n    FileStream utf16FileStream(L\"C:/utf16.txt\", FileStream::WriteOnly);\r\n    Utf16Encoder utf16Encoder;\r\n    EncoderStream utf16EncoderStream(utf16FileStream, utf16Encoder);\r\n\r\n    BroadcastStream broadcastStream;\r\n    broadcastStream.Targets().Add(&utf8EncoderStream);\r\n    broadcastStream.Targets().Add(&utf16EncoderStream);\r\n\r\n    RecorderStream recorderStream(inputDecoderStream, broadcastStream);\r\n\r\n    StreamReader reader(recorderStream);\r\n    while (!reader.IsEnd())\r\n    {\r\n        Console::WriteLine(reader.ReadLine());\r\n    }\r\n}",
+            "language": "C++"
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

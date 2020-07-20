@@ -205,6 +205,32 @@
       },
       {
         "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppRegex.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::console;\r\nusing namespace vl::regex;\r\n\r\nint main()\r\n{\r\n    List<WString> tokenDefs;\r\n    tokenDefs.Add(L\"/d+\");\r\n    tokenDefs.Add(L\"/w+\");\r\n    tokenDefs.Add(L\"/s+\");\r\n\r\n    RegexLexer lexer(tokenDefs, {});\r\n    WString input = L\"I have 2 books.\";\r\n    auto tokenResult = lexer.Parse(input);\r\n\r\n    List<RegexToken> filtered;\r\n    tokenResult.ReadToEnd(filtered, [](vint token) { return token < 0 || token == 2; });\r\n\r\n    FOREACH(RegexToken, token, tokenResult)\r\n    {\r\n        // input must be in a variable\r\n        // because token.reading points to a position from input.Buffer();\r\n        Console::WriteLine(itow(token.token) + L\": <\" + WString(token.reading, token.length) + L\">\");\r\n    }\r\n}",
+                "output": [
+                  "1: <I>\r",
+                  "2: < >\r",
+                  "1: <have>\r",
+                  "2: < >\r",
+                  "0: <2>\r",
+                  "2: < >\r",
+                  "1: <books>\r",
+                  "-1: <.>\r",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
         "title": "See Also",
         "content": [
           {

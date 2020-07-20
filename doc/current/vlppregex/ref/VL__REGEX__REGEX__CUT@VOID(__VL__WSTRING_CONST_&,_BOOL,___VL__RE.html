@@ -228,7 +228,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Cut the text by matched fragments, returning all matched or unmatched fragments."
+                "text": "Cut the text by matched sub strings, returning all matched and unmatched sub strings."
               }
             ]
           }
@@ -262,7 +262,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Set to true to keep all empty matches."
+                    "text": "Set to true to keep all empty matches. This could happen when there is nothing between two matched sub strings."
                   }
                 ]
               }
@@ -277,8 +277,30 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "All successful and failed matches."
+                    "text": "Returns all succeeded and failed matches."
                   }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <VlppRegex.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::console;\r\nusing namespace vl::regex;\r\n\r\nint main()\r\n{\r\n    Regex regex(L\"C/S+\");\r\n    RegexMatch::List matches;\r\n    regex.Cut(L\"C++ and C# are my favorite programing languages\", false, matches);\r\n    FOREACH(Ptr<RegexMatch>, match, matches)\r\n    {\r\n        Console::WriteLine(match->Result().Value());\r\n    }\r\n}",
+                "output": [
+                  "C++\r",
+                  " and \r",
+                  "C#\r",
+                  " are my favorite programing languages\r",
+                  ""
                 ]
               }
             ]
