@@ -83,6 +83,15 @@
                       ]
                     },
                     {
+                      "name": "function FinalizeAggregation",
+                      "selected": false,
+                      "path": [
+                        "vlppreflection",
+                        "ref",
+                        "VL__REFLECTION__DESCRIPTABLEOBJECT__FINALIZEAGGREGATION@VOID()"
+                      ]
+                    },
+                    {
                       "name": "function GetInternalProperty",
                       "selected": false,
                       "path": [
@@ -192,7 +201,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Cast the object to another type, considered aggregation."
+                "text": "Cast the object to another type, this is required when the object is involved in aggregation."
               }
             ]
           }
@@ -228,7 +237,66 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "The object with the expected type in all aggregated objects."
+                "text": "The object with the expected type in all involved aggregated objects. It will crash when multiple objects are found to be qualified."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Remarks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n A workflow class could inherit from multiple aggregatable C++ classes.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n In order to do pointer casting correctly,\r\n this function allow you to cast from one aggregated C++ base object to another aggregated C++ base object,\r\n even when these two objects are not involved in inheriting in C++.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "on"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", it performs dynamic_cast.\r\n "
               }
             ]
           }

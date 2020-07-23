@@ -78,6 +78,14 @@
       ],
       "subNodes": [
         {
+          "name": "Registered Types",
+          "selected": false,
+          "path": [
+            "vlppreflection",
+            "registered"
+          ]
+        },
+        {
           "name": "References",
           "selected": false,
           "path": [
@@ -125,7 +133,812 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            VlppReflection provides runtime reflection for C++ types.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            If a project includes VlppReflection source code,\r\n            it doesn't necessarily mean that the project uses reflection in runtime,\r\n            because reflectable class must inherits from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Description<T>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "AggregatableDescription<T>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which are defined in VlppReflection.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The same source code could be used in compilers or code generators,\r\n            typically these kind of tools uses reflection in runtime,\r\n            so source code that defines reflectable C++ types are required to compile\r\n            regardless weather "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is on or off,\r\n            so that to share the same code to consumers which don't need runtime reflection.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Projects in Gaclib that use reflection",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VlppParser"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " project, generated C++ code from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ParserGen.exe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will remove type registration code\r\n                when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is on.\r\n                All generated AST classes from the grammar is reflectable.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " project, compiling and running Workflow script relies on reflection,\r\n                so they are moved to separated files.\r\n                When you only uses generated C++ code from Workflow script,\r\n                only include part of the file and set "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUI"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " project, type registration and GacUI XML resource compiler uses reflection,\r\n                so they are moved to separated files.\r\n                When you don't need dynamic resource loading for controls,\r\n                only include part of the file and set "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Setting "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on reduces size of reflectable C++ types,\r\n                and significantly reduces 90% of the executable size for GacUI applications.\r\n                This improves performance a lot.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Authoring reflectable C++ types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::reflection"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In API naming convention, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VlppReflection"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " uses "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "class"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for reference types, and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "struct"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for data type.\r\n                A reference type can only be created and stored in a pointer, it contains fields, methods, properties, events, it also allow inheritance.\r\n                A data type contains only data, there is no methods and events, and inheritance is not allowed.\r\n                A data type contains only data, there is no methods and events, and inheritance is not allowed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                C++ primitive types, important types and containers from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Vlpp"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are all reflectable.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A reflectable C++ class must inherit from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Description<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AggregatableDescription<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                To make a class member reflectable, types that are used in that member should also be reflectable.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Functors and containers",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::reflection::description"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For functors, only "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Func<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is reflectable. Most containers are reflectable.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a functor is boxed, an instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueFunctionProxy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is created.\r\n                When a boxed functor is unboxed,\r\n                you don't get the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Func<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object before boxing,\r\n                instead you get a new "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Func<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object that calls this "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueFunctionProxy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instance.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a container is boxed, an instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueEnumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueDictionary"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is created.\r\n                It depends on the type of the container.\r\n                This instance references the container before boxing,\r\n                it can update the container,\r\n                so when the container is deleted, calling this instance will crash.\r\n                When a boxed container is unboxed,\r\n                you get a copy of the container.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Boxing and unboxing",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::reflection::description"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For non-generic types and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WString"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoxValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is recommended.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For functors and containers,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required.\r\n                These two function can also box and unbox non-generic types and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WString"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                but it is not as convenient as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoxValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "When to use reflection",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You are recommended not to use reflection at runtime if you can.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Reflection are mostly built for compiling and running Workflow script.\r\n                A Workflow script class can even inherit from multiple reflectable C++ classes (must inherit from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AggregatableDescription"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ").\r\n                In order to do "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "dynamic_cast"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " correctly,\r\n                you are recommended to use the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SafeAggregationCast<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function, which exist in all reflectable C++ classes.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Running Workflow script requires reflection to be available,\r\n                while running the generated C++ code from Workflow script does not.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUI"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", all controls in GacUI XML resource files are converted to workflow script files during compiling.\r\n                In order to create these controls,\r\n                you are recommended to use generated C++ code from them directly.\r\n                These are all done by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can load compiled resource files and script files in runtime to create controls,\r\n                but this is not recommended.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When runtime reflection is not needed, you must set "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on.\r\n                This is a preprocessor definition for C++ compiler.\r\n                You can also detect this option using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#ifdef VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#ifndef VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
           }
         ]
       }

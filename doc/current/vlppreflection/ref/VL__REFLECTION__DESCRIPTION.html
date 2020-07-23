@@ -65,6 +65,15 @@
               ],
               "subNodes": [
                 {
+                  "name": "class AggregatableDescription",
+                  "selected": false,
+                  "path": [
+                    "vlppreflection",
+                    "ref",
+                    "VL__REFLECTION__AGGREGATABLEDESCRIPTION"
+                  ]
+                },
+                {
                   "name": "class DescriptableObject",
                   "selected": false,
                   "path": [
@@ -154,1318 +163,11 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Inherit from this class when you want to create a reflectable class. It should be used like this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class YourClass : public Description<YourClass>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "..."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If you want YourClass to be inheritable in scripts, instead of using Description, you should use AggregatableDescription, like this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class YourClass : public AggregatableDescription<YourClass>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "~YourClass()"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "FinalizeAggregation();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "After you have complete your type, use the following macros and functions to register your class into the global type table. Everything should be defined in vl::reflection::description namespaces."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Some of the predefined type has already been registered, if your types depend on these types, you should load those types by calling some or all of them:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "PageLink",
-                "href": "/CodeIndexDemo/Gaclib/SourceFiles/GuiTypeDescriptorReflection.cpp.html#FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "LoadPredefinedTypes"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "PageLink",
-                "href": "/CodeIndexDemo/Gaclib/SourceFiles/Parsing.cpp.html#FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "LoadParsingTypes"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "PageLink",
-                "href": "/CodeIndexDemo/Gaclib/SourceFiles/ParsingJson_Ast.cpp.html#FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "JsonLoadTypes"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "PageLink",
-                "href": "/CodeIndexDemo/Gaclib/SourceFiles/ParsingXml_Ast.cpp.html#FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "XmlLoadTypes"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "1) (in header files) Create a macro that contains all types that you want to register. Content in the list will become the registered type names, so it is strongly recommended to use the full name."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#define MY_TYPELIST(F)\\"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "F(mynamespaces::MyClass1)\\"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "F(mynamespaces::MyClass2)\\"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "2) (in header files) Connect type names and types:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "MY_TYPELIST(DECL_TYPE_INFO)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "3) (in cpp files) Connect type names and types:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "MY_TYPELIST(IMPL_VL_TYPE_INFO)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "4) (in cpp files) Register all members:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#define _ ,"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "a) enum:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using \"|\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_ENUM_ITEM(Season)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_ITEM(Spring)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_ITEM(Summer)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_ITEM(Autumn)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_ITEM(Winter)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_ENUM_ITEM(Season)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "b) enum class:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "use BEGIN_ENUM_ITEM_MERGABLE instead of BEGIN_ENUM_ITEM if enum items are consider mergable using \"|\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_ENUM_ITEM(Season)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_CLASS_ITEM(Spring)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_CLASS_ITEM(Summer)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_CLASS_ITEM(Autumn)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ENUM_CLASS_ITEM(Winter)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_ENUM_ITEM(Season)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "c) struct (pure data structure):"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_STRUCT_MEMBER(Point)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "STRUCT_MEMBER(x)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "STRUCT_MEMBER(y)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_STRUCT_MEMBER(Point)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "d) class:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_CLASS_MEMBER(MyClass)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "I) declare a base class (can have multiple base classes):"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_BASE(MyBaseClass)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "II) declare a field:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_FIELD(myField)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "III) Empty constructor that results in a raw pointer:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IV) Empty constructor that results in a smart pointer:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_CONSTRUCTIOR(Ptr<MyClass>(), NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "V) Constructor with arguments:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "VI) Inject a global function as a constructor"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EXTERNALCTOR(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"}, mynamespace::CreateMyClass)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"}, CreateMyClass, L\"mynamespace::GetMyClass($Arguments)\", L\"::vl::Func<$Func>(&mynamespace::GetMyClass)\")"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(), NO_PARAMETER, []()->Ptr<MyClass>{return nullptr;}, L\"*\", L\"*\")"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "VII) Add unoverloaded functions"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(MyFunction2, {L\"parameter1\" _ L\"parameter2\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "VIII) Add unoverloaded function but give a different names"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L\"parameter1\" _ L\"parameter2\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IX) Add overloaded functions"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L\"parameter\"}, int(MyClass::*)(int))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IX) Add overloaded functions but give different names"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L\"parameter\"}, int(MyClass::*)(int))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "X) Inject global functions as methods:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L\"parameter\"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&), [](MyClass* a, int b, const WString& c){return 0;}, L\"*\", L\"*\")"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XI) Add unoverloaded static functions"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L\"parameter1\" _ L\"parameter2\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XII) Add overloaded static functions"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L\"parameter\"}, int(*)(int))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD_OVERLOAD(MyFunction6, {L\"parameter1\" _ L\"parameter2\"}, int(*)(int, const WString&))"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XIII) Inject global functions as static methods:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L\"parameter\"}, int(*)(int), mynamespace::AGlobalFunction2)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_STATIC_EXTERNALMETHOD_INVOKETEMPLATE(MyNewName6, {L\"parameter1\" _ L\"parameter2\"}, int(*)(int, const WString&), [](int b, const WString& c){return 0;}, L\"*\")"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XIV) Add a getter function as a property"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_READONLY_FAST(X)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "which is short for"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_READONLY(X, GetX)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XV) Add a pair of getter and setter functions as a property"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_FAST(X)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "which is short for"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(SetX, {L\"value\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY(X, GetX, SetX)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "XVI) Add a getter function as a property with a property changed event"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EVENT(XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "which is short for"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EVENT(XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
+                "text": "\r\n Inherit from this class when you want to create a reflectable class.\r\n It should be used like this:\r\n "
+              },
               {
-                "kind": "Text",
-                "text": "XVII) Add a pair of getter and setter functions as a property with a property changed event"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EVENT(XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_EVENT_FAST(X)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "which is short for"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_EVENT(XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_METHOD(SetX, {L\"value\"})"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_CLASS_MEMBER(MyClass)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If the code compiles, the class should look like this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class MyClass : public Description<MyClass>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "public:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "MyClass();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "MyClass(int numberParameter, const WString& stringParameter);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int MyFunction1();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int MyFunction2(int parameter1, const WString& parameter2);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int MyFunction3();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int MyFunction3(int parameter);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int MyFunction3(int parameter1, const WString& parameter2);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static int MyFunction4();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static int MyFunction5(int parameter1, const WString& parameter2);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static int MyFunction6();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static int MyFunction6(int parameter);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static int MyFunction6(int parameter1, const WString& parameter2);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Event<void()> XChanged;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int GetX();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void SetX(int value);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Ptr<MyClass> CreateMyClass(int numberParameter, const WString7 stringParameter);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int GlobalFunction(MyClass* self, int parameter);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "e) interface:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "An interface is defined by"
+                "kind": "Program",
+                "code": "class YourClass : public Description<YourClass>\r\n{\r\n    ..\r\n};"
               }
             ]
           },
@@ -1474,40 +176,25 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "I) Directly or indirectly inherits "
+                "text": "\r\n If you want YourClass to be inheritable in scripts,\r\n instead of using Description,\r\n you should use "
               },
               {
                 "kind": "PageLink",
-                "href": "/doc/current/vlppreflection/ref/VL__REFLECTION__IDESCRIPTABLE.html",
+                "href": "/doc/current/vlppreflection/ref/VL__REFLECTION__AGGREGATABLEDESCRIPTION.html",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "IDescriptable"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "II) The only registered constructor (if exists) should use Ptr<"
-              },
-              {
-                "kind": "PageLink",
-                "href": "/CodeIndexDemo/Gaclib/SourceFiles/GuiTypeDescriptorPredefined.h.html#NI$vl::reflection::description::IValueInterfaceProxy",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "IValueInterfaceProxy"
+                    "text": "AggregatableDescription"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": "> as a parameter"
+                "text": ", like this:\r\n "
+              },
+              {
+                "kind": "Program",
+                "code": "class YourClass : public AggregatableDescription<YourClass>\r\n{\r\n    ~YourClass()\r\n    {\r\n        FinalizeAggregation();\r\n    }\r\n};"
               }
             ]
           },
@@ -1516,7 +203,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Suppose you have an interface like this:"
+                "text": "\r\n After you complete your type,\r\n use the following macros and functions to register your class into the global type table.\r\n "
               }
             ]
           },
@@ -1525,7 +212,73 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>"
+                "text": "\r\n Some of the predefined type has already been registered.\r\n If your types depend on these types, you should load those types by calling some or all of them:\r\n "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/CodeIndexDemo/Gaclib/SourceFiles/GuiTypeDescriptorReflection.cpp.html#FB$vl::reflection::description::LoadPredefinedTypes@bool()[impl0]",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "LoadPredefinedTypes"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/CodeIndexDemo/Gaclib/SourceFiles/Parsing.cpp.html#FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "LoadParsingTypes"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/CodeIndexDemo/Gaclib/SourceFiles/ParsingJson_Ast.cpp.html#FB$vl::reflection::description::JsonLoadTypes@bool()[impl0]",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonLoadTypes"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/CodeIndexDemo/Gaclib/SourceFiles/ParsingXml_Ast.cpp.html#FB$vl::reflection::description::XmlLoadTypes@bool()[impl0]",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlLoadTypes"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -1534,7 +287,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "{"
+                "text": "\r\n The order does not matter, because content of types are lazily loaded.\r\n "
               }
             ]
           },
@@ -1543,367 +296,577 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "public:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
+                "text": "\r\n Everything below should be put in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description"
+                  }
+                ]
+              },
               {
                 "kind": "Text",
-                "text": "int GetX();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
+                "text": " namespaces.\r\n "
+              },
               {
-                "kind": "Text",
-                "text": "void SetX(int value);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If you want this interface implementable by Workflow script, you should first add a proxy like this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#pragma warning(push)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#pragma warning(disable:4250)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "int GetX()override"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void SetX(int value)override"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "INVOKE_INTERFACE_PROXY(SetX, value)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_INTERFACE_PROXY(IMyInterface)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#pragma warning(pop)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "And then use this code to register the interface:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BEGIN_INTERFACE_MEMBER(IMyInterface)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "..."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "END_INTERFACE_MEMBER(IMyInterface)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Everything else is the same as registering classes. Use BEGIN_INTERFACE_MEMBER_NOPROXY to register an interface without a proxy, which means you cannot implement it in runtime dynamically."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "#undef _"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "5) (in cpp files) Create a type loader:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class MyTypeLoader : public Object, public ITypeLoader"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "public:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void Load(ITypeManager* manager)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "MY_TYPELIST(ADD_TYPE_INFO)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void Unload(ITypeManager* manager)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "6) Load types when you think is a good timing using this code:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);"
+                "kind": "List",
+                "ordered": true,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(in header files)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " Create a macro that contains all types that you want to register.\r\n         Content in the list will become full names for registered type,\r\n         so it is strongly recommended to use the full name.\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "#define MY_TYPELIST(F)\\\r\n    F(mynamespaces::MyClass1)\\\r\n    F(mynamespaces::MyClass2)\\"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "in header files)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " Connect type names and types:\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "MY_TYPELIST(DECL_TYPE_INFO)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(in cpp files)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " Connect type names and types:\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "MY_TYPELIST(IMPL_CPP_TYPE_INFO)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(in cpp files)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " Register all members:\r\n         "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\r\n                 You will need to define a macro for commas, Whatever name is fine.\r\n                 "
+                              },
+                              {
+                                "kind": "Program",
+                                "code": "#define _ ,"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "enum"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ":\r\n                 use "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BEGIN_ENUM_ITEM_MERGABLE"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " instead of "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BEGIN_ENUM_ITEM"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " if enum items are flags instead of concrete items.\r\n                 "
+                              },
+                              {
+                                "kind": "Program",
+                                "code": "BEGIN_ENUM_ITEM(Season)\r\n    ENUM_ITEM(Spring)\r\n    ENUM_ITEM(Summer)\r\n    ENUM_ITEM(Autumn)\r\n    ENUM_ITEM(Winter)\r\nEND_ENUM_ITEM(Season)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "enum class:"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": "\r\n                 use "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BEGIN_ENUM_ITEM_MERGABLE"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " instead of "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BEGIN_ENUM_ITEM"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " if enum items are flags instead of concrete items.\r\n                 "
+                              },
+                              {
+                                "kind": "Program",
+                                "code": "BEGIN_ENUM_ITEM(Season)\r\n    ENUM_CLASS_ITEM(Spring)\r\n    ENUM_CLASS_ITEM(Summer)\r\n    ENUM_CLASS_ITEM(Autumn)\r\n    ENUM_CLASS_ITEM(Winter)\r\nEND_ENUM_ITEM(Season)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "struct"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ":\r\n                 It doesn't necessary mean a struct in C++.\r\n                 Structs in reflection and Workflow script mean value types that carry only data, without methods and inheritance.\r\n                 "
+                              },
+                              {
+                                "kind": "Program",
+                                "code": "BEGIN_STRUCT_MEMBER(Point)\r\n    STRUCT_MEMBER(x)\r\n    STRUCT_MEMBER(y)\r\nEND_STRUCT_MEMBER(Point)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ParagraphListItem",
+                            "paragraphs": [
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "class"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ":\r\n                 It doesn't necessary mean a class in C++.\r\n                 Classes in reflection and Workflow script mean reference types.\r\n                 "
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 Here are all macros that register content of classes\r\n                 "
+                                  },
+                                  {
+                                    "kind": "List",
+                                    "ordered": false,
+                                    "items": [
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_BASE"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_FIELD"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_CONSTRUCTOR"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_EXTERNALCTOR(_TEMPLATE)?"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_METHOD(_OVERLOAD)?_RENAME"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_(STATIC_)?METHOD(_OVERLOAD)?"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_(STATIC_)?EXTERNALMETHOD(_TEMPLATE)?"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_PROPERTY(_EVENT)?(_READONLY)?(_FAST)?"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_PROPERTY_REFERENCETEMPLATE"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CLASS_MEMBER_EVENT"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Program",
+                                    "code": "BEGIN_CLASS_MEMBER(MyClass)\r\n\r\n    // 01) Declare a base class (can have multiple base classes).\r\n    CLASS_MEMBER_BASE(MyBaseClass)\r\n\r\n    // 02) Declare a field.\r\n    CLASS_MEMBER_FIELD(myField)\r\n\r\n    // 03) Default constructor that results in a raw pointer.\r\n    CLASS_MEMBER_CONSTRUCTIOR(MyClass*(), NO_PARAMETER)\r\n\r\n    // 04) Default constructor that results in a shared pointer.\r\n    CLASS_MEMBER_CONSTRUCTIOR(Ptr<MyClass>(), NO_PARAMETER)\r\n\r\n    // 05) Constructor with arguments.\r\n    CLASS_MEMBER_CONSTRUCTOR(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"})\r\n\r\n    // 06) Inject a global function as a constructor.\r\n    CLASS_MEMBER_EXTERNALCTOR(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"}, mynamespace::CreateMyClass)\r\n\r\n    // 07) Inject a consturctor and specify how to generate C++ code, \"*\" means not able to generate.\r\n    CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(int, const WString&), {L\"numberParameter\" _ L\"stringParameter\"}, CreateMyClass, L\"mynamespace::GetMyClass($Arguments)\", L\"::vl::Func<$Func>(&mynamespace::GetMyClass)\")\r\n    CLASS_MEMBER_EXTERNALCTOR_TEMPLATE(Ptr<MyClass>(), NO_PARAMETER, []()->Ptr<MyClass>{return nullptr;}, L\"*\", L\"*\")\r\n\r\n    // 08) Add unoverloaded functions.\r\n    CLASS_MEMBER_METHOD(MyFunction1, NO_PARAMETER)\r\n    CLASS_MEMBER_METHOD(MyFunction2, {L\"parameter1\" _ L\"parameter2\"})\r\n\r\n    // 09) Add unoverloaded functions but give different names. Unoverloaded only means in C++, not in renamed functions.\r\n    CLASS_MEMBER_METHOD_RENAME(MyNewName1, MyFunction1, NO_PARAMETER)\r\n    CLASS_MEMBER_METHOD_RENAME(MyNewName2, MyFunction2, {L\"parameter1\" _ L\"parameter2\"})\r\n\r\n    // 10) Add overloaded functions, with function type specified in method pointers\r\n    CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, NO_PARAMETER, int(MyClass::*)())\r\n    CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L\"parameter\"}, int(MyClass::*)(int))\r\n    CLASS_MEMBER_METHOD_OVERLOAD(MyFunction3, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&))\r\n\r\n    // 11) Add overloaded functions but give different names.\r\n    CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName3, MyFunction3, NO_PARAMETER, int(MyClass::*)())\r\n    CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L\"parameter\"}, int(MyClass::*)(int))\r\n    CLASS_MEMBER_METHOD_OVERLOAD_RENAME(MyNewName4, MyFunction3, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&))\r\n\r\n    // 12) Inject global functions as methods:\r\n    CLASS_MEMBER_EXTERNALMETHOD(MyNewName5, {L\"parameter\"}, int(MyClass::*)(int), mynamespace::AGlobalFunction)\r\n\r\n    // 13) Inject a method and specify how to generate C++ code, \"*\" means not able to generate.\r\n    CLASS_MEMBER_EXTERNALMETHOD_TEMPLATE(MyNewName5, {L\"parameter1\" _ L\"parameter2\"}, int(MyClass::*)(int, const WString&), [](MyClass* a, int b, const WString& c){return 0;}, L\"*\", L\"*\")\r\n\r\n    // 14) Add unoverloaded static functions\r\n    CLASS_MEMBER_STATIC_METHOD(MyFunction4, NO_PARAMETER)\r\n    CLASS_MEMBER_STATIC_METHOD(MyFunction5, {L\"parameter1\" _ L\"parameter2\"})\r\n\r\n    // 15) Add overloaded static functions\r\n    CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, NO_PARAMETER, int(*)())\r\n    CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L\"parameter\"}, int(*)(int))\r\n    CLASS_MEMBER_STATIC_METHOD_OVERLOAD(MyFunction6, {L\"parameter1\" _ L\"parameter2\"}, int(*)(int, const WString&))\r\n\r\n    // 16) Inject global functions as static methods:\r\n    CLASS_MEMBER_STATIC_EXTERNALMETHOD(MyNewName6, {L\"parameter\"}, int(*)(int), mynamespace::AGlobalFunction2)\r\n\r\n    // 17) Inject a static method and specify how to generate C++ code, \"*\" means not able to generate.\r\n    CLASS_MEMBER_STATIC_EXTERNALMETHOD_TEMPLATE(MyNewName6, {L\"parameter1\" _ L\"parameter2\"}, int(*)(int, const WString&), [](int b, const WString& c){return 0;}, L\"*\")\r\n\r\n    // 18) Add a getter function as a property\r\n    CLASS_MEMBER_PROPERTY_READONLY_FAST(X)\r\n    // which is short for\r\n    CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)\r\n    CLASS_MEMBER_PROPERTY_READONLY(X, GetX)\r\n\r\n    // 19) Add a pair of getter and setter functions as a property\r\n    CLASS_MEMBER_PROPERTY_FAST(X)\r\n    // which is short for\r\n    CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)\r\n    CLASS_MEMBER_METHOD(SetX, {L\"value\"})\r\n    CLASS_MEMBER_PROPERTY(X, GetX, SetX)\r\n\r\n    // 20) Add a getter function as a property with a property changed event\r\n    CLASS_MEMBER_EVENT(XChanged)\r\n    CLASS_MEMBER_PROPERTY_EVENT_READONLY_FAST(X, XChanged)\r\n    // which is short for\r\n    CLASS_MEMBER_EVENT(XChanged)\r\n    CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)\r\n    CLASS_MEMBER_PROPERTY_EVENT_READONLY(X, GetX, XChanged)\r\n\r\n    // 21) Add a pair of getter and setter functions as a property with a property changed event\r\n    CLASS_MEMBER_EVENT(XChanged)\r\n    CLASS_MEMBER_PROPERTY_EVENT_FAST(X, XChanged)\r\n    // which is short for\r\n    CLASS_MEMBER_EVENT(XChanged)\r\n    CLASS_MEMBER_METHOD(GetX, NO_PARAMETER)\r\n    CLASS_MEMBER_METHOD(SetX, {L\"value\"})\r\n    CLASS_MEMBER_PROPERTY_EVENT(X, GetX, SetX, XChanged)\r\n\r\nEND_CLASS_MEMBER(MyClass)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 If the code compiles, the class should look like this:\r\n                 "
+                                  },
+                                  {
+                                    "kind": "Program",
+                                    "code": "class MyClass : public Description<MyClass>\r\n{\r\npublic:\r\n    MyClass();\r\n    MyClass(int numberParameter, const WString& stringParameter);\r\n\r\n    int MyFunction1();\r\n    int MyFunction2(int parameter1, const WString& parameter2);\r\n    int MyFunction3();\r\n    int MyFunction3(int parameter);\r\n    int MyFunction3(int parameter1, const WString& parameter2);\r\n\r\n    static int MyFunction4();\r\n    static int MyFunction5(int parameter1, const WString& parameter2);\r\n    static int MyFunction6();\r\n    static int MyFunction6(int parameter);\r\n    static int MyFunction6(int parameter1, const WString& parameter2);\r\n\r\n    Event<void()> XChanged;\r\n    int GetX();\r\n    void SetX(int value);\r\n};\r\n\r\nPtr<MyClass> CreateMyClass(int numberParameter, const WString7 stringParameter);\r\nint GlobalFunction(MyClass* self, int parameter);"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ParagraphListItem",
+                            "paragraphs": [
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "interface"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ":\r\n                 A C++ class can be registered as a reflectable interface if:\r\n                 "
+                                  },
+                                  {
+                                    "kind": "List",
+                                    "ordered": false,
+                                    "items": [
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "Directly or indirectly inherits "
+                                          },
+                                          {
+                                            "kind": "PageLink",
+                                            "href": "/doc/current/vlppreflection/ref/VL__REFLECTION__IDESCRIPTABLE.html",
+                                            "content": [
+                                              {
+                                                "kind": "Text",
+                                                "text": "IDescriptable"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "ContentListItem",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "The only registered constructor (if exists) should use Ptr<"
+                                          },
+                                          {
+                                            "kind": "PageLink",
+                                            "href": "/CodeIndexDemo/Gaclib/SourceFiles/GuiTypeDescriptorPredefined.h.html#NI$vl::reflection::description::IValueInterfaceProxy",
+                                            "content": [
+                                              {
+                                                "kind": "Text",
+                                                "text": "IValueInterfaceProxy"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "kind": "Text",
+                                            "text": "> as a parameter, so that a Workflow script class could implement this interface."
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 Suppose you have an interface like this:\r\n                 "
+                                  },
+                                  {
+                                    "kind": "Program",
+                                    "code": "class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>\r\n{\r\npublic:\r\n    int GetX();\r\n    void SetX(int value);\r\n};"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 If you want to allow a Workflow script class implement this interface, you should first add a proxy like this:\r\n                 "
+                                  },
+                                  {
+                                    "kind": "Program",
+                                    "code": "#pragma warning(push)\r\n#pragma warning(disable:4250)\r\nBEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR(IMyInterface)\r\n    // or BEGIN_INTERFACE_PROXY_RAWPTR(IMyInterface, baseInterfaces...)\r\n    // or BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(IMyInterface)\r\n    // or BEGIN_INTERFACE_PROXY_SHAREDPTR(IMyInterface, baseInterfaces...)\r\n    int GetX()override\r\n    {\r\n        INVOKEGET_INTERFACE_PROXY_NOPARAMS(GetX)\r\n    }\r\n\r\n    void SetX(int value)override\r\n    {\r\n        INVOKE_INTERFACE_PROXY(SetX, value)\r\n    }\r\nEND_INTERFACE_PROXY(IMyInterface)\r\n#pragma warning(pop)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 And then use this code to register the interface:\r\n                 "
+                                  },
+                                  {
+                                    "kind": "Program",
+                                    "code": "BEGIN_INTERFACE_MEMBER(IMyInterface)\r\n    ...\r\nEND_INTERFACE_MEMBER(IMyInterface)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Paragraph",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "\r\n                 Everything else is the same as registering classes.\r\n                 Use "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "BEGIN_INTERFACE_MEMBER_NOPROXY"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " to register an interface without a proxy,\r\n                 which means a Workflow script class cannot implement this interface.\r\n                 "
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\r\n                 Undefine the macro for comma:\r\n                 "
+                              },
+                              {
+                                "kind": "Program",
+                                "code": "#undef _"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(in cpp files)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " Create a type loader:\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "class MyTypeLoader : public Object, public ITypeLoader\r\n{\r\npublic:\r\n    void Load(ITypeManager* manager)\r\n    {\r\n        MY_TYPELIST(ADD_TYPE_INFO)\r\n    }\r\n\r\n    void Unload(ITypeManager* manager)\r\n    {\r\n    }\r\n};"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n         Before using reflection on registered types, you need to register the type loader:\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "vl::reflection::description::GetGlobalTypeManager()->AddTypeLoader(new MyTypeLoader);"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -1922,7 +885,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Type of your created reflection class."
+                    "text": "Type that inherit this class."
                   }
                 ]
               }

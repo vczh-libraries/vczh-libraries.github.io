@@ -93,7 +93,7 @@
         "content": [
           {
             "kind": "Program",
-            "code": "LoadPredefinedTypes();\r\n\r\nauto tm = GetGlobalTypeManager();\r\ntm->AddTypeLoader(new MyTypeLoader);\r\ntm->Load();\r\n\r\nauto td = tm->GetTypeDescriptor(L\"myapi::App\");\r\nauto ctor = td->GetConstructorGroup()->GetMethod(0);\r\nauto print = td->GetMethodGroupByName(L\"Print\");\r\n\r\nValue app = ctor->Invoke(Value(), Value_xs());\r\n\r\narguments.Add(BoxValue<WString>(L\"Hello, world!\"));\r\nprint->Invoke(app, (Value_xs(), WString(L\"Hello, world!\")));\r\n\r\nResetGlobalTypeManager();",
+            "code": "LoadPredefinedTypes();\r\n\r\nauto tm = GetGlobalTypeManager();\r\ntm->AddTypeLoader(new MyTypeLoader);\r\ntm->Load();\r\n\r\nValue app = Value::Create(GetTypeDescriptor(L\"myapi::App\"));\r\napp.Invoke(L\"Print\", (Value_xs(), WString(L\"Hello, world!\")));\r\n\r\nResetGlobalTypeManager();",
             "language": "C++"
           }
         ]
