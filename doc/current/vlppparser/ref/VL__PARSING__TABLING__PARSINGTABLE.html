@@ -246,7 +246,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "The parsing table. When you complete a grammar file, ParserGen.exe which is in the Tools project will generate the C++ code for you to create a parsing table."
+                "text": "\r\n The parsing table. When you complete a grammar file, use ParserGen.exe to generate the C++ code for you to create a parsing table.\r\n "
               }
             ]
           },
@@ -255,7 +255,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "Here is a brief description of the grammar file format:"
+                "text": "\r\n Here is a brief description of the grammar file format:\r\n "
               }
             ]
           },
@@ -264,480 +264,808 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "include:\"<releative path to the Vlpp.h>\"\t// (multiple)\te.g. \"../Import/Vlpp.h\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "classPrefix:<class prefix>\t\t\t\t\t// (single)\t\tA prefix that will be add before all generated types and function. e.g. Xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "guard:<C++ header guard>\t\t\t\t\t// (single)\t\tThe C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "namespace:<C++ namespaces>\t\t\t\t\t// (single)\t\tNamespaces separated by \".\" to contain the generated code. e.g. vl.parsing.xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "reflection:<namespace>\t\t\t\t\t\t// (single)\t\tNamespaces separated by \".\" to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "parser:<name>(<rule>)\t\t\t\t\t\t// (multiple)\tPair a function name to a rule name. ParserGen.exe will generate a function called \"<prefix><name>\" to parse the input using rule named \"<rule>\". e.g. ParseDocument(XDocument)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ambiguity:(enabled|disabled)\t\t\t\t// (single)\t\tSet to \"enabled\" indicating that the grammar is by design to have ambiguity."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "serialization:(enabled|disabled)\t\t\t// (single)\t\tSet to \"enabled\" to serialize the parsing table as binary in the generated C++ code, so that when the \"<prefix>LoadTable\" function is called to load the table, it can deserialize from the binary data directly, instead of parsing the grammar again. But the grammar text will always be contained in the generated C++ code regardless of the value of \"serialization\", it can always be retrived using the \"<prefix>GetParserTextBuffer\" function."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "grammar:\t\t\t\t\t\t\t\t\t// (single)\t\tConfiguration ends here. All content after \"grammar:\" will be treated as the grammar to define the input."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Here is the brief description of the grammar."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "The grammar is formed by 3 parts: types, token definitions and rule definitions. There is only one character escaping in strings: \"\", which means the \" character."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "1) Types:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "You can write attributes like @AttributeName(\"argument1\", \"argument2\", ...) in the middle of types. But attributes don't affect the parsing. All attribute definitions will be stored in the generated parsing table, and who uses the table defines how attributes work. Multiple attributes are separated by \",\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "a) Enum:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "enum EnumName <attributes>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Item1 <attributes>,"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Item2 <attributes>,"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "... // cannot skip the last \",\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "b) Class:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class Name [ambiguous(AmbiguousType)] [: ParentType] <attributes>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Type name [(UnescapingFunction)] <attributes> ;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "UnescapingFunction is a callback, which will be called when the contained type is fully constructed. The generated C++ code will define forward declarations of all unescaping functions in the cpp file. You should implement them in other places, or you will get linking errors."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "A*B;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "has two meaning (if we only consider context-free parsing): multiplication expression and pointer variable definition."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "So if the grammar doesn't enable ambiguity, ParserGen.exe will refuce to generate C++ codes because the grammar is wrong."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If the grammar enables ambiguity, than the syntax tree should be defined like this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class Statement ambiguous(AmbiguousStatement)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class AmbiguousStatement : Statement // due to the definition of \"Statement\" class, \"AmbiguousStatement\" should inherit from \"Statement\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Statement[] items; // required by naming convention"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class ExpressionStatement : Statement"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Expression expression;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class VariableDefinitionStatement : Statement"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Type type;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token name;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "So for the \"A*B;\" part in the whole input, it will becomes an AmbiguousStatement, in which the \"items\" field contains 2 instance of \"ExpressionStatement\" and \"VariableDefinitionStatement\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "And you can write C++ code to resolve the ambiguity in later passes."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "c) Type references:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Types can be defined globally or inside classes. Generic type is not supported. When you want to refer to a specific type, it could be:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token: Store a token, which will becomes "
+                "text": "\r\n The grammar file consists of four parts: configuration, types, tokens and grammar in order like this:\r\n "
               },
               {
-                "kind": "PageLink",
-                "href": "vlppparser/ref/VL__PARSING__PARSINGTOKEN.html",
+                "kind": "Program",
+                "code": "CONFIGURATION\r\ngrammar:\r\nTYPES\r\nTOKENS\r\nGRAMMAR"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "ParsingToken"
+                    "text": "Configuration"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "include:\"releative path to the VlppParser.h\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (multiple) e.g. \"../Import/Vlpp.h\"\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "namespace:C++-NAMESPACE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) Namespaces separated by \".\" to contain the generated code. e.g. vl.parsing.xml\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflection:REFLECTION-NAMESPACE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) Namespaces separated by \".\" to contain the name of reflectable types. In most of the cases this should be the same as namespace. e.g. vl.parsing.xml\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "filePrefix:FILE-PREFIX"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) A prefix that will be add before all generated files. e.g. ParsingXml\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "classPrefix:CLASS-PREFIX"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) A prefix that will be add before all generated types and function. e.g. Xml\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "classRoot:CLASS-ROOT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) The class that represents the whole text being parsed.\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "guard:C++-HEADER-GUARD"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) The C++ header guard pattern macro name. e.g. VCZH_PARSING_XML_PARSINGXML_PARSER\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "parser:NAME(RULE)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (multiple) Pair a function name to a rule name.\r\n It will generate a function called \"XmlParseDocument\" to parse the input using the rule named \"XDocument\",\r\n if you have \"classPrefix:Xml\" and \"parser:ParseDocument(XDocument)\"."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "file:FEATURE(POSTFIX)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (multiple) Generate code for a specified feature to \"<FILE-PREFIX><POSTFIX>.h\" and \"<FILE-PREFIX><POSTFIX>.cpp\".\r\n FEATURE could be Ast, Parser, Copy, Traverse and Empty.\r\n Ast is the definition of all classes in the grammar file.\r\n Parser is the implementation of all parsers.\r\n Others are visitors for Ast with different traversing features.\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ambiguity:(enabled|disabled)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) Set to \"enabled\" indicating that the grammar is by design to have ambiguity.\r\n If ambiguity happens during parser, but here is \"disabled\", then an error will be generated.\r\n "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "serialization:(enabled|disabled)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n (single) Set to \"enabled\" to serialize the parsing table as binary in the generated C++ code,\r\n so that when the \"<CLASS-PREFIX>LoadTable\" function is called to load the table,\r\n it can deserialize from the binary data directly,\r\n instead of parsing the grammar again.\r\n But the grammar text will always be in the generated C++ code regardless of the value of \"serialization\",\r\n it can always be retrived using the \"<CLASS-PREFIX>GetParserTextBuffer\" function.\r\n "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Character escaping in strings"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n There is only character escaping in strings: \"\", which means the \" character.\r\n For example, \"a\"\"b\"\"c\" means R\"TEXT(a\"b\"c)TEXT\" in C++.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Types"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n You can write attributes like @AttributeName(\"argument1\", \"argument2\", ...) in the middle of types.\r\n But attributes don't affect parsing.\r\n All attribute definitions will be stored in the generated parsing table,\r\n and who uses the table defines how attributes work. Multiple attributes are separated by \",\".\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n If you only need parsing, usually you don't need to use attributes.\r\n GacUI will use some attributes to drive colorizer and intellisense.\r\n This part is subject to change in the next version, so it will not be described here.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Enum"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n         "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "enum EnumName <attributes>\r\n{\r\n    Item1 <attributes>,\r\n    Item2 <attributes>,\r\n    ... // cannot skip the last \",\"\r\n}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Class"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\r\n         "
+                          },
+                          {
+                            "kind": "Program",
+                            "code": "class Name [ambiguous(AmbiguousType)] [: ParentType] <attributes>\r\n{\r\n    Type name [(UnescapingFunction)] <attributes> ;\r\n}"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         UnescapingFunction is a callback,\r\n         which will be called after the contained type is fully constructed.\r\n         The generated C++ code will define forward declarations of all unescaping functions in the cpp file.\r\n         You should implement them in other places, or you will get linking errors.\r\n         "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         If the grammar enables ambiguity, then the parsing result may contain ambiguous results for the same part of the input. For example, in C++:\r\n         "
+                          },
+                          {
+                            "kind": "Program",
+                            "code": "A*B;"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         has two meanings without considering the surrounding context: a multiplication expression or a pointer variable definition.\r\n         "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         If the grammar doesn't enable ambiguity, it will refuce to generate C++ codes because the grammar is wrong.\r\n         Note that it doesn't generate errors for every possible cases of ambiguity.\r\n         Do not rely on this to check ambiguity in the grammar.\r\n         "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         If the grammar enables ambiguity, than the syntax tree should be defined like this:\r\n         "
+                          },
+                          {
+                            "kind": "Program",
+                            "code": "// when ambiguity happens for Statement, AmbiguiusStatement will be used to container all possible cases\r\nclass Statement ambiguous(AmbiguousStatement)\r\n{\r\n}\r\n\r\n// so that \"AmbiguousStatement\" should inherit from \"Statement\"\r\nclass AmbiguousStatement : Statement\r\n{\r\n    // it should called \"items\", and the type should be an array of the base type\r\n    Statement[] items;\r\n}\r\n\r\nclass ExpressionStatement : Statement\r\n{\r\n    Expression expression;\r\n}\r\n\r\nclass VariableDefinitionStatement : Statement\r\n{\r\n    Type type;\r\n    token name;\r\n}"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         For \"A*B;\" part in the whole input, it becomes an AmbiguousStatement.\r\n         The \"items\" field contains two instances, which are \"ExpressionStatement\" and \"VariableDefinitionStatement\".\r\n         You could write C++ code to resolve the ambiguity in later passes.\r\n         "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Type references"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n         Types can be defined globally or inside classes. Generic type is not supported. You can use the following types for a class field:\r\n         "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "token"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": Store a token, which will becomes "
+                                  },
+                                  {
+                                    "kind": "PageLink",
+                                    "href": "/vlppparser/ref/VL__PARSING__PARSINGTOKEN.html",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "ParsingToken"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": "."
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "ClassName"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": Instance of a specified type, which will becomes Ptr<ClassName>."
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ParagraphListItem",
+                                "paragraphs": [
+                                  {
+                                    "kind": "Paragraph",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ClassName[]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Array, which will becomes List<Ptr<ClassName>>. Array of tokens are not supported."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Paragraph",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "A class name could also be"
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "OuterClass.InnerClass"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", referring to the \"InnerClass\" defined inside the \"OuterClass\"."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Token definitions"
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "token TokenName = \"regular expression\" <attributes>;\r\ndiscardtoken TokenName = \"regular expression\";"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n \"discardtoken\" means that,\r\n if such a token is identified,\r\n it will not appear in the lexical analyzing result.\r\n You cannot use tokens marked with \"discardtoken\" in the grammar.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Grammar"
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "rule RuleType RuleName <attributes>\r\n    = Grammar1\r\n    = Grammar2\r\n    ...\r\n    ;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n It means rule \"RuleName\" is defined by those grammars,\r\n and matching this rule will create an instance of \"RuleType\" or one of its sub classes.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n Here are all supported grammars that:\r\n "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "RuleName"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches a rule."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TokenName"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that formed by the specified token."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"StringConstant\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that formed by exactly the string constant. There should be exactly one token who can only be this string constant."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Grammar: FieldName"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field \"FieldName\" of the created object."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "!Grammar"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches Grammar, and the rule will use the created object from this grammar. The input should still match other part of the rule, but result of other parts are ignored."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "[Grammar]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that, if it matches Grammar, it returns the result from that grammar; otherwise, it returns null."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "{Grammar}"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches 0, 1 or more Grammar."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(Grammar)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches the the grammar. Brackets is only for changing operator associations."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Grammar1 Grammar2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that should match Grammar1 followed by Grammar2."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Grammar1 | Grammar2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that match either Grammar1 or Grammar2. When it matches Grammar1, Grammar2 will be ignored."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Grammar as Type"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type \"Type\"."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Grammar with { FieldName = Value }"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Defines an input that matches the Grammar, assign \"Value\" to the field \"FieldName\" of the created object."
+                      }
+                    ]
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": "."
+                "text": "\r\n A grammar branch must be \"GRAMMAR as TYPE with {Field1 = Value1} with {Field2 = Value2} ...\".\r\n "
               }
             ]
           },
@@ -745,22 +1073,43 @@
             "kind": "Paragraph",
             "content": [
               {
-                "kind": "Text",
-                "text": "Type[]: Array, which will becomes "
-              },
-              {
-                "kind": "PageLink",
-                "href": "vlpp/ref/VL__COLLECTIONS__LIST.html",
+                "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "List"
+                    "text": "Example"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n Here is an example to parse expression containing +, -, *, /, () and numbers:\r\n "
+              },
+              {
+                "kind": "Program",
+                "code": "include:\"Vlpp.h\"\r\nnamespace:vl.calculator\r\nreflection:vl.calculator\r\nfilePrefix:Calc\r\nclassPrefix:Calc\r\nclassRoot:Expression\r\nguard:VCZH_CALCULATOR_PARSER\r\nparser:ParseExpression(Expr)\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\nenum BinaryOperator\r\n{\r\n    Add, Sub, Mul, Div,\r\n}\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token number;\r\n}\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    BinaryOperator op;\r\n    Expression left;\r\n    Expression right;\r\n}\r\n\r\ntoken ADD \"\\+\"\r\ntoken SUB \"-\"\r\ntoken MUL \"\\*\"\r\ntoken DIV \"\\/\"\r\ntoken NUMBER \"\\d+(.\\d+)?\"\r\ntoken OPEN \"(\"\r\ntoken CLOSE \")\"\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule Expression Factor\r\n    = NUMBER : number as NumberExpression\r\n    = \"(\" !Expr \")\"\r\n    ;\r\nrule Expression Term\r\n    = !Factor\r\n    = Term : left \"*\" Factor : right as BinaryExpression with {op = \"Mul\"}\r\n    = Term : left \"/\" Factor : right as BinaryExpression with {op = \"Div\"}\r\n    ;\r\nrule Expression Expr\r\n    = !Term\r\n    = Expr : left \"+\" Term : right as BinaryExpression with {op = \"Add\"}\r\n    = Expr : left \"-\" Term : right as BinaryExpression with {op = \"Sub\"}\r\n    ;"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n After using ParserGen.exe to generate C++ codes, you can do this:\r\n "
+              },
+              {
+                "kind": "Program",
+                "code": "// this table can be used, please cache the result to improve the performance\r\nauto table = CalcLoadTable();\r\nList<Ptr<ParsingError>> errors;\r\n// it should be a Ptr<CalcExpression>, will returns nullptr if the input contains syntax errors\r\nauto expression = CalcParseExpression(L\"(1+2) * (3+4)\", table, errors);"
               },
               {
                 "kind": "Text",
-                "text": " to the element type. Token cannot be the element of arrays."
+                "text": "\r\n You don't need to define the \"errors\" if you don't actually care how the input is wrong.\r\n There will be a overloaded version of CalcParseExpression that doesn't need the third argument.\r\n "
               }
             ]
           },
@@ -769,1290 +1118,24 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "ClassName: Instance of a specified type, which will becomes "
+                "text": "\r\n You can also automatically correct wrong input.\r\n Ifthe input is not too wrong to recognize,\r\n you can still get a syntax tree,\r\n but some fields are nullptr,\r\n with errors filled into the \"error\" variable.\r\n "
               },
               {
-                "kind": "PageLink",
-                "href": "vlpp/ref/VL__PTR.html",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Ptr"
-                  }
-                ]
+                "kind": "Program",
+                "code": "auto table = CalcLoadTable();                   // Load the table.\r\nParsingState state(L\"(1+2) * (3+4)\", table);    // Initialize a state with the input and the table.\r\nstate.Reset(L\"Expr\");                           // Set the rule to parse.\r\nauto parser = CreateAutoRecoverParser(table);   // Create an appropriate automatic error recoverable parser.\r\nList<Ptr<ParsingError>> errors;                 // Define an error list.\r\nauto node = parser->Parse(state, errors);       // Parse to get an abstract syntax tree, which is a Ptr<ParsingTreeNode>.\r\nif (node)\r\n{\r\n    auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast<CalcExpression>();\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:\r\n "
               },
               {
-                "kind": "Text",
-                "text": " to that type."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "OuterClass.InnerClass: Refer to the \"InnerClass\" defined inside the \"OuterClass\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "2) Token definitions:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token TokenName = \"regular expression\" <attributes>;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "discardtoken TokenName = \"regular expression\";"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\"discardtoken\" means if such a token is identified, it will not appear in the lexical analyzing result. And you cannot refer to names of \"discardtoken\" in the grammar."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "3) Rule definitions:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "rule RuleType RuleName <attributes>"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Grammar1"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Grammar2"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "..."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": ";"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "It means rule \"RuleName\" is defined by those grammars, and matching this rule will create an instance of \"RuleType\" or its whatever types that inheriting \"RuleType\"."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "4) Grammars:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "RuleName: Defines an input that matches a rule."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "TokenName: Defines an input that formed by the specified token."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\"StringConstant\": Defins an input that formed by exactly the string constant. This constant should define a token in the token list."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Grammar : FieldName: Defines an input that matches Grammar (should be either a rule name or a token name), and the result will be stored in field \"FieldName\" of a class, whose type will appear later."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "!Grammar: Defines an input that matches Grammar, and the rule will return the result from this grammar. The input should still match other part of the rule, but result of other parts are ignored."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "[Grammar]: Defines an input that, if match Grammar, will returns the result from that grammar; if not, the result is null."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{Grammar}: Defines an input that matches 0, 1 or more Grammar."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "(Grammar): Defins an input that matches the the grammar. Brackets is only for changing operator associations."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Grammar1 Grammar2: Defines an input that should match Grammar1 right before Grammar2."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Grammar1 | Grammar2: Defines an input that match either Grammar1 or Grammar2."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Grammar as Type: Defines an input that matches the Grammar, and the whole branch of the rule creates an instance of type \"Type\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Grammar with { FieldName = Value }: Defins an input that matches the Grammar, and will assign \"Value\", which should be an enum item, to the field \"FieldName\" of the created instance."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "5) Example"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Here is an example to parse expression containing +, -, *, /, () and numbers:\\"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "include:\"Vlpp.h\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "classPrefix:Calc"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "guard:VCZH_CALCULATOR_PARSER"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "namespace:vl.calculator"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "reflection:vl.calculator"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "parser:ParseExpression(Expr)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ambiguity:disabled"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "serialization:enabled"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "grammar:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class Expression"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "enum BinaryOperator"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Add, Sub, Mul, Div,"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class NumberExpression : Expression"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token number;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class BinaryExpression : Expression"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "BinaryOperator op;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Expression left;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Expression right;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token ADD \"\\+\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token SUB \"-\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token MUL \"\\*\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token DIV \"\\/\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token NUMBER \"\\d+(.\\d+)?\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token OPEN \"(\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "token CLOSE \")\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "rule Expression Factor"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= NUMBER : number as NumberExpression"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= \"(\" !Expr \")\""
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": ";"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "rule Expression Term"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= !Factor"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Term : left \"*\" Factor : right as BinaryExpression with {op = \"Mul\"}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Term : left \"/\" Factor : right as BinaryExpression with {op = \"Div\"}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": ";"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "rule Expression Expr"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= !Term"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Expr : left \"+\" Term : right as BinaryExpression with {op = \"Add\"}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "= Expr : left \"-\" Term : right as BinaryExpression with {op = \"Sub\"}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": ";"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "After using ParserGen.exe to generate C++ codes, you can do this:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto table = CalcLoadTable(); // this table can be used several times, don't load each type for each parsing, it will have a big performance overhead."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "List<Ptr<ParsingError>> errors;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto expression = CalcParseExpression(L\"(1+2) * (3+4)\", table, errors); // it should be a Ptr<CalcExpression>, will returns nullptr if the input is wrong, with all errors filled into the \"errors\" variable."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "You don't need to define the \"errors\" if you don't actually care how the input is wrong. There will be a overloaded version of CalcParseExpression that doesn't need the error list."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "If you want to parse a wrong input and do automatic error recovering, which means if the input is not too wrong, you can still get a syntax tree, but some fields are null, with errors filled into the \"error\" variable. It will be a little complex:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto table = CalcLoadTable();\t\t\t\t\t// Load the table."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "ParsingState state(L\"(1+2) * (3+4)\", table);\t// Initialize a state with the input and the table."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "state.Reset(L\"Expr\");\t\t\t\t\t\t\t// Set the rule to parse."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto parser = CreateAutoRecoverParser(table);\t// Create an appropriate automatic error recoverable parser."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "List<Ptr<ParsingError>> errors;\t\t\t\t\t// Define an error list."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto node = parser->Parse(state, errors);\t\t// Parse to get an abstract syntax tree, which is a Ptr<ParsingTreeNode>."
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "if (node)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto expression = CalcConvertParsingTreeNode(node, state.GetTokens()).Cast<CalcExpression>();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "After you get a strong typed syntax tree, you can use the generated visitor interface to do something, like evaluate the results of the expression:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "class Evaluator : public Object, public virtual CalcExpression::IVisitor"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "private:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "double result;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "double Call(CalcExpression* node)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "node->Accept(this);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "return result;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "public:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static double Evaluate(CalcExpression* node)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "return Evaluator().Call(node);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void Visit(CalcNumberExpression* node)override"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "return wtof(node->number.value);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "void Visit(CalcBinaryExpression* node)override"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto left = Calc(node->left.Obj());"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto right = Calc(node->right.Obj());"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "switch (node->op)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "case CalcBinaryOperator::Add:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "result = left + right;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "break;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "case CalcBinaryOperator::Sub:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "result = left 0 right;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "break;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "case CalcBinaryOperator::Mul:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "result = left * right;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "break;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "case CalcBinaryOperator::Div:"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "result = left / right;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "break;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "};"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Nullable<double> EvaluateExpression(const WString& input)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "static auto table = CalcLoadTable();"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "auto expression = CalcParseExpression(input, table);"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "Nulllable<double> result;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "if (expression)"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "{"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "result = Evaluator::Evaulate(expression.Obj());"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "return result;"
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "}"
+                "kind": "Program",
+                "code": "class Evaluator : public Object, public virtual CalcExpression::IVisitor\r\n{\r\nprivate:\r\n    double result;\r\n\r\n    double Call(CalcExpression* node)\r\n    {\r\n        node->Accept(this);\r\n        return result;\r\n    }\r\n\r\npublic:\r\n    static double Evaluate(CalcExpression* node)\r\n    {\r\n        return Evaluator().Call(node);\r\n    }\r\n\r\n    void Visit(CalcNumberExpression* node)override\r\n    {\r\n        return wtof(node->number.value);\r\n    }\r\n\r\n    void Visit(CalcBinaryExpression* node)override\r\n    {\r\n        auto left = Calc(node->left.Obj());\r\n        auto right = Calc(node->right.Obj());\r\n        switch (node->op)\r\n        {\r\n        case CalcBinaryOperator::Add:\r\n            result = left + right;\r\n            break;\r\n        case CalcBinaryOperator::Sub:\r\n            result = left 0 right;\r\n            break;\r\n        case CalcBinaryOperator::Mul:\r\n            result = left * right;\r\n            break;\r\n        case CalcBinaryOperator::Div:\r\n            result = left / right;\r\n            break;\r\n        }\r\n    }\r\n};\r\n\r\nNullable<double> EvaluateExpression(const WString& input)\r\n{\r\n    static auto table = CalcLoadTable();\r\n    auto expression = CalcParseExpression(input, table);\r\n    Nulllable<double> result;\r\n    if (expression)\r\n    {\r\n        result = Evaluator::Evaulate(expression.Obj());\r\n    }\r\n    return result;\r\n}"
               }
             ]
           }
@@ -2074,7 +1157,7 @@
                     "content": [
                       {
                         "kind": "PageLink",
-                        "href": "vlpp/ref/VL__OBJECT.html",
+                        "href": "/vlpp/ref/VL__OBJECT.html",
                         "content": [
                           {
                             "kind": "Text",
