@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Serializing and Loading Assemblies -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "serializing"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "name": "Running Workflow Scripts",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "name": "Invoking C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Interfaces",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "name": "Serializing and Loading Assemblies",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "name": "Generating C++ Code",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "name": "Debugging",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Serializing and Loading Assemblies",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Involved files:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Lib/W05_Lib.h",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Lib/W05_Lib.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Lib/W05_Lib.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Lib/W05_Lib.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Compile/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Compile/Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_DynamicRun/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_DynamicRun/Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Saving an assembly to a file is very simple:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "FilePath assemblyPath = FilePath(argv[0]).GetFolder() / L\"WorkflowAssembly.bin\";\r\nConsole::WriteLine(L\"Writing the assembly to: \" + assemblyPath.GetFullPath());\r\nFileStream fileStream(assemblyPath.GetFullPath(), FileStream::WriteOnly);\r\nassembly->Serialize(fileStream);"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            In this piece of code,\r\n            the compiled Workflow binary is put in the same folder that containing the executable file.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Loading an assembly from a file is as simple as saving:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "FilePath assemblyPath = FilePath(argv[0]).GetFolder() / L\"WorkflowAssembly.bin\";\r\nFileStream fileStream(assemblyPath.GetFullPath(), FileStream::ReadOnly);\r\n\r\nWfAssemblyLoadErrors errors;\r\nauto assembly = WfAssembly::Deserialize(fileStream, errors);"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            After you get the assembly,\r\n            you can load and call functions or classes in the script as usual.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            You don't need to call "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfLoadTable"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " before loading an assembly,\r\n            so the launching is very fast.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            And by not having to run the compiler,\r\n            you can get rid of the following files:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppParser.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppParser.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppWorkflowCompiler.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppWorkflowCompiler.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            which makes the executable file even smaller.\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

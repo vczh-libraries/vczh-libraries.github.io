@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inheriting C++ Interfaces -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "invoking2"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "name": "Running Workflow Scripts",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "name": "Invoking C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Interfaces",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "name": "Serializing and Loading Assemblies",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "name": "Generating C++ Code",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "name": "Debugging",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Inheriting C++ Interfaces",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Involved files:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W03_InheritingCppInterfaces/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            You are able to implement a reflectable C++ interface in Workflow using anonymous interface expression.\r\n            You are able to write classes in Workflow script, but classes are not allowed to implement interfaces.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            For example, we can define this C++ interface, and make it reflectable:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class IScripting : public virtual IDescriptable, public Description<IScripting>\r\n{\r\npublic:\r\n    virtual void Execute(const WString& name) = 0;\r\n};"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            By inheriting from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IDescriptable"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Description"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            instances of this interface are accessible in Workflow scripts.\r\n            But in order to make Workflow scripts being able to implement this interface,\r\n            more things need to be done:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "namespace vl::reflection::description\r\n{\r\n    BEGIN_INTERFACE_PROXY_SHAREDPTR(IScripting)\r\n        void Execute(const WString& name)override\r\n        {\r\n            INVOKE_INTERFACE_PROXY(Execute, name);\r\n        }\r\n    END_INTERFACE_PROXY(IScripting)\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Unfortunately it looks boring,\r\n            but this version of reflection requires you to write such code to allow it to be implemented by Workflow script code.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here we use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "BEGIN_INTERFACE_PROXY_SHAREDPTR"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            because we want instances of this interface to be shared pointers.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Now, we are able to implement this interface in Workflow script:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\nusing myapi::*;\r\n\r\nfunc main(): IScripting^\r\n{\r\n    return new IScripting^\r\n    {\r\n        override func Execute(name: string): void\r\n        {\r\n            App::Print($\"Hello, $(name)!\");\r\n        }\r\n    };\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            And call it in C++:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto mainFunction = LoadFunction<Ptr<myapi::IScripting>()>(globalContext, L\"main\");\r\nmainFunction()->Execute(L\"Gaclib\");"
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

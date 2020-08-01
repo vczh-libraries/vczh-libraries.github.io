@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Running Workflow Scripts -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "running"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "name": "Running Workflow Scripts",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "name": "Invoking C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Interfaces",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "name": "Serializing and Loading Assemblies",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "name": "Generating C++ Code",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "name": "Debugging",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Running Workflow Scripts",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Involved files:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W01_RunningWorkflowScripts/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Running a Workflow script is quite simple,\r\n            just start the reflection,\r\n            compile the code,\r\n            and call the function you need.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A typical Workflow script needs to use primitive types and a very simple predefined Workflow library.\r\n            Both compiling and running a Workflow script needs type information from above types.\r\n            In order to load these types,\r\n            two functions need to be called:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "LoadPredefinedTypes();\r\nWfLoadLibraryTypes();\r\nGetGlobalTypeManager()->Load();"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Now, we begin to run this Workflow script:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nfunc main(): string\r\n{\r\n    return \"Hello, world!\";\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfLoadTable"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function creates the parser table for parsing Workflow scripts.\r\n            Loading this table takes times, and it takes a few seconds when debugging your host C++ application.\r\n            So it is recommended to cache the table.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Firstly we need to compile the code and get the assembly:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "List<WString> codes;\r\ncodes.Add(WString(ScriptCode, false))\r\n\r\nList<Ptr<ParsingError>> errors;\r\nauto table = WfLoadTable();\r\nauto assembly = Compile(table, codes, errors);"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            If it fails to compile, you will get a null assembly,\r\n            and the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "errors"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " variable stores all mistakes that are found in the script.\r\n            Note that the compiler stops at the first syntax error.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Secondly we need to create the runtime environment for executing the script:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto globalContext = MakePtr<WfRuntimeGlobalContext>(assembly);\r\nauto initializeFunction = LoadFunction<void()>(globalContext, L\"<initialize>\");\r\ninitializeFunction();"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Only one "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfRuntimeGlobalContext"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is allowed to create per assembly.\r\n            In most cases you cannot load the assembly from file twice in order to get two assembilies and two context for separate execution environment.\r\n            Because Workflow scripts could create classes and interfaces,\r\n            all of them will also be registered to the global type manager, just like C++ reflection.\r\n            Loading them twice will result in an error.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The next step is to initialize global variables.\r\n            In a Workflow script, global variables should be initialize with default values,\r\n            but by loading the assembly these variables are not initialize.\r\n            So you always need to run the exported function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<initialize>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to do it.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Now everything is prepared, we can call the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function to get the result:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto mainFunction = LoadFunction<WString()>(globalContext, L\"main\");\r\nConsole::WriteLine(mainFunction());"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Unlike C++, an Workflow script is not required to have a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function.\r\n            Here "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is just a trivial name.\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
