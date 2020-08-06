@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Allocating -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "class_new"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Allocating",
+                      "selected": true,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_new"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Allocating (class)",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            New class expressions are the only way to allocate classes.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A new class expression could allocate a class by calling the a class constructor,\r\n            the constructor decides to return a shared pointer or a raw pointer.\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class MyClass\r\n{\r\n    new(x:int){}\r\n    new*(x:string){}\r\n    delete{}\r\n}\r\n\r\nfunc main(): void\r\n{\r\n    var a = new MyClass^(0);\r\n    var b = new MyClass*(\"\");\r\n    delete b;\r\n}"
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The first constructor accepts an integer and returns a shared pointer,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new MyClass^(0)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " allocate "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MyClass"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and execute this constructor,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new MyClass*(0)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is illegal.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The second constructor accepts an string and returns a raw pointer,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new MyClass*(\"\")"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " allocate "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MyClass"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and execute this constructor,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new MyClass^(\"\")"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is illegal.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "a"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is held by a shared pointer,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete (cast MyClass* a);"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will throw an exception.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "b"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "is not held by any shared pointer,\r\n                    so "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete b;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is necessary to prevent from memory leaks.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The destructor "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete{}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be executed for both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "a"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    when "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "a"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is out of scope.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The destructor "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete{}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be executed for both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "b"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    when "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete b;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            It crashes if you call a member on a deleted object.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            It crashes if you "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "delete"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " an object that hold by shared pointers.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Where there is no constructor in a class,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new(){}"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be automatically added to this class,\r\n            which takes no argument and returns a shared pointer.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            There cannot be more than one destructor in a class.\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Classes -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "class"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ]
+                },
+                {
+                  "icon": "-",
+                  "name": "Classes",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Allocating",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_new"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Classes",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Classes can be defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "modules"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "namespaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "classes"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "interfaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A class is a type that contains data and behaviors.\r\n            It can be allocated directly,\r\n            without having to be implemented like interfaces.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A class can inherit from other classes,\r\n            but it cannot override virtual members in base classes.\r\n            A class cannot define virtual members in Workflow script.\r\n            So "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "override"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is not allowed for all members in classes.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Unlike C++, all members in classes are public.\r\n            But you can change access controls for members in "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/codegen.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "generated C++ code"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Variables, methods, properties, events, constructors and destructors are allowed in classes.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Static methods, classes, interfaces, enums are allowed in classes,\r\n            they are accessed by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TYPE::MEMBER"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " outside of the class.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Unlike interfaces,\r\n            a class does not control whether it should be created and held by a shared pointer or a raw pointer,\r\n            this is controlled by individual constructors.\r\n            When there is no contructor,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new(){}"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be added to the class automatically,\r\n            which allocate the class in a shared pointer.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A class could also be a "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/state.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "state machine"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nclass Counter\r\n{\r\n    var counter: int = 0;\r\n\r\n    func Increase(): int\r\n    {\r\n        counter = counter + 1;\r\n        return counter;\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var counter = new Counter^();\r\n    var r = \"\";\r\n    for (i in range [0, 10))\r\n    {\r\n        r = r & $\"$(counter.Increase()); \";\r\n    }\r\n    return r;\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The default contructor is not defined,\r\n            so "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new(){}"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is added to the class when compiling.\r\n            This makes "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new Counter^()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " a legal expression to allocate this class.\r\n            Meanwhile, "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new Counter*()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is not allowed,\r\n            unless "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new*(){}"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is explicitly declared in the class.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The type of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " becomes "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Counter^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            You don't need to call "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "delete counter;"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            the object will be deleted automatically when the last shared pointer is out of scope.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Now we call "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter.Increase()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " 10 times,\r\n            which generates numbers from 1 to 10.\r\n            Function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"1; 2; 3; 4; 5; 6; 7; 8; 9; 10; \""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Properties and Events -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "class_prop"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": true,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Allocating",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_new"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Properties and Events (class)",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Properties and events are allowed in classes.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Defining properties and events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When property "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is associated with event "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NameChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                magic doesn't happen automatically,\r\n                the implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should trigger "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NameChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " approppriately.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The property could also be readonly, or not associated with an event.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Auto-property is very useful to avoid boiler-plate code.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Auto-property must be initialized.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Full-featured property",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    prop Name: string = \"\" {}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    which means:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    var name: string = \"\";\r\n\r\n    event NameChanged();\r\n\r\n    func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    func SetName(value: string): void\r\n    {\r\n        if (name != value)\r\n        {\r\n            name = value;\r\n            NameChanged();\r\n        }\r\n    }\r\n\r\n    prop Name: string {GetName, SetName : NameChanged}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Note that "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not accessible if this variable is generated by auto-property.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Readonly property",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    prop Name: string = \"\" {const}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    which means:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    var name: string = \"\";\r\n\r\n    event NameChanged();\r\n\r\n    func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    func SetName(value: string): void\r\n    {\r\n        if (name != value)\r\n        {\r\n            name = value;\r\n            NameChanged();\r\n        }\r\n    }\r\n\r\n    prop Name: string {GetName : NameChanged}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Note that "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not accessible if this variable is generated by auto-property.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Even this property is readonly,\r\n                    but "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is still generated,\r\n                    because this is the only way to modify the property.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " becomse "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "protected"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in generated C++ code,\r\n                    so calling this function outside of this class will result in wrong C++ code.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Without event",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    prop Name: string = \"\" {not observe}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    which means:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    var name: string = \"\";\r\n\r\n    func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    func SetName(value: string): void\r\n    {\r\n        name = value;\r\n    }\r\n\r\n    prop Name: string {GetName, SetName}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Note that "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not accessible if this variable is generated by auto-property.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Readonly property without event",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    prop Name: string = \"\" {const, not observe}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    which means:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class WithProp\r\n{\r\n    var name: string = \"\";\r\n\r\n    func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    func SetName(value: string): void\r\n    {\r\n        name = value;\r\n    }\r\n\r\n    prop Name: string {GetName}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Note that "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not accessible if this variable is generated by auto-property.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Even this property is readonly,\r\n                    but "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is still generated,\r\n                    because this is the only way to modify the property.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " becomes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "protected"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in generated C++ code,\r\n                    so calling this function outside of this class will result in wrong C++ code.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Events in classes behaves exactly the same as "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/interface_prop.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "events in interfaces."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
