@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Async Coroutine -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "coroutine_async"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Coroutines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "coroutine"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enumerable Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_enumerable"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Async Coroutine",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_async"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Raw Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_raw"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Design Your Own Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_custom"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Async Coroutine",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            This coroutine provider is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::AsyncCoroutine"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Create"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    so this coroutine function declaration is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): Async^\r\n${\r\n    /* legal */\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateAndRun"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    so this coroutine function declaration is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): void\r\n$Async{\r\n    /* legal */\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It does not have a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AwaitAndPause"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    but it has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AwaitAndRead"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    so both statements in the coroutine are "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$Await EXPR; /* legal */\r\nvar NAME = $YieAwaitld EXPR; /* legal */"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ReturnAndExit"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    which has a parameter,\r\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "illegal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$return; /* illegal */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    but this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$return EXPR; /* legal */"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "QueryContext"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\r\n                    which has no parameter,\r\n                    so the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " expression is available in the coroutine.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using return",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return EXPR;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stops a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine and generates a return value.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If there is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "static func StoreResult"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in the return type of the function,\r\n                the return value becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TYPE::StoreResult(EXPR)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If this "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not have a meaningful return value,\r\n                like when the coroutine function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "void"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it should return "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Since a function exists without a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " statement also returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                so the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " statement is not always necessary.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc Do1(): void\r\n$Async {\r\n    return null;\r\n}\r\n\r\nfunc Do2(): Async^\r\n${\r\n    return null;\r\n}\r\n\r\n$interface StringAsync : Async<string>;\r\n\r\nfunc Do3(): StringAsync^\r\n${\r\n    return \"Text\";\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Do1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " creates an "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " that will eventually generates "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        because this function returns "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                        Calling "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Do1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " results in executing the created "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " immediately,\r\n                        but since it returns "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        so the created "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " cannot be retrived.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Do2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " creates an "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " that will eventually generates "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        because this function returns "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                        Calling "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Do1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " gets the created "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Async^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        but it is not automatically executed.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Do3"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " creates an "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "StringAsync^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " that will eventually generates "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"Text\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                        The return type "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "StringAsync^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " has a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "static func StoreResult"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        having one argument of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                        This cause the compiler to generate an error when the return value cannot be implicitly converted to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using $Await",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Await AnotherTask;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " executes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnotherTask"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and pauses the current "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine.\r\n                It will be resumed when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnotherTask"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " finishes.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "var NAME = $Await AnotherTask;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " executes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnotherTask"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and pauses the current "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine.\r\n                It will be resumed when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnotherTask"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " finishes,\r\n                and the return value from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnotherTask"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be stored in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NAME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using the $ expression",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression in a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncContext^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed outside from a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine,\r\n                an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncContext^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to be passed to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Async::Execute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                It could be null, which is also the default value for this parameter.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Await"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will pass this "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncContext^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object to all nested "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " values.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression returns this particular "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncContext^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object,\r\n                which has two members:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "func Cancel(): bool"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", makes "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$.IsCancelled()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " returns "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "func IsCancelled(): bool"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is designed to be called in any "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Async"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " coroutine.\r\n                        If a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Async"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " coroutine has many steps,\r\n                        it could check "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$.IsCancelled()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " frequently and stops the coroutine when it is required.\r\n                        This does not happen automatically,\r\n                        a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Async"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " can ignore "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$.IsCancelled()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Executing system::Async^",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async::Delay"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function creates a task that ends after a specific period of time.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async::Execute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " executes an task in a background thread.\r\n                The first argument is a callback that will be triggered when the task is end.\r\n                The second argument is an optional object that becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async::Execute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not called for the first time for that particular object,\r\n                it fails and returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "false"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Calling a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function which returning "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "void"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                result in starting the task immediately.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Hosting system::Async^",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncScheduler::RegisterDefaultScheduler"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncScheduler::RegisterSchedulerForCurrentThread"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                are required before executing a task in a particular thread.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You are recommended to call\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncScheduler::UnregisterDefaultScheduler"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::AsyncScheduler::UnregisterSchedulerForCurrentThread"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                when no task is needed to run in a particular thread.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Async::Execute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " use the caller thread's scheduler to run itself.\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RegisterSchedulerForCurrentThread"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called for this thread,\r\n                it will not use the scheduler that is registered by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RegisterDefaultScheduler"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Usually this interface is implemented in C++,\r\n                which should use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::IAsyncScheduler"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as the name of the interface.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                There are 3 methods that need to be implemented:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Execute"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\r\n                            This function runs a callback in any thread it likes.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            This function is called after "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$Await"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " finishes waiting.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            For GacUI, the scheduler for the UI thread is different from other thread,\r\n                            because "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Execute"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " of the UI thread's scheduler runs callbacks in the UI thread.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            This means that,\r\n                            for any "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " that is called from the UI thread,\r\n                            all code will eventually be executed in the UI thread,\r\n                            including tasks that are awaited using "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$Await"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            If a task don't want to be executed in the UI thread even when it is scheculed by the UI thread,\r\n                            it needs to explicitly call "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "AsyncScheduler::ExecuteInBackground"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\r\n                            which means thiat task cannot be implemented using coroutine.\r\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ExecuteInBackground"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\r\n                            This function runs a callback in any thread it likes.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            It will not be called by generated code from "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " coroutines.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            For GacUI, "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ExecuteInBackground"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " runs callbacks in a random non-UI thread.\r\n                            It doesn't matter whether this scheduler is for the UI thread or not.\r\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "DelayExecute"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\r\n                            This function runs a callback in any thread it likes\r\n                            after a specified period of time.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            It will not be called by generated code from "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " coroutines.\r\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\r\n                            For GacUI, the scheduler for the UI thread is different from other thread,\r\n                            because "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "DelayExecute"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " of the UI thread's scheduler runs callbacks in the UI thread.\r\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                There is no default scheduler provided by Workflow script.\r\n                If you don't implement any scheduler,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine fails.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Let's see an example of a scheduler.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " doesn't necessary mean multi-threading,\r\n                everything could be synchronized.\r\n                The following scheduler queued all tasks\r\n                that will be executed on by one when it is required.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "class SyncScheduler : public Object, public IAsyncScheduler, public Description<SyncScheduler>\r\n{\r\npublic:\r\n    List<Func<void()>>\t\ttasks;\r\n\r\n    void Run(const Func<void()>& callback)\r\n    {\r\n        auto scheduler = MakePtr<SyncScheduler>();\r\n        IAsyncScheduler::RegisterDefaultScheduler(scheduler);\r\n        callback();\r\n        while (scheduler->tasks.Count() > 0)\r\n        {\r\n            auto firstTask = scheduler->tasks[0];\r\n            scheduler->tasks.RemoveAt(0);\r\n            firstTask();\r\n        }\r\n        IAsyncScheduler::UnregisterDefaultScheduler();\r\n    }\r\n\r\n    void Execute(const Func<void()>& callback) override\r\n    {\r\n        tasks.Add(callback);\r\n    }\r\n\r\n    void ExecuteInBackground(const Func<void()>& callback) override\r\n    {\r\n        tasks.Add(callback);\r\n    }\r\n\r\n    void DelayExecute(const Func<void()>& callback, vint milliseconds) override\r\n    {\r\n        // the required waiting time is ignored\r\n        tasks.Add(callback);\r\n    }\r\n};"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                Assume that this class is registered using this name: "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "test::SyncScheduler"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                By calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SyncScheduler::Run"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                the scheduler registers itself as a global task scheduler,\r\n                executes the callback in the caller's thread,\r\n                executes all generated new tasks in the caller's thread until they are all cleared,\r\n                unregisters itself.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The following Workflow script creates some "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Async"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " objects\r\n                by using coroutines or implementing the interface,\r\n                and then call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SyncScheduler::Run"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to run all code.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\nusing test::*;\r\n\r\nvar s = \"\";\r\n\r\n$interface IStringAsync : Async<string>;\r\n\r\nfunc GetStringAsync(x : int) : IStringAsync^\r\n${\r\n    s = $\"$(s)[$(x)]\";\r\n    return cast string x;\r\n}\r\n\r\nfunc GetStringAsync2(x : int) : IStringAsync^\r\n{\r\n    var future = Future::Create();\r\n    AsyncScheduler::GetSchedulerForCurrentThread().ExecuteInBackground(func():void\r\n    {\r\n        s = $\"$(s)[$(x)]\";\r\n        future.Promise.SendResult(cast string x);\r\n    });\r\n    \r\n    return new IStringAsync^(using future of Async^);\r\n}\r\n\r\nfunc GetMultipleStrings() : void\r\n$Async{\r\n    for(i in range[0, 1])\r\n    {\r\n        var x = $Await GetStringAsync(i);\r\n        s = $\"$(s)[+$(x)]\";\r\n        var y = $Await GetStringAsync2(i);\r\n        s = $\"$(s)[-$(y)]\";\r\n        $Await Async::Delay(0);\r\n        s = $\"$(s)!\";\r\n    }\r\n}\r\n\r\nfunc main():string\r\n{\r\n    SyncScheduler::Run(GetMultipleStrings);\r\n    return s;\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "main"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " main function starts the task scheduler,\r\n                        asking it to call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetMultipleStrings"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetMultipleStrings"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " calls both "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStringAsync"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStringAsync2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for twice.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStringAsync"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " implements "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Async"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " using coroutine.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStringAsync2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " implements "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Async"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Future"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Promise"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Eventually "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\"[0][+0][0][-0]![1][+1][1][-1]!\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is written to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "s"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        which is also the return value from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "main"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                The difference between "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetStringAsync"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetStringAsync2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is that,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetStringAsync"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " starts the task by calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AsyncScheduler::Execute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                while "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetStringAsync2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " starts the task by calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AsyncScheduler::ExecuteInBackground"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Both scheduler functions are the same in this example.\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

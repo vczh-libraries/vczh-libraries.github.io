@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Design Your Own Coroutine -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "coroutine_custom"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Coroutines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "coroutine"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enumerable Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_enumerable"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Async Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_async"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Raw Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_raw"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Design Your Own Coroutine",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_custom"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Design Your Own Coroutine",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A coroutine provider is a class with methods that following a naming convention.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A coroutine provider could be written in either C++ with reflection, or just Workflow.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Naming your coroutine",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want a coroutine to be written in this way:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func MyCoroutine(): void\r\n$Foo {\r\n    /* ... */\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you need to define the coroutine provider like this:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "using system::*;\r\n\r\nclass FooCoroutine\r\n{\r\n    class InternalState\r\n    {\r\n        /* ... */\r\n    }\r\n\r\n    static CreateAndRun(creator: func(InternalState*): (Coroutine^)): void\r\n    {\r\n        /* ... */\r\n    }\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want a coroutine to be written in this way:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func MyCoroutine(): Foo^\r\n${\r\n    /* ... */\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                or\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "$interface StringFoo : Foo<string>;\r\nfunc MyCoroutine(): StringFoo^\r\n${\r\n    /* ... */\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you need to define the coroutine provider like this:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "using system::*;\r\n\r\ninterface Foo\r\n{\r\n    /* ... */\r\n}\r\n\r\nclass FooCoroutine\r\n{\r\n    class InternalState\r\n    {\r\n        /* ... */\r\n    }\r\n\r\n    static Create(creator: func(InternalState*): (Coroutine^)): Foo^\r\n    {\r\n        /* ... */\r\n    }\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "FooCoroutine::InternalState"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could be a class or an interface.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Create"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CreateAndRun"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could both appear.\r\n                        This makes coroutine functions being able to return both "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Foo^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        The return type of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Create"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " must be compatible with the return type of coroutine functions:\r\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "If "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Create"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " returns "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Foo^"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", then coroutine functions could return "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Foo^"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " or any of its base type."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "If "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Create"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " returns "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Foo^"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", then coroutine functions could return a generic version of "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Foo^"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": "."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        The only argument of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Create"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CreateAndRun"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " should be a function:\r\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "It takes a raw pointer of an object for storing internal states."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "It must return "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Coroutine^"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": "."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a coroutine function is called,\r\n                either "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Create"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CreateAndRun"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be called.\r\n                You are responsible to create the object for storing internal states,\r\n                and then a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be given to you.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The coroutine function takes and stores the internal state object.\r\n                When any method in the coroutine provider is called because of\r\n                coroutine providers, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                this object will be used as the first argument.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Nothing in the coroutine function is executed before the first call to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Resume"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Whenever a coroutine operation is called,\r\n                the coroutine pauses,\r\n                and another call to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Resume"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to continue the coroutine function.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                After "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Resume"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Failure"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Status"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must be read in order to correctly handle coroutine operations.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Define coroutine operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want to support\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "$Do1;\r\n$Do2 something;\r\n$Do3 something, otherthings;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you are required to add the following methods to your coroutine provider:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "static Do1AndPause(internalState: InternalState*): void { /* ... */ }\r\nstatic Do2AndPause(internalState: InternalState*, something: Something): void { /* ... */ }\r\nstatic Do3AndPause(internalState: InternalState*, something: Something, otherthings: Otherthings): void { /* ... */ }"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want to support both\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "$Do1;\r\n$Do2 something;\r\n$Do3 something, otherthings;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var x = $Do1;\r\nvar y = $Do2 something;\r\nvar z = $Do3 something, otherthings;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you are required to add the following methods to your coroutine provider:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "static Do1AndRead(internalState: InternalState*): void { /* ... */ }\r\nstatic Do2AndRead(internalState: InternalState*, something: Something): void { /* ... */ }\r\nstatic Do3AndRead(internalState: InternalState*, something: Something, otherthings: Otherthings): void { /* ... */ }"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Overloading is allowed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a coroutine operation is called,\r\n                one of these methods will be called,\r\n                and the created "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will pause right after that.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                All methods for coroutine operations must return "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "void"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                After the coroutine is resumed,\r\n                the return value from the coroutine operation comes from the second argument in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine::Resume"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This argument is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CoroutineResult^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "If the coroutine operation succeeds, the return value is stored in the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Result"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "If the coroutine operation succeeds, the exception is stored in the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Failure"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        If "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Failure"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is not null,\r\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Result"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " will be ignored.\r\n                        and an exception is thrown.\r\n                        If there is no "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "try-catch"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in this coroutine function,\r\n                        the coroutine stops immediately with this exception.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Define the return statement",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want to support\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "return;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you are required to add this method to your coroutine provider:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "static ReturnAndExit(internalState: InternalState*): void { /* ... */ }"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want to support\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "return something;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                you are required to add this method to your coroutine provider:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "static ReturnAndExit(internalState: InternalState*, something: Something): void { /* ... */ }"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Both methods could appear together.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReturnAndExit"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be called,\r\n                and the coroutine stops immediately.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Define the $ expression",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you want to suppor the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression,\r\n                you are required to add this method to your coroutine provider:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "static QueryContext(internalState: InternalState*): Something { /* ... */ }"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and the return value from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Something"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Let's see the example "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/interface_using.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "here"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReaderCoroutine"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " defines:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Set values;"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Stores a collection of values."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "var x = $Get;"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Read a value from the stored collection, returns "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " after all values are read."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "return value;"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Finish the coroutine with a result."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                After the coroutine pauses,\r\n                you need to know which coroutine operation is called.\r\n                In this example,\r\n                the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "readObject"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " field in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReaderCoroutine::Executer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is used for this purpose.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReaderCoroutine::Executor::Continue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "readObject"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Get"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called.\r\n                The default value of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cr.Result"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                If all values are read,\r\n                the assignment is not executed,\r\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Get"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Get"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called before "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Set"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it crashes because the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "enumerator"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " field is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                After that, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "co.Resume(false, cr);"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                this is how the return value from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Get"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is specified.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Finally "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Sum"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                it first stores 10 numbers,\r\n                and then read them out one by one,\r\n                and add them together.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function,\r\n                it keeps calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReaderCoroutine::Executor::Continue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " until the whole coroutine function finishes.\r\n                The return value is read from the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "result"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " field,\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReturnAndExit"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " use this field to store the value given to the return statement.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                By executing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                methods in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReaderCoroutine"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called in the following order:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Create"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Executor::Continue"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetAndPause"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Call 10 times:\r\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Executor::Continue"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "GetAndRead"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Executor::Continue"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ReturnAndExit"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

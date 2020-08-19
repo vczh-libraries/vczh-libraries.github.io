@@ -118,7 +118,7 @@
               ]
             },
             {
-              "icon": " ",
+              "icon": "+",
               "name": "Coroutines",
               "selected": false,
               "path": [
@@ -175,7 +175,1868 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            A data binding expressions "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "bind(EXPR)"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " observes the changing of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "EXPR"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            by attaching callbacks to all involved events that are associated with properties.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Defining a data binding",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When we say property "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is associated with event "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it means that the property must be declared in one of the following ways:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "prop A: Type {}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "prop A: Type {const}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "prop A: Type {getter, AChanged}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "prop A: Type {getter, setter, AChanged}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are not allowed in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                unless they are in a function body of a lambda expression or a new interface expression inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Any event that is associated with properties that\r\n                are used in a function body of a lambda expression or a new interface expressions\r\n                will not be observed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Properties that need to be observed\r\n                must be written in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "EXPR.PROP"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                For example:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "class C\r\n{\r\n    prop A: int = 0; {}\r\n\r\n    new()\r\n    {\r\n        var x = bind(A + 1);\r\n        var self = this;\r\n        var y = bind(self.A + 1);\r\n    }\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "x"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " doesn't observe "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "A"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", because it is not in the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "EXPR.PROP"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " form."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "y"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " observes "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "A"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", but since "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "this"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is not allowed in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bind"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", it needs to be stored in a variable."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Listening to a data binding",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Subscription^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Open"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method needs to be called before the observation takes effect.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Close"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method needs to be called when the observation is no longer needed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called when observed events are triggered.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a subscription observes some objects,\r\n                the reference of this subscription is captured by event handlers that are attached on properties,\r\n                and these objects are also stored in this subscription because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "detach"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " needs to be called later,\r\n                which makes cycle referencing.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                By calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Close"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                these cycle referencing are removed,\r\n                so that memory leaks don't happen.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"1; 3; 6; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                because by assigning to properties,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are all triggered,\r\n                so the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression observes 3 changes,\r\n                and the callback is executed 3 times.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Observing property chains",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Property chains are also observable,\r\n                all related events will be attached.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    {\r\n        a.B.C.X = 100;\r\n    }\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 200;\r\n        a.B.C = c;\r\n    }\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 300;\r\n        a.B = b;\r\n    }\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"100; 200; 300; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                because assigned to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C.X"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " all trigger attached events.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Capturing values",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Values captured in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expressions just like lambda expressions and new interface expressions,\r\n                they are shallow copied.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var init = 0;\r\n    var numbers = new Numbers^();\r\n    var sub = bind(init + numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    init = 100;\r\n    numbers.A = 1;\r\n    init = 200;\r\n    numbers.B = 2;\r\n    init = 300;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"1; 3; 6; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                because the change of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "init"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not visible in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using unobservable properties",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {not observe}\r\n    prop B: int = 0 {not observe}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"6; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not observable,\r\n                the callback is triggered only when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                But we can manually trigger the callback by calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Update"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "numbers.A = 1;\r\nsub.Update();\r\nnumbers.B = 2;\r\nsub.Update();\r\nnumbers.C = 3;"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                Not it returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"1; 3; 6; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Be carefule about unobservable properties in property chains",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Objects that own observed properties will be stored inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "detach"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " needs to be called.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {not observe}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {not observe}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    var oldC = a.B.C;\r\n    {\r\n        a.B.C.X = 100;\r\n    }\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 200;\r\n        a.B.C = c;\r\n    }\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 300;\r\n        a.B = b;\r\n    }\r\n    oldC.X = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"100; 400; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not observable,\r\n                so assigning to them don't trigger the callback.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                But when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "oldC.X = 400;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                the callback is triggered with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "400"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                which is obviously not the actually value of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C.X"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " that is specified in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is cached.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not observable,\r\n                so when we write "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind(a.B.C.X)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it is actually "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "let cachedObject = a.B.C in (bind(cachedObject.X))"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes observable but "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " still not,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be updated when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed.\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not changed when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is reassigned,\r\n                the evaluation of the observed expression is still using the old previous "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " value.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In the previous example,\r\n                remove "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "not observe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "prop B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                and change some code between "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "sub.Open()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "sub.Close"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " like this:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {not observe}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 100;\r\n        a.B = b;\r\n    }\r\n    {\r\n        a.B.C.X = 200;\r\n    }\r\n    var oldC = a.B.C;\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 300;\r\n        a.B.C = c;\r\n    }\r\n    oldC.X = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"100; 200; 400; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Changing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " doesn't trigger the event,\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not observable.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Changing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "oldC.X"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " triggers the event,\r\n                because the previous "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is cached in the subscription\r\n                even after "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed.\r\n                So it doesn't actually evaluate "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B.C.X"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Instead, it evaluate "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "oldC.X"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                But if we change "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " again,\r\n                the cached "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ClassC^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object will be refreshed,\r\n                and it is not "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "oldC"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " anymore.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "A ? B : C",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Cond\r\n{\r\n    prop Value: bool = false {}\r\n}\r\n\r\nclass Int\r\n{\r\n    prop Value: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var c = new Cond^();\r\n    var a = new Int^();\r\n    var b = new Int^();\r\n    var sub = bind(c.Value ? a.Value : b.Value);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    c.Value = true;\r\n    a.Value = 100;\r\n    b.Value = 200;\r\n    c.Value = false;\r\n    a.Value = 300;\r\n    b.Value = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"0; 100; 100; 200; 200; 400; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Even if "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are in different branches of the if-expression,\r\n                their events are all attached.\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed,\r\n                even if it is not involved in evaluation,\r\n                it still triggers the callback.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If there are property chains in branches of an if-expression,\r\n                all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "attach"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "detach"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will happen when up-stream properties are changed,\r\n                caching of objects that own observable properties are evaluated,\r\n                related property getters will are called,\r\n                regardless of what is evaluated from the condition expression.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Let's see a more complex example:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Cond\r\n{\r\n    prop Value: bool = false {}\r\n}\r\n\r\nclass Holder\r\n{\r\n    prop Value: Int^ = new Int^() {}\r\n}\r\n\r\nclass Int\r\n{\r\n    prop Value: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var c = new Cond^();\r\n    var a = new Holder^();\r\n    var b = new Holder^();\r\n    var sub = bind((c.Value ? a.Value : b.Value).Value);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    c.Value = true;\r\n    a.Value.Value = 100;\r\n    b.Value.Value = 200;\r\n    c.Value = false;\r\n    a.Value.Value = 300;\r\n    b.Value.Value = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"0; 100; 200; 400; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "c.Value = true;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is printed.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(c.Value ? a.Value : b.Value)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is attached,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is detached.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value.Value = 100;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "100;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is printed, obviously.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value.Value = 200;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                nothing happens,\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has already been detached.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "c.Value = false;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "200;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is printed.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(c.Value ? a.Value : b.Value)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is detached,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is attached.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value.Value = 300;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                nothing happens,\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.Value.ValueChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has already been detached.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "b.Value.Value = 400;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "400;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is printed, obviously.\r\n            "
+              }
+            ]
           }
         ]
       }

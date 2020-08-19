@@ -295,6 +295,20 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WinMain.cpp"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -803,6 +817,106 @@
               {
                 "kind": "Text",
                 "text": " is useful here.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "WinMain.cpp",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WinMain"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function is the entry of a Windows GUI program.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include <GacUI.h>\r\n#include <Skins\\DarkSkin\\DarkSkin.h>\r\n#include <Windows.h>\r\n\r\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load()override\r\n    {\r\n        RegisterTheme(MakePtr<darkskin::Theme>());\r\n    }\r\n\r\n    void Unload()override\r\n    {\r\n    }\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DefaultSkinPlugin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " class uses the predefined "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DarkSkin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as the default control template.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can write your own control template to override default ones for some controls.\r\n                You can also write control template for all controls and get rid of the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DarkSkin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Every control needs a default control template assigned in order to launch a GacUI program.\r\n            "
               }
             ]
           }
