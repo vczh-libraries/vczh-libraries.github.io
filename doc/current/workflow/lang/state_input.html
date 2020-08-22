@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Using Input Methods -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "state_input"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Using Input Methods",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_input"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Unexpected Inputs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_switch"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Jumping Between States",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_jump"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Example: Calculator",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_calculator"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Using Input Methods",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Like any function,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state_input"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is allowed to have zero, one or multiple parameters.\r\n            But since it always returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "void"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            so you don't need to specify the return value.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$switch()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " happens,\r\n            it waits for selected inputs.\r\n            If unexpected inputs are called,\r\n            you can specify what should happen "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/state_switch.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "in the parentheses"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            You don't have to keep the same parameter names in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "case"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            For example:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n\r\n        $state default()\r\n        {\r\n            $switch ()\r\n            {\r\n            case A(foo):\r\n                {\r\n                    Output = $\"A($(foo))\";\r\n                }\r\n            case B(bar):\r\n                {\r\n                    Output = $\"B($(bar))\";\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    sm.A(\"John\");\r\n    return sm.Output;\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"A(John)\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Although it defines "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "A"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state_input A(name: string);"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            but you can still use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "case A(foo):"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "name"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is not accessible here,\r\n            because the parameter name is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "foo"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            You don't need to keep the parameter name consistent in all "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "case"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " statements:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n\r\n        $state default()\r\n        {\r\n            $switch ()\r\n            {\r\n            case A(foo):\r\n                {\r\n                    Output = $\"A($(foo))\";\r\n                }\r\n            case B(bar):\r\n                {\r\n                    Output = $\"B($(bar))\";\r\n                }\r\n            }\r\n            $switch ()\r\n            {\r\n            case A(cat):\r\n                {\r\n                    Output = $\"$(Output) A($(cat))\";\r\n                }\r\n            case B(dog):\r\n                {\r\n                    Output = $\"$(Output) B($(dog))\";\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    sm.A(\"John\");\r\n    sm.B(\"Smith\");\r\n    return sm.Output;\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"A(John) B(Smith) \""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

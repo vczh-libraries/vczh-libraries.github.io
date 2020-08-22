@@ -128,13 +128,55 @@
               ]
             },
             {
-              "icon": " ",
+              "icon": "-",
               "name": "State Machines",
               "selected": true,
               "path": [
                 "workflow",
                 "lang",
                 "state"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Using Input Methods",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_input"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Unexpected Inputs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_switch"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Jumping Between States",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_jump"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Example: Calculator",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_calculator"
+                  ]
+                }
               ]
             },
             {
@@ -175,7 +217,487 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            A state machine works like a coroutine,\r\n            but unlike coroutine which only has "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Resume"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            a state machine could have multiple strong-typed inputs.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A state machine is a class.\r\n            It must inherit from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::StateMachine"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The last member must be "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state_machine { ... }"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A state machine defines multiple states with arguments.\r\n            The entry state is called "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "default"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$goto_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " could be use for jump between states.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A state machine defines multiple strong-typed inputs.\r\n            The state machine is driven by input.\r\n            When a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$switch"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " state is executed,\r\n            it waits for selected inputs.\r\n            A required input method must be called to resume the state machine.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Let's start with an example:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch ()\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"B($(name))\");\r\n                }\r\n            }\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            Append(\"First line\");\r\n            $push_state WaitForName();\r\n            Append(\"Last line\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.A(\"John\");\r\n        sm.B(\"Smith\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"First line; A(John); Last line; The state machine has been stopped.; \""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new MySM^()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is executed,\r\n                    the state machine is not started.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "sm.A(\"John\");"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is executed.\r\n                    Because this is the first time a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$state_input"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is called,\r\n                    the state machine starts.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The entry state of a state machine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "default"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    it immediately enters "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$state default()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\"First line; \""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is printed.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$push_state WaitForName()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is executed,\r\n                    it jumps to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$state WaitForName()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    It is supposed to stop at "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    But because "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " has not been consumed,\r\n                    the state machine continues and choose "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "case A(name):"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\"A(John)\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is printed.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Now "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$state WaitForName()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " finishes.\r\n                    Because the state machine jumps to this state via "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$push_state"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    so it still needs to go back to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$state default"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\"Last line;\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is printed.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The state machine stops.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "sm.B(\"Smith\");"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is executed,\r\n                    because the state machines has stopped,\r\n                    it throws an exception.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " defines states.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state_input"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " defines inputs from outside.\r\n            State machines have more freedom in exchanging data comparing to coroutines.\r\n        "
           }
         ]
       }

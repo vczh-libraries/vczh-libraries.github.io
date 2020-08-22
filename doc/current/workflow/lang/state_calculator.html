@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Example: Calculator -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "state_calculator"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Using Input Methods",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_input"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Unexpected Inputs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_switch"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Jumping Between States",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_jump"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Example: Calculator",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_calculator"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Example: Calculator",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The following example shows how to make a calculator using state machine.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n        \r\nusing system::*;\r\n\r\nclass Calculator : StateMachine\r\n{\r\n    var valueFirst : string = \"\";\r\n    var op : string = \"\";\r\n    prop Value : string = \"0\" {}\r\n\r\n    func Update(value : string) : void\r\n    {\r\n        SetValue(value);\r\n        valueFirst = value;\r\n    }\r\n\r\n    func Calculate() : void\r\n    {\r\n        if (valueFirst == \"\")\r\n        {\r\n            valueFirst = Value;\r\n        }\r\n        else if (op == \"+\")\r\n        {\r\n            Update((cast double valueFirst) + (cast double Value));\r\n        }\r\n        else if (op == \"*\")\r\n        {\r\n            Update((cast double valueFirst) * (cast double Value));\r\n        }\r\n        else\r\n        {\r\n            raise $\"Unrecognized operator: $(op)\";\r\n        }\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input Digit(i : int);\r\n        $state_input Dot();\r\n        $state_input Add();\r\n        $state_input Mul();\r\n        $state_input Equal();\r\n        $state_input Clear();\r\n\r\n        $state Digits()\r\n        {\r\n            $switch (continue)\r\n            {\r\n            case Digit(i):\r\n                {\r\n                    Value = Value & i;\r\n                    $goto_state Digits();\r\n                }\r\n            }\r\n        }\r\n\r\n        $state Integer(newNumber: bool)\r\n        {\r\n            $switch (continue)\r\n            {\r\n            case Digit(i):\r\n                {\r\n                    if (newNumber)\r\n                    {\r\n                        Value = i;\r\n                    }\r\n                    else\r\n                    {\r\n                        Value = Value & i;\r\n                    }\r\n                    $goto_state Digits();\r\n                }\r\n            }\r\n        }\r\n\r\n        $state Number()\r\n        {\r\n            $push_state Integer(true);\r\n            $switch (continue, return)\r\n            {\r\n            case Dot():\r\n                {\r\n                    Value = Value & \".\";\r\n                }\r\n            }\r\n            $push_state Integer(false);\r\n        }\r\n\r\n        $state Operator()\r\n        {\r\n            $push_state Number();\r\n            $switch (raise)\r\n            {\r\n            case Add():    {Calculate(); op = \"+\";}\r\n            case Mul():    {Calculate(); op = \"*\";}\r\n            case Equal():  {Calculate();}\r\n            case Clear():\r\n                {\r\n                    valueFirst = \"\";\r\n                    op = \"\";\r\n                    Value = \"0\";\r\n                }\r\n            }\r\n            $goto_state Operator();\r\n        }\r\n    \r\n        $state default()\r\n        {\r\n            $goto_state Operator();\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var r = {\"\"};\r\n    var c = new Calculator^();\r\n    attach(c.ValueChanged, func():void\r\n    {\r\n        r[0] = $\"$(r[0])$(c.Value)\\r\\n\";\r\n    });\r\n\r\n    c.Digit(1); c.Digit(2); c.Add(); c.Digit(3); c.Digit(4); c.Mul(); c.Digit(5); c.Digit(6); c.Equal(); c.Clear();\r\n    c.Digit(2); c.Mul(); c.Equal(); c.Equal(); c.Equal(); c.Equal(); c.Clear();\r\n    return r[0];\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The state machine simulates how numbers on a calculator is changed while pressing buttons.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function returns:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "1\r\n12\r\n3\r\n34\r\n46\r\n5\r\n56\r\n2576\r\n0\r\n2\r\n4\r\n16\r\n256\r\n65536\r\n0"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            It calculates:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "12 + 34 = 46"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "46 * 56 = 2576"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "2 * 2 = 4"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "4 * 4 = 16"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "16 * 16 = 256"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "256 * 256 = 65536"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

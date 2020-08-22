@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Jumping Between States -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "state_jump"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Using Input Methods",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_input"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Unexpected Inputs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_switch"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Jumping Between States",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_jump"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Example: Calculator",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_calculator"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Jumping Between States",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Like any function,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is allowed to have zero, one or multiple parameters.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Jump to another state by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is similar to calling a function.\r\n            When that state finishes,\r\n            the state machine continues from code after "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Jump to another state by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$goto_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is similar to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "goto"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            When that state finishes,\r\n            the state machine doesn't continue from code after "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$goto_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            If there is no stacked "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", the state machine stops.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    var result: int = 0;\r\n    event ResultChanged();\r\n\r\n    func GetResult(): int\r\n    {\r\n        return result;\r\n    }\r\n\r\n    prop Result: int {GetResult : ResultChanged}\r\n\r\n    $state_machine\r\n    {\r\n        $state_input Add(number: int);\r\n        $state_input Sum();\r\n\r\n        $state ResultGenerated(number: int)\r\n        {\r\n            result = number;\r\n            ResultChanged();\r\n        }\r\n\r\n        $state NumberExpected()\r\n        {\r\n            var sum = 0;\r\n            while (true)\r\n            {\r\n                $switch(raise)\r\n                {\r\n                case Add(number):\r\n                    {\r\n                        sum = sum + number;\r\n                    }\r\n                case Sum():\r\n                    {\r\n                        $push_state ResultGenerated(sum);\r\n                        break;\r\n                    }\r\n                }\r\n            }\r\n            $goto_state NumberExpected();\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $goto_state NumberExpected();\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var r = {\"\"};\r\n    var sm = new MySM^();\r\n    attach(sm.ResultChanged, func():void\r\n    {\r\n        r[0] = $\"$(r[0])$(sm.Result); \";\r\n    });\r\n\r\n    sm.Add(1); sm.Add(2); sm.Add(3); sm.Add(4); sm.Add(5); sm.Add(6); sm.Sum();\r\n    sm.Add(1); sm.Add(1); sm.Add(2); sm.Add(3); sm.Add(5); sm.Add(8); sm.Sum();\r\n    sm.Add(1); sm.Add(2); sm.Add(4); sm.Add(8); sm.Add(16); sm.Add(32); sm.Sum();\r\n    return r[0];\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"21; 20; 63; \""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            This state machine accumulate numbers by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Add"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and output sum of them by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sum"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Sum"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state ResultGenerated(sum);"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is executed.\r\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$state ResultGenerated"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " finishes,\r\n            the state machine continue from the last "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$push_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "break;"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            And then "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$goto_state NumberExpected();"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is executed.\r\n            This is a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$goto_state"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            so it jumps to the state instead of calling it.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$jump_state NumberExpected();"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for making a loop results in memory leaks,\r\n            because variables and resuming point for previous states are saved,\r\n            but the state never finishes.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            This is an infinite state machine,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$default"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " never ends.\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
