@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Observe events explicitly -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "bind_observe"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "bind"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Observe events explicitly",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "bind_observe"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Observe events explicitly",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Sometimes an expression may not have proper observable properties.\r\n            In this case,\r\n            you can explicitly specify which events are needed in order to track an expression.\r\n            Here comes the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "observe"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " expression.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            An "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "observe"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " expression must be in a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "bind"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " expression.\r\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "bind"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " expression must not be in an "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "observe"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " expression.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "O.observe",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe(Prop)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(o.Prop on o.PropChanged)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe(Prop on EventA, EventB, ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(o.Prop on o.EventA, o.EventB ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "O.observe as o",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(EXPR on E1, E2, ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "O"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could be any expression."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "o"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is an expression alias of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "O"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "EXPR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is the expression being tracked, you can use "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "o"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "EXPR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "E1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "E2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " ... can be any expression that are referencing events."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "There must be at least one event after "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "on"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Involved events in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "EXPR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " are all ignored, only "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "E1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "E2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " ... will be subscribed."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return A + B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.observe as x(x.C on x.AChanged, x.BChanged));\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.A = 3;\r\n    numbers.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"1; 3; 5; 7; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In this example,\r\n                we want to observe "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "numbers.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Unfortunately this property is not associated with an event.\r\n                But we know that,\r\n                either "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " happens means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed.\r\n                So we use the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "observe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression to specify it.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Nested observe expressions",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For any "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(EXPR on ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression,\r\n                since "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "EXPR"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be any expression except "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "EXPR"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could contain another "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "observe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return A + B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var n1 = new Numbers^();\r\n    var n2 = new Numbers^();\r\n    var sub = bind(\r\n        n1.observe as x(\r\n            x.C + n2.observe as y(\r\n                y.C\r\n                on y.AChanged, y.BChanged\r\n            )\r\n            on x.AChanged, x.BChanged\r\n        )\r\n    );\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    n1.A = 1;\r\n    n1.B = 2;\r\n    n2.A = 3;\r\n    n2.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"1; 3; 6; 10 \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This example track the expression "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "n1.C + n2.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                But the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property is not observable, so\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "n1.observe as x(x.C on x.AChanged, x.BChanged)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "n2.observe as y(y.C on y.AChanged, y.BChanged)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is necessary.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In order to express "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "n1.C + n2.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                one of the following could be used:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "n1.observe as x(x.C on x.AChanged, x.BChanged) + n2.observe as y(y.C on y.AChanged, y.BChanged)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "n1.observe as x(x.C + n2.observe as y(y.C on y.AChanged, y.BChanged) on x.AChanged, x.BChanged)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression,\r\n                the difference between\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(EXPR on ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "let o = O in (EXPR)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                is which events are going to be subscribed.\r\n                Obviously the above two choices are equivalent.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Cached objects",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For any "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "O.observe as o(EXPR on E1, E2, ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "E1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "E2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " ... are not tracked.\r\n                Changing related properties do not trigger anything,\r\n                and it may cause "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to work improperly.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nclass Pair\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n}\r\n\r\nclass Sum\r\n{\r\n    prop AB: Pair^ = new Pair^() {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return AB.A + AB.B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var s = new Sum^();\r\n    var sub = bind(s.observe as x(x.C on x.AB.AChanged, x.AB.BChanged));\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    s.AB = new Pair^();\r\n    s.AB.A = 1;\r\n    s.AB.B = 2;\r\n    s.AB.A = 3;\r\n    s.AB.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This example tracks "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " by subscribing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB.AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB.BChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                After "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "sub.Open()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed.\r\n                But this subscription does not track "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                so it is still waiting for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " from the old "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                which causes the callback not being triggered.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In order to track "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                we could change the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression to:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bind(s.AB.observe as x(s.C on x.AChanged, x.BChanged))"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                Now the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"0; 0; 0; 1; 3; 5; 7; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                There are three "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"0; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " being printed,\r\n                which are caused by the changing of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and resubscription on events.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "observe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.ABChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is used to track "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Once it is changed,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB.AChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.AB.BChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be resubscribed.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                And we see that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "s.C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not contain "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "x"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                which is fine.\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
