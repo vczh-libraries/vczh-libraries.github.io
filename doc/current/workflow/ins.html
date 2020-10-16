@@ -97,7 +97,7 @@
   ]
 };
   const article = {
-  "index": false,
+  "index": true,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -108,7 +108,3354 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            This is for reference only.\r\n            You are not expected to generate instructions by yourself,\r\n            but it could be useful when programming against the Workflow script debugger interface.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            All instructions are defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::workflow::runtime::WfInsCode"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            An instruction could have two types of arguments:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Embedded arguments"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": They are generated at compile time and are saved in fields of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::workflow::runtime::WfInstruction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Stack arguments"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": They are stored in the stack at runtime, most of them will be consumed and removed from the stack after executing the instruction."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Argument schema of each instructions are defined by static methods of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::workflow::runtime::WfInstruction"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When an instruction is named after, for example, "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ConvertToType(flag, type)"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            it means the name of the instruction is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfInsCode::ConvertToType"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            and embedded arguments are stored in field "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "flagParameter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "typeParameter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Stack Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "Nop",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction does nothing.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadValue(value)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push a value to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadFunction(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nindex"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the function index to the stack.\r\n                    This instruction load functions for creating closures.\r\n                    To push a function value to the stack,\r\n                    use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateClosure"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " instead.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadException",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the exception"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the exception object of the current thread context to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadLocalVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(int) value of the variable"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the value of the local variable of the specified index to the stack.\r\n                    Local variables are stored in the current stack frame.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadCapturedVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the variable"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the value of the captured variable of the specified index to the stack.\r\n                    Captured variables are stored in the closure context that is assigned to the current stack frame.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadGlobalVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the variable"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the value of the global variable of the specified index to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadMethodInfo(method)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(IMethodInfo*)"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IMethodInfo*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadMethodClosure(method)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nclosure of the IMethodInfo* object"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the closure of the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IMethodInfo*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object to the stack.\r\n                    It is created by calling "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IMethodInfo::CreateFunctionProxy"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    this function returns a function object that can be invoked.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "LoadClosureContext",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<WfRuntimeVariableContext>)"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push the closure context of the current stack frame to the stack.\r\n                    Local variables are stored in the current stack frame.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "StoreLocalVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack to update a specified local variable.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "StoreCapturedVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack to update a specified captured variable.\r\n                    Captured variables are stored in the closure context that is assigned to the current stack frame.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "StoreGlobalVar(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack to update a specified global variable.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Duplicate",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Duplicate the top value in the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Pop",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Jumping Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "Return",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> stack frame 1 (top)\r\nvalue\r\n... others\r\n--> stack frame 2\r\n... others"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> stack frame 2 (top)\r\nvalue\r\n... others"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value as a function return value,\r\n                    pop the current stack frame so that all remaining values of this stack frame is removed,\r\n                    push the return value to the next stack frame,\r\n                    and the function ends, jumping to the next instruction from one that calling into the current function.\r\n                    If there is not stack frame after running this instruction,\r\n                    the return value will be the only value in the stack,\r\n                    and the script ends.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Jump(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Jump to the specified instruction.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "JumpIf(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack.\r\n                    If it is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", jump to the specified instruction.\r\n                    If it is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", continue to execute the next instruction.\r\n                    If it is not a boolean value, exception occurs.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Invoke(index, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> stack frame 2 (top)\r\narg-n\r\n...\r\narg-1\r\n... others"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> stack frame 1 (top)\r\n... local variables\r\narg-n\r\n...\r\narg-1\r\n--> stack frame 2 (top)\r\n... others"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Jump to the specified function, taking a specified number of stack values as arguments.\r\n                    Arguments are transferred to the new stack frame,\r\n                    so after the function ends,\r\n                    they are all gone.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InvokeWithContext(index, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Works like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Invoke(index, count)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    but the target function shares captured values of the current function.\r\n                    This happens when methods of the same interface implementation are calling each other,\r\n                    because all of these methods share the same captured values.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InstallTry(index)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push a new trap frame with the entry instruction to the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "catch"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " handler.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "UninstallTry(count)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " must be called pairing with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InstallTry(index)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "UninstallTry(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a new trap frame.\r\n                    Keep the specified number of stack values right after this trap frame.\r\n                    This happens when no exception occurs while evaluating the left operand of the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "??"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " operator,\r\n                    the value of the left operand becomes the value of the whole expression,\r\n                    which should be kept in the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "RaiseException",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Raise an exception.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    When an exception occurs,\r\n                    all stack frames and stack values that are pushed after the top trap frame will be removed,\r\n                    and jump to the specified instruction of the top trap frame.\r\n                    If there is no trap frame,\r\n                    the script ends with this exception.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Object Creating Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "CreateArray(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nitem-1\r\n...\r\nitem-n"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueList>) value of created array"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the specified number of values from the stack,\r\n                    push the created array containing these values in popping order.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateObservableList(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nitem-1\r\n...\r\nitem-n"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueObservableList>) value of created observable list"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the specified number of values from the stack,\r\n                    push the created observable list containing these values in popping order.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateMap(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue-1\r\nkey-1\r\n...\r\nvalue-n\r\nkey-n"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueDictionary>) value of created map"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the specified number of value-key-pair from the stack,\r\n                    push the created observable map.\r\n                    A pair is two values on the stack instead of being a pair object.\r\n                    The order of keys in the map depends on value of keys.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateClosureContext(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nitem-n\r\n...\r\nitem-1"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<WfRuntimeVariableContext>) value of created closure context"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the specified number of values from the stack,\r\n                    push the created closure context containing these values in reverse popping order.\r\n                    If there is no value to be stored, the created context will be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateClosure",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(int) function\r\n(Ptr<WfRuntimeVariableContext>) closure context"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueFunctionProxy>) value of created closure"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the index of global function and a closure context,\r\n                    push the created closure to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateInterface(method, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(int) function-1\r\n(IMethodInfo*) method-1\r\n...\r\nfunction-n\r\nmethod-n\r\n(Ptr<WfRuntimeVariableContext>) closure context"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of created interface"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the specified number of function-method-pair from the stack.\r\n                    Push the created interface to the stack.\r\n                    A pair is two values on the stack instead of being a pair object,\r\n                    declaring that which method is implemented by which global function.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "methodParamter"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " of the instruction is the constructor of the interface.\r\n                    Such interface must be registered using one of the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BEGIN_INTERFACE_PROXY_*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " macro.\r\n                    Please check out "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "class Description"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for more details.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateRange",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of ending\r\nvalue of beginning"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueEnumerable>) value of created range"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the value of ending and beginning in order,\r\n                    push the created range,\r\n                    which is a enumerable collection,\r\n                    including the value of beginning but excluding the value of ending.\r\n                    Each value is one greater than the previous one in this collection.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CreateStruct(flag, type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of created struct"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Create a struct of the specified type and push to the stack.\r\n                    All fields are filled with default values according to their types.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "DeleteRawPtr",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue to delete"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack and delete it.\r\n                    If the value is not a raw pointer,\r\n                    then it is just popped but not deleted.\r\n                    Otherwise, "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION__VALUE__DELETERAWPTR@BOOL().html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Value::DeleteRawPtr"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is called.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Type Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "ConvertToType(flag, type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue to convert"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of converted"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack and push the converted value to the stack.\r\n                    This instruction performs a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html#Strong-casting-expression-cast-TYPE-OBJECT-cast-OBJECT",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "strong casting"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on a value.\r\n                    Exception occurs if the conversion fails.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "TryConvertToType(flag, type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue to convert"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of converted"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack and push the converted value to the stack.\r\n                    This instruction performs a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html#Strong-casting-expression-cast-TYPE-OBJECT-cast-OBJECT",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "strong casting"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on a value.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be pushed to the stack if the conversion fails.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "TestType(flag, type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue to test"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(bool) value of testing result"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack and perform a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html#Type-testing-expression-OBJECT-is-TYPE-OBJECT-is-not-TYPE",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "type testing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be pushed to the stack if the testing succeeds.\r\n                    Otherwise "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GetType",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue to test"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(ITypeDescriptor*) type of the value"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack and get its type descriptor.\r\n                    For "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", its type descriptor is also "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Reflection Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "GetProperty(property)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the property"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack as the object,\r\n                    push the value of the specified property of this object.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SetProperty(property)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object\r\nvalue of the property"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack as the object,\r\n                    pop a value as the new value of the property\r\n                    update the value of the specified property of this object.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "UpdateProperty(property)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object\r\nvalue of the property"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop a value from the stack as the object,\r\n                    pop a value as the new value of the property\r\n                    update the value of the specified property of this object.\r\n                    Unlike "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetProperty(property)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    the value of the object will be pushed back to the stack after executing this instruction.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InvokeProxy(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IValueFunctionProxy>) value of the function\r\narg-n\r\n...\r\narg-1"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the return value"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the function along with a specified number of stack values as arguments from the stack,\r\n                    run the function with arguments,\r\n                    push the return value to the stack.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If the function is a global function or a lambda expression in the same assembly,\r\n                    instead of creating a new thread context,\r\n                    the current stack will be use to store the new stack frame for this function.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InvokeMethod(method, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object\r\narg-n\r\n...\r\narg-1"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the return value"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the object along with a specified number of stack values as arguments from the stack,\r\n                    run the specified method on that object with arguments,\r\n                    push the return value to the stack.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If the method is implemented by another piece of Workflow script in the same assembly,\r\n                    instead of creating a new thread context,\r\n                    the current stack will be use to store the new stack frame for this function.\r\n                    For non-static method,\r\n                    the object will becomes the only captured value.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InvokeEvent(event, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object\r\narg-n\r\n...\r\narg-1"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the return value"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the object along with a specified number of stack values as arguments from the stack,\r\n                    run the specified event on that object with arguments,\r\n                    push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " as the return value to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "InvokeBaseCtor(method, count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the object\r\narg-n\r\n...\r\narg-1"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the return value"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the object along with a specified number of stack values as arguments from the stack,\r\n                    run the specified method on that object with arguments,\r\n                    push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " as the return value to the stack.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction is used in classes that defined using Workflow script.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If the base constructor is implemented by another piece of Workflow script in the same assembly,\r\n                    instead of creating a new thread context,\r\n                    the current stack will be use to store the new stack frame for this function.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If the base constructor is implemented by another piece of Workflow script in another assembly,\r\n                    the base constructor will be applied to the object directly.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If the base constructor is implemented by C++,\r\n                    aggregation will be used to bind the object and the created C++ instance.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "AttachEvent(event)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the function\r\nvalue of the object"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IEventHandler>) value of the event handler"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the callback function and the object from the stack,\r\n                    attach the callback function to the specified event of the object,\r\n                    push the event handler to the stack.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "DetachEvent(event)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(Ptr<IEventHandler>) value of the event handler\r\nvalue of the object"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(bool) value of detaching result"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the event handler and the object from the stack,\r\n                    detach the event handler from the specified event of the object.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be pushed to the stack if the detaching succeeds.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Set Operations",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "TestElementInSet",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern before:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\nvalue of the set\r\nvalue of the element"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Stack pattern after:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\r\n(bool) value of testing result"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Pop the set and the value from the stack,\r\n                    test if the element is in the set.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be pushed to the stack if the testing succeeds.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Comparison Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern before:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\nright-operand\r\nleft-operand"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern after:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\n(int or bool) value of the result"
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareLiteral(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Compare booleans, numbers or strings.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-1"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if the left operand is smaller.\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if the left operand is larger.\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are equal to each other.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareReference",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Compare two pointers.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are equal to each other.\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are not equal to each other, or any of them is not a pointer.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareValue",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Compare two values.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are equal to each other.\r\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are not equal to each other.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpLT",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left < right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpGT",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left > right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpLE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left <= right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpGE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left >= right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpEQ",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left == right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpNE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left != right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Unary Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern before:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\noperand"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern after:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\nvalue of the result"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Pop the operand, push the result of a specified unary operator.\r\n                Instructions in this category apply "
+              },
+              {
+                "kind": "PageLink",
+                "href": "http://localhost:8080/doc/current/workflow/lang/expr_unary.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "unary operators"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on the operand.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpNot(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "not operand"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpPositive(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "+ operand"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpNegative(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "- operand"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Binary Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern before:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\nright-operand\r\nleft-operand"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Stack pattern after:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "--> top\r\nvalue of the result"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Pop the right and left operands in order, push the result of a specified binary operator.\r\n                Instructions in this category apply "
+              },
+              {
+                "kind": "PageLink",
+                "href": "http://localhost:8080/doc/current/workflow/lang/expr_binary.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "binary operators"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on operands.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpConcat",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left & right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on strings.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpExp(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left ^ right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpAdd(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left + right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpSub(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left - right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpMul(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left * right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpMod(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left % right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpDiv(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left / right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpShl(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left shl right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpShr(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left shr right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpXor(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left xor right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpAnd(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left and right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    For flags,\r\n                    values are converted to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "UInt64"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    and then converted back after running this instruction.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpOr(type)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This instruction executes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left or right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    For flags,\r\n                    values are converted to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "UInt64"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    and then converted back after running this instruction.\r\n                "
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
