@@ -166,7 +166,256 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            GacUI is released with a set of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DarkSkin"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " control templates,\r\n            but it is you who is responsible to register them.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Registering "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DarkSkin"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is very easy,\r\n            just write the following code in any cpp file,\r\n            so that it will be executed before the application entry function (e.g. "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WinMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "):\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load()override\r\n    {\r\n        RegisterTheme(MakePtr<darkskin::Theme>());\r\n    }\r\n\r\n    void Unload()override\r\n    {\r\n    }\r\n};"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            This piece of code register "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "darkskin::Theme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " has a builder of all kinds of control templates after "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacGen_DarkSkinResourceLoader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is loaded.\r\n            GacUI has a very simple and efficient plugin system,\r\n            which load plugins according to dependencies between each other.\r\n            If "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DefaultSkinPlugin"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is registered before the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacGen_DarkSkinResourceLoader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            it will just hold it until "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacGen_DarkSkinResourceLoader"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is registered.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Maybe someday you decide to create another set of control templates and want to make it the default one.\r\n            It is very simple, just create an "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ThemeTemplates>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " following "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/root_dtemplates.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "this page"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            and modify the above plugin code to have the correct dependencies and theme types.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ThemeTemplates>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DarkSkin"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " looks like this,\r\n            which lists all control template type names for each kind of control.\r\n            By specifying "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ref.Class=\"darkskin::Theme\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            a C++ class "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "darkskin::Theme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is created,\r\n            and now it is ready to register default control templates.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            There is not default item templates in this list,\r\n            because default item templates are specified in each control template for list controls.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "<Instance ref.CodeBehind=\"false\" ref.Class=\"darkskin::Theme\" xmlns:x=\"darkskin::*\">\r\n  <ThemeTemplates Name=\"DarkSkin\">\r\n    <att.Window>x:WindowTemplate</att.Window>\r\n    <att.CustomControl>x:CustomControlTemplate</att.CustomControl>\r\n    <att.Tooltip>x:TooltipTemplate</att.Tooltip>\r\n    <att.Label>x:LabelTemplate</att.Label>\r\n    <att.ShortcutKey>x:ShortcutKeyTemplate</att.ShortcutKey>\r\n    <att.ScrollView>x:ScrollViewTemplate</att.ScrollView>\r\n    <att.GroupBox>x:GroupBoxTemplate</att.GroupBox>\r\n    <att.Tab>x:TabTemplate</att.Tab>\r\n    <att.ComboBox>x:ComboBoxTemplate</att.ComboBox>\r\n    <att.MultilineTextBox>x:MultilineTextBoxTemplate</att.MultilineTextBox>\r\n    <att.SinglelineTextBox>x:SinglelineTextBoxTemplate</att.SinglelineTextBox>\r\n    <att.DocumentViewer>x:DocumentViewerTemplate</att.DocumentViewer>\r\n    <att.DocumentLabel>x:DocumentLabelTemplate</att.DocumentLabel>\r\n    <att.DocumentTextBox>x:DocumentTextBoxTemplate</att.DocumentTextBox>\r\n    <att.ListView>x:ListViewTemplate</att.ListView>\r\n    <att.TreeView>x:TreeViewTemplate</att.TreeView>\r\n    <att.TextList>x:TextListTemplate</att.TextList>\r\n    <att.Menu>x:ToolstripMenuTemplate</att.Menu>\r\n    <att.MenuBar>x:ToolstripTemplate</att.MenuBar>\r\n    <att.MenuSplitter>x:MenuSplitterTemplate</att.MenuSplitter>\r\n    <att.MenuBarButton>x:MenuBarButtonTemplate</att.MenuBarButton>\r\n    <att.MenuItemButton>x:MenuItemButtonTemplate</att.MenuItemButton>\r\n    <att.ToolstripToolBar>x:ToolstripTemplate</att.ToolstripToolBar>\r\n    <att.ToolstripButton>x:ToolstripButtonTemplate</att.ToolstripButton>\r\n    <att.ToolstripDropdownButton>x:ToolstripDropdownButtonTemplate</att.ToolstripDropdownButton>\r\n    <att.ToolstripSplitButton>x:ToolstripSplitButtonTemplate</att.ToolstripSplitButton>\r\n    <att.ToolstripSplitter>x:ToolstripSplitterTemplate</att.ToolstripSplitter>\r\n    <att.Button>x:ButtonTemplate</att.Button>\r\n    <att.CheckBox>x:CheckBoxTemplate</att.CheckBox>\r\n    <att.RadioButton>x:RadioButtonTemplate</att.RadioButton>\r\n    <att.DatePicker>x:DatePickerTemplate</att.DatePicker>\r\n    <att.DateComboBox>x:ComboBoxTemplate</att.DateComboBox>\r\n    <att.HScroll>x:HScrollTemplate</att.HScroll>\r\n    <att.VScroll>x:VScrollTemplate</att.VScroll>\r\n    <att.HTracker>x:HTrackerTemplate</att.HTracker>\r\n    <att.VTracker>x:VTrackerTemplate</att.VTracker>\r\n    <att.ProgressBar>x:ProgressBarTemplate</att.ProgressBar>\r\n    <att.RibbonTab>x:TabTemplate</att.RibbonTab>\r\n    <att.RibbonSmallButton>x:RibbonSmallButtonTemplate</att.RibbonSmallButton>\r\n    <att.RibbonSmallDropdownButton>x:RibbonSmallDropdownButtonTemplate</att.RibbonSmallDropdownButton>\r\n    <att.RibbonSmallSplitButton>x:RibbonSmallSplitButtonTemplate</att.RibbonSmallSplitButton>\r\n    <att.RibbonLargeButton>x:RibbonLargeButtonTemplate</att.RibbonLargeButton>\r\n    <att.RibbonLargeDropdownButton>x:RibbonLargeDropdownButtonTemplate</att.RibbonLargeDropdownButton>\r\n    <att.RibbonLargeSplitButton>x:RibbonLargeSplitButtonTemplate</att.RibbonLargeSplitButton>\r\n    <att.RibbonGroup>x:RibbonGroupTemplate</att.RibbonGroup>\r\n    <att.RibbonSplitter>x:ToolstripSplitterTemplate</att.RibbonSplitter>\r\n    <att.RibbonSmallIconLabel>x:RibbonSmallIconLabelTemplate</att.RibbonSmallIconLabel>\r\n    <att.RibbonIconLabel>x:RibbonIconLabelTemplate</att.RibbonIconLabel>\r\n    <att.RibbonButtons>x:RibbonButtonsTemplate</att.RibbonButtons>\r\n    <att.RibbonToolstrips>x:RibbonToolstripsTemplate</att.RibbonToolstrips>\r\n    <att.RibbonToolstripHeader>x:RibbonToolstripHeaderTemplate</att.RibbonToolstripHeader>\r\n    <att.RibbonGallery>x:RibbonGalleryTemplate</att.RibbonGallery>\r\n    <att.RibbonGalleryList>x:RibbonGalleryTemplate</att.RibbonGalleryList>\r\n    <att.RibbonGalleryItemList>x:RibbonGalleryItemListTemplate</att.RibbonGalleryItemList>\r\n    <att.RibbonToolstripMenu>x:RibbonToolstripMenuTemplate</att.RibbonToolstripMenu>\r\n  </ThemeTemplates>\r\n</Instance>"
           }
         ]
       }
