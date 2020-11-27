@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Running a GacUI Application -- GPU Accelerated C++ User Interface (vczh)</title>
+<title>Build your first GacUI Application! -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../global.css">
 <link rel="stylesheet" type="text/css" href="../article.css">
@@ -49,7 +49,7 @@
       "subNodes": [
         {
           "icon": " ",
-          "name": "Running a GacUI Application",
+          "name": "Build your first GacUI Application!",
           "selected": true,
           "path": [
             "gacui",
@@ -110,18 +110,910 @@
   ]
 };
   const article = {
-  "index": false,
-  "numberBeforeTitle": false,
+  "index": true,
+  "numberBeforeTitle": true,
   "topic": {
     "kind": "Topic",
-    "title": "Running a GacUI Application",
+    "title": "Build your first GacUI Application!",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            This is a walkthrough of building a Hello World application in GacUI.\r\n            It based on "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_HelloWorlds/CppXml",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "one of the demo project"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " released with GacUI.\r\n            You need to prepare the following first:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "//download.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Download"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " GacUI from github."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Install Visual Studio 2017 Community or newer version\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Go to "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "https://visualstudio.microsoft.com",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "https://visualstudio.microsoft.com"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Or use "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "https://code.visualstudio.com/",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Visual Studio Code"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " with "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "https://visualstudio.microsoft.com/visual-cpp-build-tools/",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Visual C++ Build Tools"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " instead."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Prepare your folder structure",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacUI.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "UI"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " folder\r\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Source"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " folder: empty, storing generated C++ files from Resource.xml"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Resource.xml"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Lib"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " folder: copy files to this folder from "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/tree/master/Import",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "here"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Choose all files in \"Files you need for a typical GacUI application\" from the "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "./download.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Download"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " page.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Main.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WinMain.cpp"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GacUI.xml",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    GacUI allow resource files to have dependency to other resource files.\r\n                    GacUI.xml is placed in the root folder.\r\n                    Run GacBuild.ps1 on GacUI.xml and it will search all resource files recursively.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    In this tutorial, we only have one resource file,\r\n                    that is UI\\Resource.xml.\r\n                    In this case, concent of GacUI.xml is very simple:\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "<GacUI/>",
+                    "language": "xml"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "UI\\Resource.xml",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    In this file, we specify the following informations:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Where to store generated C++ files"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Where to store the generated binary resource file"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Include \"GacUI.h\" because we don't need runtime reflection"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "The name is HelloWorld"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Describe the HelloWorld window"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Resource>\r\n<Folder name=\"GacGenConfig\">\r\n    <Folder name=\"Cpp\">\r\n    <Text name=\"SourceFolder\">Source</Text>\r\n    <Text name=\"Resource\">..\\HelloWorld.bin</Text>\r\n    <Text name=\"NormalInclude\">GacUI.h</Text>\r\n    <Text name=\"Name\">HelloWorld</Text>\r\n    </Folder>\r\n</Folder>\r\n<Folder name=\"MainWindow\">\r\n    <Instance name=\"MainWindowResource\">\r\n        <Instance ref.CodeBehind=\"false\" ref.Class=\"helloworld::MainWindow\">\r\n            <Window Text=\"Hello, world!\" ClientSize=\"x:480 y:320\">\r\n                <att.BoundsComposition-set PreferredMinSize=\"x:480 y:320\"/>\r\n                <Label Text=\"Welcome to GacUI Library!\">\r\n                    <att.Font>fontFamily:\"Segoe UI\" size:32 antialias:true</att.Font>\r\n                </Label>\r\n            </Window>\r\n        </Instance>\r\n    </Instance>\r\n</Folder>\r\n</Resource>",
+                    "language": "xml"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Build GacUI Resource File",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In the root folder, run "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tools",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", with parameter \"GacUI.xml\".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " performs incremental build,\r\n                when you have multiple GacUI resource files.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacClear.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " deletes all log files created by GacBuild.ps1,\r\n                to cause GacBuild.ps1 perform a full build in the next time.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If it build successfully,\r\n                you will see "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "HelloWorld.bin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on the root folder,\r\n                and also some files in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UI\\Source"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " folder.\r\n                We only need:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HelloWorld.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HelloWorldPartialClasses.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HelloWorldPartialClasses.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                There is also a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Resource.xml.log"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " folder created.\r\n                This folder contains build results for GacBuild.ps1 for incremental build.\r\n                It is safe to be deleted.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Main.cpp",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                To build this file,\r\n                you need to include necessary files to your VC++ project:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "UI\\Source"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\\HelloWorld.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "UI\\Source"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\\HelloWorldPartialClasses.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "UI\\Source"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\\HelloWorldPartialClasses.cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Selected files in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Lib"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " folder."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                We don't need runtime reflection in this project,\r\n                so you have to define a empty "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " macro using "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definitions",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "preprocessor definitions"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                You can either to this by updating your project properties,\r\n                or use the /D compiler option if you are using Visual Studio Code.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You need to add "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Lib"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to your "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://docs.microsoft.com/en-us/cpp/build/reference/i-additional-include-directories",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "include folder list"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                You can either to this by updating your project properties,\r\n                or use the /I compiler option if you are using Visual Studio Code.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include \"UI/Source/HelloWorld.h\"\r\n\r\nusing namespace vl::collections;\r\nusing namespace vl::stream;\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"HelloWorld.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    helloworld::MainWindow window;\r\n    window.MoveToScreenCenter();\r\n    GetApplication()->Run(&window);\r\n}",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Please note that, you need to carefully place "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "HelloWorld.bin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                and search for this file in runtime.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"HelloWorld.bin\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a relative path,\r\n                it will try to find the file in your working directory.\r\n                When you press F5 in Visual Studio, the working directory is the folder containing the \".vcxproj\" file.\r\n                When you double click the executable file, the working directory is where the executable file is in.\r\n                You are recommended to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Calculate a absolute path based on the full path of the executable file"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulefilenamew",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetModuleFileName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is useful here.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "WinMain.cpp",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WinMain"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function is the entry of a Windows GUI program.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include <GacUI.h>\r\n#include <Skins\\DarkSkin\\DarkSkin.h>\r\n#include <Windows.h>\r\n\r\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load()override\r\n    {\r\n        RegisterTheme(MakePtr<darkskin::Theme>());\r\n    }\r\n\r\n    void Unload()override\r\n    {\r\n    }\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DefaultSkinPlugin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " class uses the predefined "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DarkSkin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as the default control template.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can write your own control template to override default ones for some controls.\r\n                You can also write control template for all controls and get rid of the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DarkSkin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Every control needs a default control template assigned in order to launch a GacUI program.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Build and run your program!",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Image",
+                "src": "/gacui/HelloWorld.png"
+              }
+            ]
           }
         ]
       }
