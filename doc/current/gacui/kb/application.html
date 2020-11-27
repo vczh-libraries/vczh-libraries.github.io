@@ -166,7 +166,599 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            A GacUI application requires a user defined function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "void GuiMain(void)"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            In order to start a GacUI application,\r\n            one of the following functions must be called in entry function.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            For Windows,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupWindowsDirect2DRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupWindowsGDIRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be called in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WinMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which initialize necessary objects and call "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " with different rendering techniques.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            For macOS,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupOSXCoreGraphicsRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be called in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            Porting to macOS is not completed yet.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called,\r\n            the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiApplication"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " object is ready,\r\n            which can be accessed by the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GetApplication"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function.\r\n            A typical "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function looks like:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "void GuiMain()\r\n{\r\n    // 1. create a window, anything that inherits from GuiWindow works\r\n    MyWindow myWindow;\r\n\r\n    // 2. decide where to show the window, it could be any location in any monitor you like\r\n    myWindow.MoveToScreenCenter()\r\n\r\n    // 3. show the window as a main window of the application\r\n    GetApplication()->Run(&myWindow);\r\n\r\n    // 4. when the main window is closed, it gets here\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RegisterTheme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be called before creating any UI object to\r\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/kb/dtemplates.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "register a set of default control templates"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            for all controls.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RegisterTheme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnregisterTheme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be used to manage all registered themes.\r\n            A single theme object is not required to provide control templates for all controls,\r\n            but all registered themes must cover all controls.\r\n            The latest registered theme has the top priority.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When a theme is created using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI XML Resource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RegisterTheme"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for this theme is required to call after the associated resource file is loaded.\r\n            It is difficult to know the exact timing,\r\n            so GacUI provideds an efficient plugin system to solve this problem.\r\n            You can create a plugin to register this theme and declare that this theme is depended on its resource like this:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n\tGUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n\t{\r\n\t\tGUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n\t}\r\n\r\n\tvoid Load()override\r\n\t{\r\n\t\tRegisterTheme(MakePtr<darkskin::Theme>());\r\n\t}\r\n\r\n\tvoid Unload()override\r\n\t{\r\n\t}\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When the default control templates and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are ready,\r\n            it is time to create a very simple "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WinMain"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to start the application:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            All GacUI objects must only be used in the UI thread.\r\n            In order to make communications between threads possible,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiApplication"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " provides all following functions to run tasks:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Check if the current thread is the UI thread or not."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InvokeAsync"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in a random background thread."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InvokeInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in the UI thread."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InvokeInMainThreadAndWait"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in the UI thread and wait for its completion."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DelayExecute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in a random background thread after a specified amount of time."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DelayExecuteInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in the UI thread after a specified amount of time."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RunGuiTask"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Execute a task in the UI thread and wait for its completion."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "InvokeInMainThread"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be called in any thread.\r\n            This function queues a task,\r\n            which will be executed later.\r\n            It is OK to call this function in the UI thread,\r\n            which is a very common pattern to trigger something immediately but not exactly \"now\".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            For example,\r\n            when you put a button in a tab header to remove the tab page,\r\n            you cannot just remove and delete the tab page in the button's "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Click"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " event,\r\n            because there are still other events to trigger after this "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Click"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " event,\r\n            which requires the button and all ancestors to be alive.\r\n            In this case,\r\n            you can ask "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "InvokeInMainThread"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to delete the tab header,\r\n            it will happen after all required things is done for this particular click,\r\n            and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SafeDeleteControl"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will just work.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "InvokeInMainThreadAndWait"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " cannot be called in the UI thread.\r\n            If you do this,\r\n            it will complain by throwing an exception.\r\n            You can also ask this function to return if the task does not complete in the specified amount of time.\r\n            In this case, the task will not be canceled.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RunGuiTask"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " works like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "InvokeInMainThreadAndWait"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            but it is OK to call in the UI thread.\r\n            It will return only after the task is completed.\r\n        "
           }
         ]
       }

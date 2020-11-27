@@ -166,7 +166,693 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            OS provider is the key to make GacUI cross-platform.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            If you want to port GacUI to a new platform,\r\n            this is what you should do:\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implement INativeWindowService and INativeWindow",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                These two interfaces is the key of any OS provider.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Typically,\r\n                an instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " controls a window in the target OS.\r\n                If multiple graphics API is usable (like GDI and Direct2D on Windows),\r\n                they usually share the same "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " implementation.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implement Element Renderers in Your Favorite Graphics API",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                All elements have their own renderer object.\r\n                When an element is put in a window,\r\n                a renderer object will be associated to this element.\r\n                Instances of the same element type have their own renderer object,\r\n                they don't share renderer objects.\r\n                So it is very easy to cache necessary system resources in the renderer.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                By using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DEFINE_GUI_GRAPHICS_RENDERER"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in your renderer class,\r\n                all boilerplate code will be ready,\r\n                and you just need to call the static "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Register"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When an element needs to be renderered,\r\n                it will find the registered renderer class,\r\n                create an instance and associate it to the element itself.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implement GuiGraphicsResourceManager and IGuiGraphicsRenderTarget",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiGraphicsResourceManager"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the core object for rendering.\r\n                It is a class, but it has a few abstract functions to override.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetGuiGraphicsResourceManager"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to register your implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiGraphicsResourceManager"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiGraphicsRenderTarget"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is part of the element interfaces\r\n                to give all renderer objects access to a window's system resource.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Usually you will also need to create an instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeControllerListener"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                it is a convenient way to track the creating and destroying of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instances and keep your code decoupled.\r\n                When a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is created,\r\n                usually an implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiGraphicsRenderTarget"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will also be created and associated to the window.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiGraphicsRenderTarget* GuiGraphicsResourceManager::GetRenderTarget(INativeWindow*)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                is one of the important function to implement.\r\n                When a window needs to refresh it self,\r\n                this function will be called to retrive an implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiGraphicsRenderTarget"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " from an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                And the render target will be send to all instances of renderer objects for all elements.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Since in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DEFINE_GUI_GRAPHICS_RENDERER"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " you have already specify\r\n                the underlying type that is also created by you to implement "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiGraphicsRenderTarget"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                whenever a render target is offered to a element renderers,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RenderTargetChangedInternal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be called with the real render target type.\r\n                This is a good chance to recreate system resources that depend on this particular render target.\r\n                After that,\r\n                the render target will be stored in the protected "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "renderTarget"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " field.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                For graphics API like DirectX,\r\n                sometimes the device context will be invalid and the whole thing must be restarted.\r\n                In this case,\r\n                a new render target will be created and set to all renderer objects\r\n                by calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RenderTargetChangedInternal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " again.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implement INativeController",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeController"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " consists of multiple services:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeCallbackService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Managing "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeControllerListener"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " objects so that different components can receive system messages and keep the code decoupled."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeAsyncService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Managing and executing task queues in multiple threads."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeResourceService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Accessing cursors and fonts from the OS."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeClipboardService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Accessing clipboard from the OS."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeScreenService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Accessing physical monitors from the OS."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeDialogService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Accessing default dialogs from the OS."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeImageService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Loading image from files or memories."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeWindowService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Managing windows using OS's window manager."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeInputService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Accessing keyboard and global hooks."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Development Note",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Depending on mouse hooks to control menus is actually not the best idea.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeInputService::StartHookMouse"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be called when the first menu is opened,\r\n                and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeInputService::StopHookMouse"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be called when the last menu is closed,\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In Windows,\r\n                when the hook is running and a break point is hit,\r\n                the cursor will move so slow so that you are not able to control the mouse.\r\n                It is highly recommended to comment out code in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WindowsInputService::StartHookMouse"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                temporarily when you need to debug something while a menu is opened.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                I am trying to get rid of mouse hooks but it will not happen in GacUI 1.0.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Implementing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeController"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a super complex topic.\r\n                In order to port GacUI to a new platform,\r\n                you must know everything in GacUI.\r\n                It is highly recommended to read the Windows and macOS implementation for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeController"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " before creating yours.\r\n                Especially there are GDI and Direct2D support in Windows,\r\n                it is a good example to know how to allow multiple rendering techniques in one OS.\r\n            "
+              }
+            ]
           }
         ]
       }
