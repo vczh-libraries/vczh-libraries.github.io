@@ -195,8 +195,412 @@
         "kind": "Paragraph",
         "content": [
           {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_xmlres_data/XmlPage.xml",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Here"
+              }
+            ]
+          },
+          {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            is the sample used in this topic.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Image/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " works like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Text/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            but there are a few differences:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "content=\"File\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is always required."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "It can be assigned to properties that accept "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::xml::XmlDocument^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            There is no property in predefined GacUI objects to accept an XML,\r\n            it is designed to store static structured data.\r\n            Another choice is to use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Script>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and write them in Workflow script.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In the sample,\r\n            XML is read by a piece of Workflow script,\r\n            and data are loaded to a list view control.\r\n            XML helper functions and Linq are not introduced to Workflow,\r\n            so this piece of code will be much simpler in C++.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            First we defne an XML resource item in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "res://MainWindow/XmlPage/IDE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Xml name=\"IDE\">\r\n  <IDEs>\r\n    <IDE name=\"Visual Studio\" dev=\"Microsoft\" />\r\n    <IDE name=\"Visual Studio Code\" dev=\"Microsoft\" />\r\n    <IDE name=\"XCode\" dev=\"Apple\" />\r\n    <IDE name=\"CLion\" dev=\"JetBrains\" />\r\n    <IDE name=\"C++ Builder\" dev=\"Embarcadero\" />\r\n    <IDE name=\"Eclipse\" dev=\"Eclipse Foundation\" />\r\n  </IDEs>\r\n</Xml>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            And then we define a class to store the data,\r\n            with a function to read the XML and fill to an observable list.\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sharedscript;\r\n\r\nusing system::*;\r\nusing system::xml::*;\r\n\r\nnamespace sample\r\n{\r\n  class IDE\r\n  {\r\n    prop Name: string = \"\" {}\r\n    prop Developer: string = \"\" {}\r\n  }\r\n\r\n  func Fill(doc: XmlDocument^, ides: observe IDE^[]): void\r\n  {\r\n    for (nodeIde in doc.rootElement.subNodes)\r\n    {\r\n      var xIde = cast (XmlElement^) nodeIde;\r\n      var oIde = new IDE^();\r\n      for (att in xIde.attributes)\r\n      {\r\n        switch (att.name)\r\n        {\r\n          case \"name\": { oIde.Name = att.value; }\r\n          case \"dev\": { oIde.Developer = att.value; }\r\n        }\r\n      }\r\n      ides.Add(oIde);\r\n    }\r\n  }\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In the sample,\r\n            a variable "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "var ides: observe IDE^[] = {};"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is added to the tab page using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ref.Members/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            You can write as many class members as you want in this tag.\r\n            If you need to write something in the constructor or the destructor,\r\n            you can also use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ref.Ctor/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ref.Dtor/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            they accept one Workflow statement or a pair of brace with multiple statements.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Now we need to bind this observable list to a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "BindableListView"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<BindableListView View=\"Detail\" HorizontalAlwaysVisible=\"false\" VerticalAlwaysVisible=\"false\" env.ItemType=\"sample::IDE^\">\r\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n  <att.ItemSource-bind>self.ides</att.ItemSource-bind>\r\n\r\n  <att.Columns>\r\n    <ListViewColumn Text=\"IDE\" TextProperty=\"Name\" Size=\"180\"/>\r\n    <ListViewColumn Text=\"Developer\" TextProperty=\"Developer\" Size=\"240\"/>\r\n  </att.Columns>\r\n</BindableListView>"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            There are three important things here:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemSource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    This property accept any collection type,\r\n                    and list view items will be created in a one-to-one mapping to items in the collection.\r\n                    If it is an observable collection just like this sample,\r\n                    when items are added to or removed from this observable collection,\r\n                    list view items will change automatically.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    The type name of items in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemSource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TextProperty"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ListViewColumn"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    One of a property in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    For "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BindableDataGrid"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    if you specify editor templates or visualizer templates to columns,\r\n                    you can represent data in any way you want so that this property does not have to be a string property.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Finally, we create a button.\r\n            By clicking it,\r\n            it loads all data to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ides"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " observable collection,\r\n            so that the list view will sense the change and create list view items:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Button ref.Name=\"buttonLoad\" Text=\"Click Me To Load Data\">\r\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n  <ev.Clicked-eval><![CDATA[\r\n    {\r\n      var doc = cast (system::XmlDocument^) self.ResolveResource('res', 'MainWindow/XmlPage/IDE', true);\r\n      Fill(doc, self.ides);\r\n      buttonLoad.Enabled = false;\r\n    }\r\n  ]]></ev.Clicked-eval>\r\n</Button>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here is how they looks like:\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Image",
+            "src": "/gacui/kb_xmlres_tag_xml.gif"
           }
         ]
       }
