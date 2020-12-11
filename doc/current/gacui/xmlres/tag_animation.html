@@ -264,7 +264,462 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            <Animation/> create a helper to create instances of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::IGuiAnimation^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            The created animation performs customizable transformations for selected fields in a selected class.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Typically a <Animation/> looks like this:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Animation name=\"RESOURCE_NAME\">\r\n  <Gradient ref.Class=\"ANIMATION_CLASS\" Type=\"STATE_CLASS\">\r\n    <Interpolation>\r\n      <![CDATA[\r\n        DEFAULT_INTERPOLATION_FUNCTION\r\n      ]]>\r\n    </Interpolation>\r\n    <Targets>\r\n      <Target Name=\"FIELD_1\"/>\r\n      <Target Name=\"FIELD_2\">\r\n        <Interpolation>\r\n          <![CDATA[\r\n            INTERPOLATION_FUNCTION_FOR_THIS_FIELD\r\n          ]]>\r\n        </Interpolation>\r\n      </Target>\r\n    </Targets>\r\n  </Gradient>\r\n</Animation>"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            It generates a class named "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class ANIMATION_CLASS\r\n{\r\n    prop Begin: STATE_CLASS^ {}\r\n    prop End: STATE_CLASS^{}\r\n    prop Current: STATE_CLASS^{}\r\n\r\n    new (current: STATE_CLASS^) { ... }\r\n    func CreateAnimation(target: STATE_CLASS^, time: UInt64): IGuiAnimation^ { ... }\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            While "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be an existing class,\r\n            which could be created using <Script/>:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class STATE_CLASS\r\n{\r\n    prop FIELD_1: TYPE{}\r\n    prop FIELD_2: TYPE{}\r\n}"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TYPE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be an integer type, a floating point number type, or a color type.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ": In order to perform data binding on "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS::Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            all fields in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are recommended to be properties with events.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When creating "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            an instance of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is required to be the initial state.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When calling "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "CreateAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            the current state becomes the begin state,\r\n            the first argument becomes the end state,\r\n            the second argument is the length of the animation in milliseconds.\r\n            The returned animation object could be started or killed using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "AddAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "KillAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of the root object.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            An interpolation function takes a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "double"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " between 0 and 1,\r\n            returns a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "double"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " between 0 and 1.\r\n            It could be a function name,\r\n            a lambda expression,\r\n            or any "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/expr.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Workflow expression"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " that returns a function.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When the animation is playing,\r\n            the argument is the current play time divided by the animation length.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The return value of the interpolation function is used to determine fields in the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Here"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            is an example of <Animation>.\r\n            It creates animations on the control template of radio buttons.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here is the state class:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class RadioButtonTemplateState\r\n{\r\n  prop Length : double = 0 {}\r\n  prop Text : Color = {} {}\r\n  prop Border : Color = {} {}\r\n  prop Background : Color = {} {}\r\n  ...\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            In this class,\r\n            six static functions are defined to return configuration for different button states.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here is the animation:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Animation name=\"RadioButtonTemplateAnimation\">\r\n  <Gradient ref.Class=\"sample::RadioButtonTemplateAnimation\" Type=\"sample::RadioButtonTemplateState\">\r\n    <Interpolation><![CDATA[\r\n      func (x: double): double\r\n      {\r\n        if (x < 0.5) { return x * x * 2; } else { return 1 - (1 - x) * (1 - x) * 2; }\r\n      }\r\n    ]]></Interpolation>\r\n    <Targets>\r\n      <Target Name=\"Length\"/>\r\n      <Target Name=\"Text\"/>\r\n      <Target Name=\"Border\"/>\r\n      <Target Name=\"Background\"/>\r\n    </Targets>\r\n  </Gradient>\r\n</Animation>"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The interpolation function make the animation run faster and faster in the first half,\r\n            and run slower and slower in the second half.\r\n            It does this by transfer the animation process "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "x"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is from 0 to 1,\r\n            to another value that is 0 to 1.\r\n            The image of its derivative looks like a mountain.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When the button state is changed,\r\n            the custom member function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnStateChanged"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called,\r\n            which kills the ongoing animation and starts a new one.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When the animation is running,\r\n            properties of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder.Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is changed.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a custom member field of type "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::RadioButtonTemplateAnimation^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            Now we only need to bind sizes and colors to properties of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder.Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            and the UI will move when the animation is running.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here is how they looks like:\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Image",
+            "src": "/gacui/kb_animation.gif"
           }
         ]
       }
