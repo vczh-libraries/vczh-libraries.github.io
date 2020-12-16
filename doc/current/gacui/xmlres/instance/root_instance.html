@@ -70,7 +70,7 @@
               ],
               "subNodes": [
                 {
-                  "icon": "-",
+                  "icon": " ",
                   "name": "Root Instance",
                   "selected": true,
                   "path": [
@@ -78,63 +78,6 @@
                     "xmlres",
                     "instance",
                     "root_instance"
-                  ],
-                  "subNodes": [
-                    {
-                      "icon": " ",
-                      "name": "<Window>",
-                      "selected": false,
-                      "path": [
-                        "gacui",
-                        "xmlres",
-                        "instance",
-                        "root_windows"
-                      ]
-                    },
-                    {
-                      "icon": " ",
-                      "name": "<TabPag>",
-                      "selected": false,
-                      "path": [
-                        "gacui",
-                        "xmlres",
-                        "instance",
-                        "root_tabpage"
-                      ]
-                    },
-                    {
-                      "icon": " ",
-                      "name": "<CustomControl>",
-                      "selected": false,
-                      "path": [
-                        "gacui",
-                        "xmlres",
-                        "instance",
-                        "root_custom_controls"
-                      ]
-                    },
-                    {
-                      "icon": " ",
-                      "name": "Templates",
-                      "selected": false,
-                      "path": [
-                        "gacui",
-                        "xmlres",
-                        "instance",
-                        "root_templates"
-                      ]
-                    },
-                    {
-                      "icon": " ",
-                      "name": "<ThemeTemplates>",
-                      "selected": false,
-                      "path": [
-                        "gacui",
-                        "xmlres",
-                        "instance",
-                        "root_dtemplates"
-                      ]
-                    }
                   ]
                 },
                 {
@@ -172,24 +115,24 @@
                 },
                 {
                   "icon": " ",
-                  "name": "Using Instances in Default Namespaces",
+                  "name": "Namespaces",
                   "selected": false,
                   "path": [
                     "gacui",
                     "xmlres",
                     "instance",
-                    "instance_default"
+                    "namespaces"
                   ]
                 },
                 {
                   "icon": " ",
-                  "name": "Using Instances in Non-Default Namespaces",
+                  "name": "Instance Inheriting",
                   "selected": false,
                   "path": [
                     "gacui",
                     "xmlres",
                     "instance",
-                    "instance_non_default"
+                    "inheriting"
                   ]
                 }
               ]
@@ -212,7 +155,422 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            Root instance is a direct child in an "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            whose tag name does not begin with \"ref.\".\r\n            There must be exactly one root instance in an "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The type of the root instance is the base class of this "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            To create a class:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "namespace helloworld\r\n{\r\n    class MainWindow : presentation::controls::GuiWindow\r\n    {\r\n        new*(){}\r\n    }\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            The following "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is expected:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance name=\"MainWindowResource\">\r\n  <Instance ref.Class=\"helloworld::MainWindow\">\r\n    <Window/>\r\n  </Instance>\r\n</Instance>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ": The generated constructor of instances always return a raw pointer.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Only "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/running/invoking3.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "inheritable classs"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be used as a type of root instances.\r\n            The type of a root instance is also required to have a constructor without parameters.\r\n            But GacUI also knows how to create UI objects,\r\n            so "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Window/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is also a valid type of a root instance even it has no default constructor.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Here are of valid root instance types:\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<Window>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Window is a control that can be displayed in your OS.\r\n                Unlike other controls, it doesn't need to have a parent control.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                There are a few other controls that inherit from Window,\r\n                but the only valid type for a root instance is Window.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<TabPage>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                TabPage is a child control for Tab.\r\n                When a TabPage is added to a Tab,\r\n                a tab header containing TabPage's "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property will appear in the Tab.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                It is very common for application that,\r\n                TabPages in a Tab are dynamically created based on context.\r\n                For example,\r\n                pages in a wizard can be changed when you select different options in some pages.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In this scenario,\r\n                by creating TabPages as instances,\r\n                with the power of data binding and MVVM,\r\n                it is very easy to organize the application.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<CustomControl>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                CustomControl can be a child control for any control.\r\n                CustomControl itself doesn't provide any features,\r\n                it is another way to organize the application in multiple instances.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When the content of the application is also dynamically controlled based on a context,\r\n                but Tab doesn't fit the design.\r\n                For these scenarios,\r\n                CustomControls can be organized with a few more Workflow script,\r\n                which is also very convenient.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Templates and <ThemeTemplates>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                All control templates and item templates can be types of root items.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If you have already created a new design for multiple and even all controls,\r\n                you can use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ThemeTemplates/>"
+                  }
+                ]
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/kb/dtemplates.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "like this"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                to make your design a default one for your application.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Another Instance",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                An instance is allowed to inherit from another instance.\r\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/namespaces.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Namespaces"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/inheriting.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Instance Inheriting"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                for more details.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Others",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Any inheritable classes with a default constructor can be the type of a root instance.\r\n                You can define a class in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Script/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and use it as an instance.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This is a typical scenario for creating configurations.\r\n                By defining a configuration as a Workflow class,\r\n                you can create different options for that configuration as different instances,\r\n                or create another class with a fixed amount of options as properties,\r\n                and assigning option details to these properties.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "animation sample"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                is a good example.\r\n                Please check out and see how "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnimationState"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AnimationConfig"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RadioButtonAnimationConfig"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are used,\r\n                they form a very common pattern of using instances as configurations.\r\n            "
+              }
+            ]
           }
         ]
       }
