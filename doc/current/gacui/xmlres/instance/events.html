@@ -144,7 +144,7 @@
   ]
 };
   const article = {
-  "index": false,
+  "index": true,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -155,7 +155,286 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            There are two ways to handle an event:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Object ev.EVENT1=\"FUNCTION_NAME\">\r\n    <ev.EVENT2>FUNCTION_NAME</ev.EVENT2>\r\n</Object>"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Or using data binding:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Object ev.EVENT1-eval=\"{ ... }\">\r\n    <ev.EVENT2-eval><![CDATA[\r\n        { ... }\r\n    ]]<![CDATA[></ev.EVENT2-eval>\r\n</Object>"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "By Function",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If a function name is assigned to an event,\r\n                an empty C++ function will be generated.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You are recommended to use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ref.CodeBehind=\"true\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                By doing this,\r\n                you will get a separated pair of C++ files for this "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                In the cpp file you will see an very obvious place holder for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FUNCTION_NAME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                You can insert anything you want inside this function.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When you change the XML later,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will recognize your change and merge new generated code with your change.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Only changing code in expected places,\r\n                        which will be marked using obvious comments in generated C++ code.\r\n                        Changing to all other places will be lost after running "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacBuild.ps1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacBuild.ps1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " expects \"{\" and \"}\" to take the whole line.\r\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DO NOT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " put \"{\" after the previous line.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Please check out "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/codegen.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C++ Code Generation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for details.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "By Workflow Statement",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "-eval"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must be used if a "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/stat.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow statement"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is assigned to an event.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If the event is assigned using a tag,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<![CDATA[ ]]>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to contain the code.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Use a block statement if multiple statements need to be executed for this event.\r\n            "
+              }
+            ]
           }
         ]
       }
