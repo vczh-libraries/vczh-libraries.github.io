@@ -189,7 +189,7 @@
   ]
 };
   const article = {
-  "index": false,
+  "index": true,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -200,7 +200,2373 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            Raw input events are in compositions.\r\n            Normally a composition doesn't receive events,\r\n            until "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGraphicsComposition"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "::"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GetEventReceiver"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called.\r\n            This function create a big object containing all event registrations inside it,\r\n            and cause "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGraphicsComposition"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "::"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "HasEventReceiver"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to become "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "true"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " forever.\r\n            You are not able to free the space of event registration object once it is associated to a composition.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In the event registration object you will find a lot of fields for events,\r\n            for example,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "leftButtonDown"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            There are 3 methods for subscribing an event:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    composition->GetEventReceiver()->EVENT_NAME."
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AttachMethod"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    subscribe an event using an object and a member function pointer.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    composition->GetEventReceiver()->EVENT_NAME."
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AttachFunction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    subscribe an event using a function pointer or a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::Func<...>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " functor.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    composition->GetEventReceiver()->EVENT_NAME."
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AttachLambda"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    subscribe an event using a lambda expression or other functors.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            All 3 methods returns a new handler object per each call.\r\n            The only purpose for this object is to use in\r\n            composition->GetEventReceiver()->EVENT_NAME."
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Detach"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            and cancel the registration that returning that perticular handler object.\r\n            If "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Detach"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "false"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            either this registration has already been canceled,\r\n            or this registration doesn't happen in this event.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In the event callback function,\r\n            the first argument is always "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGraphicsComposition*"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            which is the owner of the event registration object,\r\n            the second argument varies in different events.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In GacUI XML Resource,\r\n            raw input events are treated like attributes of a composition.\r\n            You can either specify a method name of the current instance,\r\n            or specify a piece of code to run.\r\n            Please check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/events.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "this page"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for details.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Events and Parent Chain",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Most of the events are not only raised on the composition that receives the input,\r\n                but also all the way to the root in the parent chain,\r\n                which means after the event is raised on the source composition,\r\n                it is then raised on its parent,\r\n                and its parent's parent until the end.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Such process could be detected using members of the second argument:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "compositionSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n                        the composition right under the mouse, which is the original event raiser.\r\n                        When the event raises through the parent chain,\r\n                        this member doesn't change.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "eventSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n                        If the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "compositionSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " has an associated event registration object,\r\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "eventSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "compositionSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\r\n                        Otherwise,\r\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "eventSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is the nearest parent composition that has an associated event registration object.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "handled"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\r\n                        you can set this member in the event callback function to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        to stop the event from going through more further in the parent chain.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                Meanwhile,\r\n                the first argument is the composition who owns the event registration object\r\n                the callback function is registered to.\r\n                When the event raises through the parent chain,\r\n                the first argument becomes the current \"parent\".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mouse Events",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "Button and Wheel Events",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    GacUI offers the following button events:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "leftButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "leftButtonUp"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "leftButtonDoubleClick"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "middleButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "middleButtonUp"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "middleButtonDoubleClick"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "rightButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "rightButtonUp"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "rightButtonDoubleClick"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "horizontalWheel"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "verticalWheel"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    mapping to the 5 standard buttons of a mouse.\r\n                    But a typical mouse today,\r\n                    middle button and vertical wheel are merged together,\r\n                    horizontal wheel are usually missing.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The type of the second argument is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::presentation::compositions::GuiMouseEventArgs&"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "presentation::composition::GuiMouseEventArgs*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Mouse button and wheel events are raised on captured composition,\r\n                    or the composition right under the mouse when no composition is captured,\r\n                    and then go through the parent chain,\r\n                    which is stoppable by setting "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "handled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Other members contains the information of the event:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ctrl"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " if the CTRL key is pressing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "shift"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " if the SHIFT key is pressing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " if the mouse left button is pressing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "middle"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " if the mouse middle button is pressing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " if the mouse right button is pressing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "x"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "y"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the relative coordinate to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "first callback argument"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "wheel"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\r\n                            direction and distance of the wheel. A positive number means the wheel is rotating towards right or down.\r\n                            The unit of the rotation is 120 for today's typical mouse.\r\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Moving Events",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    GacUI offers the following button events:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseMove"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseEnter"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseLeave"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    mapping to the 5 standard buttons of a mouse.\r\n                    But a typical mouse today,\r\n                    middle button and vertical wheel are merged together,\r\n                    horizontal wheel are usually missing.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "mouseEnter"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " happens when the mouse moves into a composition.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "mouseLeave"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " happens when the mouse moves out of a composition.\r\n                    When a mouse moves from one composition to its child composition,\r\n                    it doesn't count as leaving the original composition,\r\n                    it is still in the original composition and its child composition.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "mouseMove"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " happens when the mouse moves.\r\n                    It is raised on captured composition,\r\n                    or the composition right under the mouse when no composition is captured,\r\n                    and then go through the parent chain,\r\n                    which is stoppable by setting "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "handled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Capturing",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    When a button down event happens,\r\n                    the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "compositionSource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is captured.\r\n                    A captured composition becomes the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "compositionSource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    of all following mouse events happen in the containing window (or menu, popup, etc...),\r\n                    including button up events.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    After the button up event happens,\r\n                    the capturing is released.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Moving or deleting controls or compositions during mouse events.",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Some times you may want to change the control tree structure in a callback of mouse events,\r\n                    (including "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Clicked"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in buttons).\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This is tricky because,\r\n                    mouse events are not just sent to this composition,\r\n                    it is sent to all its parent compositions.\r\n                    Even when "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "handled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is set to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    there is still something to do after the callback function ends.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    When you move or delete controls or compositions that affect the parent chain,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUI will stably CRASH"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    In order to solve this issue,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetApplication()->InvokeInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is your friend.\r\n                    Whenever you call this function,\r\n                    the callback to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InvokeInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will run\r\n                    right after the current series of events.\r\n                    That is a very safe point to restructure your controls or compositions.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    For example,\r\n                    if you customize the tab control to have a close button in each tab page:\r\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "void MyTabPage::buttonCloseClicked(GuiGraphicsComposition* sender, GuiEventArgs& arguments)\r\n{\r\n    // this is still in the chain of mouse button events,\r\n    // so InvokeInMainThread is required to delete MyTabPage.\r\n    GetApplication()->InvokeInMainThread(this->GetRelatedControlHost(), [=]()\r\n    {\r\n        this->GetOwnerTab()->GetPages().Remove(this);\r\n        SafeDeleteControl(this);\r\n    });\r\n}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Focus Events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI offers the following button events:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "gotFocus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "lostFocus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "caretNotify"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The type of the second argument is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::compositions::GuiEventArgs&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "presentation::composition::GuiEventArgs*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A focus composition is the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusableComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of a control that has focus.\r\n                Control like buttons will take focus after it is clicked,\r\n                you can also call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetFocus"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to move focus to a control.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a control get its focus,\r\n                its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusableComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has the focus.\r\n                If you are writing a control template,\r\n                you can set any composition to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusableComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property of the control template,\r\n                and it becomes the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusableComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of the control.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A window has only one focused control.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "gotFocus"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " raises on a composition when it is focused.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "lostFocus"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " raises on a previous focused composition when it lost the focus.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "caretNotify"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is keep raising on the focused control every half second.\r\n                If a control wants to render an input caret,\r\n                it needs to subscribe to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "caretNotify"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                and than changing the input caret between visible and invisible state when this event happens.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                COMPOSITION->"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetRelatedGraphicsHost"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "()->"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetCaretPoint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                is useful to tell the system where to show the little window for the input method.\r\n                This function is strongly recommended to be called by the focused control\r\n                to avoid state corruption.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If the window itself gets or loses focus,\r\n                related events are raised on the window,\r\n                events described here are not affected.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Keyboard Events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI offers the following button events:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "previewKey"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "keyDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "keyUp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "systemKeyDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "systemKeyUp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The type of the second argument is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::compositions::GuiKeyEventArgs&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "presentation::composition::GuiKeyEventArgs*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Keyboard events are raised on the focused composition,\r\n                and then go through the parent chain,\r\n                which is stoppable by setting "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "handled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "previewKey"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is raised before any other keyboard events.\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "handled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                not only the parent chain will stop,\r\n                the following keyboard event will also be canceled.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "code"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " member of the second argument\r\n                maps to an item in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::VKEY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " enum.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Other members contains the information of the event:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ctrl"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the CTRL key is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "shift"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the SHIFT key is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "alt"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the ALT button is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "capslock"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the CAPSLOCK button is activated."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "autoRepeatKeyDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if this event is generated because of holding a key."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Input Events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI offers the following button events:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "previewCharInput"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "charInput"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The type of the second argument is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::compositions::GuiCharEventArgs&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "presentation::composition::GuiCharEventArgs*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Input events are raised on the focused composition,\r\n                and then go through the parent chain,\r\n                which is stoppable by setting "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "handled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "previewCharInput"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is raised before any other keyboard events.\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "handled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                not only the parent chain will stop,\r\n                the following keyboard event will also be canceled.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "code"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " member of the second argument\r\n                is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "wchar_t"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " that being typed into the control.\r\n                In Windows,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "wchar_t"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a UTF-16 code point.\r\n                In other platform,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "wchar_t"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a UTF-32 code point.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Other members contains the information of the event:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ctrl"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the CTRL key is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "shift"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the SHIFT key is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "alt"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the ALT button is pressing."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "capslock"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if the CAPSLOCK button is activated."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Other Events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                GacUI offers the following button events:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "clipboardNotify"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "renderTargetChanged"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The type of the second argument is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::compositions::GuiEventArgs&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "presentation::composition::GuiEventArgs*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When content in the system clipboard changes,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "clipboardNotify"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " raises on every compositions.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When the render target is changed,\r\n                this may because a composition is added to or remove from a window,\r\n                or the window itself loses and recreates its render target,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "renderTargetChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " raises on the affected root composition and all direct or indirect child compositions.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If a composition is not added to a window,\r\n                its render target is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
           }
         ]
       }
