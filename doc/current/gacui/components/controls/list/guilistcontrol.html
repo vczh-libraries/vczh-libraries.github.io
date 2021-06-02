@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Using GuiListControl -- GPU Accelerated C++ User Interface (vczh)</title>
+<title>GuiListControl and GuiSelectableListControl -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="../../../../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../../../../global.css">
 <link rel="stylesheet" type="text/css" href="../../../../article.css">
@@ -85,7 +85,7 @@
                   "subNodes": [
                     {
                       "icon": " ",
-                      "name": "Using GuiListControl",
+                      "name": "GuiListControl and GuiSelectableListControl",
                       "selected": true,
                       "path": [
                         "gacui",
@@ -170,14 +170,1410 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Using GuiListControl",
+    "title": "GuiListControl and GuiSelectableListControl",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiListControl"
+              }
+            ]
+          },
+          {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": " is the base class of all list controls.\r\n            This control transforms items in a collection to UI object with a specified layout.\r\n            When items are scrolled out of the control and becomes invisible,\r\n            UI objects for them are disposed.\r\n            Resources are not taken by invisible items.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiSelectableListControl"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " makes items selectable.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl::EnsureItemVisible",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This function moves the scroll bar to ensure that\r\n                the specified item is visible.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Item Events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                UI objects dynamically created for items,\r\n                it is not easy to handling mouse events for items\r\n                by "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/compositions/events.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "events in compositions"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " redirects all such events to the list control itself:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemLeftButtonDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemLeftButtonUp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemLeftButtonDoubleClick"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMiddleButtonDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMiddleButtonUp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMiddleButtonDoubleClick"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemRightButtonDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemRightButtonUp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemRightButtonDoubleClick"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMouseMove"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMouseEnter"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemMouseLeave"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "itemIndex"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is added to the second argument of handlers for these events\r\n                starting at "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl Properties",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "ItemProvider",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This is a readonly property.\r\n                    It reflects how the list control understand data in its items.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This property returns an instance of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiListControl::IItemProvider"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    which provide access to the text representation of each item,\r\n                    plus a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "description::Value"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " representation\r\n                    for "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/vlppreflection/home.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "reflection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    When reflection is turned off (which is recommended)\r\n                    by using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VCZH_DEBUG_NO_REFLECTION "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    you cannot access member via reflection in each item,\r\n                    but you can still do type testing or conversion.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RequestView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method is an userful way to extend data representation.\r\n                    This method is usually implemented by each list control because they require more than just text representation.\r\n                    Here are some predefined views for certain list controls:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<TextList/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<BindableTextList/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::ITextItemView"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<TreeView/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<BindableTreeView/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "tree::INodeItemView"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ListView/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<BindableListView/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::IListViewItemView"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::ListViewColumnItemArranger::IColumnItemView"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<BindableDataGrid/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::IDataGridView"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and all view for list view"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "ItemTemplate (ItemTemplateChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Different list controls require different types of item templates.\r\n                    They also provide default item templates and usually require a proper "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Arranger"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to display them as expected.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    When default item templates don't satisfy the need,\r\n                    typically "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableTextList/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableDataGrid/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is recommended\r\n                    because their item templates are very easy to implement.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    To implement the item template for tree views,\r\n                    the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Level"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property needs to be carefully taken care of to render the visual effect of the hierarchy.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Item templates for list views are not recommended to implement.\r\n                    For the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Detail"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view,\r\n                    it is much more easier to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableDataGrid/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    For other views,\r\n                    it is much more easier to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableTextList/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with expected arrangers for these views.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IMPORTANT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    UI object for each item consists of a background object and a foreground object.\r\n                    The foreground object is created from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemTemplate"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    but the background object is created from other template properties in the control template.\r\n                    The background object handles the UI effect for selection and mouse operations.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The above behavior is controlled "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DisplayItemBackground"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\r\n                    If this property is set to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\r\n                    background objects will not be created,\r\n                    and foreground objects need to handle UI effect for selection and mouse operations.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Please check out\r\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/components/itemplates/home.html",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Item Templates"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    for details.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Arranger (ArrangerChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Implementing an arranger is not easy,\r\n                    but there are predefined arrangers for common requirements:\r\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::FreeHeightItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Each item take a row, heights could be different."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::FixedHeightItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Each item take a row with the same height."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::FixedSizeMultiColumnItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Layout items like a grid, each cell has the same size."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::FixedHeightMultiColumnItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Layout items like a grid, but each column could have a different width."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "list::ListViewColumnItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Each item take a row, contents are controlled by column headers."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NOTE"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\r\n                    the direction is controlled by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Asix"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    For example,\r\n                    by using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DownLeft"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " instead of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RightDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or the default axis,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "FixedHeightItemArranger"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " layout items from left to right instead of from top to bottom.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Axis (AxisChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Axis"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiListControl"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is very similar to\r\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/components/compositions/flow.html#-Flow-Axis",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Axis"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<Flow/>"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    For some arrangers like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "FixedHeightItemArranger"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " which displays items in single dimension,\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "LeftDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RightDown"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " do no difference.\r\n                    Same for other 3 pairs of values for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AxisDirection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "AdoptedSize (AdoptedSizeInvalidated)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This property suggests a best size for the drop down container in a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ComboBox/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "DisplayItemBackground",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The default value for this property is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    See "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ItemTemplate"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for more information.\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiSelectableListControl Properties",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This control enables list items to be selected by mouse or keyboard operations.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "MultiSelect",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    The default value for this property is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    Set this property to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " makes multiple list items\r\n                    could be selected at the same time.\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CTRL"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with a mouse click or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SHIFT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with direction keys\r\n                    could help select and unselect multiple items.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SelectedItems (SelectionChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This property is a readonly collection\r\n                    storing indices of selected items staring at "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SelectedItemIndex (SelectionChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This property returns the index of the selected item.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If no item is selected,\r\n                    or if more than one item is selected,\r\n                    this property returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-1"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SelectedItemText (SelectionChanged)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This property returns the text representation of the selected item.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    If no item is selected,\r\n                    or if more than one item is selected,\r\n                    this property returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\"\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiSelectableListControl Methods",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "GetSelected and SetSelected",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetSelected"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " tells if an item is selected.\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetSelected"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " selects or unselects an item.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SelectItemsByClick",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This method select items by simulate mouse operations.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "SelectItemsByKey",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This method select items by simulate keyboard operations.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "ClearSelection",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    This method clear all selection.\r\n                "
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
