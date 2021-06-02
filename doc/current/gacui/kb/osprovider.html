@@ -739,7 +739,7 @@
                       },
                       {
                         "kind": "Text",
-                        "text": ": Accessing keyboard and global hooks."
+                        "text": ": Accessing global keyboard status and timer."
                       }
                     ]
                   }
@@ -758,72 +758,6 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\r\n                Depending on mouse hooks to control menus is actually not the best idea.\r\n                "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "INativeInputService::StartHookMouse"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " will be called when the first menu is opened,\r\n                and "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "INativeInputService::StopHookMouse"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " will be called when the last menu is closed,\r\n            "
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\r\n                In Windows,\r\n                when the hook is running and a break point is hit,\r\n                the cursor will move so slow so that you are not able to control the mouse.\r\n                It is highly recommended to comment out code in "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "WindowsInputService::StartHookMouse"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": "\r\n                temporarily when you need to debug something while a menu is opened.\r\n            "
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\r\n                I am trying to get rid of mouse hooks but it will not happen in GacUI 1.0.\r\n            "
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
                 "text": "\r\n                Implementing "
               },
               {
@@ -837,7 +771,7 @@
               },
               {
                 "kind": "Text",
-                "text": " is a super complex topic.\r\n                In order to port GacUI to a new platform,\r\n                you must know everything in GacUI.\r\n                It is highly recommended to read the Windows and macOS implementation for "
+                "text": " is a super complex topic.\r\n                In order to port GacUI to a new platform,\r\n                you must know everything about how GacUI interact with the OS.\r\n                It is highly recommended to read the Windows and macOS implementation for "
               },
               {
                 "kind": "Strong",
@@ -851,6 +785,41 @@
               {
                 "kind": "Text",
                 "text": " before creating yours.\r\n                Especially there are GDI and Direct2D support in Windows,\r\n                it is a good example to know how to allow multiple rendering techniques in one OS.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In the future, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeHostedController"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INativeHostedWindow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be created for scenarios that\r\n                all GacUI windows are rendered in one OS native window,\r\n                like CLI, UWP or browsers.\r\n            "
               }
             ]
           }
