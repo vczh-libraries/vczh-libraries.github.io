@@ -227,7 +227,490 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            Instead of using a certain fixed type for items in a certain list control,\r\n            bindable list controls allow items to be any class or interface type.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemSource property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                All bindable list controls have a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property.\r\n                This property could be any collection type.\r\n                But if it is an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "observe T[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++,\r\n                the bindable list control will keep itself always sync to the collection.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Creating a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++ is easy.\r\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::ObservableList<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instead of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::List<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                you can get a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " by calling the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetWrapper"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Property and Writable Property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                After assigning a collection to a bindable list control,\r\n                you also needs to teach the control how to read/write your item object.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Different bindable list controls have different requirements.\r\n                For example,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<BindableTextList/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CheckedProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a\r\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Property-Name-func-data-Object-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    readable property\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                which means the control will read a text from an item.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CheckedProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a\r\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Writable-Property-Name-func-data-Object-value-PROPERTY-TYPE-isWrite-bool-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    writable property\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                which means the control will not only read a checked mark from an item,\r\n                it will also set a checked mark to an item.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Please check out\r\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/ColorPicker/UI/Resource.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    this tutorial project\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                for details about using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Updating Items",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is an observable collection,\r\n                when you add an item to the collection,\r\n                or remove an item from the collection,\r\n                or replace an item in the collection,\r\n                the list control will know and show the latest result.\r\n                But changing properties in items will not trigger refreshing the list control,\r\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Property and Write Property are not data binding"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When data in an item is modified,\r\n                there are 3 ways to notify the list control:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        When using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vl::collections::ObservableList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NotifyUpdate"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to notify the list control.\r\n                        This method accepts a range of indices,\r\n                        all items in that range will be treated like they are changed.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        Trigger the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IValueObservableList::ItemChanged"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " event to notify the list control.\r\n                        When data in items are modified,\r\n                        it means there is no adding to or removing from the collection,\r\n                        so always keep the second and the third argument having the same value.\r\n                        This event accepts a range of indices,\r\n                        all items in that range will be treated like they are changed.\r\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\r\n                        When using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vl::collections::ObservableList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\r\n                        or when the observable collection is created using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Workflow"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " script,\r\n                        replacing an item with itself also notify the list control.\r\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemTemplate Property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Item objects in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be used to create instances from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Some properties of the item template will be assigned to values\r\n                that are read from the item object using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Property and Writable Property"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                But since the item template already knows the item object,\r\n                it could read from the object directly.\r\n            "
+              }
+            ]
           }
         ]
       }
