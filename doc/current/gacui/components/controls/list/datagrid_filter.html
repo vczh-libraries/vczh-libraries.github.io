@@ -193,7 +193,355 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            A filter is an instance of interface "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataFilter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When a filter is installed to the data grid,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetCallback"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be called.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GetItemProvider"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the callback object provides access to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemProvider"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of the data grid.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnProcessorChanged"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the callback object is called by the filter,\r\n            when the filter definition is changed\r\n            (e.g. a the date range is changed in a filter that only allow items in that range).\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Filter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function accepts an item from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemSource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            it returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "true"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " when the item satisfies the filter.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implementing a Filter",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Typically you need to implement the interface directly.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                When a filter is semantically for a column,\r\n                a filter could be implemented by a column dropdown.\r\n                Usually this is done by creating a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<CustomControl/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Popup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                for the UI in the column dropdown.\r\n                The control has a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::IDataFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property,\r\n                whose the implementation talks to the control for filter arguments.\r\n                In the end,\r\n                install the filter to both "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Filter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Popup"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataColumn"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Please check out\r\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/DataGrid/UI/Resource.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\r\n                    this tutorial project\r\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                for details.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Predefined Filter Combinators",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataAndFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                Combine multiple filters to one filter.\r\n                An item satisfies this filter when it satisfies all sub filters.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataOrFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                Combine multiple filters to one filter.\r\n                An item satisfies this filter when it satisfies at least one sub filters.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataNotFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                Convert one filter to another.\r\n                An item satisfies this filter when it unsatisfies the sub filter.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Installing Filters",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Multiple filters could be assigned to each column.\r\n                A filter could be assigned to the control using the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AdditionalFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property.\r\n                An item must satisfies "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AdditionalFilter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " add every filter assigned to columns\r\n                in order to appear in the control.\r\n            "
+              }
+            ]
           }
         ]
       }

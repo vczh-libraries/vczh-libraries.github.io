@@ -193,7 +193,305 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            A sorter is an instance of interface "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataSorter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When a sorter is installed to the data grid,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetCallback"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be called.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GetItemProvider"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the callback object provides access to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemProvider"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of the data grid.\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnProcessorChanged"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the callback object is called by the sorter,\r\n            when the sorter definition is changed.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Compare"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function accepts two items in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemSource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            It returns a negative number when "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "rows1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " should appear before "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "rows2"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in ascending order.\r\n            It returns a positive number when "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "rows1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " should appear after "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "rows2"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in ascending order.\r\n            It returns 0 when the order is not important.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implementing a Sorter",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Typically you need to implement the interface directly.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Predefined Sorter Combinators",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataMultipleSorter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                Combine two sorters into one sorter.\r\n                If the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LeftSorter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " decides an order for two items,\r\n                that's the order.\r\n                If the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LeftSorter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " decides that the order is not important,\r\n                the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RightSorter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " kicks in.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::DataReverseSorter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\r\n                This sorter defines a revert order based on another sorter.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Installing Sorters",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Multiple sorters could be assigned to each columns,\r\n                but only one sorter could be activated.\r\n                To activate or cancel a sorter,\r\n                just click the column header,\r\n                or request the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::IDataGridView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " view from the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                and there will be methods for controlling sorting.\r\n            "
+              }
+            ]
           }
         ]
       }
