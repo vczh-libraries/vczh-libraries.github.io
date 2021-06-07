@@ -193,7 +193,316 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The page is under construction.\r\n        "
+            "text": "\r\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property is a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            Please check out\r\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/properties.html#presentation-controls-list-IDataVisualizerFactory-",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                this page\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            for using this property in GacUI XML Resource.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            To create a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in C++,\r\n            it is recommended to use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::DataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " as the implementation for the interface.\r\n            The constructor has two argument.\r\n            The first argument is an\r\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/properties.html#Control-Item-Template-func-data-Object-TEMPLATE-CLASS-",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                item template property value\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            to create a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGridVisualizerTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            The second argument is a decorated visualizer factory,\r\n            which is optional.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            If the decorated visualizer factory is not "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "null"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            the created visualizer template from the first argument\r\n            will contain the one created from the decorated visualizer factory.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The default visualizer factory for cells in the first column is:\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                MainColumnVisualizerTemplate;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            This means that,\r\n            for these cells,\r\n            a text will be displayed in a focus rectangle (only rendered when a cell has a focus),\r\n            and the focus rectangle is contained in a border.\r\n            There is only right and bottom border lines for a cell,\r\n            but when all cells are rendered together,\r\n            they form a table.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The default visualizer factory for cells in the other columns is:\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                SubColumnVisualizerTemplate;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            For example,\r\n            to create the above default visualizer factories:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto mainProperty = [](const Value&) { return new MainColumnVisualizerTemplate; };\r\nauto subProperty = [](const Value&) { return new SubColumnVisualizerTemplate; };\r\nauto focusRectangleProperty = [](const Value&) { return new FocusRectangleVisualizerTemplate; };\r\nauto cellBorderProperty = [](const Value&) { return new CellBorderVisualizerTemplate; };\r\n\r\ndefaultMainColumnVisualizerFactory = \r\n    MakePtr<DataVisualizerFactory>(cellBorderProperty,\r\n        MakePtr<DataVisualizerFactory>(focusRectangleProperty,\r\n            MakePtr<DataVisualizerFactory>(mainProperty)\r\n    ));\r\ndefaultSubColumnVisualizerFactory = \r\n    MakePtr<DataVisualizerFactory>(cellBorderProperty,\r\n        MakePtr<DataVisualizerFactory>(focusRectangleProperty,\r\n            MakePtr<DataVisualizerFactory>(subProperty)\r\n    ));"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            We create item template property values for all predefined visualizer templates:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MainColumnVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubColumnVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusRectangleVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CellBorderVisualizerTemplate"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            And then combine them together using nested instances of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "NOTE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\r\n            The visualizer order in C++ is the reverse of in GacUI XML Resource.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Please check out\r\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/components/itemplates/home.html",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Item Templates"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            for details about "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGridVisualizerTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
           }
         ]
       }
