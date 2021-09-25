@@ -115,7 +115,7 @@
   ]
 };
   const article = {
-  "index": false,
+  "index": true,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -126,7 +126,1032 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            The page is under construction.\n        "
+            "text": "\n            The GacUI XML\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/tag_animation.html",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Animation/>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            resource creates helper classes for animations.\n            It creates a class like this:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class MyAnimation\r\n{\r\n    prop Current: STATE_CLASS^{}\r\n    new (current: STATE_CLASS^){}\r\n    func CreateAnimation(target: STATE_CLASS^, time: UInt64);\r\n}"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a class with fields of number types or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Color"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            By creating an "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "MyAnimation^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in a window like this:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ...>\r\n    <ref.Members><![CDATA[\r\n        var myAnimation : MyAnimation^ = new MyAnimation(initial_state);\r\n    ]]></ref.Members>\r\n    <Window ref.Name=\"self\">\r\n        <Something PropertyToAnimate-bind=\"self.myAnimation.Current.FIELD\"/>\r\n    </Window>\r\n</Instance>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            You are able to bind the expression "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.myAnimation.Current.FIELD"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to any compatible property.\n            When the animation is running,\n            fields in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.myAnimation.Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will keep updating,\n            so that to animate the UI.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Interpolation Functions",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The first step to animate a field in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "self.myAnimation.Current"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is to set a proper interpolation function,\n                which is described in\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/tag_animation.html",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Animation/>"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Only fields that mentioned by a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Target/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " tag could be animated.\n                All animated fields must associate an interpolation function.\n                There is also a place for a default interpolation function,\n                which will apply on all animated fields unless one is specified in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Target/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An interpolation function is an Workflow expression in a function type,\n                which takes a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "double"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and returns a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "double"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The function parameter is the progress of the animation from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If an animation is 10 seconds long,\n                then "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the beginning,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the ending,\n                and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0.4"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "10 seconds * 0.4"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " which is at the end of the 4th second.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The return value is the interpolation of the animation from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If the begin state is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "5"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and the end state is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "15"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                then returning "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "5"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                returning "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "15"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and returning "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "0.4"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "5 + (15 - 5) * 0.4"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " which is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "9"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The interpolation calculate that,\n                where a field should go given the progress of the animation.\n                If a linear interpolation function is expected,\n                then just return the parameter.\n                Such a function would typically be:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        for "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/expr.html#Ordered-lambda-expression-1-2-",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ordered lambda expression"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        : "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "[$1]"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        for "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/expr.html#Lambda-expression-func-x-int-y-int-int-return-x-y-",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "lambda expression"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        : for example: "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "func (progress: double) : double { return progress; }"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Sometimes it is better to make the field accelerate at the first half and decelerate at the second half,\n                such a function could be easily created using:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func (x: double): double\r\n{\r\n    if (x < 0.5) { return x * x * 2; } else { return 1 - (1 - x) * (1 - x) * 2; }\r\n}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Running an Animation",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Animation/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " generated class,\n                there is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CreateAnimation(state, time)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function,\n                which means the animation begins from the current state,\n                and run towards "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "state"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "time"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " milliseconds.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Calling this function doesn't make the animation run,\n                instead it returns an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(vl::)presentation::controls::IGuiAnimation^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AddAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "KillAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(vl::)presentation::controls::GuiInstanceRootObject"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                controls how the animation run.\n                This class is the base class for all UI\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/root_instance.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    root instances\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AddAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "KillAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "self.AddAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "self.KillAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                are accessible in the XML.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AddAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " adds an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object to the UI object,\n                and start the animation immediately.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "KillAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stops an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " object that has been added to the UI object,\n                and stop the animation immediately.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For animations that need to switch from state to state for multiple times,\n                like a button when the mouse is moving in and out,\n                there is a pattern to control the animation:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<ref.Members><![CDATA[\r\n    var myAnimation : MyAnimation^ = new MyAnimation(initial_state);\r\n    var lastAnimation : IGuiAnimation^ = null;\r\n]]></ref.Members>\r\n...\r\nvar newAnimation = myAnimation.CreateAnimation(newState, animationLengthInMilliseconds);\r\nKillAnimation(lastAnimation);\r\nlastAnimation = newAnimation;\r\nAddAnimation(lastAnimation);"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                When the state needs to move to a new state when the animation is running,\n                this piece of code stops the current running animation,\n                and replace it with a new one.\n                The new animation moves the current state from where it is to a new state,\n                and it should look smooth.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "KillAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could accept "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and it does nothing.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Managing Multiple Animations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                It is easy to copy the above pattern multiple times for each animation.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please remember that,\n                the created "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "lastAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will change "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "myAnimation.Current.FIELD"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                when it is executing,\n                so if multiple animation needs to run at the same time,\n                multiple "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "lastAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "myAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be created at the same time.\n                Please give them good names to make the code looks clear.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a UI object is disposing,\n                e.g. when the close button on a window is clicked,\n                all animations will be shut down,\n                and calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AddAnimation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will result in an exception.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                It is function idential to split all fields to multiple animation objects.\n                But if multiple fields represent different parts of the same animation,\n                do your best to make one animation for all these fields to increase the performance.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    this tutorial project\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                a button is controlled by 4 colors,\n                which changes in one animation because they represent different parts of the same animation.\n                So only one "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Animation/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and only one instance of it is needed for one button.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here is how it looks like:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "kb_animation"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_animation.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
