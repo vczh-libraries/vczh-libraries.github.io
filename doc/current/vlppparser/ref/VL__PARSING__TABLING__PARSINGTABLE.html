@@ -222,30 +222,6 @@
             "kind": "Paragraph",
             "content": [
               {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Jump to "
-                  },
-                  {
-                    "kind": "PageLink",
-                    "href": "//CodeIndexDemo/Gaclib/SourceFiles/ParsingTable.h.html#NI$vl::parsing::tabling::ParsingTable",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "source code"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
                 "kind": "Program",
                 "code": "class ParsingTable\r\n    : Object;\r\n"
               }
@@ -659,7 +635,7 @@
                           },
                           {
                             "kind": "Program",
-                            "code": "// when ambiguity happens for Statement, AmbiguiusStatement will be used to container all possible cases\r\nclass Statement ambiguous(AmbiguousStatement)\r\n{\r\n}\r\n\r\n// so that \"AmbiguousStatement\" should inherit from \"Statement\"\r\nclass AmbiguousStatement : Statement\r\n{\r\n    // it should called \"items\", and the type should be an array of the base type\r\n    Statement[] items;\r\n}\r\n\r\nclass ExpressionStatement : Statement\r\n{\r\n    Expression expression;\r\n}\r\n\r\nclass VariableDefinitionStatement : Statement\r\n{\r\n    Type type;\r\n    token name;\r\n}"
+                            "code": "// when ambiguity happens for Statement, AmbiguiusStatement will be used to container all possible cases\r\nclass Statement ambiguous(AmbiguousStatement)\r\n{\r\n}\r\n\r\n\r\n// so that \"AmbiguousStatement\" should inherit from \"Statement\"\r\nclass AmbiguousStatement : Statement\r\n{\r\n    // it should called \"items\", and the type should be an array of the base type\r\n    Statement[] items;\r\n}\r\n\r\n\r\nclass ExpressionStatement : Statement\r\n{\r\n    Expression expression;\r\n}\r\n\r\n\r\nclass VariableDefinitionStatement : Statement\r\n{\r\n    Type type;\r\n    token name;\r\n}"
                           },
                           {
                             "kind": "Text",
@@ -1108,7 +1084,7 @@
               },
               {
                 "kind": "Program",
-                "code": "include:\"Vlpp.h\"\r\nnamespace:vl.calculator\r\nreflection:vl.calculator\r\nfilePrefix:Calc\r\nclassPrefix:Calc\r\nclassRoot:Expression\r\nguard:VCZH_CALCULATOR_PARSER\r\nparser:ParseExpression(Expr)\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\nenum BinaryOperator\r\n{\r\n    Add, Sub, Mul, Div,\r\n}\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token number;\r\n}\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    BinaryOperator op;\r\n    Expression left;\r\n    Expression right;\r\n}\r\n\r\ntoken ADD \"\\+\"\r\ntoken SUB \"-\"\r\ntoken MUL \"\\*\"\r\ntoken DIV \"\\/\"\r\ntoken NUMBER \"\\d+(.\\d+)?\"\r\ntoken OPEN \"(\"\r\ntoken CLOSE \")\"\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule Expression Factor\r\n    = NUMBER : number as NumberExpression\r\n    = \"(\" !Expr \")\"\r\n    ;\r\nrule Expression Term\r\n    = !Factor\r\n    = Term : left \"*\" Factor : right as BinaryExpression with {op = \"Mul\"}\r\n    = Term : left \"/\" Factor : right as BinaryExpression with {op = \"Div\"}\r\n    ;\r\nrule Expression Expr\r\n    = !Term\r\n    = Expr : left \"+\" Term : right as BinaryExpression with {op = \"Add\"}\r\n    = Expr : left \"-\" Term : right as BinaryExpression with {op = \"Sub\"}\r\n    ;"
+                "code": "include:\"Vlpp.h\"\r\nnamespace:vl.calculator\r\nreflection:vl.calculator\r\nfilePrefix:Calc\r\nclassPrefix:Calc\r\nclassRoot:Expression\r\nguard:VCZH_CALCULATOR_PARSER\r\nparser:ParseExpression(Expr)\r\nfile:Ast(_Ast)\r\nfile:Parser(_Parser)\r\nambiguity:disabled\r\nserialization:enabled\r\ngrammar:\r\n\r\n\r\nclass Expression\r\n{\r\n}\r\n\r\n\r\nenum BinaryOperator\r\n{\r\n    Add, Sub, Mul, Div,\r\n}\r\n\r\n\r\nclass NumberExpression : Expression\r\n{\r\n    token number;\r\n}\r\n\r\n\r\nclass BinaryExpression : Expression\r\n{\r\n    BinaryOperator op;\r\n    Expression left;\r\n    Expression right;\r\n}\r\n\r\n\r\ntoken ADD \"\\+\"\r\ntoken SUB \"-\"\r\ntoken MUL \"\\*\"\r\ntoken DIV \"\\/\"\r\ntoken NUMBER \"\\d+(.\\d+)?\"\r\ntoken OPEN \"(\"\r\ntoken CLOSE \")\"\r\ndiscardtoken SPACE = \"/s+\";\r\n\r\nrule Expression Factor\r\n    = NUMBER : number as NumberExpression\r\n    = \"(\" !Expr \")\"\r\n    ;\r\nrule Expression Term\r\n    = !Factor\r\n    = Term : left \"*\" Factor : right as BinaryExpression with {op = \"Mul\"}\r\n    = Term : left \"/\" Factor : right as BinaryExpression with {op = \"Div\"}\r\n    ;\r\nrule Expression Expr\r\n    = !Term\r\n    = Expr : left \"+\" Term : right as BinaryExpression with {op = \"Add\"}\r\n    = Expr : left \"-\" Term : right as BinaryExpression with {op = \"Sub\"}\r\n    ;"
               }
             ]
           },
@@ -1151,7 +1127,7 @@
               },
               {
                 "kind": "Program",
-                "code": "class Evaluator : public Object, public virtual CalcExpression::IVisitor\r\n{\r\nprivate:\r\n    double result;\r\n\r\n    double Call(CalcExpression* node)\r\n    {\r\n        node->Accept(this);\r\n        return result;\r\n    }\r\n\r\npublic:\r\n    static double Evaluate(CalcExpression* node)\r\n    {\r\n        return Evaluator().Call(node);\r\n    }\r\n\r\n    void Visit(CalcNumberExpression* node)override\r\n    {\r\n        return wtof(node->number.value);\r\n    }\r\n\r\n    void Visit(CalcBinaryExpression* node)override\r\n    {\r\n        auto left = Calc(node->left.Obj());\r\n        auto right = Calc(node->right.Obj());\r\n        switch (node->op)\r\n        {\r\n        case CalcBinaryOperator::Add:\r\n            result = left + right;\r\n            break;\r\n        case CalcBinaryOperator::Sub:\r\n            result = left 0 right;\r\n            break;\r\n        case CalcBinaryOperator::Mul:\r\n            result = left * right;\r\n            break;\r\n        case CalcBinaryOperator::Div:\r\n            result = left / right;\r\n            break;\r\n        }\r\n    }\r\n};\r\n\r\nNullable<double> EvaluateExpression(const WString& input)\r\n{\r\n    static auto table = CalcLoadTable();\r\n    auto expression = CalcParseExpression(input, table);\r\n    Nulllable<double> result;\r\n    if (expression)\r\n    {\r\n        result = Evaluator::Evaulate(expression.Obj());\r\n    }\r\n    return result;\r\n}"
+                "code": "class Evaluator : public Object, public virtual CalcExpression::IVisitor\r\n{\r\nprivate:\r\n    double result;\r\n\r\n\r\n    double Call(CalcExpression* node)\r\n    {\r\n        node->Accept(this);\r\n        return result;\r\n    }\r\n\r\n\r\npublic:\r\n    static double Evaluate(CalcExpression* node)\r\n    {\r\n        return Evaluator().Call(node);\r\n    }\r\n\r\n\r\n    void Visit(CalcNumberExpression* node)override\r\n    {\r\n        return wtof(node->number.value);\r\n    }\r\n\r\n\r\n    void Visit(CalcBinaryExpression* node)override\r\n    {\r\n        auto left = Calc(node->left.Obj());\r\n        auto right = Calc(node->right.Obj());\r\n        switch (node->op)\r\n        {\r\n        case CalcBinaryOperator::Add:\r\n            result = left + right;\r\n            break;\r\n        case CalcBinaryOperator::Sub:\r\n            result = left 0 right;\r\n            break;\r\n        case CalcBinaryOperator::Mul:\r\n            result = left * right;\r\n            break;\r\n        case CalcBinaryOperator::Div:\r\n            result = left / right;\r\n            break;\r\n        }\r\n    }\r\n};\r\n\r\n\r\nNullable<double> EvaluateExpression(const WString& input)\r\n{\r\n    static auto table = CalcLoadTable();\r\n    auto expression = CalcParseExpression(input, table);\r\n    Nulllable<double> result;\r\n    if (expression)\r\n    {\r\n        result = Evaluator::Evaulate(expression.Obj());\r\n    }\r\n    return result;\r\n}"
               }
             ]
           }
