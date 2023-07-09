@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Structs -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "struct"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Structs",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Structs can be defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "modules"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "namespaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "classes"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "interfaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A struct is a tuple with all fields assigned a name:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "struct Point\r\n{\r\n    x: int;\r\n    y: int;\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Types of fields should only be value types, like:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "primitive types"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "enums"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "structs"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "primitive types"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "nullable types"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Structs cannot inherit from other structs.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Allocating a struct",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The constructor expression is the only way to allocate a value of a struct type:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func use(p: Point): Point\r\n{\r\n    return p;\r\n}\r\n\r\nvar a: Point = {x:1 y:2};\r\nvar b = {x:3 y:4} of Point;\r\nvar c = use({x:5 y:6});"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                A constructor expression does not have an explicit type,\n                so the place receiving this expression must have an explicit type,\n                otherwise an error will be generated.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not allowed to be assigned to a variable of a struct type.\n                But there is an optional type that helps in this case:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var d: Point? = null;\r\nd = {x:7 y:8};"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Accessing fields",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The type of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Point"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.x"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 1, and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a.y"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 2.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The type of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Point?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d.x"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 7, and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d.y"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 8.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                accessing fields in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will result in throwing an exception.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Struct fields are readonly,\n                after a struct is allocated,\n                fields cannot be re-assigned.\n                But the struct variable itself can be assigned with a new value.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Ambiguity",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Due to rich kinds of expression that Workflow supports,\n                sometimes the constructor expression could introduce ambiguity.\n                In this case,\n                semicolons are allowed after every fields:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var e: Point = {x:1; y:2;};"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Please note that,\n                semicolons must either appear after all fields,\n                or completely be comiited.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

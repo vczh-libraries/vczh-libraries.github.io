@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TAB and Control Focus -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "advanced",
+    "tab"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Advanced Topics",
+          "selected": false,
+          "path": [
+            "gacui",
+            "advanced",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Interop with C++ View Model",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "vm"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "bindings"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Animations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "animations"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Localization",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "localization"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "ALT Sequence and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "alt"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "TAB and Control Focus",
+              "selected": true,
+              "path": [
+                "gacui",
+                "advanced",
+                "tab"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Creating New List Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "impllistcontrol"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Porting GacUI to Other Platforms",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "implosprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "TAB and Control Focus",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If a focusable control is put on a window,\n            by setting the\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/components/controls/basic/home.html#TabPriority",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TabPriority"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            property to a value that is not "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            then it could get focused by pressing "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TAB"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Pressing "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TAB"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " switches the focus between different controls in a window,\n            in the order of their "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPriority"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " from less to greater,\n            when both "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IsTabEnabled"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IsTabAvailable"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " return "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "true"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            If the value is less than "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            then they will be treated as "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "0xFFFFFFFFFFFFFFFF"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The order between controls with the same "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPriority"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is undefined.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Behavior after being Focused",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A focusable control will just get focused if "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TAB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " decides to give the focus to this control.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Create your own Behavior",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a new control class is created,\n                there are multiple ways to customize the behavior\n                about how a control should react to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TAB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Using IGuiTabAction",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiTabAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a protected base class of all controls.\n                    If a new control is created,\n                    methods could be overriden.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsTabEnabled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " if the control is visible and enabled.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsTabAvailable"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " if the control is focusable.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The default value from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetAcceptTabInput"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    But a few controls like text controls or document controls set this value to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    When "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetAcceptTabInput"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    it means this control defines the behavior for this key,\n                    like entering a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TAB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " character,\n                    so that it doesn't want the focus to be switched to another control.\n                    Calling "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetAcceptTabInput"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " could change this value.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

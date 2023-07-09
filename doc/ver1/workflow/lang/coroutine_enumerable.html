@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Enumerable Coroutine -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "coroutine_enumerable"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Coroutines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "coroutine"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enumerable Coroutine",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_enumerable"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Async Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_async"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Raw Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_raw"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Design Your Own Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_custom"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Enumerable Coroutine",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This coroutine provider is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::EnumerableCoroutine"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Create"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this coroutine function declaration is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): int{}\r\n${\r\n    /* legal */\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Note that "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "int{}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the generic version of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::Enumerable^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    so it uses "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::EnumerableCoroutine"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " as the coroutine provider.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It does not have a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateAndRun"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this coroutine function declaration is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "illegal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): void\r\n$Enumerable {\r\n    /* illegal */\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "YieldAndPause"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$Yield EXPR; /* legal */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It does not have a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "YieldAndRead"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "illegal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var NAME = $Yield EXPR; /* illegal */"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JoinAndPause"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$Join EXPR; /* legal */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It does not have a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JoinAndRead"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "illegal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var NAME = $Join EXPR; /* illegal */"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ReturnAndExit"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method,\n                    which has no parameter,\n                    so this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "legal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$return; /* legal */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    but this statement in the coroutine is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "illegal"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "$return EXPR; /* illegal */"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using return and $Yield",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "return;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stops a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Enumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Yield EXPR;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " pauses a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Enumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " coroutine,\n                and generates a new number for the returned "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Enumerable^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "func GetNumbers(): int{}\r\n${\r\n    for (i in range [1, 10])\r\n    {\r\n        $Yield i;\r\n        if (i == 5)\r\n        {\r\n            return;\r\n        }\r\n    }\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "{1 2 3 4 5}"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using $Join",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Join EXPR;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " works like "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Yield"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                but it generates a series of numbers from the given "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Enumerable^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "func GetNumbers(): int{}\r\n${\r\n    for (i in range [1, 3])\r\n    {\r\n        $Join range [i, i + 2];\r\n    }\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                This function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "{1 2 3 2 3 4 3 4 5}"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

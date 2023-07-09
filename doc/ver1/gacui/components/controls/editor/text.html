@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Text Editor Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../../article.css">
+<script src="../../../../scripts/rootView.js"></script>
+<script src="../../../../scripts/directoryView.js"></script>
+<script src="../../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "controls",
+    "editor",
+    "text"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Editor Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "editor",
+                    "home"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": "+",
+                      "name": "Document Editor Controls",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "editor",
+                        "document"
+                      ]
+                    },
+                    {
+                      "icon": "-",
+                      "name": "Text Editor Controls",
+                      "selected": true,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "editor",
+                        "text"
+                      ],
+                      "subNodes": [
+                        {
+                          "icon": " ",
+                          "name": "<SinglelineTextBox>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "editor",
+                            "singlelinetextbox"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "<MultilineTextBox>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "editor",
+                            "multilinetextbox"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "Colorizer",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "editor",
+                            "textcolorizer"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "Auto Complete",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "editor",
+                            "textautocomplete"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "Programming Language Service",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "editor",
+                            "textgrammar"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Text Editor Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<SinglelineTextBox/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<MultilineTextBox/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            are editing text in the same way.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Text are renderered without auto line-wrapping.\n            if a line is too long,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<MultilineTextBox/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will become scrollable horizontally.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<SinglelineTextBox/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " only display the first line of the text.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mouse Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Readonly"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the text cannot be edited by mouse operations or keyboard operations.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Mouse operations could change selections by dragging.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SHIFT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could use to change selection with mouse clicking.\n                Drag and drop is not supported yet at this version.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Keyboard Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Readonly"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the text cannot be edited by mouse operations or keyboard operations.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UP"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DOWN"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LEFT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RIGHT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " move the caret.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "HOME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "END"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " move the caret to the beginning or the ending of the current line.\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CTRL"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is holding,\n                they move the caret to the beginning or the ending of the whole text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "PAGE UP"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "PAGE DOWN"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " move the caret\n                so that the view port of the text approximately\n                scroll up and down for a page.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When holding "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SHIFT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and move the caret,\n                it set the end of the selection to the updated caret position.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BACK"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DELETE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " delete characters in different direction.\n                If there is any selection,\n                they deleted the selection.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Caret Position",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(vl::)presentation::TextPos"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " struct represents a caret position in a text.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "row"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the index of the line,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "column"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the index of the next character from the caret in the current paragraph.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If the caret is at the end of a line,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "column"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " equals to the total character number of the line.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Text editor controls only support left-to-right languages,\n                the \"next character\" is the character at the right side of the caret.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretBegin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretEnd"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties\n                represent the range of the selection.\n                If the mouse dragging from right to left on a piece of text in a left-to-right language,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretBegin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is larger than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretEnd"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretSmall"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property returns whatever is closer to the beginning in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretBegin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretEnd"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretLarge"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property returns the one closer to the end.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Select"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " changes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretBegin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CaretEnd"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " at the same time.\n                To cancel the selection and move the caret,\n                just set these two properties to the same value.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CalculateCaretFromPoint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns the nearest caret at a position.\n                The coordinate is the left-top corner of the text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetRowText"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetRowCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are available for accessing text by lines.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Selection",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SelectionText"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property returns the selected text.\n                Both "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetSelectionText"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetSelectionTextAsKeyInput"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " replace the selected text with another text.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetSelectionTextAsKeyInput"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " pretends that the user is typing,\n                it could trigger "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Auto Complete"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SelectAll"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " set the selection to the whole text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetFragmentText"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get a specified part of the text by two "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextPos"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Text coordinate",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The coordinate origin is the left-top corner of all text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetRowWidth"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetRowHeight"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get the display size of a specified row.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetMaxWidth"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get the width of the longest row.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetMaxHeight"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get the height of all text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetTextPosFromPoint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get the caret position of a character which is closet to the specified point.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetNearestTextPost"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " get the available caret position closet to the specified point.\n                When a given point is close to the right side of a character,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetNearestTextPost"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be one character after than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetTextPosFromPoint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetNearestTextPost"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could also return the end of a line,\n                which "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetTextPostFromPoint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " doesn't.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Assigning Text",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Assinging a text to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " updates the whole content in the control.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Clipboard",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Return values from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanCut"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanCopy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanPaste"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                indicates whether "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Cut"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Copy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Paste"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be successful or not.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Cut"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Copy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Paste"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " apply on selections.\n                Only non-empty selection could be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Cut"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Copy"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Paste"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with a non-empty selection replaces the selection with the content from the clipboard.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanPaste"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " also checks the content from the clipboard and see if it contains any text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a piece of text is cut or copied,\n                following formats are written to the clipboard:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Plain text. In Windows, both ANSI and UNICODE formats are available."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Acceptable content from the clipboard is:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Plain text. In Windows, both ANSI and UNICODE formats are acceptable."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Undo and Redo",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Return values from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanUndo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CanRedo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                indicates whether "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Undo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Redo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be successful or not.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All editing operations,\n                including keyboard operations and all editing methods mentioned above,\n                will be recorded and are all undo-able and redo-able.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NotifyParagraphUpdated"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " marks the current version as \"saved\" and clear the previous mark.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetModified"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns true when the current version is marked as \"saved\".\n                Only one version will be marked as \"saved\".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetEditVersion"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " return a number representing the current version.\n                The version number increases when redo or modification happens,\n                it decreases for undo.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Control Templates -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "kb",
+    "ctemplates"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Knowledge Base",
+          "selected": false,
+          "path": [
+            "gacui",
+            "kb",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "GacUI Object Models",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "gom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Elements",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "elements"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "compositions"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Control Templates",
+              "selected": true,
+              "path": [
+                "gacui",
+                "kb",
+                "ctemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Item Templates",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "itemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Default Template Registrations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "dtemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Application",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "application"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "OS Provider",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "osprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Control Templates",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Control templates change controls' outfit,\n            and they are working based on data bindings.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Controls have their own control template types.\n            For example, "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " needs "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButtonTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Any derived classes of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButtonTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is acceptable,\n            but extra members will be ignored.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A control template has input properties and output properties.\n            Input properties are for data binding,\n            when the control's state is changed,\n            these properties will be changed,\n            and the control template reacts to these properties and changes how it looks,\n            for example, some colors.\n            Output properties are configuration to the control's outfit related behavior,\n            almost all of them will only be read once,\n            so changing them at runtime takes no effect.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here we demo how to write a control template for "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            When the mouse is hovering on the button,\n            it becomes brighter.\n            When the button is selected,\n            it becomes less brighter.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            These are properties in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ControlTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Input Properties:"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Focused"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": True when the control is focused."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "VisuallyEnabled"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Trhe when the control is enabled. It requires all parent controls to be enabled."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Font"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": The control's font. If a font is not associated to the control, it will be the font from a parent control."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Context"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": The control's "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Context"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Text"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": The control's "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Text"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Output Properties:"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ContainerComposition"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": A composition for control's children, anything put in <SelectableButton></SelectableButton> will be in this composition."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "FocusableComposition"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": A composition for receiving keyboard events. It works only when the control is focusable."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            These are properties in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ButtonTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButtonTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Input Properties:"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "State"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": The button's state, can be "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Normal"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Active"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " or "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Pressed"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Selected"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": True when the button is selected."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            We can use all of them to create a control template for "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ref.Class=\"sample::TabHeaderButtonTemplate\">\r\n  <SelectableButtonTemplate ref.Name=\"self\" MinSizeLimitation=\"LimitToElementAndChildren\">\r\n    <Bounds AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n      <SolidBackground>\r\n        <att.Color-bind><![CDATA[\r\n          cast Color (\r\n            not self.VisuallyEnabled ? \"#00000000\" :\r\n            self.State == ButtonState::Pressed ? \"#3D3D3D\" :\r\n            self.State == ButtonState::Active ? \"#808080\" :\r\n            self.Selected ? \"#3D3D3D\" :\r\n            \"#00000000\"\r\n          )\r\n        ]]></att.Color-bind>\r\n      </SolidBackground>\r\n    </Bounds>\r\n    <Bounds AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n      <att.Visible-bind>self.Focused</att.Visible-bind>\r\n      <FocusRectangle/>\r\n    </Bounds>\r\n    <Bounds AlignmentToParent=\"left:1 top:1 right:1 bottom:1\" MinSizeLimitation=\"LimitToElement\">\r\n      <SolidLabel Text-bind=\"self.Text\" Font-bind=\"self.Font\">\r\n        <att.Color-bind><![CDATA[\r\n          cast Color (\r\n            self.VisuallyEnabled ? \"#FFFFFF\" : \"808080\"\r\n          )\r\n        ]]></att.Color-bind>\r\n      </SolidLabel>\r\n    </Bounds>\r\n  </SelectableButtonTemplate>\r\n</Instance>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            And then a window containing three check boxes with this control template:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ref.Class=\"sample::MainWindow\" ref.Styles=\"res://MainWindow/SharedStyle\">\r\n  <Window Text=\"kb_ctemplates\" IconVisible=\"true\" ClientSize=\"x:640 y:480\">\r\n    <att.BoundsComposition-set PreferredMinSize=\"x:480 y:320\"/>\r\n      <Stack Direction=\"Vertical\" MinSizeLimitation=\"LimitToElementAndChildren\" AlignmentToParent=\"left:5 top:5 right:-1 bottom:-1\" Padding=\"5\">\r\n        <StackItem><CheckBox Text=\"Button 1\"/></StackItem>\r\n        <StackItem><CheckBox Text=\"Button 2\"/></StackItem>\r\n        <StackItem><CheckBox Text=\"Button 3\"/></StackItem>\r\n      </Stack>\r\n  </Window>\r\n</Instance>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            With a style to assign control templates to all check boxes:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Styles>\r\n  <Style ref.Path=\"//CheckBox\">\r\n    <att.ControlTemplate>sample::TabHeaderButtonTemplate</att.ControlTemplate>\r\n    <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n  </Style>\r\n</Styles>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Finally we get:\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Image",
+            "src": "/gacui/kb_ctemplates_button.gif"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            With this new control template,\n            we can create a more complex control template for tab control.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Tab"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " needs "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            and it has two important properties: "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Commands"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPages"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            These are all input properties.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Commands"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is an interface with a method "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ShowTab"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for activate a tab page.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPages"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is an observable collection for all tab pages at runtime.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            By binding "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPages"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            we can easily create a list of buttons for each tab pages.\n            When tab pages are inserted to or removed from the tab control,\n            the list of buttons will be automatically refreshed.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Firstly we create a control template for "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Tab"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ref.Class=\"sample::TabTemplate\">\r\n  <TabTemplate ref.Name=\"self\" ContainerComposition-ref=\"container\" TabOrder=\"TopToBottom\" MinSizeLimitation=\"LimitToElementAndChildren\">\r\n    <Table AlignmentToParent=\"left:0 top:0 right:0 bottom:0\" MinSizeLimitation=\"LimitToElementAndChildren\">\r\n      <att.Rows>\r\n        <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n      </att.Rows>\r\n      <att.Columns>\r\n        <CellOption>composeType:MinSize</CellOption>\r\n        <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n      </att.Columns>\r\n\r\n      <Cell Site=\"row:0 column:0\">\r\n        <RepeatStack ref.Name=\"header\" AlignmentToParent=\"left:0 top:0 right:0 bottom:0\" Padding=\"2\" Direction=\"Vertical\" MinSizeLimitation=\"LimitToElementAndChildren\">\r\n          <att.ItemTemplate>sample::TabHeaderTemplate</att.ItemTemplate>\r\n          <att.ItemSource-bind>self.TabPages</att.ItemSource-bind>\r\n          <ev.ItemInserted-eval>\r\n            <![CDATA[\r\n              {\r\n                var stackItem = header.StackItems[arguments.itemIndex];\r\n                var item = cast (TabHeaderTemplate*) stackItem.Children[0];\r\n                item.Commands = self.Commands;\r\n              }\r\n            ]]>\r\n          </ev.ItemInserted-eval>\r\n        </RepeatStack>\r\n      </Cell>\r\n\r\n      <Cell Site=\"row:0 column:1\">\r\n        <SolidBackground Color=\"#3D3D3D\"/>\r\n        <Bounds ref.Name=\"container\" AlignmentToParent=\"left:1 top:1 right:1 bottom:1\"/>\r\n      </Cell>\r\n    </Table>\r\n  </TabTemplate>\r\n</Instance>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            In this control template,\n            we create a list of buttons using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " on the left side,\n            and create a container for tab page contents on the right side.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The item template in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is named "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabHeaderTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            which is:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ref.Class=\"sample::TabHeaderTemplate\">\r\n  <ref.Parameter Name=\"CurrentTabPage\" Class=\"presentation::controls::GuiTabPage\"/>\r\n  <ref.Members>\r\n    <![CDATA[\r\n      prop Commands : ITabCommandExecutor* = null {}\r\n    ]]>\r\n  </ref.Members>\r\n  <ControlTemplate ref.Name=\"self\" MinSizeLimitation=\"LimitToElementAndChildren\">\r\n    <CheckBox AutoFocus=\"false\" AutoSelection=\"false\">\r\n      <att.ControlTemplate>sample::TabHeaderButtonTemplate</att.ControlTemplate>\r\n      <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n      <att.Context-ref>CurrentTabPage</att.Context-ref>\r\n      <att.Text-bind>CurrentTabPage.Text</att.Text-bind>\r\n      <att.Alt-bind>CurrentTabPage.Alt</att.Alt-bind>\r\n      <att.Selected-bind>CurrentTabPage.OwnerTab.SelectedPage == CurrentTabPage</att.Selected-bind>\r\n      <ev.Clicked-eval>\r\n        <![CDATA[\r\n          {\r\n            self.Commands.ShowTab(CurrentTabPage.OwnerTab.Pages.IndexOf(CurrentTabPage), true);\r\n          }\r\n        ]]>\r\n      </ev.Clicked-eval>\r\n    </CheckBox>\r\n  </ControlTemplate>\r\n</Instance>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabHeaderTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " has a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Commands"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property,\n            it needs to be assigned in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            so that when a tab header is clicked,\n            it can tell the tab control to switch to that tab.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " reacts to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemInserted"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " event in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            by accessing "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "arguments.itemIndex"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " which is provided by the event,\n            it knows a new item template is created,\n            and grab that item template to set the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Commands"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This ensures that whenever a new item template for the tab header appears in the tab control,\n            the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Commands"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property has already been assigned.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " there is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<att.ItemSource-bind>self.TabPages</att.ItemSource-bind>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            This code binds "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TabPages"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RepeatStack"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            And "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<att.ItemTemplate>sample::TabHeaderTemplate</att.ItemTemplate>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            tells it to create "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabHeaderTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for each tab page.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The assigned tab page for a particular "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::TabHeaderTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ref.Parameter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            which is a readonly property and constructor argument.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Knowledge base for item templates will be introduces in the next chapter.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Finally, we create a window with three tab pages to see how it works:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Folder name=\"MainWindow\">\r\n  <InstanceStyle name=\"SharedStyle\">\r\n    <Styles>\r\n      <Style ref.Path=\"//Stack\" Direction=\"Vertical\" MinSizeLimitation=\"LimitToElementAndChildren\"/>\r\n      <Style ref.Path=\"//RadioButton\" GroupController-ref=\"groupDirection\"/>\r\n      <Style ref.Path=\"//TabPage\">\r\n        <att.ContainerComposition-set InternalMargin=\"left:10 top:10 right:10 bottom:10\"/>\r\n      </Style>\r\n    </Styles>\r\n  </InstanceStyle>\r\n\r\n  <Instance name=\"MainWindowResource\">\r\n    <Instance ref.Class=\"sample::MainWindow\" ref.Styles=\"res://MainWindow/SharedStyle\" xmlns:x=\"presentation::controls::GuiSelectableButton::*\">\r\n      <Window Text=\"kb_ctemplates\" IconVisible=\"true\" ClientSize=\"x:640 y:480\">\r\n        <att.BoundsComposition-set PreferredMinSize=\"x:480 y:320\"/>\r\n        <x:MutexGroupController ref.Name=\"groupDirection\"/>\r\n\r\n        <Tab>\r\n          <att.ControlTemplate>sample::TabTemplate</att.ControlTemplate>\r\n          <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n          <att.Pages>\r\n            <TabPage Text=\"First TabPage\">\r\n              <Button Text=\"A button in the first page\"/>\r\n            </TabPage>\r\n\r\n            <TabPage Text=\"Second TabPage\">\r\n              <Stack>\r\n                <StackItem><CheckBox Text=\"A check box in the second page\"/></StackItem>\r\n                <StackItem><CheckBox Text=\"A check box in the second page\"/></StackItem>\r\n                <StackItem><CheckBox Text=\"A check box in the second page\"/></StackItem>\r\n              </Stack>\r\n            </TabPage>\r\n\r\n            <TabPage Text=\"Third TabPage\">\r\n              <Stack>\r\n                <StackItem><RadioButton Text=\"A radio button in the third page\"/></StackItem>\r\n                <StackItem><RadioButton Text=\"A radio button in the third page\"/></StackItem>\r\n                <StackItem><RadioButton Text=\"A radio button in the third page\"/></StackItem>\r\n              </Stack>\r\n            </TabPage>\r\n          </att.Pages>\r\n        </Tab>\r\n      </Window>\r\n    </Instance>\r\n  </Instance>\r\n</Folder>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here we have a button for the first tab page,\n            three check boxes for the second tab page,\n            and three radio buttons for the third tab page.\n            Each radio button is assigned the same group controller so that they know they are exclusive to each other.\n            By assigning different group controllers to radio buttons,\n            it is very easy to tell these radio buttons who are their allies.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Finally we get:\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Source code: "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_ctemplates/Resource.xml",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "kb_ctemplates"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Image",
+                    "src": "/gacui/kb_ctemplates_tab.gif"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

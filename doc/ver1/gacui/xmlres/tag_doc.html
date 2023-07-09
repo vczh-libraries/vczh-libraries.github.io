@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><doc> -- GPU Accelerated C++ User Interface (vczh)</doc></title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "tag_doc"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Code Generation Configuration",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cgc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Folders and Resources",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "dom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Text>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_text"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Image>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_image"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Xml>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_xml"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Doc>",
+              "selected": true,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_doc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Script>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_script"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<InstanceStyle>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instancestyle"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Animation>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_animation"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<LocalizedStrings>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_localizedstrings"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<Doc>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Doc/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a style-based rich document.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Doc/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " works like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Text/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            but there are a few differences:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "It can be assigned to properties that accept "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "presentation::DocumentModel^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Syntax",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here is a sample of a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Doc/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " resource item:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Doc name=\"Description\">\r\n  <Doc>\r\n    <Content>\r\n      <p align=\"Center\">\r\n        <div style=\"Title\">\r\n          <b>TextEditor by GacUI</b>\r\n        </div>\r\n      </p>\r\n      <p>\r\n        <div style=\"Body\">\r\n          <nop>Welcome to the demo!</nop>\r\n        </div>\r\n      </p>\r\n      <p>\r\n        <div style=\"Body\">\r\n          <b>Author: </b>Zihan Chen (vczh)<br/>\r\n          <b>Website: </b><a href=\"http://www.gaclib.net\">http://www.gaclib.net</a><br/>\r\n          <b>Github: </b><a href=\"https://github.com/vczh-libraries/Release\">https://github.com/vczh-libraries/Release</a><br/>\r\n        </div>\r\n      </p>\r\n    </Content>\r\n    <Styles>\r\n      <Style name=\"Content\">\r\n        <face>Segoe UI</face>\r\n      </Style>\r\n      <Style name=\"Title\" parent=\"Content\">\r\n        <size>24</size>\r\n        <b>true</b>\r\n      </Style>\r\n      <Style name=\"Body\" parent=\"Content\">\r\n        <size>14</size>\r\n      </Style>\r\n    </Styles>\r\n  </Doc>\r\n</Doc>"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are two part of a document: styles and content.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Styles>",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Styles/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is optional.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Styles/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " consists of zero to multiple "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Style/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " tags.\n                    A "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Style/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " looks like:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Style name=\"NAME\" parent=\"PARENT-STYLE (optional)\">\r\n  <face>FONT-NAME</face>\r\n  <size>FONT-SIZE in pixel for 96 dpi</size>\r\n  <color>TEXT-COLOR</color>\r\n  <bkcolor>BACKGROUND-COLOR</bkcolor>\r\n  <b>BOLD: true or false</b>\r\n  <i>ITALIC: true or false</i>\r\n  <u>UNDERLINE: true or false</u>\r\n  <s>STRIKELINE: true or false</s>\r\n  <antialias>ANTIALIAS: horizontal (default), vertical or no</antialias>\r\n</Style>"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "parent"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is optional.\n                    When it exist,\n                    the style "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NAME"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will first copy all properties from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "PARENT-STYLE"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    and override what is specified in this tag.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Any document has five predefined styles,\n                    they always exist and cannot be specified in a document:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Style name=\"#Default\">\r\n  <face>The default font face of the operator system</face>\r\n  <face>The default font size of the operator system</face>\r\n  <color>#000000</color>\r\n  <bkcolor>#00000000</color>\r\n  <b>false</b>\r\n  <i>false</i>\r\n  <u>false</u>\r\n  <s>false</s>\r\n  <antialias>default</antialias>\r\n</Style>\r\n<Style name=\"#Selection\">\r\n  <color>#FFFFFF</color>\r\n  <bkcolor>#3399FF</bkcolor>\r\n</Style>\r\n<Style name=\"#Context\">\r\n</Style>\r\n<Style name=\"#NormalLink\" parent=\"#Context\">\r\n  <color>#0000FF</color>\r\n  <u>true</u>\r\n</Style>\r\n<Style name=\"#ActiveLink\" parent=\"#Context\">\r\n  <color>#FF8000</color>\r\n  <u>true</u>\r\n</Style>"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If a document want to change a predefined style,\n                    let's say "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "#Default"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    it should be written as an overriding:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Style name=\"#Default-override\">\r\n  ...\r\n</Style>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Overridings only work for predefined styles.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Content>",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Content/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " consists of zero to multiple "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<p/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " tags.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<p/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " has an optional attribute "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "align"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the value of which is one of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Left"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Center"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    This property specify the alignment of the whole paragraph,\n                    the default alignment is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Left"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<p/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " consists of text.\n                    The syntax of text is:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "TEXT ::= ELEMENT\r\n     ::= TEXT ELEMENT\r\n\r\nELEMENT ::= Character                       // any valid XML character\r\n        ::= <br/>                           // \\r\\n\r\n        ::= <sp/>                           // a space character\r\n        ::= <tab>                           // a tab character\r\n        ::= <object name=\"NAME\"/>           // embed a GacUI object here, will explain later\r\n        ::= <img .../>                      // embed an image here, attributes are listed below\r\n        ::= <font ...>TEXT</font>           // apply font to text, attributes are listed below\r\n        ::= <a ...>TEXT</a>                 // make text to be a hyperlink, attributes are listed below\r\n        ::= <b>TEXT</b>                     // bold\r\n        ::= <i>TEXT</i>                     // italic\r\n        ::= <u>TEXT</u>                     // underline\r\n        ::= <s>TEXT</s>                     // strikeline\r\n        ::= <ha>TEXT</ha>                   // horizontal antialias\r\n        ::= <va>TEXT</va>                   // vertical antialias\r\n        ::= <na>TEXT</na>                   // no antialias\r\n        ::= <div style=\"STYLE\">TEXT</div>   // apply style to text\r\n        ::= <nop>TEXT</nop>                 // here it becomes TEXT, use it when it makes your XML looks clean to control spaces\r\n        ::= <p>TEXT</p>                     // here it becomes TEXT, paragraph that is not in the top level will be ignored"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Attributes of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<img/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "source"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": URL of an image resource item, begins with "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "res://"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " or "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "import-res://"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "width"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) override the width of the image."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "height"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) override the height of the image."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "baseline"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) override the baseline of the image."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "frameIndex"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) the frame index of the image, default to 0. Sometimes an image contains multiple frames."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Attributes of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<font/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "face"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) name of the font."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "size"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) size of the font in pixel for 96 dpi."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "color"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) color of the text."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "bkcolor"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) background color of the text."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Attributes of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<a/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "href"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": A hint of the hyperlink. When the hyperlink is clicked, this property will be passed to the control. "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "normal"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) The normal style, default to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "#NormalLink"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "active"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (optional) The active style, default to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "#ActiveLink"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Applying Styles to Text",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Control templates for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentLabel"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentViewer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can also specify a default style.\n                For example, here is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DarkSkin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "'s default style for these two controls:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Style name=\"#Default-Override\">\r\n    <color>#FFFFFF</color>\r\n</Style>\r\n<Style name=\"#Selection-Override\">\r\n    <color>#FFFFFF</color>\r\n    <bkcolor>#007ACC</bkcolor>\r\n</Style>"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a document is loaded to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentLabel"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentViewer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                all fource default styles (font of the control, default styles of the control template, predefined and overriding) are merged together in the following way.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When we say "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A + B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it means we first use the style "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and then use all properties in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to override the previous result,\n                and finally get a merged style.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Obviously, there is no difference between left-to-right or right-to-left association.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "T"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "D"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stands for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "control's Font property"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "control template"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "the document"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                For example,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#Default[C]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Font"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property of the control,\n                which contains everything except "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "color"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bkcolor"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "First round"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ": when a document is assigned to a control\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#Default"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " = #Default[D] + #Default-override[D] + #Default[C] + #Default-override[T]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#Selection"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " = #Selection[D] + #Selection-override[D] + #Selection-override[T]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#Context"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " = #Context[D] + #Context-override[D] + #Context-override[T]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#NormalLink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " = #NormalLink[D] + #NormalLink-override[D] + #NormalLink-override[T]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#ActiveLink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " = #ActiveLink[D] + #ActiveLink-override[D] + #ActiveLink-override[T]"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                We will see that,\n                the configuration in the control and the control template has a higher priority.\n                If a document want to apply styles in some text,\n                it should specify it explicitly (see "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Content>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for details) instead of trying to override predefined styles.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Second round"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ": when a document is displayed:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "normal text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "hyperlink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default + #NormalLink"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "active hyperlink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default + #ActiveLink"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "selected normal text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default + #Selection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "selected hyperlink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default + #NormalLink + #Selection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "selected active hyperlink"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": #Default + #ActiveLink + #Selection"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Active hyperlink is a hyperlink that is under the mouse cursor.\n                A hyperlink can specify its own normal style and active style,\n                but if they are not specified,\n                they become "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#NormalLink"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#ActiveLink"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Space Characters",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When there are spaces between tags,\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "If there are other characters, all spaces (including leading and trailing) are preserved."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "If there are only space characters, they are all ignored."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example, in this paragraph:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<p>\r\n    <nop>This is a book.<br/></nop>\r\n    <nop>It is about GacUI!<br/></nop>\r\n</p>"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The text is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "This is a book.\\r\\nIt is about GacUI!\\r\\n"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example, but in this paragraph:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<p>\r\n    This is a book.\r\n    It is about GacUI!\r\n</p>"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The text is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\\r\\n[many-spaces]This is a book.\\r\\n[many-spaces]It is about GacUI!\\r\\n[many-spaces]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<nop/>...<br/><nop/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " pattern is highly recommended to specify lines in paragraphs.\n                If there is only one line,\n                just skip <br/>.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample Application",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditor",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentEditor"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorRibbon",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentEditorRibbon"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorToolstrip",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DocumentEditorToolstrip"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                are document editors in toolstrip and ribbon.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here we created another sample for\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_xmlres_data/DocPage1.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "hyperlink and embedded controls"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_xmlres_data/DocPage1.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "kb_xmlres_data"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_xmlres_tag_doc.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

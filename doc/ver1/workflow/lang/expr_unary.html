@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Unary Operators -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "expr_unary"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Expressions",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "expr"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Precedences",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "expr_precedences"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Unary Operators",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "expr_unary"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Binary Operators",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "expr_binary"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Unary Operators",
+    "content": [
+      {
+        "kind": "Topic",
+        "title": "Type inferences",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The type of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "op VALUE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is exactly the same as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VALUE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Definitions",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "+ VALUE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For numbers, returns "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "VALUE"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "It is not allowed on other types."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "- VALUE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For signed integers, returns -1 * "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "VALUE"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For floating-point numbers, returns -1 * "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "VALUE"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "It is not allowed on other types."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "not VALUE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For integers, returns the bit-wise reversed value of "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "VALUE"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "bool"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", switch "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "false"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "It is not allowed on other types."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

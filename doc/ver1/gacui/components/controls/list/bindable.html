@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bindable List Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../../article.css">
+<script src="../../../../scripts/rootView.js"></script>
+<script src="../../../../scripts/directoryView.js"></script>
+<script src="../../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "controls",
+    "list",
+    "bindable"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "List Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "list",
+                    "home"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "GuiListControl and GuiSelectableListControl",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "guilistcontrol"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TextList>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "textlist"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TreeView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "treeview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ListView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "listview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ComboBox>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "combobox"
+                      ]
+                    },
+                    {
+                      "icon": "-",
+                      "name": "Bindable List Controls",
+                      "selected": true,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "bindable"
+                      ],
+                      "subNodes": [
+                        {
+                          "icon": " ",
+                          "name": "<BindableTextList>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "list",
+                            "bindabletextlist"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "<BindableTreeView>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "list",
+                            "bindabletreeview"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "<BindableListView>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "list",
+                            "bindablelistview"
+                          ]
+                        },
+                        {
+                          "icon": "+",
+                          "name": "<BindableDataGrid>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "list",
+                            "bindabledatagrid"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Bindable List Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Instead of using a certain fixed type for items in a certain list control,\n            bindable list controls allow items to be any class or interface type.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemSource property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All bindable list controls have a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property.\n                This property could be any collection type.\n                But if it is an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "observe T[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++,\n                the bindable list control will keep itself always sync to the collection.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Creating a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++ is easy.\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::ObservableList<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instead of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::List<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                you can get a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueObservableList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " by calling the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetWrapper"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Property and Writable Property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                After assigning a collection to a bindable list control,\n                you also needs to teach the control how to read/write your item object.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For the most common cases,\n                if a property in items in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is exactly what you need,\n                for example a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property returning "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "string"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YOUR_ITEM_CLASS"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                will be displayed directly in a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<BindableTextList/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                just write the property name in the XML for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " like:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<BindableTextList env.ItemType=\"YOUR_ITEM_CLASS^\" ...>\r\n  <att.TextProperty>Name</att.TextProperty>\r\n  <att.ItemSource-eval>COLLECTION_CONTAINING_MANY_YOUR_ITEM_CLASS</att.ItemSource-eval>\r\n  ...\r\n</BindableTextList>"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                By doing this,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<BindableTextList/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will read the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property\n                in all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YOUR_CLASS_CLASS"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and shows all names in the list control.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                If there are items in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " that is not "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YOUR_ITEM_CLASS"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                which is specified in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "env.ItemType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it will crash.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "env.ItemType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "env.ItemName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can be put in any tag inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                These attributes only control how to interpret the string for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Property and Writable Property"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                In this case they control what does "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " mean for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                assume all items in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is or inherits from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YOUR_ITEM_CLASS"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(case (YOUR_ITEM_CLASS^) item).GetName()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is a property."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "(case (YOUR_ITEM_CLASS^) item).Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is a field."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Different bindable list controls have different requirements.\n                For example,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<BindableTextList/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CheckedProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Property-Name-func-data-Object-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    readable property\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                which means the control will read a text from an item.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CheckedProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Writable-Property-Name-func-data-Object-value-PROPERTY-TYPE-isWrite-bool-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    writable property\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                which means the control will not only read a checked mark from an item,\n                it will also set a checked mark to an item.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please check out\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/ColorPicker/UI/Resource.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    this tutorial project\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                for details about using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Updating Items",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is an observable collection,\n                when you add an item to the collection,\n                or remove an item from the collection,\n                or replace an item in the collection,\n                the list control will know and show the latest result.\n                But changing properties in items will not trigger refreshing the list control,\n                because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Property and Write Property are not data binding"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When data in an item is modified,\n                there are 3 ways to notify the list control:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        When using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vl::collections::ObservableList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NotifyUpdate"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to notify the list control.\n                        This method accepts a range of indices,\n                        all items in that range will be treated like they are changed.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Trigger the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IValueObservableList::ItemChanged"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " event to notify the list control.\n                        When data in items are modified,\n                        it means there is no adding to or removing from the collection,\n                        so always keep the second and the third argument having the same value.\n                        This event accepts a range of indices,\n                        all items in that range will be treated like they are changed.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        When using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vl::collections::ObservableList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        or when the observable collection is created using "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Workflow"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " script,\n                        replacing an item with itself also notify the list control.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemTemplate Property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Item objects in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be used to create instances from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Some properties of the item template will be assigned to values\n                that are read from the item object using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Property and Writable Property"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                But since the item template already knows the item object,\n                it could read from the object directly.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

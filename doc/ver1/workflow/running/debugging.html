@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Debugging -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "debugging"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Running Workflow Scripts",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Invoking C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Interfaces",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Serializing and Loading Assemblies",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Generating C++ Code",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Debugging",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Debugging",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Involved files:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W06_Debugging/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W06_Debugging/Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            It is able to debug a running Workflow script, if it is not converted to C++.\n            In this section, we will use the debugger to debug this Workflow script:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\nusing myapi::*;\r\n\r\nfunc main(): void\r\n{\r\n    var name = App::Get(\"Please enter your name:\");\r\n    App::Print($\"Hello, $(name)!\");\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            We will set a break point at "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "App::Print"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            and change the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "name"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " variable,\n            and continue running the script.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Firstly, after initializing the assembly, we start debugging:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto debugger = MakePtr<MyDebugger>();\r\nSetDebuggerForCurrentThread(debugger);"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "MyDebugger"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " inherits "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfDebugger"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", it will be explained later.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Secondly, we set a break point:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "debugger->AddCodeLineBreakPoint(assembly.Obj(), 0, 9, true);"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            \"0\" means the first file, and \"9\" means the 10th line,\n            which is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "App::Print($\"Hello, $(name)!\");"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            We run the script as usual.\n            After the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function is executed,\n            we stop debugging:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto mainFunction = LoadFunction<void()>(globalContext, L\"main\");\r\nmainFunction();\r\nSetDebuggerForCurrentThread(nullptr);"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Now, before "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "App::Print"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called,\n            the debugger will be notified.\n            Please note that,\n            after a break point is triggered,\n            if "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfDebugger::Run"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or other similar functions are not called,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "mainFunction() will be blocked forever."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In order to take action when a break point is triggered,\n            we need to override "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfDebugger::OnBlockExecution"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " like this:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class MyDebugger : public WfDebugger\r\n{\r\nprotected:\r\n    void OnBlockExecution()override\r\n    {\r\n        // get the context for the current thread\r\n        auto context = GetCurrentThreadContext();\r\n\r\n        // whatever the input is, change the \"name\" variable to be \"MyDebugger\"\r\n        // it will print \"Hello, MyDebugger!\" after continuing\r\n        auto assembly = context->globalContext->assembly;\r\n        vint functionIndex = context->GetCurrentStackFrame().functionIndex;\r\n        auto functionMetadata = assembly->functions[functionIndex];\r\n        vint indexName = functionMetadata->localVariableNames.IndexOf(L\"name\");\r\n        context->StoreLocalVariable(indexName, BoxValue(WString(L\"MyDebugger\")));\r\n\r\n        // continue\r\n        Run();\r\n    }\r\n};"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Details of Workflow runtime API will not be explained here.\n            Basically what this function does is that,\n            we first get the thread context that we are currently debugging against,\n            and then use the metadata in the assembly to know how to change the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "name"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " variable.\n            After it is done,\n            continue running the script.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Since we only set one break point,\n            so we don't need to tell which break point is triggered in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnBlockExecution"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is what we need to know when debugging Workflow scripts:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Threads are by default not assigned with any debugger."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A debugger is activated when it is assigned to a specific thread."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The same debugger can be assigned to multiple threads."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Each call to a function returned from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "LoadFunction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " creates a separate "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WfRuntimeThreadContext"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object.\n                    Do not assume that you will always get the same "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WfRuntimeThreadContext"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object per thread.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

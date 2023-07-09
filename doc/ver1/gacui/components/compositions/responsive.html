@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Responsive Design Series -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "responsive"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "<Bounds>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "bounds"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Stack> and <StackItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "stack"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Flow> and <Flow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "flow"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Table>, <Cell>, <RowSplitter> and <ColumnSplitter>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "table"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<RepeatStack> and <RepeatFlow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "repeat"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SharedSizeRoot> and <SharedSizeItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sharedsize"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SideAligned>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sidealigned"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<PartialView>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "partialview"
+                  ]
+                },
+                {
+                  "icon": "-",
+                  "name": "Responsive Design Series",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveContainer>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_container"
+                      ]
+                    },
+                    {
+                      "icon": "+",
+                      "name": "<ResponsiveView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_view"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveStack>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_stack"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveGroup>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_group"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Input Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "events"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Responsive Design Series",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Responsive design compositions consist of following compositions:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ResponsiveContainer/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    A composition that tells its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ResponsiveTarget"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to switch to a different view when the size of the <ResponsiveContainer/> is changed.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiResponsiveCompositionBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    A composition that manages multiple views in order from large to small,\n                    it has following sub classes for different way of management:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ResponsiveFixed/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            only has one level of view.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ResponsiveView/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            allow manually assigned views:\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Views"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " accepts multiple "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "GuiResponsiveCompositionBase"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " in order from large to small as its levels of views.\n                                "
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SharedControls"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " accepts multiple controls.\n                                    When switching views,\n                                    a "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "<ResponsiveShared/>"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " could move a referenced shared control from one view to another,\n                                    keeping all its status (especially for editable controls).\n                                "
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ResponsiveGroup/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            the number of its levels of views equals to one direct or indirect child "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GuiResponsiveCompositionBase"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "\n                            that has the most levels of views.\n                            When it needs to switch to another view,\n                            it tells all direct or indirect child "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GuiResponsiveCompositionBase"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " to synchronize to the same level of view.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ResponsiveStack/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            the number of its levels of views equals to the sum of levels of views in all direct or indirect child "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GuiResponsiveCompositionBase"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                            When it needs to switch to another view,\n                            it tells one indirect child "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GuiResponsiveCompositionBase"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " to switch view,\n                            unless all has switched to its largest or the smallest views.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Usually, a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveContainer/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is put inside a window and configured to change its size according to the window size.\n            And then use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveView/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveGroup/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveStack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " together\n            to control how controls are reorganized to fit in different sizes of the container.\n            finally this "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " tree will be assigned to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveContainer/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "::"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ResponsiveTarget"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            to make the reorganizing automatically happens.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Typically,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveFixed/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will only be put in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveView/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "::"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Views"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            when this level of view doesn't have sub levels of views.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "A responsive layout sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Layout/Responsive2/UI/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial/GacUI_Layout/Responsive2/UI/Resource.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_compositions_responsive_2.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are three level of views:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "View 1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Buttons with icons and titles on the left side, and video icons on the right side."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "View 2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Buttons with icons on the left side, and video icons on the right side."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "View 3"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Buttons in a menu on the top side, and video icons on the bottom side."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is larger than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " because titles of buttons are hidden.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is larger than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 3"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " because buttons are hidden.\n                Although the menu of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 3"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " increases the height,\n                but video icons are scrollable,\n                the list control could shrink vertically to make spaces for the menu.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "A basic idea to implement this sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                We will easily find that,\n                the difference between "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is button titles.\n                so the button template itself could be a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " which has two "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveFixed/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The first (larger) view contains one icon and one title"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The second (smaller) view contains only one icon"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Now the button becomes responsive,\n                you don't need to create two different view for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                which is wasting memories and reducing performance.\n                Instead,\n                you could use a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to contain these buttons.\n                Since all buttons have 2 levels of views,\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has 2 levels of views,\n                because all child "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will synchronize to the same level of view.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Now "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are represented in one "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                we have to create a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to contain "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 3"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as its two views.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View 3"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is contained in a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveFixed/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                since all compositions in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "::"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                must be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The list control for video icons could be registered in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "::"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SharedControls"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                When the application switches between views,\n                the list control will be moved to different view,\n                controlled by all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveShared/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in each views.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Finally, the code looks like this (button templates are inlined, which is only for demo, not the way to implement):\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Window>\r\n  <ResponsiveContainer AlignmentToParent=\"left:0 top:0 right:0 bottom:0\">\r\n    <att.ResponsiveTarget>\r\n      <ResponsiveView Direction=\"Horizontal\">\r\n        <att.SharedControls>\r\n          <ScrollContainer ref.Name=\"videoContainer\" ... />\r\n        </att.SharedControls>\r\n\r\n        <att.Views>\r\n          <ResponsiveGroup Direction=\"Horizontal\">\r\n            <!-- View 1 and View 2 -->\r\n            ...\r\n            <SelectableButtonTemplate>\r\n              ...\r\n              <ResponsiveView Direction=\"Horizontal\">\r\n                <att.Views>\r\n                  <ResponsiveFixed> <!-- View 1: icon with title    --> </ResponsiveFixed>\r\n                  <ResponsiveFixed> <!-- View 2: icon without title --> </ResponsiveFixed>\r\n                </att.Views>\r\n              </ResponsiveView>\r\n              ...\r\n            </SelectableButtonTemplate>\r\n            <SelectableButtonTemplate .../>\r\n            <SelectableButtonTemplate .../>\r\n            <SelectableButtonTemplate .../>\r\n            ...\r\n            <!-- the place holder for videoContainer in View 1 and View 2 -->\r\n            <ResponsiveShared Shared-ref=\"videoContainer\"/>\r\n            ...\r\n          </ResponsiveGroup>\r\n          <ResponsiveFixed>\r\n            <!-- View 3 -->\r\n            ...\r\n            <ToolstripMenu .../>\r\n            ...\r\n            <!-- the place holder for videoContainer in View 3 -->\r\n            <ResponsiveShared Shared-ref=\"videoContainer\"/>\r\n            ...\r\n          </ResponsiveFixed>\r\n        </att.Views>\r\n      </ResponsiveView>\r\n    </att.ResponsiveTarget>\r\n  </ResponsiveContainer>\r\n</window>"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A shared control must appears in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<ResponsiveView/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "::"
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SharedControls"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in order to be referenced by multiple "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<ResponsiveShared/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Direction=\"Horizontal\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in the code means the composition responsives to changing of its width."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The code organizes the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as follows:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<ResponsiveView/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                View[0]: "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "<ResponsiveGroup/>"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "<ResponsiveView/>"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "List",
+                                        "ordered": false,
+                                        "items": [
+                                          {
+                                            "kind": "ContentListItem",
+                                            "content": [
+                                              {
+                                                "kind": "Text",
+                                                "text": "View [0]: "
+                                              },
+                                              {
+                                                "kind": "Strong",
+                                                "content": [
+                                                  {
+                                                    "kind": "Text",
+                                                    "text": "<ResponsiveFixed/>"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "kind": "Text",
+                                                "text": " (button with icon and title)"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "kind": "ContentListItem",
+                                            "content": [
+                                              {
+                                                "kind": "Text",
+                                                "text": "View [1]: "
+                                              },
+                                              {
+                                                "kind": "Strong",
+                                                "content": [
+                                                  {
+                                                    "kind": "Text",
+                                                    "text": "<ResponsiveFixed/>"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "kind": "Text",
+                                                "text": " (button with icon only)"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "..."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                View[1]: "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "<ResponsiveFixed/>"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " (button in menu)\n                            "
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When the window is getting smaller,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " shrinks all buttons at the same time (because it is a group not a stack)\n                to hide all button titles.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When the window is getting even smaller,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveGroup/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " cannot shrinks anymore,\n                so the root "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " switches to a second view in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveFixed/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                to move all button inside a menu on the top.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

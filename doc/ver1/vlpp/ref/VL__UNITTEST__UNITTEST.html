@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>class UnitTest -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/documentView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlpp",
+    "ref",
+    "VL__UNITTEST__UNITTEST"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-DocumentView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp",
+      "selected": false,
+      "path": [
+        "vlpp",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlpp",
+            "ref"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "::vl::unittest",
+              "selected": false,
+              "path": [
+                "vlpp",
+                "ref",
+                "__vl__unittest"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "class UnitTest",
+                  "selected": true,
+                  "path": [
+                    "vlpp",
+                    "ref",
+                    "VL__UNITTEST__UNITTEST"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "function RunAndDisposeTests",
+                      "selected": false,
+                      "path": [
+                        "vlpp",
+                        "ref",
+                        "VL__UNITTEST__UNITTEST__RUNANDDISPOSETESTS@INT(INT,_WCHAR_T____)"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const documentArticle = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "class UnitTest",
+    "content": [
+      {
+        "kind": "Topic",
+        "title": "Signature",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "class UnitTest;\r\n"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Summary",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Unit test framework."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n Test cases could be defined in multiple cpp files. In each cpp file, there can be one "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " call.\r\n "
+              },
+              {
+                "kind": "Program",
+                "code": "TEST_FILE\r\n{\r\n    // here could be multiple TEST_CATEGORY and TEST_CASE\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n Both "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", or nested inside another "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is used to verify a boolean expression.\r\n It could only be used in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could not be used in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n When the test program is started in debug mode (Windows only), or by command line options \"/D\",\r\n A "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " failure will trigger a break point, it could be catched by any debugger.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n When the test program is started in release mode, or by command line options \"/R\", or without command line options,\r\n A "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " failure will report an error and skip rest of the current "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", the execution will continue.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ERROR"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " execute one statement, it fails when no "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/vlpp/ref/VL__ERROR.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Error"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is thrown.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_EXCEPTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " execute one statement, it fails when the specified exception type is not thrown.\r\n Another callback will be called when the exception is thrown, given a chance to check data in the exception.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is an abbreviation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " + "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n It is very common that are multiple independent assertions.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a test case, it can be used in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n In release mode, by failing this assertion, the execution does not stop.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is very useful when multiple assertions do not have dependencies.\r\n During the execution of the test program, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CATEGORY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and failed "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_ASSERT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be rendered with indentation and different colors.\r\n "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "/vlpp/ref/VL__UNITTEST__UNITTEST__RUNANDDISPOSETESTS@INT(INT,_WCHAR_T____).html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RunAndDisposeTests"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is needed in the main function to execute test cases.\r\n "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_PRINT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used during test cases to print debug information to a command-line application.\r\n "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#include <Vlpp.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::unittest;\r\nusing namespace vl::console;\r\n\r\nTEST_FILE\r\n{\r\n    TEST_CATEGORY(L\"This is a test category\")\r\n    {\r\n        TEST_CASE(L\"This is a test case\")\r\n        {\r\n            TEST_ASSERT(true);\r\n            TEST_ERROR({WString::Empty[0];});\r\n            TEST_EXCEPTION({throw Exception();}, Exception, [](const Exception&){});\r\n        });\r\n        TEST_CASE_ASSERT(true);\r\n    });\r\n\r\n    TEST_CATEGORY(L\"This is another test category\")\r\n    {\r\n        TEST_PRINT(L\"some information\");\r\n        TEST_CASE_ASSERT(true);\r\n    });\r\n}\r\n\r\nint main(int argc, wchar_t* argv[])\r\n{\r\n    // in Linux or macOS, argv must be char*[]\r\n    return unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n}",
+                "output": [
+                  "Failures are suppressed.\r",
+                  "c:\\code\\vczhlibraries\\document\\tools\\examples\\vlpp\\example.h\r",
+                  "    This is a test category\r",
+                  "        This is a test case\r",
+                  "        true\r",
+                  "    This is another test category\r",
+                  "        some information\r",
+                  "        true\r",
+                  "Passed test files: 1/1\r",
+                  "Passed test cases: 3/3\r",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.documentArticle"] = documentArticle;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "kb",
+    "controls"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Knowledge Base",
+          "selected": false,
+          "path": [
+            "gacui",
+            "kb",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "GacUI Object Models",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "gom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Elements",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "elements"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "compositions"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Controls",
+              "selected": true,
+              "path": [
+                "gacui",
+                "kb",
+                "controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Control Templates",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "ctemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Item Templates",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "itemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Default Template Registrations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "dtemplates"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Application",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "application"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "OS Provider",
+              "selected": false,
+              "path": [
+                "gacui",
+                "kb",
+                "osprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Controls are interfaces with predefined functionalities.\n            A control doesn't care about what it looks like,\n            control templates handle all of these.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            There are also "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "virtual controls"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            A virtual control is a predefined configuration to an existing control,\n            which changes some properties of that control with a different control template.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "CheckBox"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RadioButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are typical virtual controls.\n            They do not exist in C++,\n            they are just "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SelectableButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " with different control templates.\n            They also have behavior differences,\n            for example,\n            when you click a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "CheckBox"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            it switches between selected and unselected,\n            but when you click a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RadioButton"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            it always try to become selected.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            GacUI offers a set of predefined controls:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Basic Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Label"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays interactive texts."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Button"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Reacts to mouse input."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DatePicker"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DateComboBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays and choosing date."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "SelectableButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Button with a select mark.\n                                This control is not intended to be used directly,\n                                you are supposed to use the following virtual controls:\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "CheckBox"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A selectable button that represents individual selection."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RadioButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A selectable button that represents a selection among different choices."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Scroll"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays editable position information.\n                                This control is not intended to be used directly,\n                                you are supposed to use the following virtual controls:\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ProgressBar"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Display readonly progress information."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "HScroll"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "VScroll"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "HTracker"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "VTracker"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Displays editable position information for different directions and purposes."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Container Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Tab"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "TabPage"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Organizes controls into multiple pages, only one page can be displayed at a time."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ScrollContainer"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays scroll bars when content inside it exceeds the visible boundary."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Editor Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "SinglelineTextBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "MultilineTextBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays editable colorizable code, offer customizable auto-complete functionalities."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DocumentLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "DocumentViewer"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays editable text or rich document, allowing compositions and controls to be embedded into a document."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "List Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "TextList"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ListView"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "TreeView"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Organize data into some predefined list structure."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BindableTextList"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BindableListView"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ", "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BindableTreeView"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Bindable version of list controls, which change content automatically when data in a collection is changed."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "BindableDataGrid"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Organizes data into a table, in which different cells could have different views and editors."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ComboBox"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A control with a dropdown that containing a list control."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Toolstrip Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripMenu"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A popup menu."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripMenuBar"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A menu bar for first level menu items."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripToolBar"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A container for toolstrip buttons."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripGroupContainer"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripGroup"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Organize menu items or toolstrip buttons into different groups in dropdown menus or toolstrip toolbars."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A button with icon in "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripToolBar"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": "."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                Virtual "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " controls for menus:\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "MenuBarButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Menu item in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripMenuBar"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "MenuItemButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Menu item in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripMenu"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "MenuSplitter"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A splitter between menu buttons."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                Virtual "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " controls for toolbars:\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripDropdownButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A button in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripToolBar"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", clicking it opens a dropdown menu."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripSplitButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A button in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripToolBar"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", splitted into a button and a small dropdown button."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripSplitter"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": A splitter between toolstrip buttons."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Ribbon Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonTab"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonTabPage"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": The first level container for ribbon controls, organizs ribbon controls into different pages."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonGroup"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": The second level container for ribbon controls, when the space is not enough for the whole group, it becomes a super large dropdown button."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonIconLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays icon and text before another control."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonSmallIconLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": A virtual "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonIconLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " control that looks smaller."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                Virtual "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " controls for ribbon:\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallDropdownButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " and "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallSplitButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Toolstrip toolbar buttons that display not only icons but texts."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeDropdownButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " and "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeSplitButton"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Even larger buttons."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonToolstrip"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays toolbars, redistributes buttons in different numbers of toolbars when the space is changing."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonGallery"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays large icons, and when the space is not enough for all icons, they will be in the dropdown menu.\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "BindableRibbonGalleryList"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": The gallery list in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonGallery"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonToolstripMenu"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": The dropdown menu in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonGallery"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonToolstripHeader"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ": Group header in "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonToolstripMenu"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonButtons"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Displays some "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "ToolstripButton"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " and "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "RibbonIconLabel"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " in order,\n                                when the space is not enough,\n                                controls will be automatically changed to different outfit including\n                                "
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripDropdownButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "ToolstripSplitButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallDropdownButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallSplitButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeDropdownButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonLargeSplitButton"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonIconLabel"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "RibbonSmallIconLabel"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ParagraphListItem",
+                "paragraphs": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Root Controls:"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "CustomControl"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": Blank control for customize."
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "Window"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": ": The most outer container that interacts with window manager of OS."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Toolstrip Controls",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/DocumentEditorToolstrip/UI/ResourceToolstrip.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial/GacUI_Controls/DocumentEditorToolstrip/UI/ResourceToolstrip.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_controls_toolstrip.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Ribbon Controls",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/DocumentEditorRibbon/UI/ResourceRibbon.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial/GacUI_Controls/DocumentEditorRibbon/UI/ResourceRibbon.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_controls_ribbon.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Code Editor",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/TextEditor/UI/MainWindow.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial/GacUI_Controls/TextEditor/UI/MainWindow.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_controls_textbox.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "DataGrid",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_Controls/DataGrid/UI/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Tutorial/GacUI_Controls/DataGrid/UI/Resource.xml"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/kb_controls_datagrid.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

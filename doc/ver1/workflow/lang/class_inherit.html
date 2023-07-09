@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inheritance -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "class_inherit"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": true,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Allocating",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "class_new"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Inheritance (class)",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A class can inherit multiple classes.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When Derived inherits from Base,\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Interfaces cannot inherit classes in Workflow script (this could happen in C++)."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Classes cannot inherit interfaces in Workflow script (this could happen in C++)."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " inherits all members from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Base"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "If the same method signature appears in multiple base classes, it will result in ambiguity when calling them."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "If members in base classes share the same name with members in the derived class, members in base classes will never be considered as candidates."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "You cannot call members of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on an object of type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Base"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", even if it is or inherits "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Constructors of base classes must be called by all constructors in the derived class, except default constructors of base classes."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\nusing system::reflection::*;\r\n\r\nclass Base\r\n{\r\n    prop Number: int = 0 {}\r\n\r\n    new()\r\n    {\r\n    }\r\n\r\n    new(number: int)\r\n    {\r\n        Number = number;\r\n    }\r\n}\r\n\r\nclass Derived : Base\r\n{\r\n    @cpp:Private\r\n    var r: string = \"\";\r\n\r\n    @cpp:Private\r\n    var handler: EventHandler^ = null;\r\n\r\n    @cpp:Protected\r\n    func OnNumberChanged(): void\r\n    {\r\n        r = r & $\"$(Number); \";\r\n    }\r\n\r\n    new(number: int)\r\n        :Base(number)\r\n    {\r\n        handler = attach(NumberChanged, OnNumberChanged);\r\n    }\r\n\r\n    delete\r\n    {\r\n        detach(NumberChanged, handler);\r\n    }\r\n\r\n    func GetResult(): string\r\n    {\r\n        return r;\r\n    }\r\n\r\n    prop Result: string {GetResult}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var d = new Derived^(100);\r\n    var number = d.Number;\r\n    d.Number = 200;\r\n    d.Number = 300;\r\n    return $\"$(number); $(d.Result)\";\r\n}"
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " inherits from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Base"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The constructor of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " calls the constructor of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Base"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". They don't have to be both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the destructor, which will be called before a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object is deleted."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@cpp:Private"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@cpp:Protected"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " don't affect Workflow code, it only control how C++ code is generated."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The type of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "d"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Derived^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Function "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "main"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\"100; 200; 300; \""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

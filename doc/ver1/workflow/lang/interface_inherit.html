@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inheritance -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "interface_inherit"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": true,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Implementing",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_new"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Generic",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_using"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Inheritance (interface)",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An interface can inherit multiple interfaces.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When IDerived inherits from IBase,\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Interfaces cannot inherit classes in Workflow script (this could happen in C++)."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Classes cannot inherit interfaces in Workflow script (this could happen in C++)."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " inherits all members from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "If the same method signature appears in multiple base interfaces (including the derived one), they will have the same implementation in the new interface expression."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "An object must implement all members of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in order to implement "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "An object of type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " can be implicitly converted to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "An object of type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " can be explicitly converted to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", if the object doesn't implement "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", the conversion fails at runtime."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "You cannot call members of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on an object of type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", even if it implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Interfaces are not structural typing, even of an object has all required members, but if it doesn't explicitly declare that it implements an interface, it does not."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "interface IBase\r\n{\r\n    func Say(): string;\r\n}\r\n\r\ninterface IDerived : IBase\r\n{\r\n    /* other members */\r\n}\r\n\r\nvar base = new IBase^\r\n{\r\n    override func Say(): string\r\n    {\r\n        return \"I implements IBase!\";\r\n    }\r\n};\r\n\r\nvar derived: IBase^ = new IDerived^\r\n{\r\n    override func Say(): string\r\n    {\r\n        return \"I implements IDerived!\";\r\n    }\r\n};"
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Types of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "base"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IBase^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". If an explicit type does not given to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", it will be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IDerived^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "base as IDerived^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(cast IDerived^ base)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " throws and exception."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Both above conversion will succeed for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "derived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

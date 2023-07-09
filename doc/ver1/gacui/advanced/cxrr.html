@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cross XML Resource References -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "advanced",
+    "cxrr"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Advanced Topics",
+          "selected": false,
+          "path": [
+            "gacui",
+            "advanced",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Interop with C++ View Model",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "vm"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "bindings"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Animations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "animations"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Localization",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "localization"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": true,
+              "path": [
+                "gacui",
+                "advanced",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "ALT Sequence and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "alt"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "TAB and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "tab"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Creating New List Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "impllistcontrol"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Porting GacUI to Other Platforms",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "implosprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Cross XML Resource References",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A GacUI XML Resource could\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/cxrr.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                use some resources in another XML\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            There are 3 types of resources:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Resource files: They could be accessed using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "import-res://RESOURCE-NAME/..."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-uri binding"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Objects that compiled to Workflow: They could be accessed using their generated class or interface names."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Everything else: They could not be accessed from another XML."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "XML Resource Header",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To make a GacUI XML Resource be able to depend on or be depended by another resource,\n                a header is required in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacGenConfig/Metadata"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " like this:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Resource>\r\n  <Folder name=\"GacGenConfig\">\r\n    <Xml name=\"Metadata\">\r\n      <ResourceMetadata Name=\"EditorRibbon\" Version=\"1.0\">\r\n        <Dependencies>\r\n          <Resource Name=\"EditorBase\"/>\r\n        </Dependencies>\r\n      </ResourceMetadata>\r\n    </Xml>\r\n    ...\r\n  </Folder>\r\n  ...\r\n</Resource>"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/ResourceMetadata/@Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The name of the resource.\n                        All resources that loaded into an application should either have a unique name or have no name.\n                        If a resource want to depend on or to be depended by another resource,\n                        it should have a name.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/ResourceMetadata/@Version"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The only legal value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "1.0"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        It is bounded to the GacUI XML Resource Compiler (GacGen32.exe or GacGen64.exe).\n                        To ensure that all depended resources are compiled using a compatible version of compiler,\n                        an resource could only depend on another resource that has exactly the same version.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/ResourceMetadata/Dependencies/Resource/@Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Here are all resources that the current resource depends on.\n                        The name must match their "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/ResourceMetadata/@Name"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in their metadata.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Compile Resource with Dependencies",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tools",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                is the only tool to properly compile resources with dependencies.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You need to have a file called "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUI.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<GacUI/>"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                A GacUI XML Resource and all its dependeices must be put inside the folder containing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUI.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Resource files could be put in any level of sub folders.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Then you could call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1 -FileName path/to/GacUI.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "PowerShell"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                All resource files in the folder containing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUI.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be found and compiled in the dependency order.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " forces incremental build.\n                If a resource is not changed,\n                and all its dependencies are not changed,\n                then the resource will not be compiled again.\n                You could use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacClear.ps1 -FileName path/to/GacUI.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to clear all cache,\n                the next time "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will recompile every resource files.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Generated resource binaries, workflow binaries and C++ code will be put in places\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/cgc.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    specified in each GacUI XML Resource\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Loading Resource Dependencies in your C++ Application",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::GetResourceManager()->LoadResourceOrPending(fileStream[, errors][, usage]);"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                is the only function to load compiled resource binaries:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "fileStream"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        It could be any "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/vlppos/using-streams.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vl::stream::IStream"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        you could use "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "FileStream"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " here to load a resource from file.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "errors"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        If the resource could not be loaded,\n                        errors will be stored in this list.\n                        An empty error list after calling this function means the resource is loaded properly.\n                        If the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "errors"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " argument is not use,\n                        then the function will crash if there is any error.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "usage"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        It could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "InstanceClass"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if you include all Workflow binaries into this resource file,\n                        and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DataOnly"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if not.\n                        A resource binary containing Workflow binaries could be produced using\n                        "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/gacui/xmlres/cgc.html",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "res://GacGenCppConfig/ResX86/Resource"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "res://GacGenCppConfig/ResX/Resource"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "The content of Workflow binaries is different for x86 or x64"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        you need to load the correct one.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Typically,\n                if you use compiled resource with generated C++ files instead of Workflow binaries,\n                you only need the first argument.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You don't need to worry about the order to load resource files,\n                they will be taken care of in this function,\n                just call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LoadResourceOrPending"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for all of them.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LoadResourceOrPending"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " without all depended resources prepared\n                results in delay loading.\n                Such resource will be automatically loaded after all depended resources are loaded.\n                You could call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetResource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to see if a resource has already been loaded or not.\n                If it returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " but "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LoadResourceOrPending"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " succeeded,\n                it means some depended resources are not prepared yet,\n                and the loading is delayed.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Get Rid of Resource Files",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                By using\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/cgc.html",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CppResource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CppCompressed"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "res://GacGenConfig/Cpp"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                you will get multiple cpp files for each GacUI XML Resource.\n                Link all these cpp files to your project,\n                resource binaries will be compiled into your executable file.\n                When your application starts,\n                all resources will be properly loaded before "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiMain"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using Resource in Dependedcies",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If there is a resource object "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "res://path/to/the/resource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                in a GacUI XML Resource called "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BaseResource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                another GacUI XML Resource depending on it could use\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "import-res://BaseResource/path/to/the/resource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Such resource path could be use in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "-uri binding"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ResolveResource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method in all\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/root_instance.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "root UI instance"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a resource is compiled to Workflow classes or instances,\n                just use the class or interface names directly.\n                But if the resource is not in the dependency list\n                ("
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "/ResourceMetadata/Dependencies/Resource/@Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "),\n                the class or interface name will not be found when running "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                errors will be generated and the resource cannot be compiled.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

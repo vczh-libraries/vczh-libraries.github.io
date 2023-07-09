@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ALT Sequence and Control Focus -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "advanced",
+    "alt"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Advanced Topics",
+          "selected": false,
+          "path": [
+            "gacui",
+            "advanced",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Interop with C++ View Model",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "vm"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "bindings"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Animations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "animations"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Localization",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "localization"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "ALT Sequence and Control Focus",
+              "selected": true,
+              "path": [
+                "gacui",
+                "advanced",
+                "alt"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "TAB and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "tab"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Creating New List Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "impllistcontrol"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Porting GacUI to Other Platforms",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "implosprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "ALT Sequence and Control Focus",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If a focusable control is put on a window,\n            by setting the\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/components/controls/basic/home.html#Alt-AltChanged-",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Alt"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            property to a value,\n            for example \"X\",\n            then it could get focused by pressing "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ALT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " followed by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "X"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            (not "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ALT+X"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ").\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Alt"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property could accept a sequence of characters,\n            not just one.\n            Characters in such a sequence needs to be entered to activate this control.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ESC"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is pressed,\n            it goes back to the previous container.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "BACKSPACE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is pressed,\n            it cancels the last character in the sequence.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ALT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is pressed,\n            all valid "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ALT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " sequences will be printed on the window.\n            All labels rendering these sequences will get changed\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Image",
+                "src": "/gacui/adv_alt.gif"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The operation is done by pressing the following keys:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ALT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Enter the ALT sequence mode."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "P"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": There are two controls with the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Alt"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property set to \"P\". It filters them out and wait for a number key."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "0"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": The dropdown button is activated, a sub menu is opened."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ESC"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Close the sub menu and go back to the previous container, which is the window."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "P"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Filter again."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BACKSPACE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Cancel the last character \"P\" in the sequence, showing all available items."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "P"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Filter again."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": The paste button is activated, a piece of text get pasted to the editor. The ALT sequence mode is exited because an item is finally chosen."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ALT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Enter the ALT sequence mode."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "D"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Give the focus to the editor control."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CTRL+A"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Select all text."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DELETE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Delete the selection."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Behavior after being Focused",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are three kinds of behaviors when a control is focused by a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ALT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " sequence.\n                If a control is focused by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TAB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it could behaves differently.\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Just being focused"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Controls with complex keyboard behaviors like editors or list controls,\n                            will just get focused and do nothing else.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Execute a Command"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Controls with simple executable behaviors like buttons,\n                            will do what it does when clicked,\n                            after being focused by an "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ALT"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " sequence.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Just being focused"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Controls that are not executable but contains executable items,\n                            like menu items with a sub menu,\n                            will render all executable items\n                            after being focused by an "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ALT"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " sequence.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            A menu item with a sub menu does nothing when it is clicked.\n                            But if it is activated by an "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ALT"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " sequence,\n                            the sub menu will be opened and wait for more keys.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Create your own Behavior",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a new control class is created,\n                there are multiple ways to customize the behavior\n                about how a control should react to an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ALT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " sequence: \n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Using IGuiAltAction",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a protected base class of all controls.\n                    If a new control is created,\n                    methods could be overriden.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Properly assigning an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence to the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Alt"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property of a control\n                    could also make these methods behave as expected easily.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsAltEnabled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " if the control is visible and enabled.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsAltAvailable"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " if the control is focusable and the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Alt"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property is not empty.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    When the window is in the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence mode,\n                    a label rendering the sequence for this control\n                    will be put in the composition from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetAltComposition"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsAltEnabled"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsAltAvailable"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    then the result of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetAlt()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    which is also the value from the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Alt"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property by default,\n                    becomes one of an candidate.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnActiveAlt"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be called when this control is selected by a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Using IGuiAltActionContainer",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionContainer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/components/controls/basic/home.html#Service-Objects",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        service object\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    A service object could be attached to a control\n                    by calling "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AddService"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or overriding "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "QueryService"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionContainer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " instance is attached to a control,\n                    then all methods in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are ignored.\n                    Instead,\n                    multiple "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " object returned from this interface will be used.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    You could now assign multiple "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence to a control,\n                    with each sequence binded to a different behavior.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    All "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returned from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionContainer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " must be enabled and available.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Using IGuiAltActionHost",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    An "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " instance could be attached to a control\n                    by calling "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetActivatingAltHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or overriding "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetActivatingAltHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    When a control is selected by a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence,\n                    if "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is attached to this control,\n                    then the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence mode will not exit.\n                    Instead,\n                    this "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is treated as a nested container,\n                    and GacUI calls "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CollectAltActions"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to collect all valid "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    renders all "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and wait for keyboard input.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    All top level controls like a window or a menu are attached by an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " by default.\n                    If a sub menu is created on a menu item,\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is attached to this control.\n                    So when it is activated,\n                    it opens the sub menu and continue to wait for more keys,\n                    instead of executing this menu item.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiAltActionHostBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the default implementation of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltActionHost"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    If it is attached to a control,\n                    all child controls with valid "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are not visible from the container,\n                    instead they are available when the parent control is selected by an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ALT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sequence.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiAltActionHostBase::SetAltControl"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " must be called to initialize this class,\n                    it tells this implementation where to search for child controls to collect "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiAltAction"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

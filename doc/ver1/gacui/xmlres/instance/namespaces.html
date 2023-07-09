@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Namespaces -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "instance",
+    "namespaces"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Root Instance",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "root_instance"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Child Instances",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "child_instances"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Properties",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "properties"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "events"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Namespaces",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "namespaces"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Instance Inheriting",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "inheriting"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Namespaces",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Object types must be registered before using in XML.\n            For "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacBuild.ps1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/home/registered.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "registered types"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are hardcoded.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            There are two ways to use your own types in XML:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Declare your interfaces in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Script/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    You can implement them in C++ and pass them to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ref.Parameter/Windowgt;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Declare your classes in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Script/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    These classes will be immediately available in XML.\n                    Using "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/codegen.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "code generation attributes"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " correctly\n                    and you will be able to implement them in C++.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Register"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " your types in C++,\n                    and either call the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUI XML Resource"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " compiler defined in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUICompiler.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    or guild your own "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacGen.exe"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to replace the on in release for both x86 and x64.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Registered classes are named like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            As described in "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/tag_instance.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            the default namespace is\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "presentation::controls::GuiWindow;\r\npresentation::elements::GuiWindowElement;\r\npresentation::compositions::GuiWindowComposition;\r\npresentation::compositions::GuiWindow;\r\npresentation::templates::GuiWindow;\r\nsystem::Window;\r\nsystem::reflection::Window;\r\npresentation::Window;\r\npresentation::GuiWindow;\r\npresentation::controls::Window;\r\npresentation::controls::list::Window;\r\npresentation::controls::tree::Window;\r\npresentation::elements::Window;\r\npresentation::elements::GuiWindow;\r\npresentation::elements::text::Window;\r\npresentation::compositions::Window;\r\npresentation::templates::Window;\r\npresentation::theme::Window"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            When you write "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Window/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            it replaces "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "*"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Window"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the list and results in:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "presentation::controls::GuiWindow;\r\npresentation::elements::GuiWindowElement;\r\npresentation::compositions::GuiWindowComposition;\r\npresentation::compositions::GuiWindow;\r\npresentation::templates::GuiWindow;\r\nsystem::Window;\r\nsystem::reflection::Window;\r\npresentation::Window;\r\npresentation::GuiWindow;\r\npresentation::controls::Window;\r\npresentation::controls::list::Window;\r\npresentation::controls::tree::Window;\r\npresentation::elements::Window;\r\npresentation::elements::GuiWindow;\r\npresentation::elements::text::Window;\r\npresentation::compositions::Window;\r\npresentation::templates::Window;\r\npresentation::theme::Window"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Now only "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " exist,\n            so "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Window/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            An error will be generated if zero or multiple of them exist.\n         "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            For types that are not able to be found in the default namespace,\n            like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiSelectableButton::MutexGroupController"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            which is a very useful component to define a group of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RadioButton/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            you need to define your own namespace like:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Instance ref.Class=\"sample::MainWindow\" xmlns:x=\"presentation::controls::GuiSelectableButton::*\">\r\n  ...\r\n</Instance>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Now "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<x:MutexGroupController/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " becomes available,\n            it is pointing to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiSelectableButton::MutexGroupController"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n         "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "xmlns:NAMESPACE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " only apply to the current "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n         "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Besides of tag names,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "NAMESPACE:TYPE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is also available in\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/properties.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "properties that expect type names as their values"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n         "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

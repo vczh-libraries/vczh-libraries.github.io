@@ -1,0 +1,2640 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Types -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "type"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Module",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "module"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Functions and Variables",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "funcvar"
+              ]
+            },
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": true,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ]
+                }
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Expressions",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "expr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Statements",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "stat"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "bind"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Coroutines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "coroutine"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Index of Keywords",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "index"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Index of Errors",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "error"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Types",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "PageLink",
+            "href": "/home/registered.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "This type list"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " shows all types that you can use in a Workflow script.\n            You can use "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/module.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "using declaration"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to import names so that to make a type name shorter.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Identifier",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": uses a name that is imported by "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "using declarations"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "::NAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": uses a name that is in the global namespace.\n                        If you define anything directly in a module,\n                        instead of putting it in a namespace,\n                        you are defining a concept in the global namespace.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDENTIFIER::NAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": uses a name that is declared in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDENTIFIER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDENTIFIER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could be\n                        a "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/module.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "namespace"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        a "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/class.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "class"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        or an "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/interface.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Note that you are not allowed to define a new type in a "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/struct.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "struct"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Types in parentheses",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Parentheses can change associations in a type,\n                it is useful when there is ambiguity.\n                For example:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var x: func():string{} = null;"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                This is ambiguous,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "x"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be a function returning an enumerable of string,\n                it could also be an enumerable of functions that returns a string.\n                In order to tell the difference,\n                we could use parentheses like this:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var x: func():(string{}) = null;\r\nvar y: (func():string){} = null;"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Primitive types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here is all keyword for primitive types supported by Workflow script.\n                Not all primitive types have a keyword, like "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::DateTime"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the only way to use it is to write "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::DateTime"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or shorten the name using a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "using declaration"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        It can only appear at the function return type,\n                        indicating that this function do not have a return value.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Values of all types can be implicitly converted to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        A value of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " can be explicitly converted to any type,\n                        conversion failure results in throwing an exception.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is also a valid value for "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        casting "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to an optional type results in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        casting "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to any other type results in throwing an exception.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        This is a reference type,\n                        the base type for all interfaces.\n                        it means that "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "interface*"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "interface^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " are valid types,\n                        but "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " itself is not.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "int"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        When the compiler is running in an x86 process, it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Int32"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When the compiler is running in an x64 process, it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Int64"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "uint"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        When the compiler is running in an x86 process, it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::UInt32"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When the compiler is running in an x64 process, it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::UInt64"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "float"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Float"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "double"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Double"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::String"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        You can either use "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "'"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to create a value of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        The following strings equal to each other:\n                        "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "var a = \"a'\\\"\";\r\nvar b = 'a\\'\"';\r\nvar c = \"a\" & \"'\" & '\"';"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Unlike other programming languages,\n                        the \""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "&"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\" operator joins two strings to one,\n                        instead of \""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "+"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "char"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Char"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Workflow does not support "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "char"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " operations,\n                        you are not able to create any value of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "char"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        you are not able read "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "char"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        unless it is returned from a C++ function.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bool"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::Boolean"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        It could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You could check out how "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/home/registered/vlppreflection.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "predefined types"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are mapped to C++ types.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Type Conversions",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "All primitive types could be implicitly converted to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "string"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "string"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could be explicitly converted to any primitive type."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "float"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could be implicitly converted to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "double"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Signed integer types could be implicitly converted to any larger signed integer types."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Unsigned integer types could be implicitly converted to any larger unsigned integer types."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "8-bits and 16-bits integer types could be implicitly converted to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "float"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "32-bits and 64-bits integer types could be implicitly converted to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "double"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "All numeric types could be explicitly converted to each other."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Enum types could be explicitly converted to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::UInt64"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::UInt64"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could be explicitly converted to enum types."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Reference types and Pointers",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Any class types, interface types, or the type \""
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "interface"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\", are all reference types.\n                Optional types are not reference types.\n                A reference type itself is not a valid type,\n                pointers to a reference type are valid types.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Shared pointers",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " means "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ptr<T>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in C++.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Althought "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " could be any type in C++,\n                    but in Workflow script,\n                    pointers could only point to reference types.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Raw pointers",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " means "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in C++.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Althought "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " could be any type in C++,\n                    but in Workflow script,\n                    pointers could only point to reference types.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    You can "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "delete"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " a raw pointer value as in C++.\n                    But it could result in throwing an exception,\n                    when there are shared pointers that holding this object.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Optional types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Type "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "T?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Nullable<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Althought "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "T"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be any type in C++,\n                but in Workflow script,\n                optional types could only point to primitive types, structs and enums.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a valid value for optional types.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Value of any valid type could be implicitly converted to its optional type.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Value of an optional types could be implicitly converted to its containing type.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An optional type "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can be implicitly or explicitly converted to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can be implicitly or explicitly converted to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Function types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A boxed function type is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueFunctionProxy>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                but it can also be unboxed to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Func<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Both function and member can be pack in a function type:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nfunc A(): string\r\n{\r\n    return \"A\";\r\n}\r\n\r\nclass B\r\n{\r\n    func M(): string\r\n    {\r\n        return \"B\";\r\n    }\r\n}\r\n\r\ninterface IC\r\n{\r\n    func M(): string;\r\n}\r\n\r\nvar c = new IC^\r\n{\r\n    override func M(): string\r\n    {\r\n        return \"C\";\r\n    }\r\n}.M;\r\n\r\nfunc main(): string\r\n{\r\n    var fs /* : (func(): string){} */ = {\r\n        A;\r\n        new B^().M;\r\n        c;\r\n        [\"D\"];\r\n        func():string {return \"E\";};\r\n    };\r\n\r\n    var r = \"\";\r\n    for (f in fs)\r\n    {\r\n        r = r & f();\r\n    }\r\n    return r;\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Function "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "A"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " can be stored in a variable of functions type.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        A class method can be stored in a variable of function type.\n                        We allocate "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "B"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as a shared pointer.\n                        Even we have lost the pointer holding a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "B"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        but another pointer is in the function type,\n                        the reference count is maintained.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        An interface method can also be stored in a variable of function type.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        An ordered lambda expression can be stored in a variable of function type.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        A lambda expression can be stored in a variable of function type.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A function is allowed to have parameters,\n                so as a function type.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nfunc main(): string\r\n{\r\n    var add: func(int, int):int = [$1 + $2];\r\n    var mul = func(x:int, y:int):int {return x * y;};\r\n    return mul(add(1, 2), add(3, 4));\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An ordered lambda expression does not have an explicit type,\n                because type of parameters is not specified,\n                so the place receiving it must have an explicit type.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A lambda expression has an explicit type,\n                so the type of variable "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "mul"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can be inferred.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Collection types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here are all supported collection types:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "TValue {}"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is an readonly collection, it can be iterated, it has no random access."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::Enumerable^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueEnumerable"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "TValue []"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is a list, it has random access."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::List^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueList"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "const TValue []"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is a read-only list, it has random access."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::ReadonlyList^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueReadonlyList"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "observe TValue []"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is an observable list, it has random access, changing the list triggers events."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::ObservableList^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueObservableList"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "TValue [TKey]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is a dictionary, it maps from a key to a value, it has random access on keys and values."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::Dictionary^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueDictionary"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "const TValue [TKey]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "This is a readonly dictionary, it maps from a key to a value, it has random access on keys and values."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-generic version: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::ReadonlyDictionary^"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "reflectable type: "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "system::IValueReadonlyDictionary"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When calling methods of collection types,\n                all keys and values are "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                because Workflow doesn't support generic interface.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When using the \""
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\" operator,\n                or using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "for"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " statement,\n                keys and values are strong-typed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Allocating lists",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Collections and lists can be allocated by constructor expressions:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var a: int{} = {1 2 3 4 5};\r\nvar b: int[] = {1 2 3 4 5};\r\nvar c: const int[] = {1 2 3 4 5};\r\nvar d: observe int[] = {1 2 3 4 5};\r\nvar e /* : int[] */ = {1 2 3 4 5};"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    We can also use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "{1; 2; 3; 4; 5;}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If we don't specify variable types,\n                    a constructor expression that making a list becomes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Range expressions are very useful to create collections:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var a = range (1, 5); /* {2 3 4} of int{}       */\r\nvar b = range [1, 5); /* {1 2 3 4} of int{}     */\r\nvar c = range (1, 5]; /* {2 3 4 5} of int{}     */\r\nvar d = range [1, 5]; /* {1 2 3 4 5} of int{}   */"
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Round parenthesis means the value on that side is included."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Square parenthesis means the value on that side is not included."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Iterating over lists",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TValue {}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TValue []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "const TValue []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "observe TValue []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    can be used in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "for"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " statements:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "func main(): string\r\n{\r\n    var xs = {1 2 3 4 5};\r\n    var sum = 0;\r\n    for (x in xs)\r\n    {\r\n        sum = sum + x;\r\n    }\r\n    return sum;\r\n}"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "For"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " statements can iterate over a list in an opposite direction:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "func main(): string\r\n{\r\n    var xs = {1 2 3 4 5};\r\n    var sum = 0;\r\n    for (x in revsersed xs)\r\n    {\r\n        sum = sum + x;\r\n    }\r\n    return sum;\r\n}"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Range expressions works with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "for"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " statements very well:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "func main(): string\r\n{\r\n    var sum = 0;\r\n    for (x in range[1, 5])\r\n    {\r\n        sum = sum + x;\r\n    }\r\n    return sum;\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Allocating dictionaries",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Dictionaries can be allocated by constructor expressions:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var a: string[int] = {1:\"one\" 2:\"two\" 3:\"three\"};\r\nvar b: const string[int] = {1:\"one\" 2:\"two\" 3:\"three\"};\r\nvar c /* : string[int] */ = {1:\"one\" 2:\"two\" 3:\"three\"};"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    We can also use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "{1:\"one\"; 2:\"two\"; 3:\"three\";}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If we don't specify variable types,\n                    a constructor expression that making a dictionary becomes "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TValue [TKey]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cross XML Resource References -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "cxrr"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Code Generation Configuration",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cgc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": true,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Folders and Resources",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "dom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Text>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_text"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Image>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_image"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Xml>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_xml"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Doc>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_doc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Script>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_script"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<InstanceStyle>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instancestyle"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Animation>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_animation"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<LocalizedStrings>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_localizedstrings"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Cross XML Resource References",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI XML Resource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can import types from other resource files.\n            These resource files should satisfy the following conditions:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "They should be able to be discovered under one "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUI.xml"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The resource file being imported must have a name in its metadata."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The resource file importing others must specify dependencies in its metadata."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            These items will be removed from the resource binary and cannot be imported:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<InstanceStyle/>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            These items can be imported by URI like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "import-res://RESOURCE-NAME/path/to/the/resource/item"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Text/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Image/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Xml/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Doc/>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            These items will be removed from the resource binary, but their generated types can be used in resource files that import them:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Script/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Animation/>"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<LocalizedStrings/>"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Note: in <Script/> only types can be exported,\n            global variables and functions are invisible to other resource files.\n            Names in resource files that are eventually loaded to the same GacUI application process must be unique.\n            All created Workflow types must be unique too.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here are some examples:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditor",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DocumentEditor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    A custom control which provides functionalities of rich text document editing and shared UIs.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorToolstrip",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DocumentEditorToolstrip"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    A document editor using toolstrip, with the above custom control being imported.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorRibbon",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DocumentEditorRibbon"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    A document editor using ribbon, with the above custom control being imported.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

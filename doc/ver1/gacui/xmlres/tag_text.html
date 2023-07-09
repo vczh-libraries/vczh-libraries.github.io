@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><text> -- GPU Accelerated C++ User Interface (vczh)</text></title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "tag_text"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Code Generation Configuration",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cgc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Folders and Resources",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "dom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Text>",
+              "selected": true,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_text"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Image>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_image"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Xml>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_xml"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Doc>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_doc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Script>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_script"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<InstanceStyle>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instancestyle"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Animation>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_animation"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<LocalizedStrings>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_localizedstrings"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<Text>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_xmlres_data/TextPage.xml",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Here"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            is the sample used in this topic.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Text/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a resource that contains "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "string"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            In "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " it can be used in the following ways:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "res://path/to/the/resource/item"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "import-res://RESOURCE-NAME/path/to/the/resource/item"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RESOURCE-NAME"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " should be a resource that is specifies in one of a\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/ResourceMetadata/Dependencies/Resource/@Name"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "res://GacGenConfig/Metadata"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In the sample there are three text resources:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Resource>\r\n  <Folder name=\"MainWindow\">\r\n    <Folder name=\"TextPage\">\r\n      <Text name=\"TextResource1\">This is the first text resource.</Text>\r\n      <Text name=\"TextResource2\">the second</Text>\r\n      <Text name=\"TextResource3\">the third text resource.</Text>\r\n    </Folder>\r\n  </Folder>\r\n</Resource>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TextResource1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is used in:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Button Text-uri=\"res://MainWindow/TextPage/TextResource1\"/>"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-uri"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is one of a "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/advanced/bindings.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "data binding"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " operator,\n            which pull the resource by a path and assign to the property.\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Text/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " resource can be assigned to any property that accepts "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::GuiTextData^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "string"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here the button's "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Text"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property becomes the content of this resource.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TextResource2"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is used in:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Button Text-format=\"This is $((cast (TextData^) self.ResolveResource('res', 'MainWindow/TextPage/TextResource2', true)).Text) text resource.\"/>"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-format"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is one of a "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/advanced/bindings.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "data binding"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " operator,\n            which evaluates all Workflow expressions in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "$()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and assign the whole result to the property.\n            If any expression "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/bind.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "references observable properties"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            when those property is changed,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-format"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will evaluate the whole thing and update the property automatically.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This example consist of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"This is $()\" text resource."
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and an expression:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "(cast\r\n  (TextData^)\r\n  self.ResolveResource('res', 'MainWindow/TextPage/TextResource2', true)\r\n).Text"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is the tab page because there is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ref.Name=\"self\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<TabPage/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ResolveResource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " uses the resource binary containing this tab page as a reference.\n            If the first argument is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "'res'"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            it finds the path in the current resource.\n            If the first argument is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "'import-res'"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and the second argument is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "'RESOURCE-NAME/path/to/the/resource/item'"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            it finds the path in a loaded resource binary named "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RESOURCE-NAME"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This function returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::ReferenceType^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            but for "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Text/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " it is actually a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::GuiTextData^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Since by default there is already an implicit "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "using presentation::*;"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            so "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TextData^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " becomes the type name.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The content of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TextResource2"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "the second"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            and there is no observable property in this data binding,\n            so it is equivalent to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "-format=\"This is $('the second') text resource.\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TextResource1"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is used in:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Button ref.Name=\"button3\" Text=\"Click Me!\">\r\n  <ev.Clicked-eval>\r\n    <![CDATA[\r\n      {\r\n        var textRes = (cast (TextData^) self.ResolveResource('res', 'MainWindow/TextPage/TextResource3', true)).Text;\r\n        button3.Text = $\"This button shows $(textRes)!\";\r\n      }\r\n    ]]>\r\n  </ev.Clicked-eval>\r\n</Button>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Obviously,\n            by clicking the button,\n            it updates the itself.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is how it looks like:\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Source code: "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_xmlres_data/TextPage.xml",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "kb_xmlres_data"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Image",
+                    "src": "/gacui/kb_xmlres_tag_text.gif"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

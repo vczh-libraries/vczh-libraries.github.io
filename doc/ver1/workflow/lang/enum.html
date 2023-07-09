@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Enums -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "enum"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Enums",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Enums can be defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "modules"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "namespaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "classes"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "interfaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            There are two kinds of enums: enumerations and flags.\n            The main difference between them is that,\n            the \""
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "&"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\" and \""
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "|"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\" operator is not defined for enumerations.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A value of any enum can be explicitly converted to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::UInt8"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            A value of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "system::UInt8"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can also be explicitly converted to any enum type,\n            but the runtime does not check if the conversion result is a valid enum value or not.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Enumerations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An enumeration is a type that has finite values.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "enum Seasons\r\n{\r\n    Spring = 0,\r\n    Summer = 1,\r\n    Autumn = 2,\r\n    Winter = 3,\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Each item should be assigned an integer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The first item must be assigned with 0."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Any other item must be 1 greater than the previous item."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The last comma \""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": ","
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\" must not be omitted."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There is 4 ways to use an enum item:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func use(s: Seasons):Seasons\r\n{\r\n    return s;\r\n}\r\n\r\nvar a: Seasons = Spring;\r\nvar b = Seasons::Summer;\r\nvar c = Autumn of Seasons;\r\nvar d = use(Winter);"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "var a: Seasons = Spring;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "var d = use(Winter);"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When the place accepting an enum item expression has a known type,\n                the name of the enum item is enough.\n                Variable "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has its type explicitly declared.\n                The parameter type of function "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "use"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is also explicitly declared.\n                So "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Seasons::"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not needed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "var b = Seasons::Summer;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Another way is to explicitly say the name of the enum.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "var c = Autumn of Seasons;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The third way is to explicitly declare the type of the expression.\n                This usage is similar to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "d"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                by explicitly declared that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Autumn"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Seasons"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the place accepting an enum item is \""
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<HERE> of Seasons"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\"\",\n                so this place has a known type.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Flags",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A flag is a type that has finite values and their combinations.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "flagenum Seasons\r\n{\r\n    None = 0,\r\n    Spring = 1,\r\n    Summer = 2,\r\n    Autumn = 4,\r\n    Winter = 8,\r\n    GoodSeasons = Spring | Autumn,\r\n    BadSeasons = Summer | Winter,\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Each item should be assigned an integer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The first item must be assigned with 0. Usually the first item is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "None"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", you are free to use any name."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Any other item must be twice as much as the previous item."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Aliases of item combinations must be placed after all items."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The last comma \""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": ","
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\" must not be omitted."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Just like enums, flags also have type inferencing:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func use(s: Seasons):Seasons\r\n{\r\n    return s;\r\n}\r\n\r\nvar a: Seasons = Spring | Summer;\r\nvar b = Seasons::Summer | Seasons::Autumn;\r\nvar c = (Autumn | Winter) of Seasons;\r\nvar d = use(Winter | Spring);"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                As you can see,\n                the operator \""
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\" and \""
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "|"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\" are automatically defined for flags.\n                When it is used on flags,\n                it requires that both operands must be the same type.\n                The type of the result is the same to its operands.\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "|"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\" returns the union of two operands."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\""
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "&"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\" returns the intersection of two operands."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                These two operators are also defined for integers.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

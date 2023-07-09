@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>C++ Code Generation -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "codegen"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "+",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Runtime Instructions",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ins"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "C++ Code Generation",
+          "selected": true,
+          "path": [
+            "workflow",
+            "codegen"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "C++ Code Generation",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Attributies can be applied to Workflow classes, functions and members to control the result of C++ code generation.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "@cpp:File(\"YourFile\")",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This attribute applies to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "classes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                It creates a new pair of file "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YourFile.h"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YourFile.cpp"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to \n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Since internal classes in Workflow get translated to internal classes in C++,\n                if you assign different file name to class A and B when B is defined inside A,\n                it causes an error.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This attribute is useful when the class has methods with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:UserImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "@cpp:UserImpl",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This attribute applies to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "constructors, destructors and functions"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in classes.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Bodies of functions with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:UserImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are ignored,\n                they are left blank in the generated file,\n                allowing users to add custom code lines\n                between:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_BEGIN(CLASS-NAME) */"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_END() */"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a class contains methods with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:UserImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                custom members can also be added to the generated header file for this class\n                between:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_BEGIN(custom members of CLASS-NAME) */"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_END() */"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a file contains methods with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:UserImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                custom global declarations can also be added to the generated header file for this class\n                between:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_BEGIN(custom global declarations) */"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "/* USER_CONTENT_END() */"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When the Workflow script is modified and re-generated,\n                new generated code and custom code lines in specific locations will be merged together,\n                so your work doesn't lost.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                If there are braces ("
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "{"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "}"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ") in custom code lines,\n                they must take the whole line,\n                or the code merging will report errors.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "@cpp:Protected and @cpp:Private",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                These attributes apply to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "any members"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in classes, except non-auto properties.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a class member is annotated by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:Protected"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                this part of the C++ code will be generated with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "protected:"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                So as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:Private"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NOTE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ": these attributes don't affect the Workflow compiler,\n                Workflow script treats all members as public members.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "@cpp:Friend(typeof(YourType))",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This attribute applies to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "classes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                It generates "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "friend"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " declaration in C++ code,\n                allowing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "YourType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to access protected or private members of the current class. \n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Example",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "Workflow Script",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "module SampleModule;\r\n\r\nclass DummyClass\r\n{\r\n    func CallPrivateMethod(my: MyClass^): void\r\n    {\r\n        my.Method();\r\n    }\r\n}\r\n\r\n@cpp:File(\"MyClass\")\r\n@cpp:Friend(typeof(DummyClass))\r\nclass MyClass\r\n{\r\n    @cpp:UserImpl\r\n    @cpp:Private\r\n    func Method(): void\r\n    {\r\n        raise \"Not Implemented!\";\r\n    }\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Generated C++ Files",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IMPORTANT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The default file name is configurable,\n                            here we assume that it is "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SampleModule"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            This is not the full content of generated files.\n                            By following "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "/workflow/running/generating.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Generating C++ Code"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " you will see everything.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SampleModule.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class DummyClass;\r\nclass MyClass;\r\n\r\nclass DummyClass : public ::vl::Object, public ::vl::reflection::Description<DummyClass>\r\n{\r\n#ifndef VCZH_DEBUG_NO_REFLECTION\r\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<DummyClass>;\r\n#endif\r\npublic:\r\n    void CallPrivateMethod(::vl::Ptr<::MyClass> my);\r\n    DummyClass();\r\n};\r\n\r\n/***********************************************************************\r\nGlobal Variables and Functions\r\n***********************************************************************/\r\n\r\nnamespace vl_workflow_global\r\n{\r\n    class W05Script\r\n    {\r\n    public:\r\n\r\n        static W05Script& Instance();\r\n    };\r\n}"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SampleModule.cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\r\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\r\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\r\n\r\n/***********************************************************************\r\nGlobal Variables\r\n***********************************************************************/\r\n\r\nBEGIN_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\r\n    vl_workflow_global::W05Script instance;\r\n    INITIALIZE_GLOBAL_STORAGE_CLASS\r\n    FINALIZE_GLOBAL_STORAGE_CLASS\r\nEND_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\r\n\r\nnamespace vl_workflow_global\r\n{\r\n/***********************************************************************\r\nGlobal Functions\r\n***********************************************************************/\r\n\r\n    W05Script& W05Script::Instance()\r\n    {\r\n        return Getvl_workflow_global_W05Script().instance;\r\n    }\r\n}\r\n\r\n/***********************************************************************\r\nClass (::DummyClass)\r\n***********************************************************************/\r\n\r\nvoid DummyClass::CallPrivateMethod(::vl::Ptr<::MyClass> my)\r\n{\r\n    ::vl::__vwsn::This(my.Obj())->Method();\r\n}\r\n\r\nDummyClass::DummyClass()\r\n{\r\n}\r\n\r\n#undef GLOBAL_SYMBOL\r\n#undef GLOBAL_NAME\r\n#undef GLOBAL_OBJ"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MyClass.h"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class MyClass : public ::vl::Object, public ::vl::reflection::Description<MyClass>\r\n{\r\n    friend class ::DummyClass;\r\n#ifndef VCZH_DEBUG_NO_REFLECTION\r\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MyClass>;\r\n#endif\r\nprivate:\r\n    void Method();\r\npublic:\r\n    MyClass();\r\n\r\n/* USER_CONTENT_BEGIN(custom members of ::MyClass) */\r\n/* USER_CONTENT_END() */\r\n};"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MyClass.cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\r\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\r\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\r\n\r\n/* USER_CONTENT_BEGIN(custom global declarations) */\r\n/* USER_CONTENT_END() */\r\n\r\n/***********************************************************************\r\nClass (::MyClass)\r\n***********************************************************************/\r\n\r\nvoid MyClass::Method()\r\n{/* USER_CONTENT_BEGIN(::MyClass) */\r\n    throw ::vl::Exception(L\"You should implement this function.\");\r\n}/* USER_CONTENT_END() */\r\n\r\nMyClass::MyClass()\r\n{\r\n}\r\n\r\n#undef GLOBAL_SYMBOL\r\n#undef GLOBAL_NAME\r\n#undef GLOBAL_OBJ"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

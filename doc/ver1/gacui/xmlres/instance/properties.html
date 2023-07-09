@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Properties -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "instance",
+    "properties"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Root Instance",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "root_instance"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Child Instances",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "child_instances"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Properties",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "properties"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "events"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Namespaces",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "namespaces"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Instance Inheriting",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "inheriting"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Properties",
+    "content": [
+      {
+        "kind": "Topic",
+        "title": "Syntax",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are two ways to assign values to a property:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Object PROP1=\"VALUE\">\r\n    <att.PROP2>VALUE</att.PROP2>\r\n</Object>"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Or using data binding:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Object PROP1-BINDING=\"VALUE\">\r\n    <att.PROP2-BINDING>VALUE</att.PROP2-BINDING>\r\n</Object>"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Sometimes you want to assign values to a property in an object which is returned from another property:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Object>\r\n    <att.PROP1-set PROP2=\"VALUE\">\r\n        <!-- all the above four ways are valid -->\r\n    </att.PROP1-set>\r\n</Object>"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                What it do is \"OBJECT.PROP1.PROP2 = VALUE\".\n                This is very useful when configuring "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoundsComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ContainerComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of a control.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Kinds of Properties",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An object have four kinds of properties\n                all of them are in the same syntax:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Constructor Parameter"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The value of the parameter must be evaluated before calling the constructor of the object.\n                            In "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ComboBox/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ListControl"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is such kind of property.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            A constructor parameter is not a real property,\n                            it cannot be changed after the object is created.\n                            Only assignment, "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-uri"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " binding and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-eval"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " binding is valid on such properties.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Virtual Property"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            A virtual property is created to make XML more readable.\n                            In "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Table/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Rows"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Columns"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " are such kinds of properties.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            A virtual parameter is not a real property,\n                            it cannot be changed after the object is created.\n                            Only assignment, "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-ref"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " binding, "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-uri"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " binding and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-eval"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " binding is valid on such properties.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Standard Property"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            A standard property is a real property of the object.\n                            Typically,\n                            assignment to the property "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "X"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is converted to a calling of "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SetX"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            but the actual generated code can be customized by using "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "reflection"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Binding",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Besides assignment or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "-set"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                there are several kinds of data binding:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-uri",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding retrive an object from a resource and assign to the property.\n                    This is a one-time assignment of the property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Please checkout the following topics for details:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "/gacui/xmlres/tag_text.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Text>"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "/gacui/xmlres/tag_image.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Image>"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "/gacui/xmlres/tag_doc.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Doc>"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "PageLink",
+                            "href": "/gacui/xmlres/tag_xml.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Xml>"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-ref",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding assign an object to the property.\n                    This is a one-time assignment of the property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The value of the property is the name of the object.\n                    The name of an object is defined by its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ref.Name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-ref=\"self\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on the root instance is a very common pattern,\n                    so that you can access the root instance with all custom members in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ref.Members/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-eval",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding assign a value to the property.\n                    This is a one-time assignment of the property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The value of the property is a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-bind",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding bind the property to a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    When the expression is changed,\n                    the property is assigned again.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Writing "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-bind=\"EXPR\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " means observing the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/bind.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bind(EXPR)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " expression.\n                    You can also use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-bind=\"a.observe as b(EXPR on E1, E2, ...)\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    since "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "bind(a.observe as b(EXPR on E1, E2, ...))"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a valid Workflow expression.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-format",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding bind the property to "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html#-formatted-string-",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "formatted string expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    When the expression is changed,\n                    the property is assigned again.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For example,\n                    to bind a text box's content to a label,\n                    you can use:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<DocumentTextBox ref.Name=\"textBox\"/>\r\n<Label Text-format=\"Hello, $(textBox.Text)!\"/>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It is equivalent to:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<DocumentTextBox ref.Name=\"textBox\"/>\r\n<Label Text-bind=\"$'Hello, $(textBox.Text)!'\"/>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Note that, both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "'"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\""
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are valid for strings,\n                    so it is very convenient to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "'"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in XML attributes to avoid escaping.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "-str",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This binding bind the property to string resource.\n                    When the expression is changed,\n                    the property is assigned again.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Please checkout "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/xmlres/tag_localizedstrings.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<LocalizedStrings>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for details.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Deserialization",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For any "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "non-binding"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property assignment,\n                GacUI interpret the property value differently for different types of propertyes.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here are a list of types and how they interpret property values:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Primitive Types",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For string, the value becomes the string literal."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For bool, integers and numbers, it must be a valid "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "/workflow/lang/expr.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Workflow literal"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For DateTime, it must be \"YYYY-MM-DD hh:mm:ss.sss\""
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Structs",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The value must contains multiple \"FIELD:VALUE\".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "FIELD"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a field name in the struct,\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VALUE"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a valid "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with a compatible type.\n                    Multiple items a separated by spaces.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It is actually a "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html#Constructor-expression-a-b-c-a-x-b-y-c-z-",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow constructor expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    without the surrounding braces.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Enums",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For enums, the value must be one of enum items."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "For flags, multiple enum item names are seperated by \"|\"."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Nullable Types",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The default value is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    but you cannot explicitly assign "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in XML.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Classes or Interfaces",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    An object is expected for these properties.\n                    But since an object cannot be created in XML attributes,\n                    so you need to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<att.NAME/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If the object type is exactly the property type,\n                    you can use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "_"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " as the tag name for that object.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The above rule is also valid for primitive types,\n                    for example:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Window Text=\"The Title\"/>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    is equivalent to\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Window>\r\n  <att.Text>\r\n    <String>The Title</String>\r\n  </att.Text>\r\n</Window>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    and\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Window>\r\n  <att.Text>\r\n    <_>The Title</_>\r\n  </att.Text>\r\n</Window>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Collections",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Zero to multiple values is expected for these properties.\n                    But since a collection cannot be created in XML attributes,\n                    so you need to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<att.NAME/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If the object type is exactly the item type,\n                    you can use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "_"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " as the tag name for that object.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For example:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Table>\r\n  <att.Rows>\r\n    <CellOption>composeType:MinSize</CellOption>\r\n    <CellOption>composeType:Percentage percentage:1.0</CellOption>\r\n  </att.Rows>\r\n</Table>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    is equivalent to\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<Table>\r\n  <att.Rows>\r\n    <_>composeType:MinSize</_>\r\n    <_>composeType:Percentage percentage:1.0</_>\r\n  </att.Rows>\r\n</Table>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Control/Item Template: func(data: Object): TEMPLATE_CLASS*",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The value must be a type name,\n                    or multiple type names separated by \";\".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A type name can be a full name of a class,\n                    like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "my::namespace::MyClass"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Or an equivalent tag name with property namespace setting,\n                    like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "my:MyClass"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when there is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Instance xmlns:my=\"my::namespace::*\"/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For item templates,\n                    there can be one constructor parameter,\n                    which is typically a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ref.Parameter/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The item type is unknown,\n                    because for a bindable list control,\n                    each item can be different type.\n                    If there are multiple item templates with different constructor parameter type,\n                    each constructor parameter type will be tested until there is the first one that is compatible with the actual item type.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The above test always succeeds for item templates that have no constructor parameter.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This is a common pattern to apply different item templates on different items in a list control.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Property Name: func(data: Object): PROPERTY_TYPE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    When there is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " attribute\n                    on the object having this property of or on any parent object,\n                    the type of the object to retrieve the property value at runtime is expected to be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    In this case,\n                    the value of this property must be a valid property or field name.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    When there is also a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " attribute,\n                    the value of this property can also be a valid\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/expr.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Workflow expression"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "env.ItemName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " becomes a valid identifier representing the object to retrieve the property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For example:\n                    when you bind a collection to a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableDataGrid/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    different columns can be configured to displays different properies of the collection item like this:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "<BindableDataGrid env.ItemType=\"demo::MyDataItem^\" env.ItemName=\"itemToBind\">\r\n  <att.Columns>\r\n    <DataColumn Text=\"Name\" Size=\"120\">\r\n      <att.TextProperty>Name</att.TextProperty>\r\n    </DataColumn>\r\n\r\n    <DataColumn Text=\"Gender\" Size=\"80\">\r\n      <att.TextProperty>demo::ToString(itemToBind.Gender)</att.TextProperty>\r\n    </DataColumn>\r\n  </att.Columns>\r\n</BindableDataGrid>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Writable Property Name: func(data: Object, value: PROPERTY_TYPE, isWrite: bool): PROPERTY_TYPE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Writable Property Name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is very similar to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Property Name"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    The only difference is that,\n                    regardless the property value is an identifier or an expression,\n                    it must be assignable.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NOTE:"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " struct fields and readonly properties are not assignable.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<BindableDataGrid> column properties",
+            "content": [
+              {
+                "kind": "Topic",
+                "title": "presentation::controls::list::IDataVisualizerFactory^",
+                "content": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        A "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataVisualizerFactory"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property is very similar to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Item Template"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        There is no input object to select a visualizer.\n                        Instead,\n                        multiple visualizer are all created and nested together,\n                        so that different visualizers could share some decoration like borders.\n                        The first one is the most inner one.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Each visualizer must inherit from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "presentation::templates::GuiGridVisualizerTemplate"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CellValue"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property will be assigned according to the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ValueProperty"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of the column.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Topic",
+                "title": "presentation::controls::list::IDataEditorFactory^",
+                "content": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        A "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataEditorFactory"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property is very similar to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Item Template"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        There is no input object to select an editor.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Each editor must inherit from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "presentation::templates::GuiGridEditorTemplate"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CellValue"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property will be assigned according to the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ValueProperty"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of the column.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Topic",
+                "title": "presentation::controls::list::IDataFilter^",
+                "content": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        The property value of a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataFilter^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property is expected to be a\n                        "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/expr.html#Ordered-lambda-expression-1-2-",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Workflow lambda expression"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        The first argument is the row object,\n                        which is an item in the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ItemSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " collection of the list control.\n                        Returns true to make the row visible.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NOTE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        for "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "-eval"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " binding,\n                        the expression must returns an object implementing the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataFilter"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " interface.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Topic",
+                "title": "presentation::controls::list::IDataSorter^",
+                "content": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        The property value of a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataSorter^"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property is expected to be a\n                        "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/expr.html#Ordered-lambda-expression-1-2-",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Workflow lambda expression"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        The first and second arguments are two row objects to compare,\n                        which are two items in the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ItemSource"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " collection of the list control.\n                        Returns a negative, zero, positive number for \"less than\", \"equal\", \"greater than\".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NOTE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        for "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "-eval"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " binding,\n                        the expression must returns an object implementing the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IDataSorter"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " interface.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Instance Inheriting -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "instance",
+    "inheriting"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Root Instance",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "root_instance"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Child Instances",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "child_instances"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Properties",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "properties"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "events"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Namespaces",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "namespaces"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Instance Inheriting",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "inheriting"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Instance Inheriting",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be a base type of another "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            These two instances are required to be in the same XML resource,\n            or the base type is required to be in\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/cxrr.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "one of the dependency"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            specified in\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/cgc.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Metadata"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " configuration"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Typically,\n            you don't want your "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to be in the default namespaces,\n            so it is very common to use "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/namespaces.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "xmlns:NAMESPACE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for the base type like:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Resource>\r\n  <Instance name=\"BaseInstanceResource\">\r\n    <Instance ref.Class=\"sample::MyBaseInstance\">\r\n      <Window/>\r\n    </Instance>\r\n  </Instance>\r\n  \r\n  <Instance name=\"DerivedInstanceResource\">\r\n    <Instance ref.Class=\"sample::MyDerivedInstance\" xmlns:sample=\"sample::*\">\r\n      <sample:MyBaseInstance/>\r\n    </Instance>\r\n  </Instance>\r\n</Resource>"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Please check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/advanced/cxrr.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Cross XML Resource References"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for details.\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

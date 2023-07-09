@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Coroutines -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "coroutine"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Module",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "module"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Functions and Variables",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "funcvar"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Expressions",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "expr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Statements",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "stat"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "bind"
+              ]
+            },
+            {
+              "icon": "-",
+              "name": "Coroutines",
+              "selected": true,
+              "path": [
+                "workflow",
+                "lang",
+                "coroutine"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enumerable Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_enumerable"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Async Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_async"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Raw Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_raw"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Design Your Own Coroutine",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "coroutine_custom"
+                  ]
+                }
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Index of Keywords",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "index"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Index of Errors",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "error"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Coroutines",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            There are two kinds of coroutines:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Raw Coroutine"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Coroutine Function"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Coroutine creates a piece of code\n            that can be paused and resumed as expected,\n            so that this piece of code could receive multiple inputs\n            and produce multiple outputs.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Raw Coroutine",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Raw coroutine is an expression which looks like:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "$coroutine{ ... }"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                This expression returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Coroutine^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/coroutine_raw.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Raw Coroutine"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Coroutine function",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Coroutine function (including lambda expressions) is written in these forms:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func ... : void\r\n$NAME {\r\n    ...\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                or\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func ... : Something\r\n$NAME {\r\n    ...\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                or\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func ... : Something\r\n${\r\n    ...\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are two predefines coroutine in Workflow:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/coroutine_async.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Async"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/lang/coroutine_enumerable.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$Enumerable"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Determine the coroutine provider for a coroutine function",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Consider the following coroutine function:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func ... : TYPE\r\n$NAME {\r\n    ...\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        When "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$NAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " has a name,\n                        the coroutine provider is determined by the coroutine name "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "That"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        When "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$NAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " does not has a name (written as "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "),\n                        the coroutine provider is determined by the return type "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TYPE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        It generates an error when "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TYPE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Searching by return type",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Consider the following coroutine:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\n$interface StringAsync : Async<string>;\r\n\r\nfunc DoAsync(): StringAsync\r\n$ {\r\n    ...\r\n}"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The coroutine provider to use is determined like this:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The coroutine does not have a name,\n                            because the function body starts with "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "${"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            so the coroutine is searched by return type.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The return type is "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "StringAsync^"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            list this type with all parent types in the breadth-first order.\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::StringAsync"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::system::Async"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::system::Interface"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Append "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\"Coroutine\""
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " after the type name:\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::StringAsyncCoroutine"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::system::AsyncCoroutine"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "::system::InterfaceCoroutine"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The first existing type is "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "::system::AsyncCoroutine"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            pick this one.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Searching by coroutine name",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Consider the following coroutine:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc DoAsync(): void\r\n$Async {\r\n    ...\r\n}"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The coroutine provider to use is determined like this:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            The coroutine has a name,\n                            it is "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Search for "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " in the context,\n                            we get "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "::system::Async"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Append "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\"Coroutine\""
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " after the type name:\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "::system::AsyncCoroutine"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            It exists, pick this one.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            If the previous step fails,\n                            search for "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "AsyncCoroutine"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " in the context.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

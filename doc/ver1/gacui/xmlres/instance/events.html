@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Events -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "instance",
+    "events"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Root Instance",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "root_instance"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Child Instances",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "child_instances"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Properties",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "properties"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Events",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "events"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Namespaces",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "namespaces"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Instance Inheriting",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "inheriting"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Events",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            There are two ways to handle an event:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Object ev.EVENT1=\"FUNCTION_NAME\">\r\n    <ev.EVENT2>FUNCTION_NAME</ev.EVENT2>\r\n</Object>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Or using data binding:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Object ev.EVENT1-eval=\"{ ... }\">\r\n    <ev.EVENT2-eval><![CDATA[\r\n        { ... }\r\n    ]]<![CDATA[></ev.EVENT2-eval>\r\n</Object>"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "By Function",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a function name is assigned to an event,\n                an empty C++ function will be generated.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You are recommended to use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ref.CodeBehind=\"true\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                By doing this,\n                you will get a separated pair of C++ files for this "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Instance/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                In the cpp file you will see an very obvious place holder for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FUNCTION_NAME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                You can insert anything you want inside this function.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When you change the XML later,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacBuild.ps1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will recognize your change and merge new generated code with your change.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Only changing code in expected places,\n                        which will be marked using obvious comments in generated C++ code.\n                        Changing to all other places will be lost after running "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacBuild.ps1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GacBuild.ps1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " expects \"{\" and \"}\" to take the whole line.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DO NOT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " put \"{\" after the previous line.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please check out "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/codegen.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C++ Code Generation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for details.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "By Workflow Statement",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "-eval"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must be used if a "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/stat.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow statement"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is assigned to an event.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If the event is assigned using a tag,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<![CDATA[ ]]>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to contain the code.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Use a block statement if multiple statements need to be executed for this event.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

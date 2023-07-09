@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Interfaces -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "interface"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "-",
+                  "name": "Interfaces",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Implementing",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_new"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Generic",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_using"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Interfaces",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Interfaces can be defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "modules"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "namespaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "classes"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "interfaces"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An interface shapes an object by defining how methods, properties and events look like.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An interface usually begins with:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "interface IMyInterface"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    it means the new interface expression creates an object that implements this interface\n                    and returns a shared pointer holding this object.\n                    Such expression should look like: "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new IMyInterface^ { ... }"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "interface IMyInterface*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    it means the new interface expression creates an object that implements this interface\n                    and returns a raw pointer holding this object.\n                    Such expression should look like: "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "new IMyInterface* { ... }"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Methods, properties and events are allowed in both interface declaration and new interface expressions.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Static methods, classes, interfaces, enums are allowed in interfaces,\n            they are accessed by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TYPE::MEMBER"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " outside of the interface.\n            Static methods must have a body,\n            and they cannot be implemented in new interface expressions.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Variables are allowed in new interface expressions.\n            Variables are only accessible to methods in this new interface expression.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            All methods, including that are generated by properties,\n            must be overrided in the new interface expression,\n            using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "override"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " keyword before functions.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\n\r\ninterface ICounter\r\n{\r\n    func Increase(): int;\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var counter = new ICounter^\r\n    {\r\n        var x: int = 0;\r\n\r\n        override func Increase(): int\r\n        {\r\n            x = x + 1;\r\n            return x;\r\n        }\r\n    };\r\n\r\n    var r = \"\";\r\n    for (i in range [0, 10))\r\n    {\r\n        r = r & $\"$(counter.Increase()); \";\r\n    }\r\n    return r;\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In this example,\n            we define an interface "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ICounter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Note that we didn't use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "interface ICounter*"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " here,\n            it means that "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new ICounter^ { ... }"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is legal, but "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new ICounter* { ... }"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is not.\n            So the type of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ICounter^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This interface has a method called "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Increase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            which makes "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter.Increase()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " a valid expression.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            All variables defined at parent scopes of this new interface expression are captured by value.\n            But since "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " doesn't have an explicit type,\n            so visiting "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in this new interface expression results in an error,\n            because the type is not recognized yet when processing members of this new interface expression.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            even if "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is hidden from the method,\n            but when the method is resolving the name "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            all symbols called "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will be examined before picking the right one,\n            so it still generates an error.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Now we call "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "counter.Increase()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " 10 times,\n            which generates numbers from 1 to 10.\n            Function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"1; 2; 3; 4; 5; 6; 7; 8; 9; 10; \""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

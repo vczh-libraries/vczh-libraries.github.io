@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Invoking C++ Classes -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "invoking1"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Running Workflow Scripts",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Invoking C++ Classes",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Interfaces",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Serializing and Loading Assemblies",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Generating C++ Code",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Debugging",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Invoking C++ Classes",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Involved files:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W02_InvokingCppClasses/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            It is allowed to use reflectable types in Workflow script.\n            Here we define a type to read and write from a console window.\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Registering"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " this class is required,\n            but the code will not be pasted here.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Firstly we define a reflectable C++ class:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "namespace myapi\r\n{\r\n    class App : public Object, public Description<App>\r\n    {\r\n    public:\r\n        static WString Get()\r\n        {\r\n            return Console::Read();\r\n        }\r\n\r\n        static WString Get(const WString& message)\r\n        {\r\n            Console::Write(message);\r\n            return Console::Read();\r\n        }\r\n\r\n        static void Print(const WString& text)\r\n        {\r\n            Console::WriteLine(text);\r\n        }\r\n    };\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Secondly, we use this class in the Workflow script:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "module sampleModule;\r\nusing myapi::*;\r\n\r\nfunc main(): void\r\n{\r\n    var name = App::Get(\"Please enter your name:\");\r\n    App::Print($\"Hello, $(name)!\");\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Workflow uses wildcard to import names like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "using myapi::*;"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            In fact, you can use it to use part of a name.\n            For example, in GacUI we have "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::presentation::controls::GuiWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            it is registered using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::GuiWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            You are able to use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Window"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the script by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "using presentation::controls::Gui*;"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            although in C++ we are free to create a class in either a raw pointer or a shared pointer,\n            but when registering a contructor, a decision must be made.\n            Some constructors create raw pointers, some constructors create shared pointers.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here we cannot write "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new App*()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new App^()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            because there is no registered contructor.\n            But when one constructor is registered,\n            and the constructor returns "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Ptr<App>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            then only "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "new App^()"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is allowed.\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

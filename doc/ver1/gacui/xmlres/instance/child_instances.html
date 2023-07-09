@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Child Instances -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "instance",
+    "child_instances"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Root Instance",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "root_instance"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Child Instances",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "child_instances"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Properties",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "properties"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "events"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Namespaces",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "namespaces"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Instance Inheriting",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "xmlres",
+                    "instance",
+                    "inheriting"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Child Instances",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Some UI objects are allowed to have child instances,\n            or child objects.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            For example,\n            in the root "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Window/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            you can add controls or compositions to make them displayed in the window.\n            You can also add components like radio button group controllers or system dialogs,\n            which are not displayed in the window,\n            instead they gain access to the window,\n            and their life cycles are controlled by the window.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Adding different types of UI object as child instances to a parent object behavios differently.\n            For example,\n            adding "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<StackItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Stack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " makes it be aligned with other "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<StackItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            but adding other compositions or controls to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Stack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will only layout it in a standard way.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is the list of objects that are allowed to have child instances.\n            Please check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/components/home.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI Components"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for details.\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Any Composition"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Control: Put the control inside the parent composition."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Composition: Put the composition inside the parent composition."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Element: Assign the element to the parent composition. A composition can be assigned with at most one element."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Any Control"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Control: Put the control inside the parent control."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Composition: Put the composition inside the parent control."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Component (for root instance only): Add the component to the parent control. The component will gain access to the parent control, and the life cycle will be controlled."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Table/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Cell/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the cell according to its "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Site"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<RowSplitter/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the splitter according to its "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "RowsToTheTop"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ColumnSplitter/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the splitter according to its "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ColumnsToTheLeft"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Stack/> and <RepeatStack/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<StackItem/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the item according to its position in all items."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Flow/> and <RepeatFlow/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<FlowItem/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the item according to its position in all items."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<SharedSizeRoot/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<SharedSizeItem/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Align the item according to its "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Group"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SharedWidth"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SharedHeight"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ". The item is not required to be a direct child instance."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<DocumentItem/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Control: Put the control inside a document according to the "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Name"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property of this document item."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Composition: Put the composition inside a document according to the "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Name"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property of this document item."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<DocumentViewer/> and <DocumentLabel/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<DocumentItem/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Register a document item. Please check out "
+                          },
+                          {
+                            "kind": "PageLink",
+                            "href": "/gacui/xmlres/tag_doc.html",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<Doc>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " for details."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ToolstripToolBar/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ToolstripMenu/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", typically also for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SubMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property of toolstrip buttons:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripGroupContainer/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Put the group containers in the toolstrip menu."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripButton/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " or its virtual classes: Put the button inside the parent control."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripSplitter/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Put the splitter inside the parent control."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ToolstripGroupContainer/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", typically also for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SubMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property of toolstrip items:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripGroup/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Put the group inside this group container. "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripSplitter>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " will be automatically inserted between groups."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ToolstripGroup/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripButton/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " or its virtual classes: Put the button inside the parent control."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "<ToolstripSplitter/>"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Put the splitter inside the parent control."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

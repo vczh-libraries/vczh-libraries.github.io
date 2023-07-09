@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><animation> -- GPU Accelerated C++ User Interface (vczh)</animation></title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "xmlres",
+    "tag_animation"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Code Generation Configuration",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cgc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Folders and Resources",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "dom"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Text>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_text"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Image>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_image"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Xml>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_xml"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Doc>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_doc"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Script>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_script"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "<Instance>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instance"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<InstanceStyle>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_instancestyle"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<Animation>",
+              "selected": true,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_animation"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "<LocalizedStrings>",
+              "selected": false,
+              "path": [
+                "gacui",
+                "xmlres",
+                "tag_localizedstrings"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<Animation>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            After a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI XML Resource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is converted to a resource binary:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "This resource does not exist in the resource binary."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The equivalent Workflow script will be included in the Workflow assembly part in the resource binary."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If you use the one specified in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacGenConfig/Cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the Workflow assembly is also not included in the resource binary,\n                    because you are supposed to use the generated C++ code.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            <Animation/> create a helper to create instances of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "presentation::controls::IGuiAnimation^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The created animation performs customizable transformations for selected fields in a selected class.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Typically a <Animation/> looks like this:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Animation name=\"RESOURCE_NAME\">\r\n  <Gradient ref.Class=\"ANIMATION_CLASS\" Type=\"STATE_CLASS\">\r\n    <Interpolation>\r\n      <![CDATA[\r\n        DEFAULT_INTERPOLATION_FUNCTION\r\n      ]]>\r\n    </Interpolation>\r\n    <Targets>\r\n      <Target Name=\"FIELD_1\"/>\r\n      <Target Name=\"FIELD_2\">\r\n        <Interpolation>\r\n          <![CDATA[\r\n            INTERPOLATION_FUNCTION_FOR_THIS_FIELD\r\n          ]]>\r\n        </Interpolation>\r\n      </Target>\r\n    </Targets>\r\n  </Gradient>\r\n</Animation>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            It generates a class named "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class ANIMATION_CLASS\r\n{\r\n    prop Begin: STATE_CLASS^ {}\r\n    prop End: STATE_CLASS^{}\r\n    prop Current: STATE_CLASS^{}\r\n\r\n    new (current: STATE_CLASS^) { ... }\r\n    func CreateAnimation(target: STATE_CLASS^, time: UInt64): IGuiAnimation^ { ... }\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            While "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be an existing class,\n            which could be created using <Script/>:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class STATE_CLASS\r\n{\r\n    prop FIELD_1: TYPE{}\r\n    prop FIELD_2: TYPE{}\r\n}"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TYPE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " must be an integer type, a floating point number type, or a color type.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ": In order to perform data binding on "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS::Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            all fields in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are recommended to be properties with events.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When creating "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ANIMATION_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            an instance of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "STATE_CLASS"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is required to be the initial state.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When calling "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "CreateAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            the current state becomes the begin state,\n            the first argument becomes the end state,\n            the second argument is the length of the animation in milliseconds.\n            The returned animation object could be started or killed using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "AddAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "KillAnimation"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " of the root object.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An interpolation function takes a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "double"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " between 0 and 1,\n            returns a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "double"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " between 0 and 1.\n            It could be a function name,\n            a lambda expression,\n            or any "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/workflow/lang/expr.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Workflow expression"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " that returns a function.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When the animation is playing,\n            the argument is the current play time divided by the animation length.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The return value of the interpolation function is used to determine fields in the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Here"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            is an example of <Animation>.\n            It creates animations on the control template of radio buttons.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is the state class:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "class RadioButtonTemplateState\r\n{\r\n  prop Length : double = 0 {}\r\n  prop Text : Color = {} {}\r\n  prop Border : Color = {} {}\r\n  prop Background : Color = {} {}\r\n  ...\r\n}"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            In this class,\n            six static functions are defined to return configuration for different button states.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is the animation:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "<Animation name=\"RadioButtonTemplateAnimation\">\r\n  <Gradient ref.Class=\"sample::RadioButtonTemplateAnimation\" Type=\"sample::RadioButtonTemplateState\">\r\n    <Interpolation><![CDATA[\r\n      func (x: double): double\r\n      {\r\n        if (x < 0.5) { return x * x * 2; } else { return 1 - (1 - x) * (1 - x) * 2; }\r\n      }\r\n    ]]></Interpolation>\r\n    <Targets>\r\n      <Target Name=\"Length\"/>\r\n      <Target Name=\"Text\"/>\r\n      <Target Name=\"Border\"/>\r\n      <Target Name=\"Background\"/>\r\n    </Targets>\r\n  </Gradient>\r\n</Animation>"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            The interpolation function makes the animation run faster and faster in the first half,\n            and run slower and slower in the second half.\n            It does this by transfer the animation progress "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "x"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            which is from 0 to 1,\n            to another value that is 0 to 1.\n            The image of its derivative looks like a mountain.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When the button state is changed,\n            the custom member function "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnStateChanged"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called,\n            which kills the ongoing animation and starts a new one.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When the animation is running,\n            properties of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder.Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is changed.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a custom member field of type "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "sample::RadioButtonTemplateAnimation^"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Now we only need to bind sizes and colors to properties of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "self.animationBuilder.Current"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            and the UI will move when the animation is running.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Here is how it looks like:\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Source code: "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/kb_animation/Resource.xml",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "kb_animation"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Image",
+                    "src": "/gacui/kb_animation.gif"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

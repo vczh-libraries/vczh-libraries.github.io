@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Generating C++ Code -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "running",
+    "generating"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Running Workflow Scripts",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "running"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Invoking C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking1"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Interfaces",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking2"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Inheriting C++ Classes",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "invoking3"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Serializing and Loading Assemblies",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "serializing"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Generating C++ Code",
+              "selected": true,
+              "path": [
+                "workflow",
+                "running",
+                "generating"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Debugging",
+              "selected": false,
+              "path": [
+                "workflow",
+                "running",
+                "debugging"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Generating C++ Code",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Involved files:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Lib/W05_Lib.h",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Lib/W05_Lib.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Lib/W05_Lib.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Lib/W05_Lib.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_Compile/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_Compile/Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Main.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Main.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Generated files:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Generated/W05ScriptIncludes.h",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Generated/W05ScriptIncludes.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Generated/W05Script.h",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Generated/W05Script.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Generated/W05Script.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Generated/W05Script.cpp"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Generated/W05ScriptReflection.h",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Generated/W05ScriptReflection.h"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Console_Workflow/W05_StaticRun/Generated/W05ScriptReflection.cpp",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "W05_StaticRun/Generated/W05ScriptReflection.cpp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Workflow script can be converted to C++ and save to files.\n            If you don't want reflection,\n            you still need to link "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VlppReflection.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            but by adding "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to the precompile definitions list,\n            many reflection related code are removed in C++ files.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In this case,\n            you can either link or not link to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "W05ScriptReflection.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is on,\n            you get an empty "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "LoadW05ScriptTypes"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function.\n            This helps you to write code that can be compiled regardless whether "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is on or off.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "W05_Lib/W05_Lib.h"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "W05_Lib/W05_Lib.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a good example.\n            When "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is on,\n            reflection related codes are removed.\n            This makes them be able to use in both "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "W05_DynamicRun"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "W05_StaticRun"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            You need the semantic analyzing result in order to generate C++ code,\n            so the compiling code is slightly different.\n            After you get the assembly,\n            you can use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfCppInput"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " class and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GenerateCppFiles"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function to translate Workflow to C++.\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto cppInput = MakePtr<WfCppInput>(L\"W05Script\");\r\ncppInput->comment = L\"THIS FILE IS GENERATED BY W05_COMPILE\";\r\ncppInput->headerGuardPrefix = L\"W05_SCRIPT_\";\r\ncppInput->normalIncludes.Add(L\"../../W05_Lib/W05_Lib.h\");\r\ncppInput->normalIncludes.Add(L\"VlppWorkflowLibrary.h\");\r\n\r\nauto cppOutput = GenerateCppFiles(cppInput, &manager);"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            All configuration is necessary.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            After calling "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GenerateCppFiles"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", you can a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfCppOutput"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " object, containing C++ codes.\n            You need to write them to files manually.\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "for (vint i = 0; i < cppOutput->cppFiles.Count(); i++)\r\n{\r\n    auto key = cppOutput->cppFiles.Keys()[i];\r\n    auto value = cppOutput->cppFiles.Values()[i];\r\n    Console::WriteLine(L\"    \" + key);\r\n    File(cppFolder / key).WriteAllText(value, false, BomEncoder::Utf8);\r\n}"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Then you get all generated files!\n            All Workflow classes now become C++ classes:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include \"Generated/W05ScriptIncludes.h\"\r\n\r\nusing namespace myscript;\r\n\r\nint main()\r\n{\r\n    // VCZH_DEBUG_NO_REFLECTION is on\r\n    // so we don't need, and are not allowed, to start reflection\r\n    auto myapp = MakePtr<MyApp>();\r\n    myapp->CreateScripting()->Execute(L\"Gaclib\");\r\n\r\n    // we need to call this because we use generated code from Workflow script\r\n    FinalizeGlobalStorage();\r\n}"
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

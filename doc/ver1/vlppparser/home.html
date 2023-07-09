@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vlpp Parser -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppparser",
+    "home"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "+",
+      "name": "Gaclib Document",
+      "selected": false,
+      "path": [
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp",
+      "selected": false,
+      "path": [
+        "vlpp",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Regex",
+      "selected": false,
+      "path": [
+        "vlppregex",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Reflection",
+      "selected": false,
+      "path": [
+        "vlppreflection",
+        "home"
+      ]
+    },
+    {
+      "icon": "-",
+      "name": "Vlpp Parser",
+      "selected": true,
+      "path": [
+        "vlppparser",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppparser",
+            "ref"
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Introduction to VlppParser",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            VlppParser provides GLR parser generator for C++,\n            with generated XML and JSON parsers.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "AST"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " here means abstract syntax tree, which are strong-typed representation of text in a specific format.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "JSON parser",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::parsing::json"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonParse"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Takes a JSON string and the return value from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonLoadTable"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        returns the AST for the JSON string.\n                        You are recommended to cache the return value from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonLoadTable"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to improve performance.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonPrint"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JsonToString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Serialize JSON from AST back to string.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ": The parser does not support surrogate pairs in HEX codes.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "XML parser",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::parsing::xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlParse"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Takes an XML string and the return value from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlLoadTable"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        returns the AST for the XML string.\n                        You are recommended to cache the return value from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlLoadTable"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to improve performance.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlPrint"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlPrintContent"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlToString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Serialize XML from AST back to string.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlGetAttribute"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlGetElement"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlGetElements"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlGetValue"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Helper functions for reading XML in AST.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ": The XML parser only accept a subset of the XML standard:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Prologue nodes only accept instructions and comments."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Elements only accept elements, text nodes, cdata nodes and comments as sub nodes."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "(&lt;), "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": ">"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "(&gt;), "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "&"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "(&amp;), "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "'"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "(&apos;), "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "(&quot;) must be escaped in attribute values and text nodes."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "xml:space"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " attribute is ignored during parsing."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Writing your own parsers.",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You are recommended to learn "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "EBNF"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " before using the parser generator.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To write your own parser:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Prepare "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/vlppparser/ref/VL__PARSING__TABLING__PARSINGTABLE.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "a grammar file"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for your parser.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Use "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ParserGen.exe"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " from the release to process this file.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Some C++ source files will be generated in the same folder that contains the grammar file.\n                        Add them to your project.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        For example, if you have such configuration in your grammar file:\n                        "
+                      },
+                      {
+                        "kind": "Program",
+                        "code": "classPrefix:Xml\r\nparser:ParseDocument(XDocument)"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        Then you can call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XmlParseDocument(\"Input\", XmlLoadTable())"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to do parsing.\n                        You are recommended to cache the return value from the load table function.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here are some sample grammar files:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/VlppParser/blob/master/Source/Parsing/Json/ParsingJson.parser.txt",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "JSON parser"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/VlppParser/blob/master/Source/Parsing/Xml/ParsingXml.parser.txt",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "XML parser"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Workflow/blob/master/Source/Expression/WfExpression.parser.txt",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Workflow script parser"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/GacUI/blob/master/Source/Compiler/InstanceQuery/GuiInstanceQuery_Parser.parser.txt",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Instance query parser"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for GacUI XML resource,\n                        working like the CSS selector but it is inspired by XPath.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

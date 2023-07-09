@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><responsiveshared> -- GPU Accelerated C++ User Interface (vczh)</responsiveshared></title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "responsive_shared"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Responsive Design Series",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": "-",
+                      "name": "<ResponsiveView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_view"
+                      ],
+                      "subNodes": [
+                        {
+                          "icon": " ",
+                          "name": "<ResponsiveFixed>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "compositions",
+                            "responsive_fixed"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "<ResponsiveShared>",
+                          "selected": true,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "compositions",
+                            "responsive_shared"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<ResponsiveShared>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveView/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            sometimes when it switch to a different view,\n            the content is totaly changed by switching\n            from one "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to another "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Views"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            If a control with important status needs to be shared between different views,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveShared/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " could help.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This kind of scenarios are very common.\n            For example,\n            different views may share a text box.\n            If different text box controls are used in different view to represent the same input data,\n            users will be confused like the selected area is gone just because of changing the window size.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::SharedControls",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All controls need to share between views\n                must be created in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SharedControls"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " collection property.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In order to make these controls being able to use in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveShared/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                usually a control name needs to be specified in the\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/tag_instance.html",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ref.Name"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                attribute for each control.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is deleted,\n                all controls in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SharedControls"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will also be deleted.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveShared>::Shared",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For any control that needs to appear in a specific location in a view,\n                a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveShared/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is used as a place holder.\n                It is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Bounds/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                so all necessary properties are available just like a control's "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoundsComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In this composition,\n                the control to appear is specified using the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Shared"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property,\n                usually using a\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#-ref",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "-ref"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                binding.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is selected,\n                all containing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveShared/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in this composition will get a notice\n                to make "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Shared.BoundsComposition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " become a child composition,\n                with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Shared.BoundsComposition.AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "left:0 top:0 right:0 bottom:0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                After that,\n                all shared controls are moved to their place holders.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

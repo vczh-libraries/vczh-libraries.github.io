@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><bounds> -- GPU Accelerated C++ User Interface (vczh)</bounds></title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "bounds"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "<Bounds>",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "bounds"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Stack> and <StackItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "stack"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Flow> and <Flow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "flow"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Table>, <Cell>, <RowSplitter> and <ColumnSplitter>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "table"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<RepeatStack> and <RepeatFlow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "repeat"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SharedSizeRoot> and <SharedSizeItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sharedsize"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SideAligned>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sidealigned"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<PartialView>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "partialview"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Responsive Design Series",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Input Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "events"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<Bounds>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Bounds/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is able to set a relative position directly.\n            But usually this composition is used when you just need to have a composition.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Three properties are provided by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Bounds/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "SizeAffectParent",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The default value of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SizeAffectParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When it is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "PreferredBounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be considered while calculating "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MinPreferredClientSize"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of its parent composition.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Bounds",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To set a relative position,\n                the default value is 0 for all its components.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                The relative position of a composition does not always listen to the value of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Bounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Bounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is only a suggestion.\n                To decide a position of a composition,\n                one component will be calculated by looking at other properties,\n                only when nothing is provided for this component,\n                the component of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Bounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be used.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example,\n                to decide the width of a composition,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will first be examined.\n                But sometimes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "left"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "right"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are both -1 in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and there is enough room for the composition to grow bigger than its minimum width,\n                then "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "width"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Bounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is used.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "AlignmentToParent",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is added for all compositions that can control the relative position by themselves.\n                The position of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are completely decided by\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Stack/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Flow/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not exist in these compositions.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please check out\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/compositions/home.html#Position-of-the-composition",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this page"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                for more information.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/layout_bounds/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "layout_bounds"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/layout_bounds.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

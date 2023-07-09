@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>List Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../../article.css">
+<script src="../../../../scripts/rootView.js"></script>
+<script src="../../../../scripts/directoryView.js"></script>
+<script src="../../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "controls",
+    "list",
+    "home"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "+",
+                  "name": "Basic Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "basic",
+                    "home"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Container Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "container",
+                    "home"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Editor Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "editor",
+                    "home"
+                  ]
+                },
+                {
+                  "icon": "-",
+                  "name": "List Controls",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "list",
+                    "home"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "GuiListControl and GuiSelectableListControl",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "guilistcontrol"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TextList>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "textlist"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TreeView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "treeview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ListView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "listview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ComboBox>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "combobox"
+                      ]
+                    },
+                    {
+                      "icon": "+",
+                      "name": "Bindable List Controls",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "bindable"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Toolstrip Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "toolstrip",
+                    "home"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Ribbon Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "ribbon",
+                    "home"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "List Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            List controls organize multiple similar items in a particular order.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Overview of Classes",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the base class of all list controls.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ComboBox/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", which is a virtual control of  "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiComboBoxListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                is a drop down control with a list control in the drop down.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiScrollView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property to control how an item looks like.\n                All list controls have its own default "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Arranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Axis"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property controls how items are organized.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Each visible item has its own instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                When an item becomes invisible (typically because it is scrolled out of the view port),\n                its item template instance will be deleted.\n                When an item becomes visible again,\n                a new item template will be created for this item.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Items in a list control are not required to use the same item template class,\n                this is very easy to customize for bindable version of list controls.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All mentioned types in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(vl::)presentation::controls::"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " namespace are without a full name.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Text List",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTextList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the base class of all list controls displaying items as texts.\n                    Items could be optionally checkable.\n                    This control doesn't maintain items,\n                    instead it requires an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiListControl::IItemProvider"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when created,\n                    which must support a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "list::ITextItemView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<TextList/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTextList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that maintains items in its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Items"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\n                    This property an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "observe (list::TextItem^) []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableTextList/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTextList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that display all items from a given item source object.\n                    Each item is required to inherit from a specified interface or class.\n                    If the provided item source object is an\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/type.html#Collection-types",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        observable collection\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the list control will automatically updates itself when items are added to or removed from this item source object.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Tree View",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTreeListControl"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the base class of all list controls displaying cascading items.\n                    Items are expandable if they have child items.\n                    This control doesn't maintain items,\n                    instead it requires an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INodeRootProvider"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when created.\n                    It will create an item provider which supports the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "tree::INodeItemView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The root node is invisible,\n                    the control displays child nodes of the root node as visible root nodes.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTreeView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTreeListControl"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for all items that has an icon and a title.\n                    It requires the root provider to support a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ITreeViewItemView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<TreeView/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTreeView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that maintains items in its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Nodes"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\n                    All direct or indirect child nodes in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Nodes"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    must be a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "tree::MemoryNodeProvider^"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    whose "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Data"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " must be a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "tree::TreeViewItem^"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableTreeView/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualTreeView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that display all items from a given item source object.\n                    Each item is required to inherit from a specified interface or class.\n                    If the provided item source object is an\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/type.html#Collection-types",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        observable collection\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the list control will automatically updates itself when items are added to or removed from this item source object.\n                    The base type of items is required to have a property for getting child nodes,\n                    this property could also be an observable collection.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "List View",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualListView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the base class of all list controls displaying items as texts with icons.\n                    This control doesn't maintain items,\n                    instead it requires an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiListControl::IItemProvider"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when created,\n                    which must support a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "list::IListViewItemView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "list::ListViewColumnItemArranger::IColumnItemView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A list view control could organizes items in different way,\n                    one of them is to display items in a table with a column header.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ListView/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualListView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that maintains items in its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Items"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\n                    This property an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "observe (list::ListViewItem^) []"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableListView/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualListView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that display all items from a given item source object.\n                    Each item is required to inherit from a specified interface or class.\n                    If the provided item source object is an\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/type.html#Collection-types",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        observable collection\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the list control will automatically updates itself when items are added to or removed from this item source object.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Data Grid",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualDataGrid"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the base class of all list controls displaying items as a table.\n                    This control doesn't maintain items,\n                    instead it requires an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiListControl::IItemProvider"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when created,\n                    which must support a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "list::IDataGridView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " view and all other views required by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualListView"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A data grid is a list view control with powerful features when the list view control is rendering a table.\n                    A data grid provide customizable visualizing and editing experience for each cell in the table.\n                    It also provide basic filtering and sorting on items.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<BindableDataGrid/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiVirtualDataGrid"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " that display all items from a given item source object.\n                    Each item is required to inherit from a specified interface or class.\n                    If the provided item source object is an\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/type.html#Collection-types",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        observable collection\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the list control will automatically updates itself when items are added to or removed from this item source object.\n                    Data in different columns in an item could be connected to different properties in the item.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

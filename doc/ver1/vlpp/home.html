@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vlpp -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlpp",
+    "home"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "+",
+      "name": "Gaclib Document",
+      "selected": false,
+      "path": [
+        "home"
+      ]
+    },
+    {
+      "icon": "-",
+      "name": "Vlpp",
+      "selected": true,
+      "path": [
+        "vlpp",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlpp",
+            "ref"
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Regex",
+      "selected": false,
+      "path": [
+        "vlppregex",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Reflection",
+      "selected": false,
+      "path": [
+        "vlppreflection",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Parser",
+      "selected": false,
+      "path": [
+        "vlppparser",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Introduction to Vlpp",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Vlpp provides basic constructions for writing C++ programs. Here is what you can get from this library:\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Data types",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ","
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Object"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", which are base classes for reference types and interfaces. Almost everything inherit from one or both of them."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Nullable<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Ptr<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Lazy<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": data containers."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "AString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DateTime"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": basic primitive types."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Error"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Exception"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": basic exception types."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Func<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Event<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": strongly-typed functor that can contain function pointers, method pointers or lambda expressions."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Data type conversions functions."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "And more ..."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Containers and collections operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::collections"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ","
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Array<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "List<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SortedList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Dictionary<K, V>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Group<K, V>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": linear containers."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "LazyList<T>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Lazy evaluated read-only containers with rich operations, similar to Linq."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PartialOrderingProcessor"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": Partial ordering and strong connected component discovering."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GroupInnerJoin"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " function for doing inner join on two "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Group"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " containers."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "FOREACH"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "FOREACH_INDEXER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " macros for iterating containers."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "And more ..."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Console I/O",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::console"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ","
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Simple string reading and writing for command-line applications.\n                Character encodings are correctly handled for stream redirections.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Unit test framework",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::unittest"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ","
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An easy-to-use unit test framework.\n                You are able to organize test cases in nested categories,\n                and either run all the way to the end,\n                or tell the IDE to stop at the first failed test assertion.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

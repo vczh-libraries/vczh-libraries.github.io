@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Elements -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "elements",
+    "home"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Elements",
+              "selected": true,
+              "path": [
+                "gacui",
+                "components",
+                "elements",
+                "home"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Control Templates",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "ctemplates",
+                "home"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Item Templates",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "itemplates",
+                "home"
+              ]
+            },
+            {
+              "icon": "+",
+              "name": "Components",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "components",
+                "home"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Elements",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "PageLink",
+            "href": "/gacui/kb/elements.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Elements"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " offer rendering of geometry shapes and texts.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Elements render differently under different DPI and text scaling.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            GacUI with Windows GDI renderer does not support high DPI.\n            Rendering will be performed under 96 DPI with 100% text scaling,\n            and Windows will blur the window using its default behavior.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            GacUI with Windows Direct2D renderer supports high DPI.\n            Text size will scale with the system,\n            and line width will be enlarged with higher DPI.\n            For example, "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<SolidBorder/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " draw a one pixel border in 96 DPI.\n            But for 192 DPI, the border becomes 2 pixels.\n            The differences between Direct2D and GDI with higher DPI is that,\n            texts and images are not blurred for Direct2D.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Some renderers do not support alpha channel.\n            For example, GDI ignores the value in the alpha channel.\n            But when the alpha channel has a value of zero for geometry elements,\n            it doesn't render.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Format of Shape property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Some elements has a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Shape"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property to define its shape.\n                It accepts 3 kinds of values:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "shapeType:Rectangle"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": A rectangle."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "shapeType:Ellipse"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": An ellipse."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "shapeType:RoundRect radiusX:x radiusY:y"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": A rectangle with round coners. Radius on X and Y axis for corners are required in the value."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Format of Color property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Some elements has one or more color properties to define colors.\n                The value could be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#RRGGBB"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "#RRGGBBAA"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<FocusRectangle>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FocusRectangle>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders an OS dependent rectangle for a focused visual effect.\n                In Windows it is formed by multiple dots,\n                which are applied with XOR operator.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<SolidBorder>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<SolidBorder>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders a border of a specified shape.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Shape"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the shape of this element."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the color of the border."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<SolidBackground>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<SolidBorder>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " fills color in a specified shape.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Shape"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the shape of this element."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the color of the shape."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<Gui3DBorderElement>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Gui3DBorderElement>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders a border of a 3D-like rectangle.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the bright color."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the dark color."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is brighter than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the element looks like a raised rectangle.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is darker than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the element looks like a sink rectangle.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<Gui3DSplitterElement>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Gui3DSplitterElement>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders a border of a 3D-like line.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the bright color."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the dark color."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Direction"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the direction of the line. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Horizontal"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Vertical"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is brighter than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the element looks like a raised line.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is darker than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Color2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the element looks like a sink line.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<GradientBackground>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<GradientBackground>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " fills gradient colors in a specified shape.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Shape"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the shape of this element."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color1"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the beginning color."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color2"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the ending color."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Direction"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the direction of the gradient. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Horizontal"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Vertical"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Slash"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Backslash"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<InnerShadow>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<SolidBorder>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders a border with gradient colors of a specified shape.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Thickness"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the width of the border."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property defines the outer color of the border. It fades to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#00000000"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " towards the center."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<SolidLabel>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<SolidLabel>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders text.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Color"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the color of the text."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Font"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the font of the text. It could be binded to the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DisplayFont"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a control or the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Font"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a control template.\n                        The type of this property is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "presentation::FontProperties"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", which is a "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/gacui/xmlres/instance/properties.html#Structs",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "struct"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Thickness"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the width of the text."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the content of the text."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "HorizontalAlignment"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the horizontal alignment of the text. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Center"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Right"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VerticalAlignment"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the vertical alignment of the text. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Center"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Top"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bottom"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bottom"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WrapLine"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the element wraps the text to multiple line if it exceeds the expected width."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Ellipse"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the element renders out-of-bound text to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "..."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " line if it exceeds the expected width."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Multiline"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the element interpret "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\\n"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as a line break."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WrapLineHeightCalculation"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the minimum size of the element does not consider "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WrapLine"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the minimum height of the element depends on the expected width, and the minimum width is the expected width.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ImageFrame>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ImageFrame>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders an image.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Image"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the source of an image.\n                        It could be binded to image properties of a control or a control template.\n                        The "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/gacui/xmlres/instance/properties.html#-uri",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "-uri"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " binding could be used to specify an image from the resource.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "FrameIndex"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to 0. It specified the target frame in the image to render. All image contains only one frame except "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "gif"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "HorizontalAlignment"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the horizontal alignment of the text. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Center"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Right"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VerticalAlignment"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the vertical alignment of the text. The value could be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Center"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Top"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bottom"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bottom"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Stretch"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", image fills the expected size instead of keeping its original size. And the minimum size of this element becomes 0."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Enabled"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". When it is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", the element renders a gray-scaled image. Typically this is used on icons of toolstrip buttons."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<Polygon>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Polygon>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " renders a polygon with a border color and a filling color.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BorderColor"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#00000000"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". It defines the color of the border."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BackgroundColor"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "#00000000"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". It defines the color of the shape."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Size"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defines the size of the polygon. It also becomes the minimum size of this element."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Points"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is an array of "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "presentation::Point"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". It defines all vertices of the polygon in order.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Size"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property creates a coordinate space for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Points"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with (0,0) in the top-left corner.\n                When the size of the element is larger than the minimum size,\n                the coordinate space is aligned to the center.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

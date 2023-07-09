@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><table>, <cell>, <rowsplitter> and <columnsplitter> -- GPU Accelerated C++ User Interface (vczh)</columnsplitter></rowsplitter></cell></table></title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "table"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "<Bounds>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "bounds"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Stack> and <StackItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "stack"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Flow> and <Flow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "flow"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Table>, <Cell>, <RowSplitter> and <ColumnSplitter>",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "table"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<RepeatStack> and <RepeatFlow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "repeat"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SharedSizeRoot> and <SharedSizeItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sharedsize"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SideAligned>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sidealigned"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<PartialView>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "partialview"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Responsive Design Series",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Input Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "events"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<Table>, <Cell>, <RowSplitter> and <ColumnSplitter>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Table/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " arrange all direct children "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Cell/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " compositions\n            in a table with size configurations.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Cell/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "::MinSizeLimitation is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "LimitToElementAndChildren"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " by default.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Properties",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A few more properties are provided by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Table/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Cell/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                to control the details of how to ordering "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Cell/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Cell/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Bounds/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                there is no writable "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Bounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<Cell/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Table>::Rows and <Table>::Columns",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    They are collection properties that can only be used in GacUI XML Resource and Workflow.\n                    In order to access them in C++,\n                    please check out the following methods:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetRows"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetRows"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetRowsAndColumns"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetRowOption"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetRowOption"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetColumnOption"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetColumnOption"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Call "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetRowsColumns"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to allocate the numbers of rows and columns for this table,\n                    and then call "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetRowOption"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetColumnOption"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to set the size configuration.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    In GacUI XML Resource,\n                    in order to have a 5x3 table,\n                    it is expected to have 5 values in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Rows"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and 3 values in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Columns"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Values for these properties could be:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:MinSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the size of the cell is the minimum size for this composition."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Absolute absolute:X"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the size of the cell cannot be smaller than X. X must be a non-negative integer."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Percentage percentage:X"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the size of the cell is decided by all "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Percentage"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " cells. X must be a non-negative number."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Before repositioning cells,\n                    the table will collect all rows and cells that are "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MinSize"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    spaces are first allocate to these rows and cells.\n                    And then if there are still spaces,\n                    spaces will be allocate to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Percentage"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " cells in proportion.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Table/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "::MinSizeLimitation is set to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "LimitToElementAndChildren"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    the minimum size of the table is the sum of all cells' minimum sizes with paddings.\n                    For "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " cells,\n                    if the absolute value is larger than its minimum size,\n                    the absolute value becomes the minimum size for this cell.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The sum of all percentage values could be anything.\n                    for example, if a table has a 0 padding with these 5 row options:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Percentage percentage:0.5"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:MinSize"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Percentage percentage:1.0"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Absolute absolute:200"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "composeType:Percentage percentage:0.5"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    and the minimum width for each cell is 100.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It is easy to know that the minimum width of this table is 500.\n                    If the table has a border and a cell padding of 10,\n                    its minimum width becomes 560.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    In the space of 500:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "100 will be allocated to the 2nd cell"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "200 will be allocated to the 4nd cell"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    and there is still 200 left.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The sum of all percentage values is 0.5 + 1.0 + 0.5 = 2.\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "The 1st cell will be allocated 50 (200 * 0.5 / 2)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "The 3rd cell will be allocated 100 (200 * 1.0 / 2)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "The 5th cell will be allocated 50 (200 * 0.5 / 2)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Table>::CellPadding",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The default value is 0.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CellPadding"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " keeps an distance between each "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Cell/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Table>::BorderVisible",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The default value  is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    If "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BorderVisible"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is true,\n                    cells are keep the distance of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CellPadding"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the border of the table,\n                    otherwise the distance is 0.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<Cell>::Site",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This is a required property in GacUI XML Resource.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This property can only be used in GacUI XML Resource and Workflow.\n                    In order to access them in C++,\n                    please check out the following methods:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetRow"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetRowSpan"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetColumn"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetColumnSpan"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetSite"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetSite"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " requires 4 arguments,\n                    which are exactly the 4 components in this "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Site"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Value for this property is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "row:R column:C rowSpan:RS columnSpan:CS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    The default values for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "rowSpan"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "columnSpan"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are 1.\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "row"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            specify the row where this cell locates starting from 0.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "column"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            specify the column where this cell locates starting from 0.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "rowSpan"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            specify how many rows does this cell take.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "columnSpan"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            specify how many columns does this cell take.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A table is split to multiple cell blocks,\n                    a cell could take multiple cell blocks at once,\n                    but they must form a rectangle space.\n                    A cell block can only be taken by one cell.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<Cell/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are processed according to their order in GacUI XML Resource.\n                    If a cell is found to be taking cell blocks that have already been taken,\n                    the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Site"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property of this cell is canceled,\n                    the position of this cell is undefined.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Adding Cells in C++",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To create a table in C++,\n                these steps must be taken in order:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetRowsAndColumns"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " of the table to allocate cell blocks."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetRowOption"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetColumnOption"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " of the table for size configuration."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetSite"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for cells to define which cell blocks are taken by each cell."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Add cells as a direct child composition of the table."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "UpdateCellBounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " of the table to tell that the configuration is ready."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When contents of cells are changed,\n                no action is required.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When size configurations are changed,\n                or when cells are added or removed to the table,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UpdateCellBounds"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must be called to tell the table to reorganize cells.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Adjusting Cells by Mouse",
+        "content": [
+          {
+            "kind": "Topic",
+            "title": "<RowSplitter>",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<RowSplitter/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " takes the space between two rows.\n                    This requires the table to have a non-zero "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CellPadding"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    One of a sibling row of the splitter is required to be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RowsToTheTop"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " specifies how many rows are above this splitter.\n                    If the table has 5 rows,\n                    valid values for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RowsToTheTop"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are 1 to 4.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    After adding a splitter to the table,\n                    it can be dragged by a mouse to adjust the size of an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " row around the splitter.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "<ColumnSplitter>",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ColumnSplitter/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " takes the space between two columns.\n                    This requires the table to have a non-zero "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CellPadding"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    One of a sibling column of the splitter is required to be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ColumnsToTheLeft"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " specifies how many columns are above this splitter.\n                    If the table has 5 columns,\n                    valid values for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ColumnsToTheLeft"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are 1 to 4.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    After adding a splitter to the table,\n                    it can be dragged by a mouse to adjust the size of an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Absolute"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " column around the splitter.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please check out\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Layout/Table",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    this tutorial project\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                .\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><responsiveview> -- GPU Accelerated C++ User Interface (vczh)</responsiveview></title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "responsive_view"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Responsive Design Series",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveContainer>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_container"
+                      ]
+                    },
+                    {
+                      "icon": "-",
+                      "name": "<ResponsiveView>",
+                      "selected": true,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_view"
+                      ],
+                      "subNodes": [
+                        {
+                          "icon": " ",
+                          "name": "<ResponsiveFixed>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "compositions",
+                            "responsive_fixed"
+                          ]
+                        },
+                        {
+                          "icon": " ",
+                          "name": "<ResponsiveShared>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "compositions",
+                            "responsive_shared"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveStack>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_stack"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ResponsiveGroup>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "compositions",
+                        "responsive_group"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<ResponsiveView>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveView/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " tells its current managed "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to switch view,\n            or switch to a new managed "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            when itself is required to do so.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<ResponsiveView/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiResponsiveCompositionBase"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Bounds/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::Views",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " only manages "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " that is added to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The first one in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the one that is expected to be the largest one.\n                The last one in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the one that is expected to be the smallest one.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Although only the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a child composition of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                but every "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be deleted when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is deleted.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                If a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has a different "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Direction"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be treated like 1.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::Direction",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The default value for this property is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Both"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Valid values for this property are "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Horizontal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Vertical"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Both"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Direction"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Horizontal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it only reacts to changing to its width.\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Direction"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Vertical"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it only reacts to changing to its height.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::LevelCount",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This property represents how many different view it could have.\n                It is the sum of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " of all managed "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If there is no managed "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 1.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::CurrentLevel",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This property represents the current view of a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The smallest view is 0,\n                the largest view is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " - 1.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "<ResponsiveView>::CurrentView",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Each view in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could have multiple view ("
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " > 1).\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " represents a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiResponsiveCompositionBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                who is selected to display one of its view.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is empty,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LevelCount IS NOT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " always "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views.Count"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView IS NOT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " always "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views[CurrentView]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Choosing a view",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to switch to a larger view\n                (increasing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentLevel"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " by 1),\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will tell "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to switch to a larger view.\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is already in its largest view,\n                than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " switches "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to its previous one in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The new "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be in its smallest view.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required to switch to a smaller view\n                (decreasing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentLevel"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " by 1),\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will tell "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to switch to a smaller view.\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is already in its smallest view,\n                than "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " switches "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to its next one in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Views"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The new "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be in its largest view.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CurrentView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is changed,\n                the old one is removed from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the new one is added as a child composition in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                with its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AlignmentToParent"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "left:0 top:0 right:0 bottom:0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

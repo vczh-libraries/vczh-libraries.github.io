@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Handling Unexpected Inputs -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "state_switch"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "State Machines",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "state"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Using Input Methods",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_input"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Unexpected Inputs",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_switch"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Jumping Between States",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_jump"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Example: Calculator",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "state_calculator"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Handling Unexpected Inputs",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Workflow offers built-in strategy for handling unexpected inputs.\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(raise)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " raises an exception on unexpected input and stops the state machine."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(return)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " consume the unexpected input."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(continue)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(continue, return)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " do not consume the unexpected input."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch()"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(continue)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " stop the current "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and continue."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(return)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "$switch(continue, return)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " stop the current state and continue."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "$switch()",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch()"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ignores and consumes an unpected input"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "continues to execute code after "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$switch"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n        $state_input C(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch ()\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"B($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes WaitForName()\");\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $push_state WaitForName();\r\n            Append(\"Finishes default()\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.C(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"Finishes WaitForName(); Finishes default(); \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " found that this is an unexpected input,\n                it continues to run code after "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "$switch(raise)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch()"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "throws an exception when an unpected input happens"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "stops the state machine"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n        $state_input C(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch (raise)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"B($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes WaitForName()\");\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $push_state WaitForName();\r\n            Append(\"Finishes default()\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.C(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    try\r\n    {\r\n        sm.A(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"Method \"C\" of class \"MySM\" cannot be called at this moment.; The state machine has been stopped.; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " found that this is an unexpected input,\n                it throws an exception,\n                and the state machine is stopped.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "$switch(return)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch()"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "consumes an unpected input"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "stops the current state"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "continues to execute code after this state"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n        $state_input C(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch (return)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"B($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes WaitForName()\");\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $push_state WaitForName();\r\n            Append(\"Finishes default()\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.C(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"Finishes default(); \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " found that this is an unexpected input,\n                it stops "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$state WaitForName()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and continues in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$state default()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "$switch(continue)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch(continue)"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "consumes an unpected input"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "continues to execute code after "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$switch"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "the unpected input is not consumes, it is left for the next "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$switch"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n        $state_input C(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch (continue)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"1st A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"1st($(name))\");\r\n                }\r\n            }\r\n            $switch (raise)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"2nd A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"2nd B($(name))\");\r\n                }\r\n            case C(name):\r\n                {\r\n                    Append($\"2nd C($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes WaitForName()\");\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $push_state WaitForName();\r\n            $switch (raise)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"3rd A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"3rd B($(name))\");\r\n                }\r\n            case C(name):\r\n                {\r\n                    Append($\"3rd C($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes default()\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.C(\"John\");\r\n        sm.C(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"2nd C(John); Finishes WaitForName(); 3rd C(John); Finishes default(); \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\n                the first "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " found that this is an unexpected input,\n                it continues to run code after "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                And then the second "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\n                it found that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is an expected input at this moment,\n                and consumes it.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "$switch(continue, return)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch(continue)"
+                  }
+                ]
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "consumes an unpected input"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "stops the current state"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "continues to execute code after this state"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "the unpected input is not consumes, it is left for the next "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "$switch"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nclass MySM : StateMachine\r\n{\r\n    prop Output: string = \"\" {not observe}\r\n\r\n    func Append(text: string): void\r\n    {\r\n        Output = $\"$(Output)$(text); \";\r\n    }\r\n\r\n    $state_machine\r\n    {\r\n        $state_input A(name: string);\r\n        $state_input B(name: string);\r\n        $state_input C(name: string);\r\n\r\n        $state WaitForName()\r\n        {\r\n            $switch (continue, return)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"1st A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"1st($(name))\");\r\n                }\r\n            }\r\n            $switch (raise)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"2nd A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"2nd B($(name))\");\r\n                }\r\n            case C(name):\r\n                {\r\n                    Append($\"2nd C($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes WaitForName()\");\r\n        }\r\n\r\n        $state default()\r\n        {\r\n            $push_state WaitForName();\r\n            $switch (raise)\r\n            {\r\n            case A(name):\r\n                {\r\n                    Append($\"3rd A($(name))\");\r\n                }\r\n            case B(name):\r\n                {\r\n                    Append($\"3rd B($(name))\");\r\n                }\r\n            case C(name):\r\n                {\r\n                    Append($\"3rd C($(name))\");\r\n                }\r\n            }\r\n            Append(\"Finishes default()\");\r\n        }\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var sm = new MySM^();\r\n    try\r\n    {\r\n        sm.C(\"John\");\r\n        sm.C(\"John\");\r\n    }\r\n    catch (ex)\r\n    {\r\n        sm.Append(ex.Message);\r\n    }\r\n    return sm.Output;\r\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"3rd C(John); Finishes default(); The state machine has been stopped.; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called,\n                the first "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " found that this is an unexpected input,\n                it stops "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$state WaitForName()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and continues in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$state default()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The second "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is skipped.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                And then the third "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$switch"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is executed,\n                it found that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is an expected input at this moment,\n                and consumes it.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "C(\"John\")"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called for the second time,\n                the state machine has stopped,\n                it throws an exception.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

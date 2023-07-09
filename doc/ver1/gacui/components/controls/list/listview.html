@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><listview> -- GPU Accelerated C++ User Interface (vczh)</listview></title>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../../article.css">
+<script src="../../../../scripts/rootView.js"></script>
+<script src="../../../../scripts/directoryView.js"></script>
+<script src="../../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "controls",
+    "list",
+    "listview"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "List Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "list",
+                    "home"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "GuiListControl and GuiSelectableListControl",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "guilistcontrol"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TextList>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "textlist"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<TreeView>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "treeview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ListView>",
+                      "selected": true,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "listview"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "<ComboBox>",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "combobox"
+                      ]
+                    },
+                    {
+                      "icon": "+",
+                      "name": "Bindable List Controls",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "bindable"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<ListView>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<ListView/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "C++/Workflow"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": (vl::)presentation::controls::GuiListView*"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Template Tag"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": <ListViewTemplate/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Item Template Tag"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": <ListItemTemplate/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Template Name"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": ListView"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Predefined Item Template"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(Detail)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": " (default): list::DetailListViewItemTemplate + list::ListViewColumnItemArranger"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(BigIcon)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": list::BigIconListViewItemTemplate + list::FixedSizeMultiColumnItemArranger"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(SmallIcon)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": list::SmallIconListViewItemTemplate + list::FixedSizeMultiColumnItemArranger"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(List)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": list::ListListViewItemTemplate + list::FixedHeightMultiColumnItemArranger"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(Tile)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": list::TileListViewItemTemplate + list::FixedSizeMultiColumnItemArranger"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "SetView(Information)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": list::InformationListViewItemTemplate + list::FixedHeightItemArranger"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Items",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ListView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stores a list of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and display them.\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " there are\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SmallImage"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LargeImage"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Tag"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties,\n                changing these properties also immediately causes changing in the list control.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You can add, remove or change items in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Items"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property to change content in the list control.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SelectedItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property returns the currently selected item in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If no item is selected,\n                or multiple items are selected,\n                this property returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Views",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property defines all predefined view in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<TextList/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Valid values are listed at the beginning of this page.\n                You could ignore this property and change "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Arranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                by assigning new values to these properties\n                or calling the protected method "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetStyleAndArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to set them at the same time.\n                Doing this makes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "View"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " become "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Unknown"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Detail"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " view renders a table,\n                column headers are defined by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewColumn"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " objects in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Columns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property.\n                Changing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Columns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " immediately causes the list control to display different columns.\n                In each row,\n                the first column is always "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                other columns are stored in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems[0]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems[1]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems[2]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " ...\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Columns",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewColumn"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " there are\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Size"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OwnPopup"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DropdownPopup"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SortingState"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties,\n                changing these properties also immediately causes changing in the list control headers:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The column header.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Size"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The size of the column header. Column sizes could also be changed by dragging them by mouse.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OwnPopup"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When the list control is deleted,\n                        if this property is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DropdownPopup"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " of this column will also be deleted.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DropdownPopup"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        A popup attaching to the window.\n                        This could be either "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<Popup/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "<ToolstripMenu/>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or anything that is compatible.\n                        If "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DropdownPopup"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is not "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        a small dropdown button will be displayed in the column header.                    \n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SortingState"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        The default value is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NotSorted"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Changing it to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Ascending"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Descending"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        causes a sorting mark to appear in the column header.\n                        It is usually a triangle towards up (Ascending) or down (Descending).\n                    "
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TextProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<BindableListView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sub Items and Data Columns",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Tile"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Information"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " views render "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with selected "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Selected "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are defined by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DataColumns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in the list control.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DataColumns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " stores indices of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                It also require enough column headers in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Columns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The relationship between these properties are:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "list::ListViewItem::Text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Columns[0]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "list::ListViewItem::SubItems[X]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DataColumns[X]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "list::ListViewItem::SubItems[X]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Columns[X + 1]"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ListViewItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " contains not enough values\n                but they are required in\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Columns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DataColumns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in the list control,\n                the list control renders empty strings for these sub columns.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Columns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " contains not enough values\n                but they are required in\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "DataColumns"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in the list control,\n                the list control renders empty strings for these column headers.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/control_list_listview/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "control_list_listview"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/control_list_listview.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

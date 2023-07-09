@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Properties and Events -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "interface_prop"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": " ",
+                      "name": "Properties and Events",
+                      "selected": true,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_prop"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Inheritance",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_inherit"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Implementing",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_new"
+                      ]
+                    },
+                    {
+                      "icon": " ",
+                      "name": "Generic",
+                      "selected": false,
+                      "path": [
+                        "workflow",
+                        "lang",
+                        "interface_using"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Properties and Events (interface)",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Properties and events are allowed in interfaces.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Defining properties and events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When property "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is associated with event "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NameChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                magic doesn't happen automatically,\n                the implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should trigger "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NameChanged"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " approppriately.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The property could also be readonly, or not associated with an event.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Full-featured auto-property",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    which means:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    event NameChanged();\r\n    func GetName(): string;\r\n    func SetName(value: string): void;\r\n    prop Name: string {GetName, SetName : NameChanged}\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Readonly auto-property",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {const}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    which means:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    event NameChanged();\r\n    func GetName(): string;\r\n    prop Name: string {GetName : NameChanged}\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Auto-property Without event",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {not observe}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    which means:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    func GetName(): string;\r\n    func SetName(value: string): void;\r\n    prop Name: string {GetName, SetName}\r\n}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Readonly auto-property without event",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {const, not observe}\r\n}"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    which means:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "interface IWithProp\r\n{\r\n    func GetName(): string;\r\n    prop Name: string {GetName}\r\n}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implementing properties",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Auto-properties are also allowed in new interface expressions\n                to create default implementation for properties:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var withProp = new IWithProp^\r\n{\r\n    override prop Name: string = \"an-initialized-value\" {}\r\n};"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "override"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " keyword is required."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Auto-properties in new interface expressions must be initialized."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "It doesn't matter whether the property in the interface is auto-property or not."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                It is almost equivalent to:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var withProp = new IWithProp^\r\n{\r\n    var name: string = \"an-initialized-value\";\r\n\r\n    override func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    override func SetName(value: string): void\r\n    {\r\n        if (name != value)\r\n        {\r\n            name = value;\r\n            NameChanged();\r\n        }\r\n    }\r\n};"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                but the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " variable is not accessible.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You don't need to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "override"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " an event in an interface.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When an auto-property is used in an new interface expression,\n                the configuration of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "const"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "not observe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must be exactly the same\n                to the property that is overrided in the interface,\n                semantically (because it could be declared using a normal property, not using an auto-property).\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Even if you use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "const"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for an auto-property in an new interface expression,\n                the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function is always there.\n                In this case,\n                the only way to change the value of the property is to call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using events",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Events don't have to be associated with properties.\n                You can define events in interfaces and trigger them in new interface expressions.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Events are allowed to have arguments,\n                but just like a function type,\n                arguments do not have names.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "module sampleModule;\r\n\r\ninterface IWithEvent\r\n{\r\n    event SomethingHappened(string);\r\n    func MakeItHappen(something: string): void;\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var withEvent = new IWithEvent^\r\n    {\r\n        override func MakeItHappen(something: string): void\r\n        {\r\n            SomethingHappened(something);\r\n        }\r\n    };\r\n\r\n    var r = {\"\"};\r\n    var handler = attach(\r\n        withEvent.SomethingHappened,\r\n        func (something:string): void\r\n        {\r\n            r[0] = r[0] & $\"$(something); \";\r\n        }\r\n    );\r\n\r\n    withEvent.MakeItHappen(\"Good\");\r\n    withEvent.MakeItHappen(\"Cool\");\r\n    withEvent.SomethingHappened(\"Wonderful\");\r\n\r\n    detach(withEvent.SomethingHappened, handler);\r\n    return r[0];\r\n}"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Triggering an event is like calling a function."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Events can be triggered anywhere, not just in the new interface expression."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The only way to access an event is to trigger it, you are not allowed to copy the event object."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "attach"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is used to subscribe an event with a value of a function type that is compatible with the event (exactly same argument types and returning "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "void"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ")."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The result from "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "attach"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is used to unsubscribe an event in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "detach"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "detach"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " expression returns a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bool"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " value, it returns null when this event handler is not a subscription for this event, or this event handler has been unsubscribed."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                Variables are captured by value in ordered lambda expressions, lambda expressions and new interface expressions.\n                This is the reason why we define "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "r"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "string []"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Because "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "r"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not allowed to be changed in the event callback,\n                but we can change elements in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "r"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Function "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "main"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"Good; Cool; Wonderful; \""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

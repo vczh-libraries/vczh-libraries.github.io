@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><repeatstack> and <repeatflow> -- GPU Accelerated C++ User Interface (vczh)</repeatflow></repeatstack></title>
+<link rel="shortcut icon" href="../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../article.css">
+<script src="../../../scripts/rootView.js"></script>
+<script src="../../../scripts/directoryView.js"></script>
+<script src="../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "compositions",
+    "repeat"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Compositions",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "compositions",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "<Bounds>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "bounds"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Stack> and <StackItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "stack"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Flow> and <Flow>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "flow"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<Table>, <Cell>, <RowSplitter> and <ColumnSplitter>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "table"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<RepeatStack> and <RepeatFlow>",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "repeat"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SharedSizeRoot> and <SharedSizeItem>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sharedsize"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SideAligned>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "sidealigned"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<PartialView>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "partialview"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Responsive Design Series",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "responsive"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Handling Input Events",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "compositions",
+                    "events"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "<RepeatStack> and <RepeatFlow>",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatStack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatFlow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            are "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Stack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Flow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " with data binding.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            You are not required to create "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<StackItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<FlowItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for each item.\n            Instead,\n            you bind a collection object to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemSource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property,\n            assign an item template to the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property,\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatStack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatFlow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            will create "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<StackItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<FlowItem/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for each item in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemSource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            each containing an instance from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to display an item in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ItemSource"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatStack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " inherits from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Stack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<RepeatFlow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " inherits from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Flow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            all properties in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Stack/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Flow/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are available.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemSource property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A valid object to assign to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Enumerable^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Here are built-in interfaces that inherits from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Enumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::ReadonlyList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::List"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "system::ObservableList"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/home/registered/vlppreflection.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this page"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                you could find C++ class names for these interfaces.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/type.html#Collection-types",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this page"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                you could find "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " syntax for these types.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Values in the collection must match "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ref.Parameter/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                of the "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/tag_instance.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "instance"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                that is specified in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If there are\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Control-Item-Template-func-data-Object-TEMPLATE-CLASS-",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "multiple instances"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property,\n                the first one whose "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ref.Parameter/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is able to accept the value will be selected for the item in the collection.\n                If none of them can,\n                an exception will raise.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To create a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::Enumerable^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++,\n                either call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::IValueEnumerable::Create"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::BoxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::IEnumerable<T>&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To create a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::List^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++,\n                either call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::IValueList::Create"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::BoxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::IList<T>&"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BoxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function creates a reference to the C++ collection,\n                the C++ collection and the created object share items in the collection,\n                and one can observe changes from another.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Binding system::ObservableList to ItemSource property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ObservableList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is assigned to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property,\n                when items in the list changed,\n                associated "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                will be automatically created or destroyed in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatStack/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatFlow/>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To create a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::List^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in C++,\n                either call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::reflection::description::IValueList::Create"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                or use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::collections::ObservableList<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as your collection class and call its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetWrapper"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetWrapper"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function creates a reference to the C++ collection,\n                they share items in the collection,\n                and one can observe changes from another.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "ItemTemplate property",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Control-Item-Template-func-data-Object-TEMPLATE-CLASS-",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                property accepts one or a list of "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/tag_instance.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "instances"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                in their full names or XML names.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Instances here are required to have exactly one "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ref.Parameter/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                as the only argument in their constructor.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is being assigned,\n                or when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::ObservableList^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and new items are inserted to the list,\n                instances in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be tested one by one to see if its constructor argument could accept the item in the list.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The first instance of a successful test will be created with the item in the list,\n                with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MinSizeLimitation"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LimitToElementAndChildren"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Margin"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " set to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "left:0 top:0 right:0 bottom:0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                And then a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will be created to contain this instance\n                and inserted to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatStack/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatFlow/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in the correct position.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Accessing auto-managed <StackItem/> or <FlowItem/>",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatStack/>::StackItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property\n                or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<RepeatFlow/>::FlowItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property\n                contains the same number of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                to items in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in exactly the same order.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::ObservableList^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is assigned to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the items and the order will be kept throught out the running time.\n                Otherwise these compositions only reflect items in the collection at the moment of assigning to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Each "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " has an only child composition\n                which is an selected instance from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To access the item template instance of a specified item in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                just use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "StackItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FlowItems"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with the same index,\n                and find the first direct child composition of the returned "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To access "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<StackItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<FlowItem/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " inside the item template instance,\n                just find its direct parent composition.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is assigned to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ItemSource"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                all items will be deleted.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Please check out\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_ControlTemplate/BlackSkin/UI/FullControlTest/RepeatTabPage.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    the demo for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<RepeatStack/>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "<RepeatFlow/>"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                and its\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/GacUI_ControlTemplate/BlackSkin/UI/FullControlTest/RepeatComponents.xml",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    sample item templates\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                .\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

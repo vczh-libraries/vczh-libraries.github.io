@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Visualizer -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../../../global.css">
+<link rel="stylesheet" type="text/css" href="../../../../article.css">
+<script src="../../../../scripts/rootView.js"></script>
+<script src="../../../../scripts/directoryView.js"></script>
+<script src="../../../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "controls",
+    "list",
+    "datagrid_visualizer"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Controls",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "controls",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": "-",
+                  "name": "List Controls",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "controls",
+                    "list",
+                    "home"
+                  ],
+                  "subNodes": [
+                    {
+                      "icon": "-",
+                      "name": "Bindable List Controls",
+                      "selected": false,
+                      "path": [
+                        "gacui",
+                        "components",
+                        "controls",
+                        "list",
+                        "bindable"
+                      ],
+                      "subNodes": [
+                        {
+                          "icon": "-",
+                          "name": "<BindableDataGrid>",
+                          "selected": false,
+                          "path": [
+                            "gacui",
+                            "components",
+                            "controls",
+                            "list",
+                            "bindabledatagrid"
+                          ],
+                          "subNodes": [
+                            {
+                              "icon": " ",
+                              "name": "Column Configuration",
+                              "selected": false,
+                              "path": [
+                                "gacui",
+                                "components",
+                                "controls",
+                                "list",
+                                "datagrid_column"
+                              ]
+                            },
+                            {
+                              "icon": " ",
+                              "name": "Filter",
+                              "selected": false,
+                              "path": [
+                                "gacui",
+                                "components",
+                                "controls",
+                                "list",
+                                "datagrid_filter"
+                              ]
+                            },
+                            {
+                              "icon": " ",
+                              "name": "Sorter",
+                              "selected": false,
+                              "path": [
+                                "gacui",
+                                "components",
+                                "controls",
+                                "list",
+                                "datagrid_sorter"
+                              ]
+                            },
+                            {
+                              "icon": " ",
+                              "name": "Visualizer",
+                              "selected": true,
+                              "path": [
+                                "gacui",
+                                "components",
+                                "controls",
+                                "list",
+                                "datagrid_visualizer"
+                              ]
+                            },
+                            {
+                              "icon": " ",
+                              "name": "Editor",
+                              "selected": false,
+                              "path": [
+                                "gacui",
+                                "components",
+                                "controls",
+                                "list",
+                                "datagrid_editor"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Visualizer",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " property is a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Please check out\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/properties.html#presentation-controls-list-IDataVisualizerFactory-",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                this page\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            for using this property in GacUI XML Resource.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            To create a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::IDataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in C++,\n            it is recommended to use "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "list::DataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " as the implementation for the interface.\n            The constructor has two argument.\n            The first argument is an\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/xmlres/instance/properties.html#Control-Item-Template-func-data-Object-TEMPLATE-CLASS-",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                item template property value\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            to create a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGridVisualizerTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The second argument is a decorated visualizer factory,\n            which is optional.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If the decorated visualizer factory is not "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "null"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            the created visualizer template from the first argument\n            will contain the one created from the decorated visualizer factory.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The default visualizer factory for cells in the first column is:\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                MainColumnVisualizerTemplate;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This means that,\n            for these cells,\n            a text will be displayed in a focus rectangle (only rendered when a cell has a focus),\n            and the focus rectangle is contained in a border.\n            There is only right and bottom border lines for a cell,\n            but when all cells are rendered together,\n            they form a table.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The default visualizer factory for cells in the other columns is:\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                SubColumnVisualizerTemplate;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            For example,\n            to create the above default visualizer factories:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "auto mainProperty = [](const Value&) { return new MainColumnVisualizerTemplate; };\r\nauto subProperty = [](const Value&) { return new SubColumnVisualizerTemplate; };\r\nauto focusRectangleProperty = [](const Value&) { return new FocusRectangleVisualizerTemplate; };\r\nauto cellBorderProperty = [](const Value&) { return new CellBorderVisualizerTemplate; };\r\n\r\ndefaultMainColumnVisualizerFactory = \r\n    MakePtr<DataVisualizerFactory>(cellBorderProperty,\r\n        MakePtr<DataVisualizerFactory>(focusRectangleProperty,\r\n            MakePtr<DataVisualizerFactory>(mainProperty)\r\n    ));\r\ndefaultSubColumnVisualizerFactory = \r\n    MakePtr<DataVisualizerFactory>(cellBorderProperty,\r\n        MakePtr<DataVisualizerFactory>(focusRectangleProperty,\r\n            MakePtr<DataVisualizerFactory>(subProperty)\r\n    ));"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            We create item template property values for all predefined visualizer templates:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MainColumnVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SubColumnVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusRectangleVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CellBorderVisualizerTemplate"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            And then combine them together using nested instances of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "DataVisualizerFactory"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "NOTE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ":\n            The visualizer order in C++ is the reverse of in GacUI XML Resource.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Please check out\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/components/itemplates/home.html",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Item Templates"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            for details about "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiGridVisualizerTemplate"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Step-by-Step Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In this demo,\n                cell visualizers are applied to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Author"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " column and the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Summary"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " column:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<att.AuthorColumn-set>\r\n  <att.VisualizerFactory>HyperlinkVisualizerTemplate;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate</att.VisualizerFactory>\r\n</att.AuthorColumn-set>\r\n<att.SummaryColumn-set>\r\n  <att.VisualizerFactory>sample:SummaryVisualizer;FocusRectangleVisualizerTemplate;CellBorderVisualizerTemplate</att.VisualizerFactory>\r\n</att.SummaryColumn-set>"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "HyperlinkVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a predefined visualizer to convert a cell to a hyperlink.\n                It only changes the look and the mouse cursor for all cells under a column.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "sample:SummaryVisualizer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a visualizer defined in the same resource file.\n                It adds an icon to the text,\n                when the mouse hovers above the icon,\n                a tooltip is displayed to show the whole summary.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In GacUI XML Resource,\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#presentation-controls-list-IDataVisualizerFactory-",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    multiple templates\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                could be assigned to the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VisualizerFactory"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property to make multiple visualizers nested together.\n                Here "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FocusRectangleVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CellBorderVisualizerTemplate"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are used\n                to keep a cell looks like a default one,\n                which could be focused and has a border.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Source code: "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release/blob/master/SampleForDoc/GacUI/XmlRes/control_datagrid_visualizer/Resource.xml",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "control_datagrid_visualizer"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Image",
+                        "src": "/gacui/control_datagrid_visualizer.gif"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

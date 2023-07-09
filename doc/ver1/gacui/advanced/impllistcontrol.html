@@ -1,0 +1,3008 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Creating New List Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../../global.css">
+<link rel="stylesheet" type="text/css" href="../../article.css">
+<script src="../../scripts/rootView.js"></script>
+<script src="../../scripts/directoryView.js"></script>
+<script src="../../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "advanced",
+    "impllistcontrol"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/ver1";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Advanced Topics",
+          "selected": false,
+          "path": [
+            "gacui",
+            "advanced",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Interop with C++ View Model",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "vm"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Data Bindings",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "bindings"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Animations",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "animations"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Localization",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "localization"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Cross XML Resource References",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "cxrr"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "ALT Sequence and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "alt"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "TAB and Control Focus",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "tab"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Creating New List Controls",
+              "selected": true,
+              "path": [
+                "gacui",
+                "advanced",
+                "impllistcontrol"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Porting GacUI to Other Platforms",
+              "selected": false,
+              "path": [
+                "gacui",
+                "advanced",
+                "implosprovider"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Creating New List Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Customizing "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiTextList"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiBindableTextList"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " by providing new item templates ,\n            should be the most common way to create a new list control experience.\n            But you could still create your new list control.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            In GacUI 1.0,\n            any new classes created completely by C++\n            (instead of by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "<Instance/>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in GacUI XML Resource)\n            is not accessible in the GacUI XML Resource,\n            because the compiler doesn't know about that.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Any new list control is expected to derives from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiSelectableListControl"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " directly.\n            If list items are not selectable,\n            then "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiListControl"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " could be used to reduce runtime overhead.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl::IItemProvider, the constructor argument",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An instance of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is required in the constructor of\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiSelectableListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The base class doesn't control the life cycle of this instance,\n                it should be properly disposed in the derived class.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This interface offers a bridge so that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could access its items.\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "AttachCallback"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Multiple "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemProviderCallback"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could be installed to an "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemProvider"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When a callback is properly installed,\n                        its "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OnAttached(this)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " must be called immediately.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DetachCallback"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method is called to remove an installed "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemProviderCallback"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        When a callback is properly uninstalled,\n                        its "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OnAttached(nullptr)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " must be called immediately.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PushEditing"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method is called when the list control enters another level of editing mode.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PopEditing"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method is called when the list control leaves one level of editing mode.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IsEditing"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method should return "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " if at least one level of editing mode is still in the list control.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Count"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method should return the total number of items in the list control.\n                        In "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GuiTreeView"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ",\n                        all collapsed items are not counted.\n                        Although they exist in the logical tree,\n                        but if a node is collapsed,\n                        all sub items will be treated as removed by calling "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemProviderCallback::OnItemModified"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        And when a node is expanded,\n                        all sub items come back in the same way.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetTextValue"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method should return a text representation for a given item.\n                        The value will be copied to the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Text"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a item template.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetBindingValue"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method should return a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "non-null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " object for a given item,\n                        if data binding for item source is available in this control.\n                        For non-bindable list controls,\n                        a "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "null"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " object should be returned by calling the constructor of the return value with no argument,\n                        for example, "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "{}"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in C++.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "RequestView"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method provides a way to decouple between the list control and the details of items.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemProvider"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " should handle the life cycle of all returned views.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "list::ItemProviderBase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to create an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The following methods are implemented in this class:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "AttachCallback"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DetachCallback"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PushEditing"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PopEditing"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IsEditing"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                You need to implement the rest to complete an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "InvokeOnItemModified"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method is provider to call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in all installed callbacks.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl::IItemProviderCallback, the constructor argument",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " allow "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to report\n                one change of consecutive items:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "start"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": The index of the first item in all changing consecutive items."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "count"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": The numbers of all changing consecutive items."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "newCount"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": The numbers of new items that all changing consecutive items change into."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If changes happens in multiple groups of consecutive items,\n                each group should be reported in separate call to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                You must try your best to ensure that,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider::Count"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider::GetTextValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider::GetBindingValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                and all related methods in views from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RequestView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                should not see any unreported changes.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified(start, 0, count)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                when a group of items are inserted to the position "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "start"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If one item is inserted,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "count"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified(start, count, 0)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                when a group of items are removed from the position "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "start"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If one item is removed,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "count"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnItemModified(start, count, count)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                when a group of items are updated beginning from the position "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "start"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If one item is updated,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "count"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                An item is updated,\n                if the item is replaced,\n                or any interested content inside this item is updated.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl::IItemArranger, the item layouting",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " handles rendering of list items.\n                An "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is attached to a list control\n                using its "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Arranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property\n                or its protected method "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SetStyleAndArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                There are already some\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/controls/list/guilistcontrol.html#Arranger-ArrangerChanged-",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    built-in IItemArranger implementations\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Check them out to see if any of the works,\n                so you don't have to implement this interface.\n                It is pretty difficult.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProviderCallback"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is also the base class of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                When an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is attached to a list control,\n                it will be installed as a callback to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                So that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could update the rendering when any item is changed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be aware of the\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/controls/list/guilistcontrol.html#DisplayItemBackground",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    DisplayItemBackground\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                property of a list control.\n                If this property returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                all item template instances returned from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArrangerCallback::ReleaseItem"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                should be contained in a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiSelectableButton"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as the item background using\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ThemeNameLLListItemBackground"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as the theme of this button."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "listControl->TypedControlTemplateObject(true)->GetBackgroundTemplate()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as the control template of this button."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All locations, sizes and margins involved in this interface are all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "virtual"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " just need to provide item layout in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LeftDown"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " direction.\n                The \n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/controls/list/guilistcontrol.html#Axis-AxisChanged-",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Axis"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                property will be used by the list control\n                to adjust locations and sizes of all visible items to layout them in the expected direction.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here are all methods to implemement:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "AttachListControl"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method is called when it is attached to a list control.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "DetachListControl"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method is called when it is detached from a list control.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetCallback"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            Get the argument from the last "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SetCallback"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " call.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "SetCallback"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method is called when it is attached to a list control.\n                            Only one callback will be installed to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                            This callback provides everything that an "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could do the a list control.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetTotalSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            Return the total size of all items in their layout.\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetVisibleStyle"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method should return the item template instance for a give item.\n                            If the item is invisible because it is scrolled out of the visible area of the list control,\n                            it should return "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "nullptr"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Living item template instances for items could be managed using\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArrangerCallback::RequestItem"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArrangerCallback::ReleaseItem"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetVisibleIndex"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method should return the item index for a given item template instance.\n                            If such an instance is unknown to this "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ",\n                            it should return "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-1"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ReloadVisibleStyles"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            Recreate all UI objects for visible items.\n                            Items don't need to be recreated immediately,\n                            but all UI objects for items should be disposed in the call to this method.\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetVisibleStyle"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetVisibleIndex"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could pretend that all items are invisible\n                            until the next call to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "OnViewChanged"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "OnViewChanged"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            This method is called to tell the "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "\n                            what is the visible part in "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GetTotalSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could only create UI objects for items in this area,\n                            to reduce the memory pressure and improve the performance.\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArranger"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could also create UI objects for all items if performance is not important.\n                            All items with their UI objects created are "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "visible items"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Living item template instances for items could be managed using\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArrangerCallback::RequestItem"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IItemArrangerCallback::ReleaseItem"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ParagraphListItem",
+                    "paragraphs": [
+                      {
+                        "kind": "Paragraph",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "FindItem"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ":\n                            Search a next item from the specified item "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "itemIndex"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " using a keyboard operation "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "key"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                            "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "-1"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " could be returned if no reasonable item is definded as "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "the next item"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ".\n                        "
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "EnsureItemVisible"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        This method is called if the list control want to scroll to an area to make a given item visible.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemArrangerCallback::SetViewLocation"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is usually called as a respond.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OnViewChanged"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " could be called in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetViewLocation"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetAdoptedSize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Return a reasonable size for the visible area of items,\n                        if the list control is used as a combo box dropdown list.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "GuiListControl::IItemArrangerCallback, the item layouting",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All locations, sizes and margins involved in this interface are all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "virtual"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " just need to provide item layout in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LeftDown"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " direction.\n                The \n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/controls/list/guilistcontrol.html#Axis-AxisChanged-",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Axis"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                property will be used by the list control\n                to adjust locations and sizes of all visible items to layout them in the expected direction.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "RequestItem"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Ask the list control to create an item template instance for a specific item.\n                        An item template instance that is released by calling "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ReleaseItem"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "\n                        could be reused for a different item.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ReleaseItem"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Ask the list control to dispose an item template instance for a specific item.\n                        The item template instance will be deleted from the memory later if necessary,\n                        the pointer should not be used anymore after calling this method.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetViewLocation"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Tell the list control what should be the left-top corner of the visible area.\n                        But the list control could move the visible area to a different location closed by\n                        if it thinks this is better.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStylePreferredSize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Read the size of the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "PreferredBounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a compositon contained by list control.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPORTANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": the result is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "virtual"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Do not use this property directly,\n                        use this method instead.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetStyleAlignmentToParent"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Update the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "AlignmentToParent"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a composition contained by list control.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPORTANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": the result is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "virtual"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Do not use this property directly,\n                        use this method instead.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetStyleBounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Read the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a composition contained by list control.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPORTANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": the result is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "virtual"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Do not use this property directly,\n                        use this method instead.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SetStyleBounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Update the "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Bounds"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " property of a composition contained by list control.\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPORTANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": the result is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "virtual"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                        Do not use this property directly,\n                        use this method instead.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetContainerComposition"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Get the composition as a container to store all UI objects for items.\n                    "
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OnTotalSizeChanged"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ":\n                        Call this method to tell the list control that\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IItemArranger::GetTotalSize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " has been changed.\n                    "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using IItemProvider::RequestView Properly",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A list control could override "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnStyleInstalled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiListControl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                This method is called when an item template instance is binded to a list item.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A new list control class typlically defines a new item template class for an item.\n                the new item template class adds new properties to define how an item for this new list control should look like.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                One or more views could be defined to read or write details for an item for this particular list control class.\n                Then the list control class could call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RequestView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for a view using a unique identifier string,\n                to bind data from the view to item template instances.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example:\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiTextList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " defines the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITextItemView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " view to add the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Checked"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " property to items.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could also defines its own views.\n                For example,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewColumnItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " defines "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IColumnItemView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                to read columns from the list control\n                to render column headers.\n                Any list control using "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewColumnItemArranger"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should make sure that\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IColumnItemView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is implemented and accessible from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IItemProvider::RequestView"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You can define your own view for any purpose,\n                as long as it is only used to read or write details of for items.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Data Binding on Items",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A data bindable list control could read or write items from a item source implementing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueEnumerable>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                This object could also implement any derived interfaces like:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IValueReadonlyList"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IValueList"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IValueObservableList"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                If the item source implements "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueObservableList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                then the list control is expected to update automatically when items are changed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Property-Name-func-data-Object-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The readable property type\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/xmlres/instance/properties.html#Writable-Property-Name-func-data-Object-value-PROPERTY-TYPE-isWrite-bool-PROPERTY-TYPE",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    the writable property type\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                could be used to let the user tell you how to access details from items.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::controls::ReadProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::presentation::controls::WriteProperty"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                could be used on these property types in C++.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sample",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                You are strongly recommended to read the source code of\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiTextList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiBindableTextList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                before creating your own list control classes.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
