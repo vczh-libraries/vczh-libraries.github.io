@@ -83,6 +83,15 @@
       ],
       "subNodes": [
         {
+          "icon": " ",
+          "name": "Upgrading from 1.0",
+          "selected": false,
+          "path": [
+            "vlppreflection",
+            "upgrade"
+          ]
+        },
+        {
           "icon": "+",
           "name": "References",
           "selected": false,
@@ -187,7 +196,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            The same source code could be used in compilers or code generators,\n            typically these kind of tools uses reflection at runtime,\n            so source code that defines reflectable C++ types are required to compile\n            regardless weather "
+            "text": "\n            Such design allow the same source code to be shared acorss projects that with or without reflection at runtime,\n            source code that defines reflectable C++ types are required to compile\n            regardless whether "
           },
           {
             "kind": "Strong",
@@ -200,7 +209,7 @@
           },
           {
             "kind": "Text",
-            "text": " is on or off,\n            so that to share the same code to consumers which don't need runtime reflection.\n        "
+            "text": " is on or off.\n        "
           }
         ]
       },
@@ -268,13 +277,61 @@
                 "content": [
                   {
                     "kind": "Text",
+                    "text": "VlppParser2"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " project, generated C++ code from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GlrParserGen.exe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will remove type registration code\n                when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is on.\n                All generated AST classes from the grammar is reflectable.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
                     "text": "Workflow"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": " project, compiling and running Workflow script relies on reflection,\n                so they are moved to separated files.\n                When you only uses generated C++ code from Workflow script,\n                only include part of the file and set "
+                "text": " project, compiler and Workflow script executor rely on reflection,\n                so they are moved to separated files.\n                When you only use generated C++ code from Workflow script,\n                only include part of the file and set "
               },
               {
                 "kind": "Strong",
@@ -309,7 +366,7 @@
               },
               {
                 "kind": "Text",
-                "text": " project, type registration and GacUI XML resource compiler uses reflection,\n                so they are moved to separated files.\n                When you don't need dynamic resource loading for controls,\n                only include part of the file and set "
+                "text": " project, type registration and GacUI XML resource compiler use reflection,\n                so they are moved to separated files.\n                When you don't need dynamic resource loading for controls,\n                only include part of the file and set "
               },
               {
                 "kind": "Strong",
@@ -485,7 +542,7 @@
       },
       {
         "kind": "Topic",
-        "title": "Functors and containers",
+        "title": "Functors",
         "content": [
           {
             "kind": "Paragraph",
@@ -514,7 +571,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                For functors, only "
+                "text": "\n                Only "
               },
               {
                 "kind": "Strong",
@@ -549,7 +606,7 @@
               },
               {
                 "kind": "Text",
-                "text": " is created.\n                When a boxed functor is unboxed,\n                you don't get the "
+                "text": " is created.\n                When a boxed functor is unboxed,\n                you don't get the reference to the original "
               },
               {
                 "kind": "Strong",
@@ -562,7 +619,7 @@
               },
               {
                 "kind": "Text",
-                "text": " object before boxing,\n                instead you get a new "
+                "text": " object,\n                instead you get a new "
               },
               {
                 "kind": "Strong",
@@ -591,13 +648,41 @@
                 "text": " instance.\n            "
               }
             ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Containers",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "In namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::vl::reflection::description"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
           },
           {
             "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                When a container is boxed, an instance of "
+                "text": "\n                When a container is boxed at the first time, an instance of "
               },
               {
                 "kind": "Strong",
@@ -605,6 +690,19 @@
                   {
                     "kind": "Text",
                     "text": "IValueEnumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueArray"
                   }
                 ]
               },
@@ -636,7 +734,125 @@
               },
               {
                 "kind": "Text",
-                "text": " is created.\n                It depends on the type of the container.\n                This instance references the container before boxing,\n                it can update the container,\n                so when the container is deleted, calling this instance will crash.\n                When a boxed container is unboxed,\n                you get a copy of the container.\n            "
+                "text": " is created.\n                The same instance will be returned if you box a container for multiple times.\n                It depends on the type of the container.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " types don't affect lifecycles of original container objects.\n                If you use an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instance after its original container object is deleted,\n                it will crash.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Boxing multiple "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LazyList<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " creates different instances of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValueEnumerable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Unboxing a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " gets a copy of the container.\n                But if such "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is boxed from a container,\n                unboxing it to the exact same type gets the references of the original container.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instance could also be created in Workflow script,\n                there is no \"original container object\" in this case.\n            "
               }
             ]
           }
@@ -789,6 +1005,172 @@
                 "text": ".\n            "
               }
             ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Unboxed<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a new object is created during "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it owns the reference,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IsOwned"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the reference to the object will be deleted in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Unboxed<>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "'s destructor.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If a reference to an existing object is returned from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnboxParameter"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                it does not own the reference,\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IsOwned"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "false"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                the reference to the object will not be deleted in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Unboxed<>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "'s destructor.\n                It happens when you box a container to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IValue*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and unbox to the exact same type.\n            "
+              }
+            ]
           }
         ]
       },
@@ -907,46 +1289,58 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                When runtime reflection is not needed, you must set "
+                "text": "\n                There are 3 levels of reflection:\n                "
               },
               {
-                "kind": "Strong",
-                "content": [
+                "kind": "List",
+                "ordered": false,
+                "items": [
                   {
-                    "kind": "Text",
-                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VCZH_DEBUG_NO_REFLECTION"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " preprocessor is defined: There is no runtime reflection."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "VCZH_DEBUG_METAONLY_REFLECTION"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " preprocessor is defined: Only type names are available. You can reload dumped binary files to restore type definitions, but it is metadata only and reflected methods can't be executed."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "When non of macros above is used: Full runtime reflection features. You can dump types to binary files at this level."
+                      }
+                    ]
                   }
                 ]
-              },
-              {
-                "kind": "Text",
-                "text": " on.\n                This is a preprocessor definition for C++ compiler.\n                You can also detect this option using "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "#ifdef VCZH_DEBUG_NO_REFLECTION"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " or "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "#ifndef VCZH_DEBUG_NO_REFLECTION"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": ".\n            "
               }
             ]
           }
