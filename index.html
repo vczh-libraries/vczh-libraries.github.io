@@ -2,22 +2,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Gaclib -- GPU Accelerated C++ User Interface (vczh)</title>
+<title>Gaclib --  GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="stylesheet" type="text/css" href="global.css">
 <link rel="stylesheet" type="text/css" href="article.css">
 <link rel="stylesheet" type="text/css" href="navigation.css">
-<link rel="stylesheet" type="text/css" href="category.css">
 <script src="scripts/rootView.js"></script>
-<script src="scripts/homeView.js"></script>
-<script src="scripts/homeCategoryArticleView.js"></script>
+<script src="scripts/articleView.js"></script>
 
 </head>
 <body>
 <div id="MVC-ViewContainer"></div>
 <script lang="javascript">
 {
-  const mvcModel = {};
+  const mvcModel = {
+  "page": "index"
+};
   const mvcViews = [
   {
     "targetObject": "MVC-ViewContainer",
@@ -25,16 +25,11 @@
   },
   {
     "targetObject": "rootViewContainer",
-    "viewName": "Gaclib-HomeView"
-  },
-  {
-    "targetObject": "homeViewContainer",
-    "viewName": "Gaclib-HomeCategoryArticleView"
+    "viewName": "Gaclib-ArticleView"
   }
 ];
   const activeButton = "Home";
-  const activeCategory = "Hello";
-  const homeArticle = {
+  const article = {
   "index": false,
   "numberBeforeTitle": false,
   "topic": {
@@ -63,17 +58,7 @@
             "text": ".\n            This library provide many useful features.\n            If you don't need all features,\n            you can just use a subset of released C++ files to reduce the size of the executable.\n        "
           }
         ]
-      }
-    ]
-  }
-};
-  const categoryArticle = {
-  "index": false,
-  "numberBeforeTitle": false,
-  "topic": {
-    "kind": "Topic",
-    "title": "Hello, world!",
-    "content": [
+      },
       {
         "kind": "Paragraph",
         "content": [
@@ -89,9 +74,7 @@
   window["MVC-Resources.mvcModel"] = mvcModel;
   window["MVC-Resources.mvcViews"] = mvcViews;
   window["MVC-Resources.activeButton"] = activeButton;
-  window["MVC-Resources.activeCategory"] = activeCategory;
-  window["MVC-Resources.homeArticle"] = homeArticle;
-  window["MVC-Resources.categoryArticle"] = categoryArticle;
+  window["MVC-Resources.article"] = article;
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }
