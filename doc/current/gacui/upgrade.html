@@ -119,7 +119,7 @@
   ]
 };
   const article = {
-  "index": false,
+  "index": true,
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
@@ -127,62 +127,818 @@
     "content": [
       {
         "kind": "Topic",
-        "title": "GuiControl",
+        "title": "GacUI API",
         "content": [
           {
-            "kind": "Paragraph",
+            "kind": "Topic",
+            "title": "GuiControl",
             "content": [
               {
-                "kind": "Strong",
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetFocus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetFocus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are renamed to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetFocused"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetFocused"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiListControl",
+            "content": [
+              {
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "SetFocus"
+                    "text": "\n                    Adding items could cause flashing during rendering for about 1 frame.\n                    To workaround this issue, call "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiControlHost::ForceCalculateSizeImmediately"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " after finishing editing all items in a rendering cycle, in either C++ or Workflow.\n                    A control host is a top level window like window or menu.\n                    You could also call the same function in `ContainerComposition` of any list controls,\n                    but this function is only available to C++.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiControlHost",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WindowReadyToClose"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " event is added.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WindowClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is called first,\n                    and if it does not cancel the operation,\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WindowReadyToClose"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is close, then the window is close, then "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WindowClosed"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is called.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiGraphicsComposition",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Removed:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Margin"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "IsTrivialComposition"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " function"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "PreferredBounds"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Renamed:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "ClientArea"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "CachedClientArea"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "MinPreferredMinSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "CachedMinSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "CachedMinClientSize"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Bounds"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "PreviousCalculatedBounds"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "CachedBounds"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " property"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "FindComposition"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " function to "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "FindVisibleComposition"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " function."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiGraphicsSite",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This class is removed, members are merged to its base class "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiGraphicsComposition"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiBoundsComposition",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Bounds"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property is renamed to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ExpectedBounds"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": " and "
-              },
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AlignmentToParent"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property will no longer consider parent's "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InternalMargin"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property in layout.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GuiTableComposition",
+            "content": [
               {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "GetFocus"
+                    "text": "\n                    Removed "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetCellArea"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "UpdateCellBounds"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " functions.\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": " are renamed to "
-              },
-              {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "SetFocused"
+                    "text": "\n                    When "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MinSizeLimitation"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "LimitToElementAndChildren"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", layout of cells is not considered in the table's minimum size.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "ThemeName",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New theme "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SystemFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for control template of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when the system frame is enabled.\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": " and "
-              },
-              {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "GetFocused"
+                    "text": "\n                    New theme "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CustomFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for control template of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when the system frame is disabled.\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": ".\n            "
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New theme "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RibbonGroupMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for control template of a drop down menu when "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiRibbonGroup"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is collapsed to a button.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "ThemeTemplates",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New themes as described in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ThemeName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New property "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "PreferCustomFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    The default value is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "nullptr"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    At least one "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ThemeTemplates"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " should have this property set to non-null.\n                    The latest "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ThemeTemplates"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with a non-null "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "PreferCustomFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " decides\n                    whether to use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SystemFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CustomFrameWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    when a window's theme name is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ThemeName::Window"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
               }
             ]
           }
@@ -190,27 +946,107 @@
       },
       {
         "kind": "Topic",
-        "title": "GuiListControl",
+        "title": "GacUI Rendering API",
         "content": [
           {
-            "kind": "Paragraph",
+            "kind": "Topic",
+            "title": "DEFINE_GUI_GRAPHICS_ELEMENT",
             "content": [
               {
-                "kind": "Text",
-                "text": "\n                Adding items could cause flashing during rendering for about 1 frame.\n                To workaround this issue, call "
-              },
-              {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "GuiControlHost::ForceCalculateSizeImmediately"
+                    "text": "\n                    This macro is removed.\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": " after finishing editing all items in a rendering cycle, in either C++ or Workflow.\n                A control host is a top level window like window or menu.\n                You could also call the same function in `ContainerComposition` of any list controls,\n                but this function is only available to C++.\n            "
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class YourElement : public GuiElementBase<TYPE>, YourBaseClasses...\r\n{\r\n    DEFINE_GUI_GRAPHICS_ELEMENT(TYPE, NAME)\r\n...\r\n};",
+                    "language": "c++"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    should be replaced by\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class YourElement : public GuiElementBase<TYPE>, YourBaseClasses...\r\n{\r\nprivate:\r\n    friend class GuiElementBase<TYPE>;\r\n    static constexpr const wchar_t* ElementTypeName = NAME;\r\n...\r\n};",
+                    "language": "c++"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "DEFINE_CACHED_RESOURCE_ALLOCATOR",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This macro is removed.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class YourAllocator : YourBaseClasses...\r\n{\r\n    DEFINE_CACHED_RESOURCE_ALLOCATOR(TKEY, TVALUE)\r\n...\r\n};",
+                    "language": "c++"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    should be replaced by\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class YourAllocator : public GuiCachedResourceAllocatorBase<YourAllocator, TKEY, TVALUE>, YourBaseClasses...\r\n{\r\n...\r\n};",
+                    "language": "c++"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "DEFINE_GUI_GRAPHICS_RENDERER",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    This macro is removed.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Program",
+                    "code": "class YourRenderer : public Object, public IGuiGraphicsRenderer, YourBaseClasses...\r\n{\r\n    DEFINE_GUI_GRAPHICS_RENDERER(TELEMENT, TRENDERER, TTARGET)\r\n...\r\n};",
+                    "language": "c++"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    should be replaced by\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "class YourRenderer : GuiElementRendererBase<TELEMENT, TRENDERER, TTARGET>, YourBaseClasses...\r\n{\r\nprivate:\r\n    friend class GuiElementRendererBase<TELEMENT, TRENDERER, TTARGET>;\r\n...\r\n};",
+                    "language": "c++"
+                  }
+                ]
               }
             ]
           }
@@ -218,199 +1054,680 @@
       },
       {
         "kind": "Topic",
-        "title": "GuiControlHost",
+        "title": "GacUI Platform Provider API",
         "content": [
           {
-            "kind": "Paragraph",
+            "kind": "Topic",
+            "title": "IGuiGraphicsRenderTarget",
             "content": [
               {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "WindowReadyToClose"
+                    "text": "\n                    New methods "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsInHostedRendering"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "StartHostedRendering"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "StopHostedRendering"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": " event is added.\n                "
-              },
-              {
-                "kind": "Strong",
+                "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "WindowClosing"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " is called first,\n                and if it does not cancel the operation,\n                "
-              },
-              {
-                "kind": "Strong",
-                "content": [
+                    "text": "\n                    Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiGraphicsRenderTarget"
+                      }
+                    ]
+                  },
                   {
                     "kind": "Text",
-                    "text": "WindowReadyToClose"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " is close, then the window is close, then "
-              },
-              {
-                "kind": "Strong",
-                "content": [
+                    "text": " to implement "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IGuiGraphicsRenderTarget"
+                      }
+                    ]
+                  },
                   {
                     "kind": "Text",
-                    "text": "WindowClosed"
+                    "text": " to reduce complexity,\n                    without bothering with dealing with hosted or non-hosted mode,\n                    and some calculation of clippings.\n                "
                   }
                 ]
-              },
-              {
-                "kind": "Text",
-                "text": " is called.\n            "
               }
             ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "GuiGraphicsComposition",
-        "content": [
+          },
           {
-            "kind": "Paragraph",
+            "kind": "Topic",
+            "title": "INativeWindow",
             "content": [
               {
-                "kind": "Text",
-                "text": "\n                Removed:\n                "
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetFocus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsFocused"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is removed, because now activated means focused.\n                "
+                  }
+                ]
               },
               {
-                "kind": "List",
-                "ordered": false,
-                "items": [
+                "kind": "Paragraph",
+                "content": [
                   {
-                    "kind": "ContentListItem",
+                    "kind": "Text",
+                    "text": "\n                    New method "
+                  },
+                  {
+                    "kind": "Strong",
                     "content": [
                       {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "Margin"
-                          }
-                        ]
-                      },
-                      {
                         "kind": "Text",
-                        "text": " property"
+                        "text": "IsActivelyRefreshing"
                       }
                     ]
                   },
                   {
-                    "kind": "ContentListItem",
+                    "kind": "Text",
+                    "text": ", it always returns "
+                  },
+                  {
+                    "kind": "Strong",
                     "content": [
                       {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "IsTrivialComposition"
-                          }
-                        ]
-                      },
-                      {
                         "kind": "Text",
-                        "text": " function"
+                        "text": "true"
                       }
                     ]
                   },
                   {
-                    "kind": "ContentListItem",
+                    "kind": "Text",
+                    "text": " for native platform provider.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New method "
+                  },
+                  {
+                    "kind": "Strong",
                     "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetRenderingOffset"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", it always returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "{0,0}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for native platform provider.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New method "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IsRenderingAsActivated"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", it should returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when the window or any child window is activated.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "INativeWindowListener",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New callback "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RenderingAsActivated"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RenderingAsDeactivated"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    called when "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INativeWindow::IsRenderingAsActivated"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is changed.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Closing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " renamed to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BeforeClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AfterClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BeforeClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " of all listeners must be called first,\n                    followed by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AfterClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " of all listeners,\n                    if none of listeners cancel the closing in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BeforeClosing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    New callback "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NeedRefresh"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ForceRefresh"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BecomeNonMainHostedWindow"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    they should not be called from a native platform provider.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A parameter is added to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DpiChanged"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DpiChanged(true)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " of all listeners must be called first,\n                    followed by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DpiChanged(false)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " of all listeners.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "GetCurrentController and SetCurrentController",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    It is renamed to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetNativeController"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetCurrentController"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " no longer returns the object in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SetNativeController"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    instead it returns a new implementation of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INativeController"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    of which services could be substituted by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetNativeServiceSubstitution"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "New helper functions",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "PerformHitTest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to call "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INativeWindowListener::HitTest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on a collection of listeners.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetCursorFromHitTest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to get a suggested cursors from hit test results.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "New macros",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GUI_DEFINE_KEYBOARD_WINDOWS_NAME"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for suggested names for keys.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "New helper classes",
+            "content": [
+              {
+                "kind": "Topic",
+                "title": "SharedAsyncService",
+                "content": [
+                  {
+                    "kind": "Paragraph",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\n                        This class is offered as a default implementation of "
+                      },
                       {
                         "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "PreferredBounds"
+                            "text": "INativeAsyncService"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": " property"
+                        "text": ".\n                    "
                       }
                     ]
                   }
                 ]
               },
               {
-                "kind": "Text",
-                "text": "\n                Renamed:\n                "
-              },
-              {
-                "kind": "List",
-                "ordered": false,
-                "items": [
+                "kind": "Topic",
+                "title": "SharedCallbackService",
+                "content": [
                   {
-                    "kind": "ContentListItem",
+                    "kind": "Paragraph",
                     "content": [
                       {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "ClientArea"
-                          }
-                        ]
-                      },
-                      {
                         "kind": "Text",
-                        "text": " property to "
+                        "text": "\n                        This class is offered as a default implementation of "
                       },
                       {
                         "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "CachedClientArea"
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "Text",
-                        "text": " property"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "MinPreferredMinSize"
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "Text",
-                        "text": " property to "
-                      },
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "CachedMinSize"
+                            "text": "INativeCallbackService"
                           }
                         ]
                       },
@@ -423,233 +1740,84 @@
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "CachedMinClientSize"
+                            "text": "INativeCallbackInvoker"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": " property"
+                        "text": ".\n                    "
                       }
                     ]
-                  },
+                  }
+                ]
+              },
+              {
+                "kind": "Topic",
+                "title": "FakeDialogService",
+                "content": [
                   {
-                    "kind": "ContentListItem",
+                    "kind": "Paragraph",
                     "content": [
                       {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "Bounds"
-                          }
-                        ]
-                      },
-                      {
                         "kind": "Text",
-                        "text": " and "
+                        "text": "\n                        This class is offered as a default implementation of "
                       },
                       {
                         "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "PreviousCalculatedBounds"
+                            "text": "INativeDialogService"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": " property to "
+                        "text": " for "
                       },
                       {
                         "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "CachedBounds"
+                            "text": "hosted mode only"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": " property"
+                        "text": ".\n                        To use this service in hosted mode,\n                        "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeController::DialogService"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " of a native platform provider could just return "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "nullptr"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ".\n                    "
                       }
                     ]
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "GuiGraphicsSite",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\n                This class is removed, members are merged to its base class "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "GuiGraphicsComposition"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": ".\n            "
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "GuiBoundsComposition",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "Bounds"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " property is renamed to "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "ExpectedBounds"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": ".\n            "
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "AlignmentToParent"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " property will no longer consider parent's "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "InternalMargin"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " property in layout.\n            "
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "GuiTableComposition",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\n                Removed "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "GetCellArea"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " and "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "UpdateCellBounds"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " functions.\n            "
-              }
-            ]
-          },
-          {
-            "kind": "Paragraph",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "\n                When "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "MinSizeLimitation"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " is not "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "LimitToElementAndChildren"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": ", layout of cells is not considered in the table's minimum size.\n            "
               }
             ]
           }
