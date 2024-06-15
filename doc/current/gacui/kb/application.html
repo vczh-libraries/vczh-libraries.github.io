@@ -498,7 +498,7 @@
           },
           {
             "kind": "Program",
-            "code": "class DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n\tGUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n\t{\r\n\t\tGUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n\t}\r\n\r\n\tvoid Load()override\r\n\t{\r\n\t\tRegisterTheme(MakePtr<darkskin::Theme>());\r\n\t}\r\n\r\n\tvoid Unload()override\r\n\t{\r\n\t}\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)"
+            "code": "class DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\tGUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n\t{\r\n\t\tGUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n\t}\r\n\r\n\tvoid Load(bool, bool)override\r\n\t{\r\n\t\tRegisterTheme(Ptr(new darkskin::Theme));\r\n\t}\r\n\r\n\tvoid Unload(bool, bool)override\r\n\t{\r\n\t}\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)"
           }
         ]
       },

@@ -994,7 +994,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include <GacUI.h>\r\n#include <Skins\\DarkSkin\\DarkSkin.h>\r\n#include <Windows.h>\r\n\r\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load()override\r\n    {\r\n        RegisterTheme(MakePtr<darkskin::Theme>());\r\n    }\r\n\r\n    void Unload()override\r\n    {\r\n    }\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include <GacUI.h>\r\n#include <Skins\\DarkSkin\\DarkSkin.h>\r\n#include <Windows.h>\r\n\r\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load(bool, bool)override\r\n    {\r\n        RegisterTheme(Ptr(new darkskin::Theme));\r\n    }\r\n\r\n    void Unload(bool, bool)override\r\n    {\r\n    }\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
                 "language": "c++"
               }
             ]
