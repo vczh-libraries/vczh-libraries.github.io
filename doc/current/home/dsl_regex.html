@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Regular Expression -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "home",
+    "dsl_regex"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Gaclib Document",
+      "selected": false,
+      "path": [
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Domain Specific Languages",
+          "selected": false,
+          "path": [
+            "home",
+            "dsl"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Regular Expression",
+              "selected": true,
+              "path": [
+                "home",
+                "dsl_regex"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Reflectable Type Registrations",
+              "selected": false,
+              "path": [
+                "home",
+                "dsl_reflection"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Unit Test Framework (Vlpp)",
+              "selected": false,
+              "path": [
+                "home",
+                "dsl_unittest"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Regular Expression",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Charset"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "a"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "[a-z]"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "[^a-z]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Functional characters"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "^"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the beginning of the input (DFA incompatible)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "$"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": the end of the input (DFA incompatible)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex1|regex2"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": match either regex1 or regex2"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Escaping"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " (both \\ and / mean the next character is escaped):\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Escaped characters:\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\r"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the CR character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\n"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the LF character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\t"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the tab character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\s"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": spacing characters (including space, \\r, \\n, \\t)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\S"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": non-spacing characters"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\d"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [0-9]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\D"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [^0-9]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\l"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [a-zA-Z]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\L"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [^a-zA-Z]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\w"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [a-zA-Z0-9_]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\W"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": [^a-zA-Z0-9_]"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": any character (this is the main different from other regex, which treat \".\" as any characters and \"\\.\" as the dot character)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\\\"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\/"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\("
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\)"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\+"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\*"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\?"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\{"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\["
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\<"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\>"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\^"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\$"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\!"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\="
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": represents itself"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "\n                            Escaped characters in charset defined in a square bracket:\n                            "
+                          },
+                          {
+                            "kind": "List",
+                            "ordered": false,
+                            "items": [
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\r"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the CR character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\n"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the LF character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\t"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": the tab character"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "ContentListItem",
+                                "content": [
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\-"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\["
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\\\"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\/"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\^"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ", "
+                                  },
+                                  {
+                                    "kind": "Strong",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "\\$"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Text",
+                                    "text": ": represents itself"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Loops"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex{3}"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 3 times"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex{3,}"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 3 or more times"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex{1,3}"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 1 to 3 times"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex?"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 0 or 1 times"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex*"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 0 or more times"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "regex+"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": repeats 1 or more times"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    if you add an additional "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "?"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " right after a loop, it means repeating as less as possible "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(DFA incompatible)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Capturing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(DFA incompatible)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": No capturing, just change the operators' association"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(?regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Capture matched fragment"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<name>regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Capture matched fragment in a named group called \"name\""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<$i>)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Match the i-th captured fragment, begins from 0"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<$name;i>)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Match the i-th captured fragment in the named group called \"name\", begins from 0"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<$name>)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Match any captured fragment in the named group called \"name\""
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MISC"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(=regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": The prefix of the following text should match the regex, but it is not counted in the whole match "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(DFA incompatible)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(!regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Any prefix of the following text should not match the regex, and it is not counted in the whole match "
+                          },
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(DFA incompatible)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<#name>regex)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Name the regex \"name\", and it applies here"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "(<&name>)"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ": Copy the named regex \"name\" here and apply"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The regular expression has pupre mode and rich mode.\n            Pure mode means the regular expression is driven by a DFA, while the rich mode is not.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The regular expression can test a string instead of matching.\n            Testing only returns a bool very indicating success or failure.\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
