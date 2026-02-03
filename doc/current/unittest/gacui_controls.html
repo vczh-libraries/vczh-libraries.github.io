@@ -1,0 +1,351 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Accessing Controls -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "gacui_controls"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": false,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "gacui"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Snapshots and Frames",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_frame"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "IO Interaction",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_io"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Accessing Controls",
+              "selected": true,
+              "path": [
+                "unittest",
+                "gacui_controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Snapshot Viewer",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_snapshots"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Accessing Controls",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            When a window or a custom control is created from GacUI XML Resource,\r\n            and you need the pointer to a specific sub object,\r\n            you don't have to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "public"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " them.\r\n            Here are functions to access a specific control, composition or component by its "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ref.Name"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " attribute,\r\n            or to access a control by its text,\r\n            defined in the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::presentation::controls"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " namespace.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "FindObjectByName(rootObject, name)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The first parameter must be an object that created by an <Instance/>, e.g. a window or a custom control.\r\n                The second parameter must be an object that directly inside that particular <Instance/> with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ref.Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " attribute assigned.\r\n                If nothing is found, the function crashes.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "auto button = FindObjectByName(window, L\"buttonSomething\");",
+                "language": "c++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "TryFindObjectByName(rootObject, name)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Same as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FindObjectByName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", but it returns null if nothing is found.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "FindObjectByName(rootObject, name1, name2, ...)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This is a shortcut of a chain call: to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "... FindObjectByName(FindObjectByName(rootObject, name1), name2) ..."
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                It is useful when your target object is inside nested custom controls in a window,\r\n                you need to provide all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ref.Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " attributes in the hierarchy.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT:"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " such custom controls must be created by <Instance/>.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "FindControlByText<Type>(control, text)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The first parameter must be a control.\r\n                The is the text of the target sub control.\r\n                If nothing is found matching the type and the text, the function crashes.\r\n                Otherwise it would return a random one within all matching controls.\r\n                Unlike "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FindObjectByName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", you can use this function to search into nested custom controls.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "auto button = FindControlByText<GuiButton>(window, L\"Click Me!\");",
+                "language": "c++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "TryFindControlByText<Type>(control, text)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Same as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FindControlByText"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", but it returns null if nothing is found.\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

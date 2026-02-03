@@ -1,0 +1,849 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Unit Testing -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "home"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "+",
+      "name": "Gaclib Document",
+      "selected": false,
+      "path": [
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp",
+      "selected": false,
+      "path": [
+        "vlpp",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Regex",
+      "selected": false,
+      "path": [
+        "vlppregex",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Reflection",
+      "selected": false,
+      "path": [
+        "vlppreflection",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Parser",
+      "selected": false,
+      "path": [
+        "vlppparser",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Vlpp Parser2",
+      "selected": false,
+      "path": [
+        "vlppparser2",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ]
+    },
+    {
+      "icon": "+",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ]
+    },
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": true,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Using Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "vlpp"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "gacui"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Unit Testing",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "In namespace "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "::vl::unittest"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ","
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            An easy-to-use unit test framework.\r\n            You are able to organize test cases in nested categories,\r\n            and either run all the way to the end,\r\n            or tell the IDE to stop at the first failed test assertion.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            Calling "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTest::RunAndDisposeTests"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to start a unit test CLI application and the following CLI arguments are supported by default:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/D"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Debug mode, it will crash at the first error."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/R"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Release mode, it will print all crashed tests with their failures."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/C"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": LLM mode, it will execute until the first crashed test with its failure printed and exit."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/F:FileName.cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Only run test cases defined in this file.\r\n                    Multiple instances are allowed at the same time to execute a specified group of files.\r\n                    Wildcards are supported, e.g., "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/F:Test_My*.cpp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\r\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/F"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " only filters test files by file names, file path is not considered.\r\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/D"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/R"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/C"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are exclusive. If none of them are offered, on Windows "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/D"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is activated if a debugger is attached to the process from the beginning.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mocking DateTime",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectDateTimeImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to control the implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::DateTime"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                This function stack all injections, each injection could access the previous implementation by implementing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::feature_injection::IFeatureImpl"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::EjectDateTimeImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to revert "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectDateTimeImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Passing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "nullptr"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to cancel all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectDateTimeImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " calls.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mocking Locale",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectLocaleImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to control the implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::Locale"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                This function stack all injections, each injection could access the previous implementation by implementing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::feature_injection::IFeatureImpl"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::EjectLocaleImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to revert "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectLocaleImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Passing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "nullptr"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to cancel all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::InjectLocaleImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " calls.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mocking File, Folder and FileStream",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::InjectFileSystemImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to control the implementation of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::File"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::Folder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::stream::FileStream"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                This function stack all injections, each injection could access the previous implementation by implementing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::feature_injection::IFeatureImpl"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IFileSystemImpl::GetFileStreamImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " controls how "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "FileStream"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " access a file from a given file path.\r\n                If virtual files are added to the file system, this function should take care of them.\r\n                This function can redirect the call to the previous implementation for files that are not added by the current implementation.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::EjectFileSystemImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " could be used to revert "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::InjectFileSystemImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                Passing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "nullptr"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to cancel all "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::filesystem::InjectFileSystemImpl"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " calls.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Ordinary Testing",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The unit test framework is a CLI application.\r\n                You can do any assertion you want in the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TEST_FILE -> {TEST_CATEGORY}* -> TEST_CASE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " structure.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Testing GacUI Application",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                There are some additional features for testing a GacUI application.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can simulate user interaction, including keyboard, mouse, typing, etc.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can access controls for assertion even if they are not exposed in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "public"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " members.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                You can log the whole UI into multiple JSON files.\r\n                The file organization is handled by the unit test framework,\r\n                and you are able to run a snapshot viewer to render these snapshots for inspection.\r\n                The snapshot viewer is offered along with the source code as a window class,\r\n                you need to write a simple "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiMain"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to run the window offering the snapshot folder path.\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

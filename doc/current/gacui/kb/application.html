@@ -855,6 +855,199 @@
             "text": ",\n            but it is OK to call in the UI thread.\n            It will return only after the task is completed.\n        "
           }
         ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupWindowsGDIRendererInternal"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupHostedWindowsDirect2DRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            setup GacUI with only one OS native window.\n            All non-main windows will be renderered inside that window.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupRemoteNativeController"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " setup GacUI with remote protocol,\n            it is also running in hosted mode.\n            It takes an argument to an implementation of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            which is responsible to serialize and deserialize commands between core and renderer.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupRawWindowsGDIRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SetupRawWindowsDirect2DRenderer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " starts up a GacUI application with "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "INativeController"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " only,\n            there will be no "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiApplication"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " running and therefore no controls can be used.\n            This is useful when you want to run a remote protocol renderer that interacts with a user.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteRendererSingle"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " connects to one actual GacUI application that running with remote protoco.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IMPORTANT:"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " you must implement the communicating by yourself.\n            GacUI has a default implementation of remote protocol serialization with JSON or string format.\n            But you must implement the sending and receiving.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            When running GacUI with unit test framework,\n            it starts GacUI with remote protocol,\n            with an implementation of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " that logs the whole UI to multiple JSON files.\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTestSnapshotViewerAppWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTestSnapshotViewerViewModel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            offers an ability to render these JSON files with limited user interaction\n            to inspect what happened during the unit tests.\n            In order to ensure a test case creates exactly the same logging across multiple platforms,\n            text measurments are fake and limited to simple layout.\n            Therefore in the snapshot viewer you might find controls for displaying texts (e.g. a button) appear to be larger than expected,\n            that is normal.\n        "
+          }
+        ]
       }
     ]
   }

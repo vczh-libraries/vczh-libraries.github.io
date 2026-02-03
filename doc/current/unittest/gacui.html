@@ -1,0 +1,638 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Running GacUI in Unit Test Framework -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "gacui"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": false,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Using Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "vlpp"
+          ]
+        },
+        {
+          "icon": "-",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": true,
+          "path": [
+            "unittest",
+            "gacui"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Snapshots and Frames",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_frame"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "IO Interaction",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_io"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Accessing Controls",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Snapshot Viewer",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_snapshots"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Running GacUI in Unit Test Framework",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The most simple way to start the unit test framework would be:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <GacUI.UnitTest.h>\r\nusing namespace vl;\r\nusing namespace vl::unittest;\r\nusing namespace vl::presentation::unittest;\r\n\r\n#ifdef VCZH_MSVC\r\nint wmain(int argc , wchar_t* argv[])\r\n#else\r\nint main(int argc, char** argv)\r\n#endif\r\n{\r\n    UnitTestFrameworkConfig config;\r\n    config.snapshotFolder = L\"...\";\r\n    config.resourceFolder = L\"...\";\r\n    GacUIUnitTest_Initialize(&config);\r\n    int result = unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n    GacUIUnitTest_Finalize();\r\n#ifdef VCZH_CHECK_MEMORY_LEAKS\r\n    _CrtDumpMemoryLeaks();\r\n#endif\r\n    return result;\r\n}",
+            "language": "c++"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A typical test file would be:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <GacUI.UnitTest.h>\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\nusing namespace vl::presentation::unittest;\r\n\r\nTEST_FILE\r\n{\r\n    const auto resourceSingleButton = LR\"GacUISrc(\r\n<Resource>\r\n  <Instance name=\"MainWindowResource\">\r\n    <Instance ref.Class=\"gacuisrc_unittest::MainWindow\">\r\n      <Window ref.Name=\"self\" Text=\"GuiButton\" ClientSize=\"x:320 y:240\">\r\n        <Button ref.Name=\"button\" Text=\"This is a Button\">\r\n          <ev.Clicked-eval>...</ev.Clicked-eval>\r\n        </Button>\r\n      </Window>\r\n    </Instance>\r\n  </Instance>\r\n</Resource>\r\n)GacUISrc\";\r\n\r\n    TEST_CASE(L\"ClickOnMouseUp\")\r\n    {\r\n        GacUIUnitTest_SetGuiMainProxy([](UnitTestRemoteProtocol* protocol, IUnitTestContext*)\r\n        {\r\n            protocol->OnNextIdleFrame(L\"Ready\", [=]()\r\n            {\r\n                auto window = GetApplication()->GetMainWindow();\r\n                auto button = FindObjectByName<GuiButton>(window, L\"button\");\r\n                auto location = protocol->LocationOf(button);\r\n                protocol->LClick(location);\r\n            });\r\n            protocol->OnNextIdleFrame(L\"Close\", [=]()\r\n            {\r\n                auto window = GetApplication()->GetMainWindow();\r\n                window->Hide();\r\n            });\r\n        });\r\n        GacUIUnitTest_StartFast_WithResourceAsText<darkskin::Theme>(\r\n            WString::Unmanaged(L\"Controls/Basic/GuiButton/ClickOnMouseUp\"),\r\n            WString::Unmanaged(L\"gacuisrc_unittest::MainWindow\"),\r\n            resourceSingleButton\r\n            );\r\n    });\r\n}",
+            "language": "c++"
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Or if you are loading an existing window instead of making one from GacUI XML resource:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <GacUI.UnitTest.h>\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\nusing namespace vl::presentation::unittest;\r\n\r\nTEST_FILE\r\n{\r\n    TEST_CASE(L\"ClickOnMouseUp\")\r\n    {\r\n        GacUIUnitTest_SetGuiMainProxy([](UnitTestRemoteProtocol* protocol, IUnitTestContext*)\r\n        {\r\n            protocol->OnNextIdleFrame(L\"Ready\", [=]()\r\n            {\r\n                auto window = GetApplication()->GetMainWindow();\r\n                auto button = FindObjectByName<GuiButton>(window, L\"button\");\r\n                auto location = protocol->LocationOf(button);\r\n                protocol->LClick(location);\r\n            });\r\n            protocol->OnNextIdleFrame(L\"Close\", [=]()\r\n            {\r\n                auto window = GetApplication()->GetMainWindow();\r\n                window->Hide();\r\n            });\r\n        });\r\n        GacUIUnitTest_LinkGuiMainProxy([=](\r\n            vl::presentation::unittest::UnitTestRemoteProtocol* protocol,\r\n            vl::presentation::unittest::IUnitTestContext* context,\r\n            const vl::presentation::unittest::UnitTestMainFunc& previousMainProxy\r\n            )\r\n        {\r\n            {\r\n                vl::presentation::remoteprotocol::ControllerGlobalConfig globalConfig;\r\n#if defined VCZH_WCHAR_UTF16\r\n                globalConfig.documentCaretFromEncoding = vl::presentation::remoteprotocol::CharacterEncoding::UTF16;\r\n#elif defined VCZH_WCHAR_UTF32\r\n                globalConfig.documentCaretFromEncoding = vl::presentation::remoteprotocol::CharacterEncoding::UTF32;\r\n#endif\r\n                protocol->GetEvents()->OnControllerConnect(globalConfig);\r\n            }\r\n            auto theme = vl::Ptr(darkskin::Theme);\r\n            vl::presentation::theme::RegisterTheme(theme);\r\n            {\r\n                gacuisrc_unittest::MainWindow window;\r\n                window.MoveToScreenCenter();\r\n                previousMainProxy(protocol, context);\r\n                vl::presentation::controls::GetApplication()->Run(&window);\r\n            }\r\n            vl::presentation::theme::UnregisterTheme(theme->Name);\r\n        });\r\n        GacUIUnitTest_Start(WString::Unmanaged(L\"Controls/Basic/GuiButton/ClickOnMouseUp\"));\r\n    });\r\n});",
+            "language": "c++"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "About Snapshots and Frames",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                This test case will create a bunch of file in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnitTestFrameworkConfig::snapshotFolder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\r\n                under the path "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Controls/Basic/GuiButton"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n                There will be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ClickOnMouseUp.json"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and two "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ClickOnMouseUp/frame_*.json"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", with some other "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ClickOnMouseUp.*.json"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " files.\r\n                If you "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "git commit"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " them,\r\n                after running a test case you can easily find out which test cases have been affected.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                In this test case, the unit test framework does the following thing:\r\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Compile the resource and run "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "gacuisrc_unittest::MainWindow"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as the main window, offering no arguments."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Wait until the layout finishes."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Save the snapshot of the current UI to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "frame_0.json"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Click the button."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Wait until the layout finishes."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Save the snapshot of the current UI to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "frame_1.json"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "exit."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Each frame needs to make some visible UI changes,\r\n                the unit test framework will detect and fail if no visible UI change has been made.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Each frame should not call blocking functions directly.\r\n                For example, if a button displays a dialog,\r\n                the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowDialog"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowModal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowModalAndDelete"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " function only returns after the dialog is closed,\r\n                such functions are blocking functions.\r\n                In case when clicking a button displaying a dialog,\r\n                you should use:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "GetApplication()->InvokeInMainThread(window, [=]()\r\n{\r\n    protocol->LClick(location);\r\n});",
+                "language": "c++"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                The next frame will starts right after the dialog is shown,\r\n                and you can then interact with it.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowModalAsync"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not have such limitation.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                So the title of the frame should describe what the UI looks like before the action,\r\n                or just describe what the previous frame has done,\r\n                as a snapshot is taken combining with the title name before executing the code inside a frame.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Using Images",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnitTestFrameworkConfig::resourceFolder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the working directly when compiling the GacUI XML resource.\r\n                If it needs to add other resource files, e.g. images, you can put them there.\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n             The following code shows how to reference image files in the resource:\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Resource>\r\n  <Folder name=\"UnitTestConfig\" content=\"Link\">ListViewImagesData.xml</Folder>\r\n  <Folder name=\"ListViewImages\" content=\"Link\">ListViewImagesFolder.xml</Folder>\r\n  ...\r\n</Resource>",
+                "language": "xml"
+              },
+              {
+                "kind": "Text",
+                "text": "\r\n                By saying this, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewImagesData.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewImagesFolder.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should be put under "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnitTestFrameworkConfig::resourceFolder"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewImagesData.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "<Folder>\r\n  <Xml name=\"ImageData\">\r\n    <ImageData>\r\n      <Image Path=\"ListViewImages/LargeImages/Cert\" Format=\"Png\" Width=\"32\" Height=\"32\"/>\r\n      ...\r\n    </ImageData>\r\n  </Xml>\r\n</Folder>",
+                "language": "xml"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ListViewImagesFolder.xml"
+                  }
+                ]
+              },
+              {
+                "kind": "Program",
+                "code": "<Folder>\r\n  <Folder name=\"LargeImages\">\r\n    <Image name=\"Cert\" content=\"File\">Cert_32.png</Image>\r\n    ...\r\n  </Folder>\r\n  ...\r\n</Folder>",
+                "language": "xml"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                The unit test framework will not actually read the image file,\r\n                but in order to perform UI layouting,\r\n                it will instead read "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "UnitTestConfig/ImageData"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to search for the metadata of the image.\r\n                In this example,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "res://ListViewImages/LargeImages/Cert"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " will match the record "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Format=\"Png\" Width=\"32\" Height=\"32\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\r\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

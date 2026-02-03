@@ -1,0 +1,564 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Using Unit Test Framework -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "vlpp"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": false,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Using Unit Test Framework",
+          "selected": true,
+          "path": [
+            "unittest",
+            "vlpp"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "gacui"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Using Unit Test Framework",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            The most simple way to start the unit test framework would be:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <Vlpp.h>\r\nusing namespace vl;\r\nusing namespace vl::unittest;\r\n\r\n#ifdef VCZH_MSVC\r\nint wmain(int argc , wchar_t* argv[])\r\n#else\r\nint main(int argc, char** argv)\r\n#endif\r\n{\r\n\tint result = unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n\tvl::FinalizeGlobalStorage();\r\n#ifdef VCZH_CHECK_MEMORY_LEAKS\r\n\t_CrtDumpMemoryLeaks();\r\n#endif\r\n\treturn result;\r\n}",
+            "language": "c++"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            In this way you could pass "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/D"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/R"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/C"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/F"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " directly to your unit test binary\r\n            and they will be handled by the unit test framework properly.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            You can create multiple cpp files for your test cases,\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/F"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will automatically react to them.\r\n            A typical test file would be:\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <Vlpp.h>\r\nusing namespace vl;\r\nusing namespace vl::unittest;\r\n\r\nvoid AnError()\r\n{\r\n    CHECK_FAIL(L\"Not Implemented!\");\r\n}\r\n\r\nvoid AnException()\r\n{\r\n    throw Exception(L\"A message\");\r\n}\r\n\r\nTEST_FILE\r\n{\r\n    TEST_CASE(L\"This is a test case\")\r\n    {\r\n        TEST_ASSERT(1 + 1 == 2);\r\n    });\r\n\r\n    TEST_CATEGORY(L\"This is a test category\")\r\n    {\r\n        TEST_CASE(L\"This is another test case\")\r\n        {\r\n            TEST_ERROR(AnError());\r\n            TEST_EXCEPTION(AnException(), Exception, [](const Exception& e)\r\n            {\r\n                TEST_ASSERT(e.Message() == L\"A message\");\r\n            });\r\n        });\r\n    });\r\n}",
+            "language": "c++"
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TEST_ASSERT(condition);"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " accepts an expression and fails if it evaluates to false."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TEST_ERROR(statement);"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " accepts a statement and fails if it does not throw an exception is or inheriting from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Error"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". Such error are usually triggered by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CHECK_ERROR"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CHECK_FAIL"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TEST_EXCEPTION(statement,exception,handler);"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " executes the statement, fails if it does not throw an exception is or inheriting from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "exception"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". The handler will be called on that exception for additional assertion."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\r\n            Please be aware that these are macros, commas may be interepreted unexpectedly.\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CATEGORY"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " could be used to group other "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CATEGORY"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CASE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_ASSERT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_ERROR"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_EXCEPTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can only be used in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CASE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CASE_ASSERT(condition);"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a shortcut for a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_CASE"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " containing only a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TEST_ASSERT"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            If you get "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TestA.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TestB.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TestC.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            using no "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/F"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will run tests in all three files,\r\n            using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/F:Test*.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will run tests in all three files,\r\n            using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/F:TestA.cpp /F:TestB.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " will run tests in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TestA.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TestB.cpp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " only.\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

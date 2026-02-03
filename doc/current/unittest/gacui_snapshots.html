@@ -1,0 +1,219 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Snapshot Viewer -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "gacui_snapshots"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": false,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "gacui"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Snapshots and Frames",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_frame"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "IO Interaction",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_io"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Accessing Controls",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Snapshot Viewer",
+              "selected": true,
+              "path": [
+                "unittest",
+                "gacui_snapshots"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Snapshot Viewer",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            After running the GacUI unit test,\r\n            snapshots will be stored in a folder specified by "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTestFrameworkConfig::snapshotFolder"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\r\n            which is passed to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUIUnitTest_Initialize"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "main"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function.\r\n            You can write your own snapshot viewer to render any snapshot from a test run like this.\r\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "#include <GacUI.UnitTest.UI.h>\r\n#include <Windows.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::filesystem;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\nusing namespace vl::presentation::unittest;\r\nusing namespace gaclib_controls;\r\n\r\nvoid GuiMain()\r\n{\r\n    theme::RegisterTheme(Ptr(new darkskin::Theme));\r\n    {\r\n        // you can use GetApplication()->GetExecutablePath() if hardcoding a relative path to the folder contains the executable is possible.\r\n        FilePath snapshotFolderPath = ...;\r\n        UnitTestSnapshotViewerAppWindow window(Ptr(new UnitTestSnapshotViewerViewModel(snapshotFolderPath)));\r\n        window.ForceCalculateSizeImmediately();\r\n        window.MoveToScreenCenter();\r\n        window.WindowOpened.AttachLambda([&](auto&&...)\r\n        {\r\n            window.ShowMaximized();\r\n        });\r\n        GetApplication()->Run(&window);\r\n    }\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+            "language": "c++"
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTestSnapshotViewerAppWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "UnitTestSnapshotViewerViewModel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " are defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI.UnitTest.UI"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\r\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

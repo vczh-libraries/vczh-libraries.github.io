@@ -1,0 +1,535 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Snapshots and Frames -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "unittest",
+    "gacui_frame"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Unit Testing",
+      "selected": false,
+      "path": [
+        "unittest",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Running GacUI in Unit Test Framework",
+          "selected": false,
+          "path": [
+            "unittest",
+            "gacui"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Snapshots and Frames",
+              "selected": true,
+              "path": [
+                "unittest",
+                "gacui_frame"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "IO Interaction",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_io"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Accessing Controls",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_controls"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Snapshot Viewer",
+              "selected": false,
+              "path": [
+                "unittest",
+                "gacui_snapshots"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Snapshots and Frames",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            If you let the unit test framework create a window from a GacUI XML resource,\r\n            You can set the 4th parametero of "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUIUnitTest_StartFast_WithResourceAsText"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " to offer some callbacks.\r\n            The type is "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUIUnitTest_Installer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and it has these members:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Func<void()> initialize;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " it is called before the window is created."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Func<void(GuiWindow*)> installWindow;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " it is called before the window is opened."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Func<void()> finalize;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " it is called after the window is closed."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Nullable<UnitTestScreenConfig> config;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " more configurations, including font list, screen size, etc."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\r\n            A test case typically begins with a call to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUIUnitTest_SetGuiMainProxy"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " with multiple frames created.\r\n            You are recommended to follow the rule:\r\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The name of the first frame should be "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ready"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Names of other frames describe what has been done in the previous frame."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "In each frame visible UI changes must be triggered."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "As each IO operation is completed after all events are handled in the GacUI application, if an operation calls any blocking function, wrap it in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "InvokeInMainThread"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "When an action is taken, if the side effect happens immediately, assertion should be placed right after the action."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "When an action is taken, if the side effect happens async but fast, assertion should be placed at the beginning of the next frame."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Whenever possible keep the last frame only calling the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "window->Close();"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " function. This rule could sometimes conflict with the previous rule, the previous rule has higher priority."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "About Visible UI Change",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                A visible UI change means something that cause GacUI to refresh any window in your application.\r\n                This includes changing texts, sizes, layouts; showing or hiding windows or controls; enabling or disabling controls; select anything or type anything in a control; etc.\r\n                The unit test framework will detect whether any visible UI change has been made in a frame,\r\n                and the test fail if there is not.\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMPORTANT:"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " DO NOT make a frame just for assertion as it doesn't cause any visible UI change.\r\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "About Blocking Function",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\r\n                Blocking functions are anything that does not return but the application is still running.\r\n                For example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowDialog"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowModal"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ShowModalAndDelete"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "InvokeInMainThreadAndWait"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", etc.\r\n                Any IO interaction inside a frame only returns after GacUI handles all events.\r\n                For example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "protocol->LClick(location);"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on a button only returns after "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Clicked"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as well as all other mouse events are handled.\r\n                If in any of this event a blocking function is called,\r\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LClick"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " blocks the current frame,\r\n                and the unit test framework detects such action and fail the test.\r\n                In this case, call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LClick"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "InvokeInMainThread"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instead.\r\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "GetApplication()->InvokeInMainThread(window, [=]()\r\n{\r\n    protocol->LClick(location);\r\n});",
+                "language": "c++"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>
