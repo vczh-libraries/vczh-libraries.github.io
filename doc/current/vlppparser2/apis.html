@@ -103,7 +103,620 @@
     "content": [
       {
         "kind": "Paragraph",
-        "content": []
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If you enable everything (by default) in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Parser.xml"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            AST will generates following APIs for creating and accessing AST types:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "For any "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ClassType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " there is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "MakeClassType"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " class, call its default constructor and you can create the whole AST tree with this fluent interface. After all fields are prepared the created object can be obtained by static_cast<Ptr<ClassType>>."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Each base class has a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ClassType::IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " interface and a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " function. The "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " function accepts an implementation of the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " interface, and one member in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " will be called according to the actual type of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "'s \"this argument\"."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "your::namespaces::empty_visitor::ClassTypeVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for each "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ClassType::IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". It has all members implemented doing nothing. You can use this class to implement your own algorithm when only a few types need to be handled."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "your::namespaces::copy_visitor::AstVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ast"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " here is the AST group's name. This visitor implements all "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " interfaces in one class. After passing it to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "result"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " field has a copy of the whole AST tree."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "your::namespaces::json_visitor::AstVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ast"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " here is the AST group's name. This visitor implements all "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " interfaces in one class. After passing it to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", its "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "result"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " field has a serialized JSON document. The JSON document also follows the design of AST."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "your::namespaces::traverse_visitor::AstVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ast"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " here is the AST group's name. This visitor implements all "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IVisitor"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " interfaces in one class. After passing it to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Accept"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", every object in the AST tree will calls a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Traverse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " function from the top base type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ParsingAstBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " all the way to its actual type  in order, and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Finishing"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when all members of an AST object are traversed, from its actual type all the way to the top base type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ParsingAstBase"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". There is also a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Traverse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " function for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ParsingToken"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            For any "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "RuleName"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " decorated with a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "@parser"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ParseRuleName"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " function is generated in the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "your::namespaces::Parser"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " class. Here "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Parser"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is the name of the parser defined in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Parser.xml"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            You can either put a string or a List<RegexToken> to this function.\n            It returns an AST tree when succeeded,\n            otherwise it triggers the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "OnError"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " event.\n            In this event, you can choose to stop the parse function to throw an exception,\n            and it will just returns null.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            For the predefined XML parser,\n            you are not recommended to call the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Parser"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " class directly,\n            because some post processing is required to fix the AST tree.\n            Instead pass this "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Parser"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " class to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "XmlParseDocument"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " or "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "XmlParseElement"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
       }
     ]
   }
