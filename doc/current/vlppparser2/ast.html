@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="utf-8">
-<title>References -- GPU Accelerated C++ User Interface (vczh)</title>
+<title>AST Definition -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="../favicon.ico">
 <link rel="stylesheet" type="text/css" href="../global.css">
 <link rel="stylesheet" type="text/css" href="../article.css">
@@ -16,7 +16,7 @@
   const mvcModel = {
   "path": [
     "vlppparser2",
-    "ref"
+    "ast"
   ]
 };
   const mvcViews = [
@@ -48,7 +48,7 @@
         {
           "icon": " ",
           "name": "AST Definition",
-          "selected": false,
+          "selected": true,
           "path": [
             "vlppparser2",
             "ast"
@@ -82,24 +82,12 @@
           ]
         },
         {
-          "icon": "-",
+          "icon": "+",
           "name": "References",
-          "selected": true,
+          "selected": false,
           "path": [
             "vlppparser2",
             "ref"
-          ],
-          "subNodes": [
-            {
-              "icon": " ",
-              "name": "Namespaces",
-              "selected": false,
-              "path": [
-                "vlppparser2",
-                "ref",
-                "namespaces"
-              ]
-            }
           ]
         }
       ]
@@ -111,15 +99,124 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "API References for VlppParser",
+    "title": "AST Definition",
     "content": [
       {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An AST definition consists of multiple "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Enum"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Class"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "@public"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be used before any type definition to make it visible from another AST definition file.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Single line comments are allowed using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "//"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
         "kind": "Topic",
-        "title": "Resources",
+        "title": "Enum",
         "content": [
           {
             "kind": "Paragraph",
             "content": [
+              {
+                "kind": "Program",
+                "code": "enum Season\r\n{\r\n    Spring,\r\n    Summer,\r\n    Autumn,\r\n    Winter,\r\n}",
+                "language": "AST"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Class",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "class Base\r\n{\r\n    var name : token;\r\n}\r\n\r\nclass Derived : Base\r\n{\r\n    var season : Season;\r\n    var baseArray : Base[];\r\n}",
+                "language": "AST"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Inheriting between classes works as other programming languages.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Here are a list of supported field types:\n                "
+              },
               {
                 "kind": "List",
                 "ordered": false,
@@ -128,18 +225,17 @@
                     "kind": "ContentListItem",
                     "content": [
                       {
-                        "kind": "PageLink",
-                        "href": "/gacui/running.html",
+                        "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "Tutorial"
+                            "text": "token"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": ": build your first GacUI application."
+                        "text": ": vl::glr::ParsingToken"
                       }
                     ]
                   },
@@ -147,18 +243,49 @@
                     "kind": "ContentListItem",
                     "content": [
                       {
-                        "kind": "PageLink",
-                        "href": "/home/download.html",
+                        "kind": "Strong",
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "Download"
+                            "text": "enum type"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "class type"
                           }
                         ]
                       },
                       {
                         "kind": "Text",
-                        "text": ": download this library."
+                        "text": ": vl::Ptr<ClassType>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "array to class type"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": vl::collections::List<vl::Ptr<ClassType>>"
                       }
                     ]
                   }
@@ -171,151 +298,46 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                If you don't need runtime reflection on C++ classes,\n                it is recommended to add "
+                "text": "\n                A "
               },
               {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "VCZH_DEBUG_NO_REFLECTION"
+                    "text": "@ambiguous"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": " to "
+                "text": " can be used before a class definition,\n                indicating that any syntax rule of exactly this type is allow to produce results with ambiguity.\n                The type of such rule is rewritten to "
               },
               {
-                "kind": "PageLink",
-                "href": "https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definitions",
+                "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "preprocessor definitions"
+                    "text": "ClassTypeToResolve"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": ".\n                By doing this, unnecessary code are eliminated, which significantly reduces both executable size and object sizes.\n            "
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Source Files for VlppParser",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
+                "text": ",\n                with a member "
+              },
               {
-                "kind": "List",
-                "ordered": false,
-                "items": [
+                "kind": "Strong",
+                "content": [
                   {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "VlppParser2.h"
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "Text",
-                        "text": " and "
-                      },
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "VlppParser2.cpp"
-                          }
-                        ]
-                      }
-                    ]
+                    "kind": "Text",
+                    "text": "var candidates : ClassType[];"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "kind": "Topic",
-        "title": "Dependencies",
-        "content": [
-          {
-            "kind": "Paragraph",
-            "content": [
+              },
               {
-                "kind": "List",
-                "ordered": false,
-                "items": [
-                  {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "Vlpp"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "VlppOS"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "VlppRegex"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "ContentListItem",
-                    "content": [
-                      {
-                        "kind": "Strong",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "VlppReflection"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "kind": "Text",
+                "text": " to store all results that could be produced from the same input.\n                A rule of a sub type to an ambiguous type is not automatically allowed to be ambiguous,\n                but you can explicitly specific the type to make such rule use the ambiguous base type.\n            "
               }
             ]
           }

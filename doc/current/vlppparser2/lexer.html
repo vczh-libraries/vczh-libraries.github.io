@@ -1,0 +1,271 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Lexer Definition -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppparser2",
+    "lexer"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp Parser2",
+      "selected": false,
+      "path": [
+        "vlppparser2",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "AST Definition",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "ast"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Lexer Definition",
+          "selected": true,
+          "path": [
+            "vlppparser2",
+            "lexer"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Syntax Definition",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "syntax"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Generated APIs",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "apis"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Lexer Definition",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An lexer definition consists of multiple tokens.\n            Names of non-discarded tokens can be used in syntax definitions.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Single line comments are allowed using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "//"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A token can be defined by:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "TokenName           :REGEX",
+            "language": "Lexer"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Spaces are allowed before "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\":\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " but not after, everything after "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\":\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in this line is considered the regular expression to define the token.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A discarded token can be defined by:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "discard TokenName   :REGEX",
+            "language": "Lexer"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Such token will be recognized and removed from the input.\n            You can use it for comments or whitespaces.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A token fragment can be defined by:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "$FragmentName       :REGEX",
+            "language": "Lexer"
+          },
+          {
+            "kind": "Text",
+            "text": "\n           This is not a token,\n           but it can be used in other regular expressions using "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "{$FragmentName}"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n           to paste the fragment at that position and avoid repeating the same pattern everywhere.\n           Here is an example of defining integer, hex and binary literal in C++:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "$CPP_NUMBER_POSTFIX  :[uU]|[lL]|[uU][lL]|[lL][uU]|[lL][lL]|[uU][lL][lL]|[lL][uU][lL]|[lL][lL][uU]|i8|ui8|i16|ui16|i32|ui32|i64|ui64\r\nINT                  :(/d+('/d+)*)({$CPP_NUMBER_POSTFIX})?\r\nHEX                  :0[xX][0-9a-fA-F]+({$CPP_NUMBER_POSTFIX})?\r\nBIN                  :0[bB][01]+({$CPP_NUMBER_POSTFIX})?",
+            "language": "Lexer"
+          },
+          {
+            "kind": "Text",
+            "text": "\n            Token fragments are just simply copy-pasted, that's why "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\"()\""
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is needed here.\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>

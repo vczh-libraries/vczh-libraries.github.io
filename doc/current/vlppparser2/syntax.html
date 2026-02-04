@@ -1,0 +1,1621 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<title>Syntax Definition -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" type="text/css" href="../global.css">
+<link rel="stylesheet" type="text/css" href="../article.css">
+<script src="../scripts/rootView.js"></script>
+<script src="../scripts/directoryView.js"></script>
+<script src="../scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppparser2",
+    "syntax"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp Parser2",
+      "selected": false,
+      "path": [
+        "vlppparser2",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "AST Definition",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "ast"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Lexer Definition",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "lexer"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Syntax Definition",
+          "selected": true,
+          "path": [
+            "vlppparser2",
+            "syntax"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Generated APIs",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "apis"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppparser2",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Syntax Definition",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            An AST definition consists of multiple rules.\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "@public"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " can be used before any type definition to make it visible from another AST definition file.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            One rule consits of multiple clauses, each clauses is defined by EBNF-like syntax:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RuleOrTokenName:FieldName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match the rule or token and store the result to the field. The class type of this clause can be either specified or inferred. "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RuleName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " here should not be a partial rule."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "!RuleName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": The whole rule will modify fields in the same object from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RuleName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " instead of creating a new object."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(Syntax)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Syntax"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", just for fixing operator priority."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "[Syntax]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Syntax"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " optionally."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "+[Syntax]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Syntax"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " optionally, when ambiguity occurs, the opt-in one wins."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxA SyntaxB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxA"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " followed by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxA | SyntaxB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match either "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxA"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "{Syntax}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match zero or more occurrences of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Syntax"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "{SyntaxA ; SyntaxB}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Match zero or more occurrences of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxA"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " separating by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SyntaxB"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". This is a shortcut for "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "[SyntaxA {SyntaxB SyntaxA}]"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            A rule is defined by:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "RuleName : TypeName\r\n::= Clause1\r\n...\r\n;",
+            "language": "Syntax"
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "If any clause matches, the rule matches. If multiple clauses match, ambiguity happens."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "There are optional, alternative and loop syntax in clauses, if multiple paths of a clause match, ambiguity happens."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Each clause has a type, either specified or inferred. If "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": ":TypeName"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not omitted, it becomes the most detailed common type of all clauses."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "All clauses must be partial or not partial at the same time in a rule."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@public"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " can be used before a rule to make it visible to other syntax files."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@parser"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " can be used before a rule to make a public function generated for the parser class for this rule. Rules without "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@parser"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is not accessible in C++."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "If both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@public"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@parser"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are used, put "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@public"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " before "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@parser"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Ordinary Clause",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Syntax as ClassType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " creates an ordinary clause.\n                An ordinary clause should not contain "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!RuleName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in its syntax.\n                When such clause matches, a new object of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ClassType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is created to store the results of this clause.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Reuse Clause",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Syntax"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " creates a reuse clause.\n                A reuse clause should have exactly one "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!RuleName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in its all possible paths.\n                Such clause modify fields in the object from that "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RuleName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " instead of creating a new object.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Partial Clause",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Syntax as partial ClassType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " creates an ordinary clause.\n                A partial clause should not contain "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!RuleName"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " in its syntax.\n                The syntax of the partial clause will be copy-pasted to everywhere that uses this rule,\n                if there are multiple partial clauses in this rule,\n                they are treated like an alternative syntax.\n                The clause that use this rule must use the same ClassType or its sub type.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Additional Field Assignments",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                At the very end of the syntax there can be additional field assignment,\n                only for fields that are enum types:\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "{Field1=EnumItem1, Field2?=EnumItem2 ...}"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Field assignments cannot be used in the middle of the syntax.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Switches",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Switches can be used when you want to exclude something when matching a rule.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "switch A, !B, ...;"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " must appear at the very top of a syntax definition to declare all used switches in this file.\n                Switches are visible to all syntax files therefore their names must be unique globally.\n                Each switch has its default value, here "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is on and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is off.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If we want to make some syntax that only available with certain switches are turned on or off:\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "?(Condition1:Syntax1 | Condition2:; | ...)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                This is a switch-enabled alternative syntax.\n                Each branch is available only when its condition is satisfied.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A condition could look like\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(A && !B | !C) && D"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                In the switch-enabled alternative syntax,\n                each branch is tested in order,\n                only the first satisfying branch becomes selected.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\";\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " means an invalid syntax,\n                when it is selected, the whole clause is disabled.\n                If such selected invalid syntax is in another alternative syntax,\n                only that branch becomes invalid.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To specify switch values for a piece of syntax:\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!(!A, B, ...; Syntax)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Only inside "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Syntax"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " referenced switches have new values assigned.\n                In this example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "A"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes off and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "B"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " becomes on.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Switches with new values will be taken into "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Syntax"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " recursively until it hits another switch value assignment.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Calculator Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                AST Definition:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "class Expr\r\n{\r\n}\r\n\r\nclass NumExpr : Expr\r\n{\r\n    var value : token;\r\n}\r\n\r\nenum UnaryOp\r\n{\r\n    Positive,\r\n    Negative,\r\n}\r\n\r\nclass Unary : Expr\r\n{\r\n    var op : UnaryOp;\r\n    var operand : Expr;\r\n}\r\n\r\nenum BinaryOp\r\n{\r\n    Add,\r\n    Minus,\r\n    Multiply,\r\n    Divid,\r\n}\r\n\r\nclass Binary : Expr\r\n{\r\n    var op : BinaryOp;\r\n    var left : Expr;\r\n    var right : Expr;\r\n}",
+                "language": "AST"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Lexer Definition:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "ADD:/+\r\nSUB:-\r\nMUL:/*\r\nDIV://\r\nOPEN_BRACE:/(\r\nCLOSE_BRACE:/)\r\nNUM:/d+(./d+)?\r\ndiscard SPACE:/s+",
+                "language": "LEXER"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Syntax Definition:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "Exp0\r\n  ::= NUM:value as NumExpr\r\n  ::= \"(\" !Exp \")\"\r\n  ;\r\n\r\nExp1\r\n  ::= !Exp0\r\n  ::= \"+\" Exp1:operand as Unary {op = Positive}\r\n  ::= \"-\" Exp1:operand as Unary {op = Negative}\r\n  ;\r\n\r\nExp2\r\n  ::= !Exp1\r\n  ::= Exp2:left \"*\" Exp1:right as Binary {op = Multiply}\r\n  ::= Exp2:left \"/\" Exp1:right as Binary {op = Divid}\r\n  ;\r\n\r\n@parser Exp\r\n  ::= !Exp2\r\n  ::= Exp3:left \"+\" Exp2:right as Binary {op = Add}\r\n  ::= Exp3:left \"-\" Exp2:right as Binary {op = Minus}\r\n  ;",
+                "language": "SYNTAX"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Switch Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This sample demos one of the way to solve the ambiguity if-else problem.\n                Actually the best approach is to use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "if condition then statements +[else statements]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                so using switches for this problem is not recommended but it can still be an example:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "switch allow_half_if;\r\n\r\nDo\r\n  ::= \"do\" \";\" as DoStat\r\n  ;\r\n\r\nBlock\r\n  ::= \"{\" { Stat:stats } \"}\" as BlockStat\r\n  ;\r\n\r\nIfTail\r\n  ::= OtherStat:thenBranch (\"else\" Stat:elseBranch | ?(allow_half_if: ;)) as partial IfStat\r\n  ::= !(!allow_half_if; If:thenBranch) \"else\" Stat:elseBranch as partial IfStat\r\n  ::= ?(allow_half_if: If:thenBranch) as partial IfStat\r\n  ;\r\n\r\nIf\r\n  ::= \"if\" \"cond\" \"then\" IfTail as IfStat\r\n  ;\r\n\r\nOtherStat\r\n  ::= !Do\r\n  ::= !Block\r\n  ;\r\n\r\n@parser Stat\r\n  ::= !OtherStat\r\n  ::= !(allow_half_if; !If)\r\n  ;",
+                "language": "SYNTAX"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                For this input\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "if cond then if cond then do; else do;"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Stat"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " matches the whole input, it has to be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "!(allow_half_if; !If)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "If"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " consumes the first 3 tokens and living "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "if cond then do; else do;"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IfTail"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IfFail"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " has two choices:\n                        "
+                      },
+                      {
+                        "kind": "List",
+                        "ordered": false,
+                        "items": [
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                Using "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "!(!allow_half_if; If:thenBranch) \"else\" Stat:elseBranch"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " to match "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "if cond then do; else do;"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "It means using "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "!(!allow_half_if; If:thenBranch)"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " to match "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "if cond then do;"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", leaving "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "else do;"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " for "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "\"else\" Stat:elseBranch"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Now it tries to match "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "If"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " with "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "allow_half_if"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " turned off."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "The second level of "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "If"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " still consumes 3 tokens and leaving "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "do;"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " for "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "IfTail"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " also with "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "allow_half_if"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " turned off."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "It has to match "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "OtherStat:thenBranch (\"else\" Stat:elseBranch | ?(allow_half_if: ;))"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " with "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "do;"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Since "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "allow_half_if"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " is off, "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "?(allow_half_if: ;)"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " is invalid as all branches in fails, so the current "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "IfTail"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " is rewritten to "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "OtherStat:thenBranch \"else\" Stat:elseBranch"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": "."
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Obviously it cannot match "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "do;"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": ", therefore fails."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "ContentListItem",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "\n                                Using "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "?(allow_half_if: If:thenBranch)"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Text",
+                                "text": " to match "
+                              },
+                              {
+                                "kind": "Strong",
+                                "content": [
+                                  {
+                                    "kind": "Text",
+                                    "text": "if cond then do; else do;"
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "List",
+                                "ordered": false,
+                                "items": [
+                                  {
+                                    "kind": "ContentListItem",
+                                    "content": [
+                                      {
+                                        "kind": "Text",
+                                        "text": "Given that when "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "allow_half_if"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " is on, "
+                                      },
+                                      {
+                                        "kind": "Strong",
+                                        "content": [
+                                          {
+                                            "kind": "Text",
+                                            "text": "If"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Text",
+                                        "text": " accepts all forms, so it succeeds."
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "So the \"else\" associates with the second \"if\", instead of the first one or both."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+
+
+</body></html>
