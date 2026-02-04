@@ -58,16 +58,6 @@
           "subNodes": [
             {
               "icon": " ",
-              "name": "Hosted Mode Application",
-              "selected": false,
-              "path": [
-                "gacui",
-                "modes",
-                "hosted"
-              ]
-            },
-            {
-              "icon": " ",
               "name": "Remote Protocol Core Application",
               "selected": false,
               "path": [
@@ -113,8 +103,58 @@
         "kind": "Paragraph",
         "content": [
           {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteRendererSingle"
+              }
+            ]
+          },
+          {
             "kind": "Text",
-            "text": "\n            (editing ...)\n        "
+            "text": " is a remote client implementation that renders everything to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "INativeWindow"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " offering full user interaction features.\n            A typical example would be:\n             "
+          },
+          {
+            "kind": "Program",
+            "code": "class RendererChannel : public Object, public virtual IGuiRemoteProtocolChannelReceiver<WString>\r\n{\r\npublic:\r\n    RendererChannel(GuiRemoteRendererSingle* renderer, IGuiRemoteProtocolChannel<WString>* channel)\r\n    {\r\n        // connect to the remote core application\r\n    }\r\n\r\n    void OnReceive(const TPackage& package) override\r\n    {\r\n        // send the string away\r\n    }\r\n\r\n    void RegisterMainWindow(INativeWindow* _window)\r\n    {\r\n        // begin handling messages\r\n        // when a message is received, call channel->Write\r\n        // when it is a fetal error, call renderer->ForceExitByFatelError()\r\n        // they must be called with GetCurrentController()->AsyncService()->InvokeInMainThread\r\n        // renderer and channel are the arguments of the constructor\r\n    }\r\n\r\n    void UnregisterMainWindow()\r\n    {\r\n    }\r\n\r\n    void WaitForDisconnected()\r\n    {\r\n        // block until the remote core application tells the remote client the work is done\r\n    }\r\n};\r\n\r\nRendererChannel* rendererChannel = nullptr;\r\nGuiRemoteRendererSingle* renderer = nullptr;\r\n\r\nvoid GuiMain()\r\n{\r\n    auto mainWindow = GetCurrentController()->WindowService()->CreateNativeWindow(INativeWindow::Normal);\r\n    mainWindow->SetTitle(L\"Connecting ...\");\r\n    {\r\n        auto size = mainWindow->Convert(Size(320, 240));\r\n        auto screen = GetCurrentController()->ScreenService()->GetScreen((vint)0);\r\n        auto client = screen->GetClientBounds();\r\n        auto x = client.Left() + (client.Width() - size.x) / 2;\r\n        auto y = client.Top() + (client.Height() - size.y) / 2;\r\n        mainWindow->SetBounds({ {x,y},size });\r\n    }\r\n    rendererChannel->RegisterMainWindow(mainWindow);\r\n    renderer->RegisterMainWindow(mainWindow);\r\n    GetCurrentController()->WindowService()->Run(mainWindow);\r\n    renderer->UnregisterMainWindow();\r\n    rendererChannel->UnregisterMainWindow();\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    auto jsonParser = Ptr(new glr::json::Parser);\r\n    GuiRemoteRendererSingle remoteRenderer;\r\n    GuiRemoteJsonChannelFromProtocol channelReceiver(&remoteRenderer);\r\n    GuiRemoteJsonChannelStringDeserializer channelJsonDeserializer(&channelReceiver, jsonParser);\r\n    RendererChannel clientRendererChannel(&remoteRenderer, &channelJsonDeserializer);\r\n\r\n    channelReceiver.BeforeWrite.Add([&](const ChannelPackageInfo& info) { clientRendererChannel.BeforeWrite(info); });\r\n    channelReceiver.BeforeOnReceive.Add([&](const ChannelPackageInfo& info) { clientRendererChannel.BeforeOnReceive(info); });\r\n\r\n    rendererChannel = &clientRendererChannel;\r\n    renderer = &remoteRenderer;\r\n    int result = SetupRawWindowsDirect2DRenderer();\r\n    clientRendererChannel.WaitForDisconnected();\r\n    renderer = nullptr;\r\n    rendererChannel = nullptr;\r\n\r\n    return result;\r\n}",
+            "language": "c++"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This sample simplifies all the details leaving the sending and receiving of strings to you.\n            Check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/GacUI/tree/master/Test/GacUISrc/RemotingTest_Rendering_Win32",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "this test project"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for a complete example.\n        "
           }
         ]
       }

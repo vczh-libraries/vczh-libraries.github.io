@@ -58,16 +58,6 @@
           "subNodes": [
             {
               "icon": " ",
-              "name": "Hosted Mode Application",
-              "selected": false,
-              "path": [
-                "gacui",
-                "modes",
-                "hosted"
-              ]
-            },
-            {
-              "icon": " ",
               "name": "Remote Protocol Core Application",
               "selected": true,
               "path": [
@@ -114,7 +104,35 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            (editing ...)\n        "
+            "text": "\n            Unlike working in the unit test framework,\n            we usually needs to start a GacUI application with remote protocol asynchronously.\n            So that we can give a dedicated thread for handling actual communitation with the remote client.\n            A typical example would be:\n             "
+          },
+          {
+            "kind": "Program",
+            "code": "class CoreChannel : public Object, public IGuiRemoteProtocolChannel<WString>\r\n{\r\npublic:\r\n    void Initialize(IGuiRemoteProtocolChannelReceiver<WString>* receiver) override\r\n    {\r\n        // when you get any string later you need to call receiver->OnReceive(str)\r\n        // receiver->OnReceive must be called with asyncChannel->ExecuteInChannelThread\r\n        // asyncChannel is the argument of WaitForConnected\r\n    }\r\n\r\n    IGuiRemoteProtocolChannelReceiver<WString>* GetReceiver() override\r\n    {\r\n        // return the argument passed to Initialize\r\n    }\r\n    \r\n    void Write(const WString& package) override\r\n    {\r\n        // send the string away\r\n    }\r\n    \r\n    WString GetExecutablePath() override\r\n    {\r\n        // anything that you want GetCurrentController()->GetExecutablePath() to return\r\n    }\r\n    \r\n    void Submit(bool& disconnected) override\r\n    {\r\n        // you can also save all Write calls and send them in batch here\r\n    }\r\n    \r\n    IGuiRemoteEventProcessor* GetRemoteEventProcessor() override\r\n    {\r\n        return nullptr;\r\n    }\r\n    \r\n    void WaitForConnected(GuiRemoteProtocolAsyncJsonChannelSerializer* asyncChannel)\r\n    {\r\n        // block until a remote client is connected\r\n    }\r\n\r\n    void WaitForDisconnected()\r\n    {\r\n        // tell the remote client that all work is done\r\n        // block until the remote client is disconnected\r\n    }\r\n\r\n    void WriteError(const WString& error)\r\n    {\r\n        // send an error message to the remote client\r\n        // such error will be a fetal error and the remote client is supposed to stop\r\n    }\r\n};\r\n\r\nCoreChannel* coreChannel = nullptr;\r\n\r\nvoid GuiMain()\r\n{\r\n    theme::RegisterTheme(Ptr(new darkskin::Theme));\r\n    {\r\n        rptest::MainWindow window;\r\n        window.ForceCalculateSizeImmediately();\r\n        window.MoveToScreenCenter();\r\n        try\r\n        {\r\n            GetApplication()->Run(&window);\r\n        }\r\n        catch (const Exception& e)\r\n        {\r\n            coreChannel->WriteError(e.Message());\r\n        }\r\n        catch (const Error& e)\r\n        {\r\n            coreChannel->WriteError(WString::Unmanaged(e.Description()));\r\n        }\r\n    }\r\n}\r\n\r\nint main(int argc, char* argv[])\r\n{\r\n    CoreChannel serverCoreChannel(&server);\r\n\r\n    auto jsonParser = Ptr(new glr::json::Parser);\r\n    GuiRemoteJsonChannelStringSerializer channelJsonSerializer(&serverCoreChannel, jsonParser);\r\n\r\n    GuiRemoteProtocolAsyncJsonChannelSerializer asyncChannelSender;\r\n    asyncChannelSender.Start(\r\n        &channelJsonSerializer,\r\n        [&serverCoreChannel](GuiRemoteProtocolAsyncJsonChannelSerializer* channel)\r\n        {\r\n            GuiRemoteProtocolFromJsonChannel channelSender(channel);\r\n            GuiRemoteProtocolFilter filteredProtocol(&channelSender);\r\n            GuiRemoteProtocolDomDiffConverter diffConverterProtocol(&filteredProtocol);\r\n            coreChannel = &serverCoreChannel;\r\n            SetupRemoteNativeController(&diffConverterProtocol);\r\n            coreChannel = nullptr;\r\n        },\r\n        [&serverCoreChannel](\r\n            GuiRemoteProtocolAsyncJsonChannelSerializer::TChannelThreadProc channelThreadProc,\r\n            GuiRemoteProtocolAsyncJsonChannelSerializer::TUIThreadProc uiThreadProc\r\n            )\r\n        {\r\n            Thread::CreateAndStart(channelThreadProc);\r\n            Thread::CreateAndStart(uiThreadProc);\r\n        });\r\n\r\n    Console::WriteLine(L\"> Waiting for a renderer ...\");\r\n    serverCoreChannel.WaitForConnected(&asyncChannelSender);\r\n    asyncChannelSender.WaitForStopped();\r\n    serverCoreChannel.WaitForDisconnected();\r\n\r\n    return 0;\r\n}",
+            "language": "c++"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            This sample simplifies all the details leaving the sending and receiving of strings to you.\n            Check out "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/GacUI/tree/master/Test/GacUISrc/RemotingTest_Core",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "this test project"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for a complete example.\n        "
           }
         ]
       }

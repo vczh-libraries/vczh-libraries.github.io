@@ -58,16 +58,6 @@
           "subNodes": [
             {
               "icon": " ",
-              "name": "Hosted Mode Application",
-              "selected": false,
-              "path": [
-                "gacui",
-                "modes",
-                "hosted"
-              ]
-            },
-            {
-              "icon": " ",
               "name": "Remote Protocol Core Application",
               "selected": false,
               "path": [
@@ -113,8 +103,313 @@
         "kind": "Paragraph",
         "content": [
           {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
             "kind": "Text",
-            "text": "\n            (editing ...)\n        "
+            "text": " has a lot of strong typed messages defined as functions.\n            When the core application wants to send anything to a remote client, a member function is called.\n            When the remote client sent anything to the core application, a member function in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol::GetRemoteEventProcessor"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is called.\n            Some messages need to wait for a response from the remote client, the first argument of such message is always "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vint id"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The core application will be blocked until the remote client sends back a expected response message with the same id.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Therefore "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " represents a renderer.\n            The core side implementation sends messages to client and receive responses from client.\n            The client side implementation receives messages from core and send responses to core.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocolChannel<T>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocolChannelReceiver<T>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " works like "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteEventProcessor"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ",\n            but there is no strong typed messages anymore, everything becomes the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "T"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteProtocolFromJsonChannel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " (for core) and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteJsonChannelFromProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " (for client) handles message translation between\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocolChannel<Ptr<JsonObject>>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteJsonChannelStringSerializer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " (for core) and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GuiRemoteJsonChannelStringDeserializer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " (for client) handles message translation between\n            "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocolChannel<Ptr<JsonObject>>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocolChannel<WString>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Although message are sent bidirectionally, but the naming is saying what is done from core to client.\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/modes/remote_client.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Remote Protocol Client Application"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and\n            "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/modes/remote_communication.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Implementing a Communication Protocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            demos how to setup the pipeline from "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IGuiRemoteProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " all the way to sending and receiving strings.\n            You can also implements your own pipeline using different message formats.\n            JSON serialization is offered in GacUI by default,\n            but you can also code generate your own serializer with other underlying format\n            using metadata in "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/tree/master/Import/Metadata",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "this folder"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
           }
         ]
       }
