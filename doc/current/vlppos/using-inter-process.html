@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Using Inter-Process Channels -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppos",
+    "using-inter-process"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Using Streams",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-streams"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Using Threads and Locks",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-threads"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Using Inter-Process Channels",
+          "selected": true,
+          "path": [
+            "vlppos",
+            "using-inter-process"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Using Inter-Process Channels",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::inter_process"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " namespace is organized in layers.\n            Feature code normally uses the channel interfaces, because they describe typed named message delivery between connected participants.\n            Transport code implements the raw network protocol interfaces, because they describe how one server and many clients exchange asynchronous "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WString"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " messages.\n            The built-in Windows transports are composition choices that connect these two layers.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Keep this boundary in application code:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IChannelServer<TPackage>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IChannelClient<TPackage>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IChannel<TPackage>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IChannelReader<TPackage>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when the feature sends and receives packages."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolCallback"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when adding a new pipe, socket, HTTP, shared-memory or other underlying transport."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NetworkProtocolChannelServer<TPackage, TSerialization, TServerBase>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NetworkProtocolChannelClient<TPackage, TSerialization>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when a channel should run on top of a raw protocol implementation."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Channel Interfaces for Features",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A channel client is a participant with a server-assigned positive client id and a set of named channels.\n                A channel is not a socket and it is not owned by the server alone.\n                It is a logical lane shared by every connected participant that declares the same channel name.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The channel interfaces are the stable API for feature code:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IChannelReader<TPackage>::OnRead"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " receives the sender client id and one typed package."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IChannel<TPackage>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " exposes "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Initialize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SendToClient"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BroadcastFromClient"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BatchWrite"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IChannelClient<TPackage>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " exposes channel names, generated channel objects, client status, "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WaitForServer"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and lifecycle callbacks."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IChannelServer<TPackage>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " accepts or rejects clients, records client ids, supports in-process local clients and broadcasts fatal channel errors."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Channel names are user-defined strings.\n                A user channel name must not be empty and must not contain "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Names beginning with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", including "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!Error"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!System"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", are reserved for the implementation.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Initialize"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " installs one reader and replays messages that arrived before the reader was installed.\n                There is no reader uninstallation.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "SendToClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " queues a direct message to one client id.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BroadcastFromClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " queues a message for all other participants on the same channel, optionally excluding selected receiver ids.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BatchWrite"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " flushes queued messages and reports disconnection through its output argument.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IChannelServer<TPackage>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " manages delivery and bookkeeping.\n                It is not itself a channel speaker.\n                When server-side logic must send normal channel messages, create a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NetworkProtocolLocalChannelClient<TPackage, TSerialization>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", connect it with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ConnectLocalClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", and send through that local client's channel objects.\n                This keeps every normal channel message tied to a real positive sender client id.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A small channel client follows this shape:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "using namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::inter_process;\r\n\r\nconstexpr const wchar_t* ChatChannelName = L\"Chat\";\r\n\r\nstruct WStringListSerializer\r\n{\r\n    using SourceType = List<WString>;\r\n    using DestType = WString;\r\n    using ContextType = std::nullptr_t;\r\n\r\n    static void Serialize(const ContextType&, const SourceType& source, DestType& dest)\r\n    {\r\n        dest = WString::Empty;\r\n        for (auto&& item : source)\r\n        {\r\n            dest += itow(item.Length()) + L\":\" + item;\r\n        }\r\n    }\r\n\r\n    static void Deserialize(const ContextType&, const DestType& dest, SourceType& source)\r\n    {\r\n        source.Clear();\r\n        const wchar_t* reading = dest.Buffer();\r\n        const wchar_t* end = reading + dest.Length();\r\n        while (reading < end)\r\n        {\r\n            auto delimiter = wcschr(reading, L':');\r\n            CHECK_ERROR(delimiter && delimiter < end, L\"Invalid package.\");\r\n\r\n            auto length = wtoi(WString::CopyFrom(reading, (vint)(delimiter - reading)));\r\n            CHECK_ERROR(length >= 0 && delimiter + 1 + length <= end, L\"Invalid package length.\");\r\n\r\n            source.Add(WString::CopyFrom(delimiter + 1, length));\r\n            reading = delimiter + 1 + length;\r\n        }\r\n    }\r\n};\r\n\r\nusing ChatChannelClientBase =\r\n    NetworkProtocolChannelClient<WString, WStringListSerializer>;\r\n\r\nclass ChatClient\r\n    : public ChatChannelClientBase\r\n    , public virtual IChannelReader<WString>\r\n{\r\nprivate:\r\n    IChannelClient<WString>::ChannelMap channelNames;\r\n    IChannel<WString>* chat = nullptr;\r\n\r\npublic:\r\n    ChatClient(Ptr<INetworkProtocolClient> transport)\r\n        : ChatChannelClientBase(transport)\r\n    {\r\n        channelNames.Add(ChatChannelName, nullptr);\r\n        auto&& channels = GetChannels();\r\n        auto index = channels.Keys().IndexOf(ChatChannelName);\r\n        CHECK_ERROR(index != -1, L\"Missing chat channel.\");\r\n        chat = channels.Values()[index];\r\n        chat->Initialize(this);\r\n    }\r\n\r\n    const IChannelClient<WString>::ChannelNameList& OnGetChannelNames() override\r\n    {\r\n        return channelNames.Keys();\r\n    }\r\n\r\n    void OnConnected(vint clientId) override\r\n    {\r\n        // Record the assigned positive client id if the feature needs it.\r\n    }\r\n\r\n    void OnRead(vint senderClientId, const WString& package) override\r\n    {\r\n        // Handle one typed package from senderClientId.\r\n    }\r\n\r\n    void Send(vint receiverClientId, const WString& package)\r\n    {\r\n        bool disconnected = false;\r\n        chat->SendToClient(receiverClientId, package);\r\n        chat->BatchWrite(disconnected);\r\n        if (disconnected)\r\n        {\r\n            // Stop using this client.\r\n        }\r\n    }\r\n};",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Network Protocol Interfaces for Transports",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The raw protocol layer is the extension point for a new underlying implementation.\n                It intentionally knows nothing about channel names or package types.\n                One "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INetworkProtocolConnection"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " exchanges asynchronous "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WString"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " messages with the other side.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Implement these interfaces for a new transport:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INetworkProtocolConnection"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": install or uninstall one callback, start the asynchronous read loop, send one string message and stop the connection."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INetworkProtocolCallback"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": receive strings, remote errors, local errors, connected and disconnected events. Callback methods may run on any thread, so implementations and users must be thread-safe."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INetworkProtocolClient"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": own one connection, block in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WaitForServer"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " until the connection is established or fails, and report "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ClientStatus"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INetworkProtocolServer"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": start accepting, call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "OnClientConnected"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for accepted transport connections, stop all owned connections and report stopped state."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "InstallCallback"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " should call "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "OnInstalled"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " with the connection.\n                Passing "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "nullptr"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " uninstalls the callback.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BeginReadingLoopUnsafe"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " starts receiving messages asynchronously, but callers must tolerate implementations that have already received data after the callback was installed.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Stop"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the shutdown boundary; after it returns, pending transport callbacks should no longer touch the stopped object.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A raw client must return a connection object from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetConnection"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", but using that connection before "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WaitForServer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " finishes is outside the contract.\n                A raw server should not report client-connected callbacks before "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Start"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or after "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Stop"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If a connection is lost, the same connection object does not reconnect; a reconnecting transport should create a new connection object.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                After a raw transport exists, reuse the channel bridge instead of reimplementing channel routing:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "class MyConnection : public Object, public virtual INetworkProtocolConnection\r\n{\r\n    // Store one callback, frame transport bytes into WString messages,\r\n    // call OnReadString / OnLocalError / OnDisconnected, and drain callbacks in Stop.\r\n};\r\n\r\nclass MyClient : public Object, public virtual INetworkProtocolClient\r\n{\r\n    // Own one MyConnection and implement WaitForServer / GetStatus.\r\n};\r\n\r\nclass MyServer : public Object, public virtual INetworkProtocolServer\r\n{\r\n    // Accept MyConnection objects and pass them to OnClientConnected.\r\n};\r\n\r\nusing MyChannelServer =\r\n    NetworkProtocolChannelServer<MyPackage, MyPackageListSerializer, MyServer>;\r\n\r\nusing MyChannelClient =\r\n    NetworkProtocolChannelClient<MyPackage, MyPackageListSerializer>;",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Default Channel Bridge",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NetworkProtocolChannelServer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NetworkProtocolChannelClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NetworkProtocolLocalChannelClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " translate channel batches into raw "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "WString"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " protocol messages.\n                The bridge requires a serializer where:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TSerialization::SourceType"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "collections::List<TPackage>"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TSerialization::DestType"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TSerialization::ContextType"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " stores optional serializer state, or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "std::nullptr_t"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " when no state is required."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Serialize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " converts a package list to one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Deserialize"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " converts one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " back to a package list."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The bridge uses "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NetworkPackage"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as the raw text envelope.\n                Its string shape is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "clientId,extraClientId1,...;channelName;messageBody"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                For client-to-server messages, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "clientId"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the direct receiver id; an empty id means broadcast, and extra ids are blocked broadcast receivers.\n                For server-to-client messages, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "clientId"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is the positive sender id.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A network channel client connects by sending one handshake package with an empty client id, an empty channel name and all supported channel names joined by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The server validates the names, assigns a positive client id, records channel membership and sends the id back in an empty-channel response.\n                After that, normal channel packages are delivered only when sender and receiver membership matches the channel name.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A channel server over a Windows named pipe can be declared like this:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "#include <vlppos.h>\r\n#include <VlppOS.Windows.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::inter_process;\r\n\r\nclass ChatServer\r\n    : public NetworkProtocolChannelServer<WString, WStringListSerializer, NamedPipeServer>\r\n{\r\npublic:\r\n    ChatServer(const WString& pipeName)\r\n        : NetworkProtocolChannelServer<WString, WStringListSerializer, NamedPipeServer>(pipeName)\r\n    {\r\n    }\r\n\r\n    WaitForClientResult OnClientConnected(\r\n        vint clientId,\r\n        const IChannelClient<WString>::ChannelNameList& availableChannels,\r\n        IChannelClient<WString>* localClient) override\r\n    {\r\n        return availableChannels.Contains(ChatChannelName)\r\n            ? WaitForClientResult::Accept\r\n            : WaitForClientResult::Reject;\r\n    }\r\n};\r\n\r\nauto server = Ptr(new ChatServer(L\"ExamplePipe\"));\r\nserver->Start();",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Windows Implementations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The concrete raw protocol implementations currently provided by VlppOS are Windows-only.\n                Treat them as ready-to-use Windows transports and as reference implementations for the raw protocol contract, but do not make portable feature code depend on them directly.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Named Pipe Transport",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NamedPipeServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NamedPipeClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " derives from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NamedPipeConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NamedPipeConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The server starts overlapped named-pipe accepting in "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Start"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and owns both accepted connections and pending accepts.\n                    The client opens "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "\\\\.\\pipe\\NAME"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", waits for the server and switches the pipe into message-read mode.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SendString"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " frames one "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WString"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with length data.\n                    The implementation chunks writes because a Windows named pipe message is limited to 64K bytes.\n                    Broken-pipe cases become disconnection events, and fatal local pipe failures become "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnLocalError"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " followed by disconnection.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "HTTP Transport",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " derives from "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServerApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " implements both "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    This transport is a raw protocol implementation over Windows HTTP APIs, not a general web framework.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The raw HTTP protocol uses these routes under the configured base URL:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "GET /VlppInterProcess/Connect"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " creates a logical connection and returns per-connection request and response URLs."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "POST /VlppInterProcess/Request/GUID"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is the client-maintained long-poll request for server-to-client messages."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "POST /VlppInterProcess/Response/GUID"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " sends client-to-server messages and may also receive one queued server-to-client message."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpClient::WaitForServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sends the connect request, validates the returned URLs, records them and reports connection.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BeginReadingLoopUnsafe"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " starts the long-poll request loop.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SendString"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " posts to the response URL.\n                    Connect and response failures retry a limited number of times; request failures retry while the client is still running.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " creates a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServerConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for each connect request.\n                    Server-to-client messages are returned through a pending long-poll request when possible, or queued until the next request.\n                    Client-to-server request bodies are dispatched as inbound strings.\n                    When the server stops, pending long-poll requests are cancelled and connection callbacks receive disconnection.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Windows HTTP Helper APIs",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpClientApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServerApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are lower-level Windows helpers used by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Use them directly when a Windows feature needs asynchronous HTTP request and response behavior without adopting the raw "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocol"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " transport shape.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpClientApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " owns one WinHTTP session and connection for a host and port.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpQuery"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " sends one asynchronous request described by "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpRequest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", whose fields include method, query, body, content type, accept types, credentials, cookies, extra headers and timeouts.\n                    Results are either "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpResponse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpError"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "; HTTP status codes such as 404 are represented as "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpResponse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " values.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpServerApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " owns one HTTP.sys URL prefix.\n                    Override "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnHttpRequestReceived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to dispatch requests and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnHttpServerStopping"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to clean up feature state.\n                    Helpers such as "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetUtf8Body"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SendResponse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SendResponseUtf8"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " handle common request-body and response tasks.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Writing Project.md -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "coding-agent",
+    "project-md"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Working with Coding Agent",
+      "selected": false,
+      "path": [
+        "coding-agent",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Preparing Context Files",
+          "selected": false,
+          "path": [
+            "coding-agent",
+            "context"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Writing Project.md",
+              "selected": true,
+              "path": [
+                "coding-agent",
+                "project-md"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Writing Project.md",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Name",
+            "text": "Project.md"
+          },
+          {
+            "kind": "Text",
+            "text": " is the repository map that tells the agent where to build, what to run, which generated files are protected, and which platform folders matter.\n            The Release copy only points to the GacUI example; an application repository should replace it with concrete project facts.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Recommended Shape",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A useful "
+              },
+              {
+                "kind": "Name",
+                "text": "Project.md"
+              },
+              {
+                "kind": "Text",
+                "text": " usually contains:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Solution to work on: the solution file and the meaning of "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SOLUTION-ROOT"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Projects for verification: unit-test, CLI, code-generation, metadata, or UI projects that must run after relevant changes."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Execution order: required ordering when one project generates files consumed by another project."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Files not allowed to modify directly: generated folders, imported dependencies, released binaries, and generated baselines."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Code generation triggers: which files require running generators and which outputs they refresh."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Platform notes: Linux "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Test/Linux"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " folders, unsupported platforms, special tools, and available configurations."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Application-specific debugging notes: services, ports, sample data, dialogs, or local servers that matter for the app."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Small Application Example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A small GacUI application can use this shape:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "# Project Specific Instruction\r\n\r\n## Solution to Work On\r\n\r\nYou are working on the solution `REPO-ROOT/App/App.sln`,\r\ntherefore `SOLUTION-ROOT` is `REPO-ROOT/App`.\r\n\r\n## Projects for Verification\r\n\r\nThe `REPO-ROOT/App/AppTests/AppTests.vcxproj` project is the unit test project.\r\nWhen any `*.h`, `*.cpp`, `*.xml`, or Workflow script file is changed, build the solution\r\nand run `AppTests`.\r\n\r\nThe `REPO-ROOT/App/App/App.vcxproj` project is the interactive GacUI application.\r\nRun it when the change affects windows, dialogs, command routing, or application startup.\r\n\r\n## Files not Allowed to Modify\r\n\r\nFiles in these folders are generated and must not be edited directly:\r\n- `REPO-ROOT/App/Generated`\r\n- `REPO-ROOT/App/Resources/Compiled`\r\n\r\nFix the source resource or generator input instead.\r\n\r\n## Code Generation\r\n\r\nIf `REPO-ROOT/App/Resources/*.xml` changes, run `GacGen` through the project build.\r\nIf generated files change, rebuild and run `AppTests`.\r\n\r\n## Linux Specific\r\n\r\nThis repository has no Linux build for the application.\r\nDo not try to create one unless the task explicitly asks for it.",
+                "language": "markdown"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Large Repository Patterns",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The library repositories use the same idea with more detail:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Vlpp, VlppOS, and VlppRegex define one unit-test solution and one Linux folder."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppReflection adds metadata generation and metadata round-trip tests when reflection types change."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VlppParser2 and Workflow list ordered generator and test projects because later projects consume files produced by earlier projects."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUI lists generated folders, reflection metadata projects, GacUI compiler triggers, remote protocol generation, AutomationService-enabled applications, and Linux project folders."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Use these examples as patterns, not templates to copy blindly.\n                The important part is that every instruction names the exact project, folder, generated output, or trigger that applies to the application repository.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

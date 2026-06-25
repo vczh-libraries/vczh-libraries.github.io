@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>Implementing a Communication Protocol -- GPU Accelerated C++ User Interface (vczh)</title>
+<title>Remote Protocol Channel Layer -- GPU Accelerated C++ User Interface (vczh)</title>
 <link rel="shortcut icon" href="/doc/current/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
 <link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
@@ -80,7 +80,7 @@
             },
             {
               "icon": " ",
-              "name": "Implementing a Communication Protocol",
+              "name": "Remote Protocol Channel Layer",
               "selected": true,
               "path": [
                 "gacui",
@@ -99,49 +99,14 @@
   "numberBeforeTitle": false,
   "topic": {
     "kind": "Topic",
-    "title": "Implementing a Communication Protocol",
+    "title": "Remote Protocol Channel Layer",
     "content": [
       {
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocol"
-              }
-            ]
-          },
-          {
             "kind": "Text",
-            "text": " has a lot of strong typed messages defined as functions.\n            When the core application wants to send anything to a remote client, a member function is called.\n            When the remote client sent anything to the core application, a member function in "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocol::GetRemoteEventProcessor"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " is called.\n            Some messages need to wait for a response from the remote client, the first argument of such message is always "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "vint id"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n            The core application will be blocked until the remote client sends back a expected response message with the same id.\n        "
+            "text": "\n            GacUI remote protocol channeling uses the vl::inter_process channel bridge and the INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces underneath.\n            The GacUI layer remains a rendering protocol between a headless core and a renderer.\n        "
           }
         ]
       },
@@ -150,204 +115,49 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            Therefore "
+            "text": "\n            The layers are:\n            "
           },
           {
-            "kind": "Strong",
-            "content": [
+            "kind": "List",
+            "ordered": false,
+            "items": [
               {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocol"
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IGuiRemoteProtocol and IGuiRemoteEventProcessor: the strongly typed GacUI remote protocol."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiRemoteProtocolCoreChannel and GuiRemoteProtocolRendererChannel: conversion between the strongly typed protocol and JSON channel packages."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GuiRemoteProtocolNetworkChannelServer, GuiRemoteProtocolLocalChannelClient and GuiRemoteProtocolChannelClient: the vl::inter_process JSON channel bridge."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NamedPipeServer, NamedPipeClient, HttpServer, HttpClient, or custom implementations of the INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces: the underlying data-transmission implementation."
+                  }
+                ]
               }
             ]
-          },
-          {
-            "kind": "Text",
-            "text": " represents a renderer.\n            The core side implementation sends messages to client and receive responses from client.\n            The client side implementation receives messages from core and send responses to core.\n        "
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocolChannel<T>"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocolChannelReceiver<T>"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " works like "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocol"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteEventProcessor"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ",\n            but there is no strong typed messages anymore, everything becomes the "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "T"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n        "
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "GuiRemoteProtocolFromJsonChannel"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " (for core) and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "GuiRemoteJsonChannelFromProtocol"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " (for client) handles message translation between\n            "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocol"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocolChannel<Ptr<JsonObject>>"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n        "
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "GuiRemoteJsonChannelStringSerializer"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " (for core) and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "GuiRemoteJsonChannelStringDeserializer"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " (for client) handles message translation between\n            "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocolChannel<Ptr<JsonObject>>"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": " and "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "IGuiRemoteProtocolChannel<WString>"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n        "
           }
         ]
       },
@@ -356,62 +166,218 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            Although message are sent bidirectionally, but the naming is saying what is done from core to client.\n            "
+            "text": "\n            The JSON channel package type is Ptr<glr::json::JsonNode>.\n            The remote protocol channel name is GacUIRemoteProtocolChannelName, whose value is GacUIRemoteProtocol.\n            The in-process core client should be assigned GacUIRemoteProtocolCoreClientId.\n            Renderer-side packages are sent to that core client id, and core-side packages are sent to the renderer client id learned from ControllerConnect.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            ChannelPackageInfo describes the remote protocol envelope:\n            "
           },
           {
-            "kind": "PageLink",
-            "href": "/gacui/modes/remote_client.html",
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "semantic: Message, Request, Response or Event."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "id: the request or response id, or -1 when the package does not need one."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "name: the generated remote protocol message, request, response or event name."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            JsonChannelPack and JsonChannelUnpack convert this envelope and the optional arguments node to and from a JSON object.\n            Application code normally does not call these functions unless it is logging, debugging or building a non-C++ renderer.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "What User Code Owns",
+        "content": [
+          {
+            "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "Remote Protocol Client Application"
+                "text": "\n                A normal C++ application configures the remote protocol channel at startup.\n                After GuiRemoteProtocolCoreChannel and GuiRemoteProtocolRendererChannel are connected,\n                the library routes individual remote protocol messages between the strongly typed protocol and JSON channel packages.\n            "
               }
             ]
           },
           {
-            "kind": "Text",
-            "text": " and\n            "
-          },
-          {
-            "kind": "PageLink",
-            "href": "/gacui/modes/remote_communication.html",
+            "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "Implementing a Communication Protocol"
+                "text": "\n                User code usually owns only:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A small server policy around GuiRemoteProtocolNetworkChannelServer, if the core needs to wait for a renderer, reject invalid clients, or replace a previous renderer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "An underlying data-transmission implementation, represented by INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Optional renderer-side error handling by overriding GuiRemoteProtocolChannelClient::OnReadError, OnLocalError or OnDisconnected."
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           {
-            "kind": "Text",
-            "text": "\n            demos how to setup the pipeline from "
-          },
-          {
-            "kind": "Strong",
+            "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "IGuiRemoteProtocol"
+                "text": "\n                GuiRemoteProtocolCoreChannel exposes BeforeWrite and BeforeOnRead.\n                GuiRemoteProtocolRendererChannel exposes the same events.\n                Use these events for tracing package flow or diagnosing mismatched renderer/core behavior.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Adding a Transport",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Add a new underlying data-transmission implementation below GacUI by implementing the vl::inter_process INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces.\n                The names say network protocol, but the contract is only asynchronous WString message exchange.\n                The implementation can be a pipe, socket, stdio stream, shared memory, DLL function calls, or any other mechanism that can satisfy INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer.\n                Then reuse the GacUI JSON channel classes.\n            "
               }
             ]
           },
           {
-            "kind": "Text",
-            "text": " all the way to sending and receiving strings.\n            You can also implements your own pipeline using different message formats.\n            JSON serialization is offered in GacUI by default,\n            but you can also code generate your own serializer with other underlying format\n            using metadata in "
-          },
-          {
-            "kind": "PageLink",
-            "href": "https://github.com/vczh-libraries/Release/tree/master/Import/Metadata",
+            "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "this folder"
+                "text": "\n                The core side selects the INetworkProtocolServer implementation as the template argument:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "using MyRemoteCoreServer =\r\n    GuiRemoteProtocolNetworkChannelServer<MyTransportServer>;\r\n\r\nauto jsonParser = Ptr(new glr::json::Parser);\r\nMyRemoteCoreServer server(jsonParser, /* transport server constructor arguments */);\r\nserver.Start();\r\n\r\nauto coreClient = Ptr(new GuiRemoteProtocolLocalChannelClient(jsonParser));\r\nserver.ConnectLocalClient(coreClient);",
+                "language": "c++"
               }
             ]
           },
           {
-            "kind": "Text",
-            "text": ".\n        "
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The renderer side wraps an INetworkProtocolClient object:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "auto jsonParser = Ptr(new glr::json::Parser);\r\nauto networkClient = Ptr(new MyTransportClient(/* connection arguments */));\r\n\r\nGuiRemoteProtocolChannelClient channelClient(networkClient, jsonParser);\r\nchannelClient.WaitForServer();",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The same channel setup shown in\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/modes/remote_core.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Remote Protocol Core Application"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/modes/remote_client.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Remote Protocol Client Application"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                works after the transport object is connected.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/vlppos/using-inter-process.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Using Inter-Process Channels"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                for the inter-process protocol and channel interface contracts.\n            "
+              }
+            ]
           }
         ]
       }

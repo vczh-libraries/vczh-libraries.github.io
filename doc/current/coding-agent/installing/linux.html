@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Linux -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "coding-agent",
+    "installing",
+    "linux"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Working with Coding Agent",
+      "selected": false,
+      "path": [
+        "coding-agent",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Installing required tools",
+          "selected": false,
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Windows",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "windows"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Linux",
+              "selected": true,
+              "path": [
+                "coding-agent",
+                "installing",
+                "linux"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "macOS",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "macos"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Installing Required Tools on Linux",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The Linux agent workflow is driven by "
+          },
+          {
+            "kind": "Name",
+            "text": ".github/Ubuntu/build.sh"
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            It adds "
+          },
+          {
+            "kind": "Name",
+            "text": ".github/Ubuntu/vl/cmd"
+          },
+          {
+            "kind": "Text",
+            "text": " to "
+          },
+          {
+            "kind": "Name",
+            "text": "PATH"
+          },
+          {
+            "kind": "Text",
+            "text": ", runs "
+          },
+          {
+            "kind": "Name",
+            "text": "vmake --make"
+          },
+          {
+            "kind": "Text",
+            "text": ", and then builds with "
+          },
+          {
+            "kind": "Name",
+            "text": "vbuild"
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The agent instructions deliberately route builds through this script instead of direct "
+          },
+          {
+            "kind": "Name",
+            "text": "cmake"
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Name",
+            "text": "make"
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Name",
+            "text": "clang++"
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Name",
+            "text": "g++"
+          },
+          {
+            "kind": "Text",
+            "text": ", or "
+          },
+          {
+            "kind": "Name",
+            "text": "gdb"
+          },
+          {
+            "kind": "Text",
+            "text": " calls.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Prepare a Linux environment with a C++ compiler toolchain, Bash, and LLDB.\n            After copying the Release "
+          },
+          {
+            "kind": "Name",
+            "text": ".github"
+          },
+          {
+            "kind": "Text",
+            "text": " folder, make the copied scripts executable if the checkout blocks execution bits:\n            "
+          },
+          {
+            "kind": "Program",
+            "code": "chmod +x .github/Ubuntu/build.sh\r\nchmod +x .github/Ubuntu/vl/cmd/*",
+            "language": "bash"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Build from the folder that contains the target "
+          },
+          {
+            "kind": "Name",
+            "text": "vmake"
+          },
+          {
+            "kind": "Text",
+            "text": " file:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "For a repository with one Linux project, use "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "REPO-ROOT/Test/Linux"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "For a repository with multiple Linux projects, use "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "REPO-ROOT/Test/Linux/PROJECT-NAME"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Run "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "REPO-ROOT/.github/Ubuntu/build.sh"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for an incremental build."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Run "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "REPO-ROOT/.github/Ubuntu/build.sh -f"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for a full rebuild."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Linux debug work should use "
+          },
+          {
+            "kind": "Name",
+            "text": "lldb"
+          },
+          {
+            "kind": "Text",
+            "text": " in an interactive terminal session.\n            The copied guidelines expect the agent to start LLDB from the same folder that contains the "
+          },
+          {
+            "kind": "Name",
+            "text": "vmake"
+          },
+          {
+            "kind": "Text",
+            "text": " file so relative paths to binaries and source files remain correct.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            If the application uses Release tools, run "
+          },
+          {
+            "kind": "Name",
+            "text": "Release/Tools/BuildExecutables.sh"
+          },
+          {
+            "kind": "Text",
+            "text": " in the Release repository.\n            It produces "
+          },
+          {
+            "kind": "Name",
+            "text": "CodePack"
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Name",
+            "text": "CppMerge"
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Name",
+            "text": "GacGen"
+          },
+          {
+            "kind": "Text",
+            "text": ", and "
+          },
+          {
+            "kind": "Name",
+            "text": "GlrParserGen"
+          },
+          {
+            "kind": "Text",
+            "text": " under "
+          },
+          {
+            "kind": "Name",
+            "text": "Release/Tools"
+          },
+          {
+            "kind": "Text",
+            "text": ".\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

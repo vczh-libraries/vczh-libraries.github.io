@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AutomationService -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "coding-agent",
+    "automation-service"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Coding Agent Supports",
+          "selected": false,
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "AutomationService",
+              "selected": true,
+              "path": [
+                "gacui",
+                "coding-agent",
+                "automation-service"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "AutomationService",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            AutomationService is the GacUI surface for programmatic inspection and input.\n            It is exposed by "
+          },
+          {
+            "kind": "Name",
+            "text": "INativeAutomationService"
+          },
+          {
+            "kind": "Text",
+            "text": " through "
+          },
+          {
+            "kind": "Name",
+            "text": "GetCurrentController()->AutomationService()"
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            Coding agents use it to read the current UI structure and send input commands without depending on operating-system UI Automation.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The service is independent from the remote protocol.\n            A normal Windows application, a remote protocol core application, and a remote protocol renderer can all expose an automation service,\n            but each setup exposes the view of the UI that exists on that side.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Service Interface",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " has one service-level availability flag and three feature groups:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "Available"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": returns false when no automation service exists for the current controller."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "Stop"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": turns off all features. Windows implementations also stop the HTTP listener."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "CanDumpControlTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "DumpControlTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": expose visible GacUI windows, popups, controls and compositions."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "CanDumpDomTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "DumpDomTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": expose the remote protocol renderer DOM."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "CanRunIOCommands"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommand"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": send a textual IO command to the main window or to a selected native window."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Feature availability is checked separately.\n                A real service returns true from "
+              },
+              {
+                "kind": "Name",
+                "text": "Available"
+              },
+              {
+                "kind": "Text",
+                "text": " even if a specific feature is unsupported.\n                Unsupported features should return false from the corresponding "
+              },
+              {
+                "kind": "Name",
+                "text": "Can..."
+              },
+              {
+                "kind": "Text",
+                "text": " function and return an empty string from the operation.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Windows HTTP Layer",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "StartWindowsHttpAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " creates a localhost HTTP wrapper around the current "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                It is declared in "
+              },
+              {
+                "kind": "Name",
+                "text": "PlatformProviders/Windows/WinNativeWindow.h"
+              },
+              {
+                "kind": "Text",
+                "text": " and implemented by the Windows platform provider.\n                If "
+              },
+              {
+                "kind": "Name",
+                "text": "GetCurrentController()->AutomationService()->Available()"
+              },
+              {
+                "kind": "Text",
+                "text": " is false, the function returns without starting a listener.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The function takes "
+              },
+              {
+                "kind": "Name",
+                "text": "applicationName"
+              },
+              {
+                "kind": "Text",
+                "text": " as a URL path fragment and "
+              },
+              {
+                "kind": "Name",
+                "text": "port"
+              },
+              {
+                "kind": "Text",
+                "text": " as the localhost port.\n                Given "
+              },
+              {
+                "kind": "Name",
+                "text": "applicationName == L\"Automation/MyApp\""
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "port == 8888"
+              },
+              {
+                "kind": "Text",
+                "text": ", the listener prefix is "
+              },
+              {
+                "kind": "Name",
+                "text": "http://localhost:8888/Automation/MyApp/"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The service offers exactly these HTTP URLs:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "GET http://localhost:8888/Automation/MyApp/Controls"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": calls "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "DumpControlTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " on the UI thread when "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "CanDumpControlTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is true."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "GET http://localhost:8888/Automation/MyApp/Dom"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": calls "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "DumpDomTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " on the UI thread when "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "CanDumpDomTree"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is true."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "POST http://localhost:8888/Automation/MyApp/IO"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": passes the UTF-8 request body to "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommand"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " with no window id."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "POST http://localhost:8888/Automation/MyApp/IO/<windowId>"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": passes the UTF-8 request body to "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommand"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " with the window id path segment."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The window id is a path segment after "
+              },
+              {
+                "kind": "Name",
+                "text": "IO"
+              },
+              {
+                "kind": "Text",
+                "text": ", not a query parameter.\n                All other methods, paths, and malformed "
+              },
+              {
+                "kind": "Name",
+                "text": "IO"
+              },
+              {
+                "kind": "Text",
+                "text": " suffixes return HTTP 404 with a text response.\n                Successful IO command parsing returns "
+              },
+              {
+                "kind": "Name",
+                "text": "Queued"
+              },
+              {
+                "kind": "Text",
+                "text": "; this means the command was accepted and posted to the UI thread, not that every visible effect has already finished.\n                Syntax errors and command errors are returned synchronously as text beginning with "
+              },
+              {
+                "kind": "Name",
+                "text": "!"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Starting The Service",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Call "
+              },
+              {
+                "kind": "Name",
+                "text": "StartWindowsHttpAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " from "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiMain"
+              },
+              {
+                "kind": "Text",
+                "text": ", after the setup function has installed the current native controller and before entering the application event loop.\n                Call "
+              },
+              {
+                "kind": "Name",
+                "text": "StopWindowsHttpAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " during shutdown when the service lifetime is not already stopped through "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService::Stop"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A normal Windows application can start the service before "
+              },
+              {
+                "kind": "Name",
+                "text": "GetApplication()->Run"
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "#include \"../../../Source/PlatformProviders/Windows/WinNativeWindow.h\"\r\n\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\n\r\nvoid GuiMain()\r\n{\r\n    demo::MainWindow window;\r\n    window.ForceCalculateSizeImmediately();\r\n    window.MoveToScreenCenter();\r\n\r\n    windows::StartWindowsHttpAutomationService(\r\n        WString::Unmanaged(L\"Automation/MyApp\"),\r\n        8888);\r\n    GetApplication()->Run(&window);\r\n    windows::StopWindowsHttpAutomationService();\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)\r\n{\r\n    return SetupHostedWindowsDirect2DRenderer();\r\n}",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Repeated calls do not create multiple listeners.\n                The Windows implementation keeps one process-wide HTTP service until "
+              },
+              {
+                "kind": "Name",
+                "text": "StopWindowsHttpAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService::Stop"
+              },
+              {
+                "kind": "Text",
+                "text": " stops it.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Setup Function Cases",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The setup function decides which controller and service are active while "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiMain"
+              },
+              {
+                "kind": "Text",
+                "text": " runs.\n                Use the following cases when deciding whether user code must substitute another automation service:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": installs "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WindowsAutomationService"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Use "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "StartWindowsHttpAutomationService"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " directly for multi-window control tree and IO. The DOM route is normally unavailable."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupWindowsDirect2DRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": same automation behavior as "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SetupWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", with the Direct2D renderer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupHostedWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": installs "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WindowsAutomationServiceHosted"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Use the HTTP service directly. IO should use "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "/IO"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " without a window id because hosted sub windows and popups are represented under the main window."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupHostedWindowsDirect2DRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": same automation behavior as "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SetupHostedWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", with the Direct2D renderer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupRawWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": installs "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WindowsAutomationService"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for the raw native window controller. If the raw process is a remote protocol renderer and owns a "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "GuiRemoteRendererSingle"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", substitute "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WindowsAutomationServiceRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to expose renderer DOM and renderer-side IO."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupRawWindowsDirect2DRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": same automation behavior as "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SetupRawWindowsGDIRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", with the Direct2D renderer."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupRemoteNativeController"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": the remote controller itself does not return an automation service. Substitute "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RemoteProtocolAutomationService"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " around "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "GetApplication()->Run"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " when the remote core should expose the hosted control tree and core-side IO."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupGacGenNativeController"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": this setup is for generation-time resource processing, not an interactive UI session. It does not provide an automation service for HTTP control."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupGtkRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": do not call the Windows HTTP helper. A Gtk port must provide its own endpoint layer and automation service implementation if it needs coding-agent automation."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupWGacRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": do not call the Windows HTTP helper. A Wayland port must provide its own endpoint layer and automation service implementation if it needs coding-agent automation."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "SetupWGacHostedRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": same requirement as "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SetupWGacRenderer"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", but the service should follow hosted-mode window-id behavior if it exposes hosted windows."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Substituting a Service",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Use "
+              },
+              {
+                "kind": "Name",
+                "text": "GetNativeServiceSubstitution()->Substitute(service, false)"
+              },
+              {
+                "kind": "Text",
+                "text": " before the automation service is first requested.\n                The substitution layer rejects a late substitution after a service has already been used.\n                Keep the substituted object alive until it is unsubstituted.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A remote protocol core can expose the core-side automation surface like this:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "void GuiMain()\r\n{\r\n    RemoteProtocolAutomationService automationService;\r\n    GetNativeServiceSubstitution()->Substitute(&automationService, false);\r\n    windows::StartWindowsHttpAutomationService(\r\n        WString::Unmanaged(L\"Automation/RemoteCore\"),\r\n        8888);\r\n\r\n    GetApplication()->Run(mainWindow);\r\n\r\n    windows::StopWindowsHttpAutomationService();\r\n    GetNativeServiceSubstitution()->Unsubstitute(&automationService);\r\n}",
+                "language": "c++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A remote protocol renderer that owns a "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiRemoteRendererSingle"
+              },
+              {
+                "kind": "Text",
+                "text": " can substitute "
+              },
+              {
+                "kind": "Name",
+                "text": "WindowsAutomationServiceRenderer"
+              },
+              {
+                "kind": "Text",
+                "text": " in the same scope before starting the HTTP service.\n                This is the case where "
+              },
+              {
+                "kind": "Name",
+                "text": "GET /Dom"
+              },
+              {
+                "kind": "Text",
+                "text": " becomes meaningful.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implementing Another Platform",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A platform implementation should implement "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " or reuse "
+              },
+              {
+                "kind": "Name",
+                "text": "AutomationServiceBase"
+              },
+              {
+                "kind": "Text",
+                "text": " from "
+              },
+              {
+                "kind": "Name",
+                "text": "Utilities/SharedServices"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Return true from "
+              },
+              {
+                "kind": "Name",
+                "text": "Available"
+              },
+              {
+                "kind": "Text",
+                "text": ", implement the supported "
+              },
+              {
+                "kind": "Name",
+                "text": "Can..."
+              },
+              {
+                "kind": "Text",
+                "text": " and operation pairs, and make "
+              },
+              {
+                "kind": "Name",
+                "text": "Stop"
+              },
+              {
+                "kind": "Text",
+                "text": " disable all future operations.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When implementing IO:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Parse the command synchronously on the request path so malformed commands return an immediate error."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Queue the parsed command to the UI thread instead of running arbitrary UI work on the HTTP or transport thread."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Return "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Queued"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " after the parsed command is accepted."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Use "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommandOnNativeWindow"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " when the platform can map a window id to an "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "INativeWindow"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and its listener list."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The Windows HTTP wrapper is only one endpoint layer.\n                Other platforms may expose the same URL contract, a stdio protocol, an in-process function-call bridge, or another transport,\n                as long as the transport calls the same "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " operations on the correct threads.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Operational Notes",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Application-level automation depends on the GacUI UI thread.\n                A native crash dialog, file dialog, or other modal native window can block the UI thread and keep the HTTP endpoint from answering.\n                In that situation, inspect and operate native windows from another process using Win32 APIs, then return to the automation endpoint after the modal window is closed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Do not use operating-system UI Automation as the fallback for GacUI automation on Windows.\n                It can fail when the screen is locked, and it is not the contract implemented by "
+              },
+              {
+                "kind": "Name",
+                "text": "AutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

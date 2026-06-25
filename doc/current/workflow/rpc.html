@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>RPC -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "rpc"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "+",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Attributes",
+          "selected": false,
+          "path": [
+            "workflow",
+            "attributes"
+          ]
+        },
+        {
+          "icon": "-",
+          "name": "RPC",
+          "selected": true,
+          "path": [
+            "workflow",
+            "rpc"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "JSON RPC Channel Setup",
+              "selected": false,
+              "path": [
+                "workflow",
+                "rpc",
+                "json-channel"
+              ]
+            }
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Runtime Instructions",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ins"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "C++ Code Generation",
+          "selected": false,
+          "path": [
+            "workflow",
+            "codegen"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "workflow",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Workflow RPC",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n\t\t\tWorkflow RPC describes service contracts with Workflow interfaces and runs them through a transport-independent lifecycle, dispatcher, serializer, and channel layer. The contract is written in Workflow; the runtime decides how object references, method calls, property access, and events travel between processes or machines.\n\t\t"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Declaring RPC Interfaces",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tAn RPC service interface is a non-generic Workflow interface marked with @rpc:Interface. Base interfaces must also be RPC interfaces.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tUse @rpc:Ctor on an RPC interface when that interface represents a service type that can be requested by clients.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "module Rpc;\r\nusing system::*;\r\n\r\nnamespace Chat\r\n{\r\n\t@rpc:Interface\r\n\t@rpc:Ctor\r\n\tinterface IChatService\r\n\t{\r\n\t\tfunc Send(text : string) : void;\r\n\t\tfunc LastMessage() : string;\r\n\t}\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tRPC members can use serializable values, shared pointers to RPC interfaces, and strong typed collections whose element types are serializable. void is valid only as a method return type.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "RPC Attributes",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe RPC analyzer recognizes these attributes:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Interface: marks a Workflow interface as an RPC interface."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Ctor: marks an RPC interface as constructible through the RPC service model."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Cached: marks an RPC property as cached by the client-side wrapper."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Dynamic: marks an RPC property as read from the remote object every time."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Byval: transfers a strong typed collection by value."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:Byref: transfers a strong typed collection by reference."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\t@rpc:Cached and @rpc:Dynamic can only be used on RPC properties and cannot appear together. A property is cached by default unless it is marked @rpc:Dynamic.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\t@rpc:Byval and @rpc:Byref can be used on RPC properties, method return values, and method parameters that are strong typed collections. They cannot appear together. When neither is written, observable collections and collections containing RPC interfaces default to reference transfer; other strong typed collections default to value transfer.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Serializable Values",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tRPC payloads must be serializable. Supported payload shapes are:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "primitive reflected values such as booleans, integers, floating point values, and strings;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "reflected structs, normal enums, and flag enums;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "nullable values whose element type is serializable;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "shared pointers to interfaces marked with @rpc:Interface;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "strong typed collections whose type arguments are serializable."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tReserved framework types such as object references and RPC exceptions are part of the transport protocol and are not valid as ordinary RPC member payloads.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Service and Client Flow",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA server creates an implementation object and registers it with IRpcLifecycle. A client asks the lifecycle for the same service name and casts the returned object to the service interface.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "func serviceMain(lc : IRpcLifecycle*) : void\r\n{\r\n\tvar service = new Chat::IChatService^\r\n\t{\r\n\t\tvar last : string = \"\";\r\n\r\n\t\toverride func Send(text : string) : void\r\n\t\t{\r\n\t\t\tlast = text;\r\n\t\t}\r\n\r\n\t\toverride func LastMessage() : string\r\n\t\t{\r\n\t\t\treturn last;\r\n\t\t}\r\n\t};\r\n\r\n\tlc.RegisterLocalService(rpc_GetIds()[\"Chat::IChatService\"], service);\r\n}\r\n\r\nfunc clientMain(lc : IRpcLifecycle*) : string\r\n{\r\n\tvar service = cast (Chat::IChatService^) lc.RequestService(\"Chat::IChatService\");\r\n\tservice.Send(\"hello\");\r\n\treturn service.LastMessage();\r\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\trpc_GetIds() exposes the RPC interface id table for the loaded RPC module. RegisterLocalService binds a local implementation to an interface id. RequestService asks the remote side for a service by name and returns a wrapper object.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Runtime Objects",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe Workflow RPC runtime separates protocol logic from transport:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IRpcLifecycle owns the per-client or per-session state. It maps local objects to object references, creates wrappers for remote object references, registers services, requests services, and exposes the serializer, dispatcher, and controller."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IRpcDispatcher routes object operations and event operations. It declares local services, sends object operations to clients, broadcasts object events, and has explicit initialize and finalize steps."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IRpcController performs local object operations and event operations. It also controls whether property change events and collection item events are suppressed while an RPC operation is being applied."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IRpcSerializer converts reflected values, object references, exceptions, and operation records to and from the transport representation."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Implementing a Dispatcher",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA dispatcher implementation owns the lifecycle of a transport connection. It should:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "create or receive an IRpcLifecycle for each connected client;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "call Initialize before sending or receiving RPC operations;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "translate incoming transport messages to object operations, event operations, service declarations, or lifecycle operations;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "call DeclareLocalService when local services must become visible to the other side;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "send object operations through SendToClient_ObjectOps and object events through BroadcastFromClient_ObjectEventOps;"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "call Finalize when the transport is closed."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tDispatchers should schedule user callbacks through the host task queue or event loop that owns the service objects. RPC callbacks can re-enter user code, so a dispatcher must keep its threading and lifetime policy consistent.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "JSON RPC Channel Layer",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe JSON implementation uses RpcJsonDispatcher, RpcJsonLifecycle, RpcJsonObjectOps, and RpcJsonObjectEventOps. IRpcJsonMessageDispatcher accepts JSON requests and classifies them as direct, broadcast, or broadcast-and-drop messages.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe shared channel implementation connects the JSON dispatcher to "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/vlppos/using-inter-process.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::inter_process"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " channels:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonPackage is a JSON node package."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonChannel is an IChannel<JsonPackage>."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonChannelClient and JsonChannelServer are the channel endpoints used by the dispatcher."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonNetworkChannelClient and JsonNetworkChannelServer use the network channel implementation."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonLocalChannelClient uses the local inter-process channel implementation."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tRpcJsonDispatcherClient receives JSON packages from a channel, waits for the server handshake, connects to local servers when needed, and exposes its RPC lifecycle and dispatcher. RpcJsonDispatcherServer receives JSON packages from clients, registers and disconnects clients, broadcasts service declarations, and forwards RPC requests. Both classes require a concrete ScheduleTask policy; the task-queue variants provide the standard implementation.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tSee "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/rpc/json-channel.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "JSON RPC Channel Setup"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for the IRpcJsonMessageDispatcher transport contract and concrete vl::inter_process setup code.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -259,12 +259,72 @@
                     ]
                   }
                 ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "one delete{} block"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            All of them are only accessible by name inside the new interface expressions.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Delete block in a new interface expression",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A new interface expression can contain one delete{} block.\n                It declares cleanup code for the anonymous implementation object.\n            "
               }
             ]
           },
           {
-            "kind": "Text",
-            "text": "\n            All of them are only accessible by name inside the new interface expressions.\n        "
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The block has no name, arguments, return type, or override keyword:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "interface ISubscription*\r\n{\r\n    func Stop():void;\r\n}\r\n\r\nvar subscription = new ISubscription*\r\n{\r\n    var stopped: bool = false;\r\n\r\n    override func Stop():void\r\n    {\r\n        stopped = true;\r\n    }\r\n\r\n    delete\r\n    {\r\n        if (!stopped)\r\n        {\r\n            Stop();\r\n        }\r\n    }\r\n};\r\n\r\ndelete subscription;"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For a shared interface object, the delete{} block runs when the last shared pointer releases the object.\n                For a raw interface object, it runs when the object is deleted directly,\n                or when the object has been converted to a shared pointer and the last shared pointer releases it.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The block is used for resources owned by the anonymous implementation object,\n                such as unregistering callbacks, closing subscriptions, or releasing native handles.\n            "
+              }
+            ]
           }
         ]
       },

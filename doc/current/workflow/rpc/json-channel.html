@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>JSON RPC Channel Setup -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "rpc",
+    "json-channel"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "RPC",
+          "selected": false,
+          "path": [
+            "workflow",
+            "rpc"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "JSON RPC Channel Setup",
+              "selected": true,
+              "path": [
+                "workflow",
+                "rpc",
+                "json-channel"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "JSON RPC Channel Setup",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n\t\t\tThe JSON RPC layer separates RPC object semantics from data transmission. RpcJsonDispatcher, RpcJsonLifecycle, RpcJsonObjectOps, and RpcJsonObjectEventOps know how to turn RPC operations into JSON nodes. IRpcJsonMessageDispatcher is the boundary that sends those JSON nodes to another endpoint and receives JSON nodes back.\n\t\t"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n\t\t\tUse this page when wiring a JSON RPC endpoint to a transport. Implement IRpcJsonMessageDispatcher for a custom transport. Use the channeling classes when vl::inter_process should provide the transport.\n\t\t"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "IRpcJsonMessageDispatcher Contract",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tIRpcJsonMessageDispatcher has two runtime responsibilities:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AllocateRequestId returns a unique request id for outgoing JSON RPC messages from this endpoint."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnJsonRequest sends one JSON request according to the RequestType and returns the response JSON node when a response is expected."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tRequestType describes the routing behavior:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Direct sends a request to the target client and waits for the matching response."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Broadcast sends a request through the server-side broker and waits for the broker response."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BroadcastAndDrop sends a broadcast message that does not produce a response. Service declarations use this mode."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tWhen a transport receives a JSON RPC request for the local endpoint, call IRpcJsonMessageDispatcher::DefaultTranslate with the local object operations, event operations, dispatcher and lifecycle. DefaultTranslate invokes the local RPC operation and returns the response JSON node when the request needs one.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA custom transport usually follows this shape:\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "using namespace vl;\r\nusing namespace vl::glr::json;\r\nusing namespace vl::rpc_controller;\r\n\r\nclass MyJsonMessageDispatcher : public Object, public virtual IRpcJsonMessageDispatcher\r\n{\r\nprivate:\r\n\tatomic_vint nextRequestId = 0;\r\n\tIRpcObjectOps* objectOps = nullptr;\r\n\tIRpcObjectEventOps* objectEventOps = nullptr;\r\n\tIRpcDispatcher* rpcDispatcher = nullptr;\r\n\tIRpcLifecycle* lifecycle = nullptr;\r\n\r\npublic:\r\n\tvint AllocateRequestId() override\r\n\t{\r\n\t\treturn ++nextRequestId;\r\n\t}\r\n\r\n\tPtr<JsonNode> OnJsonRequest(Ptr<JsonNode> message, RequestType requestType) override\r\n\t{\r\n\t\tswitch (requestType)\r\n\t\t{\r\n\t\tcase RequestType::Direct:\r\n\t\t\treturn SendDirectAndWaitForResponse(message);\r\n\t\tcase RequestType::Broadcast:\r\n\t\t\treturn SendBroadcastAndWaitForResponse(message);\r\n\t\tcase RequestType::BroadcastAndDrop:\r\n\t\t\tSendBroadcastAndDrop(message);\r\n\t\t\treturn nullptr;\r\n\t\tdefault:\r\n\t\t\tCHECK_FAIL(L\"Unexpected JSON RPC request type.\");\r\n\t\t}\r\n\t}\r\n\r\n\tvoid OnIncomingJsonRequest(Ptr<JsonNode> message)\r\n\t{\r\n\t\tauto response = IRpcJsonMessageDispatcher::DefaultTranslate(\r\n\t\t\tmessage,\r\n\t\t\tClassifyIncomingRequest(message),\r\n\t\t\tobjectOps,\r\n\t\t\tobjectEventOps,\r\n\t\t\trpcDispatcher,\r\n\t\t\tlifecycle);\r\n\r\n\t\tif (response)\r\n\t\t{\r\n\t\t\tSendJsonResponse(response);\r\n\t\t}\r\n\t}\r\n};",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe functions named SendDirectAndWaitForResponse, SendBroadcastAndWaitForResponse, SendBroadcastAndDrop, ClassifyIncomingRequest and SendJsonResponse are transport-specific. They may use sockets, pipes, HTTP, shared memory or another message bus. The RPC layer only requires that request ids and response routing stay consistent.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Default vl::inter_process Channeling",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe default implementation is in namespace vl::rpc_controller::channeling. It implements IRpcJsonMessageDispatcher on top of vl::inter_process channels:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonPackage is Ptr<vl::glr::json::JsonNode>."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonChannel is vl::inter_process::IChannel<JsonPackage>."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonNetworkChannelClient and JsonNetworkChannelServer connect JSON packages to an INetworkProtocol transport."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "JsonLocalChannelClient connects an in-process endpoint to the same channel server."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RpcJsonDispatcherClient implements IRpcJsonMessageDispatcher and IChannelReader<JsonPackage> for one endpoint."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RpcJsonDispatcherServer implements IChannelReader<JsonPackage> for the server-side broadcast broker."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe channel server is a broker. It must have one local channel client owned by RpcJsonDispatcherServer. That local client receives broadcast requests, service declarations and broadcast responses. Normal clients, whether local or remote, are registered with the broker after they connect.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Shared Channel Client Glue",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA JSON channel client must declare at least one channel name. The RPC dispatcher only needs the channel object for that name:\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "#include <VlppWorkflowLibrary.h>\r\n#include <VlppOS.Windows.h>\r\n#include <utility>\r\n\r\nusing namespace vl;\r\nusing namespace vl::collections;\r\nusing namespace vl::glr::json;\r\nusing namespace vl::inter_process;\r\nusing namespace vl::reflection;\r\nusing namespace vl::rpc_controller;\r\nusing namespace vl::rpc_controller::channeling;\r\n\r\nconstexpr const wchar_t* RpcChannelName = L\"WorkflowRpc\";\r\n\r\ntemplate<typename TBase>\r\nclass JsonRpcChannelClient : public TBase\r\n{\r\nprivate:\r\n\tJsonChannelClient::ChannelMap channelNames;\r\n\tJsonChannel* rpcChannel = nullptr;\r\n\r\nprotected:\r\n\tvoid InitializeRpcChannel()\r\n\t{\r\n\t\tchannelNames.Add(WString::Unmanaged(RpcChannelName), nullptr);\r\n\t\tauto&& channels = this->GetChannels();\r\n\t\tauto index = channels.Keys().IndexOf(WString::Unmanaged(RpcChannelName));\r\n\t\tCHECK_ERROR(index != -1, L\"Missing Workflow RPC channel.\");\r\n\t\trpcChannel = channels.Values()[index];\r\n\t}\r\n\r\npublic:\r\n\ttemplate<typename... TArgs>\r\n\tJsonRpcChannelClient(TArgs&&... args)\r\n\t\t: TBase(std::forward<TArgs>(args)...)\r\n\t{\r\n\t\tInitializeRpcChannel();\r\n\t}\r\n\r\n\tconst JsonChannelClient::ChannelNameList& OnGetChannelNames() override\r\n\t{\r\n\t\treturn channelNames.Keys();\r\n\t}\r\n\r\n\tJsonChannel* GetRpcChannel()\r\n\t{\r\n\t\tCHECK_ERROR(rpcChannel, L\"Missing Workflow RPC channel.\");\r\n\t\treturn rpcChannel;\r\n\t}\r\n};\r\n\r\nusing JsonRpcNetworkClient = JsonRpcChannelClient<JsonNetworkChannelClient>;\r\nusing JsonRpcLocalClient = JsonRpcChannelClient<JsonLocalChannelClient>;",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Endpoint Dispatcher Client",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tRpcJsonDispatcherClientForTaskQueue already implements IRpcJsonMessageDispatcher by sending JSON packages through a JsonChannel. A project still needs a small subclass to create RpcJsonDispatcher and RpcJsonLifecycle, then register the RPC metadata and helper operations for the loaded module.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe module-specific registration is represented below by ConfigureLifecycleForRpcModule. It should set the id map, serializer, object ops, event ops, event attachers and wrapper factory for the module being used.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "void ConfigureLifecycleForRpcModule(RpcJsonLifecycle* lifecycle);\r\n\r\nclass MyRpcDispatcherClient : public RpcJsonDispatcherClientForTaskQueue\r\n{\r\npublic:\r\n\tMyRpcDispatcherClient(Ptr<TaskQueue> taskQueue)\r\n\t\t: RpcJsonDispatcherClientForTaskQueue(taskQueue)\r\n\t{\r\n\t}\r\n\r\n\tvoid InitializeRpc(vint clientId)\r\n\t{\r\n\t\tauto rpcDispatcher = Ptr(new RpcJsonDispatcher(clientId, this));\r\n\t\tauto lifecycle = Ptr(new RpcJsonLifecycle(clientId, rpcDispatcher.Obj()));\r\n\r\n\t\tSetRpcObjects(rpcDispatcher, lifecycle);\r\n\t\tConfigureLifecycleForRpcModule(lifecycle.Obj());\r\n\t}\r\n};",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Server Channel Setup",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe server channel accepts only clients that declare the RPC channel name. After the broker local client is connected, every accepted normal client is registered with RpcJsonDispatcherServer.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "class JsonRpcChannelServer : public JsonNetworkChannelServer<NamedPipeServer>\r\n{\r\nprivate:\r\n\tRpcJsonDispatcherServer* dispatcher = nullptr;\r\n\r\npublic:\r\n\tJsonRpcChannelServer(Ptr<Parser> parser, const WString& pipeName)\r\n\t\t: JsonNetworkChannelServer<NamedPipeServer>(parser, pipeName)\r\n\t{\r\n\t}\r\n\r\n\tWaitForClientResult OnClientConnected(\r\n\t\tvint clientId,\r\n\t\tconst JsonChannelClient::ChannelNameList& availableChannels,\r\n\t\tJsonChannelClient* localClient) override\r\n\t{\r\n\t\tif (!availableChannels.Contains(WString::Unmanaged(RpcChannelName)))\r\n\t\t{\r\n\t\t\treturn WaitForClientResult::Reject;\r\n\t\t}\r\n\r\n\t\tif (localClient)\r\n\t\t{\r\n\t\t\treturn WaitForClientResult::Accept;\r\n\t\t}\r\n\r\n\t\tif (!dispatcher || !dispatcher->HasServerClientId())\r\n\t\t{\r\n\t\t\treturn WaitForClientResult::Reject;\r\n\t\t}\r\n\r\n\t\tdispatcher->RegisterClient(clientId);\r\n\t\treturn WaitForClientResult::Accept;\r\n\t}\r\n\r\n\tvoid OnClientDisconnected(vint clientId) override\r\n\t{\r\n\t\tif (dispatcher && dispatcher->HasServerClientId())\r\n\t\t{\r\n\t\t\tdispatcher->DisconnectClient(clientId);\r\n\t\t}\r\n\t}\r\n\r\n\tvoid SetDispatcher(RpcJsonDispatcherServer* value)\r\n\t{\r\n\t\tdispatcher = value;\r\n\t}\r\n};\r\n\r\nclass JsonRpcBroadcastingLocalClient : public JsonRpcLocalClient\r\n{\r\nprivate:\r\n\tPtr<RpcJsonDispatcherServerForTaskQueue> dispatcher;\r\n\r\npublic:\r\n\tJsonRpcBroadcastingLocalClient(Ptr<Parser> parser)\r\n\t\t: JsonRpcLocalClient(parser)\r\n\t{\r\n\t}\r\n\r\n\tvoid Connect(JsonChannelServer* channelServer, Ptr<JsonChannelClient> self, Ptr<TaskQueue> taskQueue)\r\n\t{\r\n\t\tauto clientId = channelServer->ConnectLocalClient(self);\r\n\t\tCHECK_ERROR(clientId != -1, L\"Failed to connect the RPC broker local client.\");\r\n\r\n\t\tdispatcher = Ptr(new RpcJsonDispatcherServerForTaskQueue(\r\n\t\t\tthis,\r\n\t\t\tGetRpcChannel(),\r\n\t\t\ttaskQueue));\r\n\t}\r\n\r\n\tRpcJsonDispatcherServer* GetDispatcher()\r\n\t{\r\n\t\tCHECK_ERROR(dispatcher, L\"The RPC broker local client is not connected.\");\r\n\t\treturn dispatcher.Obj();\r\n\t}\r\n};\r\n\r\nvoid StartRpcChannelServer(\r\n\tPtr<Parser> parser,\r\n\tPtr<TaskQueue> taskQueue,\r\n\tPtr<JsonRpcChannelServer>& channelServer,\r\n\tPtr<JsonRpcBroadcastingLocalClient>& brokerClient)\r\n{\r\n\tchannelServer = Ptr(new JsonRpcChannelServer(parser, L\"WorkflowRpcPipe\"));\r\n\tchannelServer->Start();\r\n\r\n\tbrokerClient = Ptr(new JsonRpcBroadcastingLocalClient(parser));\r\n\tbrokerClient->Connect(channelServer.Obj(), brokerClient, taskQueue);\r\n\tchannelServer->SetDispatcher(brokerClient->GetDispatcher());\r\n}",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Hosting a Local Service Endpoint",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA process can host services through a local channel client connected to the same channel server. This is useful when the process that owns the channel server also owns local services.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "class JsonRpcServiceLocalClient : public JsonRpcLocalClient\r\n{\r\nprivate:\r\n\tPtr<MyRpcDispatcherClient> dispatcher;\r\n\r\npublic:\r\n\tJsonRpcServiceLocalClient(Ptr<Parser> parser)\r\n\t\t: JsonRpcLocalClient(parser)\r\n\t{\r\n\t}\r\n\r\n\tvoid OnConnected(vint clientId) override\r\n\t{\r\n\t\tCHECK_ERROR(dispatcher, L\"The RPC dispatcher client is missing.\");\r\n\t\tdispatcher->InitializeRpc(clientId);\r\n\t}\r\n\r\n\tvint Connect(\r\n\t\tJsonChannelServer* channelServer,\r\n\t\tPtr<JsonChannelClient> self,\r\n\t\tPtr<TaskQueue> taskQueue,\r\n\t\tvint serverClientId,\r\n\t\tconst List<WString>& waitingForServices)\r\n\t{\r\n\t\tdispatcher = Ptr(new MyRpcDispatcherClient(taskQueue));\r\n\t\tauto clientId = dispatcher->ConnectLocalServer(\r\n\t\t\tchannelServer,\r\n\t\t\tself,\r\n\t\t\tGetRpcChannel(),\r\n\t\t\twaitingForServices);\r\n\r\n\t\tdispatcher->SetServerLocalClientId(serverClientId);\r\n\t\treturn clientId;\r\n\t}\r\n\r\n\tMyRpcDispatcherClient* GetDispatcher()\r\n\t{\r\n\t\tCHECK_ERROR(dispatcher, L\"The RPC dispatcher client is not connected.\");\r\n\t\treturn dispatcher.Obj();\r\n\t}\r\n};\r\n\r\nvoid HostLocalService(\r\n\tJsonChannelServer* channelServer,\r\n\tRpcJsonDispatcherServer* broker,\r\n\tPtr<Parser> parser,\r\n\tPtr<TaskQueue> taskQueue,\r\n\tPtr<IDescriptable> service)\r\n{\r\n\tauto serviceClient = Ptr(new JsonRpcServiceLocalClient(parser));\r\n\tList<WString> waitingForServices;\r\n\tserviceClient->Connect(\r\n\t\tchannelServer,\r\n\t\tserviceClient,\r\n\t\ttaskQueue,\r\n\t\tbroker->GetServerClientId(),\r\n\t\twaitingForServices);\r\n\r\n\tauto rpcClient = serviceClient->GetDispatcher();\r\n\tauto lifecycle = rpcClient->GetRpcLifecycle();\r\n\tauto typeId = lifecycle->GetTypeIdFromName(L\"example::IExampleService\");\r\n\tCHECK_ERROR(typeId != RpcTypeId_NotFound, L\"Unknown RPC service type.\");\r\n\r\n\tlifecycle->RegisterLocalService(typeId, service);\r\n\trpcClient->Initialize();\r\n}",
+                "language": "C++"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Connecting a Remote Client",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA remote client uses JsonNetworkChannelClient over a raw transport such as NamedPipeClient or HttpClient. The channel connection supplies the client id; OnConnected initializes the RPC lifecycle for that id.\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "class JsonRpcNetworkEndpoint : public JsonRpcNetworkClient\r\n{\r\nprivate:\r\n\tPtr<MyRpcDispatcherClient> dispatcher;\r\n\r\npublic:\r\n\tJsonRpcNetworkEndpoint(\r\n\t\tPtr<MyRpcDispatcherClient> _dispatcher,\r\n\t\tPtr<INetworkProtocolClient> transport,\r\n\t\tPtr<Parser> parser)\r\n\t\t: JsonRpcNetworkClient(transport, parser)\r\n\t\t, dispatcher(_dispatcher)\r\n\t{\r\n\t}\r\n\r\n\tvoid OnConnected(vint clientId) override\r\n\t{\r\n\t\tCHECK_ERROR(dispatcher, L\"The RPC dispatcher client is missing.\");\r\n\t\tdispatcher->InitializeRpc(clientId);\r\n\t}\r\n};\r\n\r\nPtr<MyRpcDispatcherClient> ConnectRemoteRpcClient(\r\n\tPtr<Parser> parser,\r\n\tPtr<TaskQueue> taskQueue,\r\n\tconst List<WString>& waitingForServices)\r\n{\r\n\tauto dispatcher = Ptr(new MyRpcDispatcherClient(taskQueue));\r\n\tauto transport = Ptr(new NamedPipeClient(L\"WorkflowRpcPipe\"));\r\n\tauto channelClient = Ptr(new JsonRpcNetworkEndpoint(dispatcher, transport, parser));\r\n\r\n\tdispatcher->WaitForServer(\r\n\t\tchannelClient.Obj(),\r\n\t\tchannelClient->GetRpcChannel(),\r\n\t\twaitingForServices);\r\n\r\n\tdispatcher->Initialize();\r\n\treturn dispatcher;\r\n}",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tAfter ConnectRemoteRpcClient returns, use dispatcher->GetRpcLifecycle() to request remote services. The server sends a login message through the broker, so a network client does not call SetServerLocalClientId.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

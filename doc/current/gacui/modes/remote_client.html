@@ -80,7 +80,7 @@
             },
             {
               "icon": " ",
-              "name": "Implementing a Communication Protocol",
+              "name": "Remote Protocol Channel Layer",
               "selected": false,
               "path": [
                 "gacui",
@@ -105,34 +105,30 @@
         "kind": "Paragraph",
         "content": [
           {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "GuiRemoteRendererSingle"
-              }
-            ]
-          },
+            "kind": "Text",
+            "text": "\n            GuiRemoteRendererSingle is the standard C++ renderer for one remote GacUI core.\n            It implements IGuiRemoteProtocol,\n            renders to one INativeWindow,\n            and sends user input, window, screen, measuring, and automation events back to the core.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
           {
             "kind": "Text",
-            "text": " is a remote client implementation that renders everything to "
-          },
-          {
-            "kind": "Strong",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "INativeWindow"
-              }
-            ]
-          },
+            "text": "\n            The renderer side does not implement a string channel anymore.\n            It only chooses a vl::inter_process transport client,\n            creates a GuiRemoteProtocolChannelClient,\n            and bridges that JSON channel to GuiRemoteRendererSingle.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
           {
             "kind": "Text",
-            "text": " offering full user interaction features.\n            A typical example would be:\n             "
+            "text": "\n            A compact named pipe renderer looks like this:\n            "
           },
           {
             "kind": "Program",
-            "code": "class RendererChannel : public Object, public virtual IGuiRemoteProtocolChannelReceiver<WString>\r\n{\r\npublic:\r\n    RendererChannel(GuiRemoteRendererSingle* renderer, IGuiRemoteProtocolChannel<WString>* channel)\r\n    {\r\n        // connect to the remote core application\r\n    }\r\n\r\n    void OnReceive(const TPackage& package) override\r\n    {\r\n        // send the string away\r\n    }\r\n\r\n    void RegisterMainWindow(INativeWindow* _window)\r\n    {\r\n        // begin handling messages\r\n        // when a message is received, call channel->Write\r\n        // when it is a fetal error, call renderer->ForceExitByFatelError()\r\n        // they must be called with GetCurrentController()->AsyncService()->InvokeInMainThread\r\n        // renderer and channel are the arguments of the constructor\r\n    }\r\n\r\n    void UnregisterMainWindow()\r\n    {\r\n    }\r\n\r\n    void WaitForDisconnected()\r\n    {\r\n        // block until the remote core application tells the remote client the work is done\r\n    }\r\n};\r\n\r\nRendererChannel* rendererChannel = nullptr;\r\nGuiRemoteRendererSingle* renderer = nullptr;\r\n\r\nvoid GuiMain()\r\n{\r\n    auto mainWindow = GetCurrentController()->WindowService()->CreateNativeWindow(INativeWindow::Normal);\r\n    mainWindow->SetTitle(L\"Connecting ...\");\r\n    {\r\n        auto size = mainWindow->Convert(Size(320, 240));\r\n        auto screen = GetCurrentController()->ScreenService()->GetScreen((vint)0);\r\n        auto client = screen->GetClientBounds();\r\n        auto x = client.Left() + (client.Width() - size.x) / 2;\r\n        auto y = client.Top() + (client.Height() - size.y) / 2;\r\n        mainWindow->SetBounds({ {x,y},size });\r\n    }\r\n    rendererChannel->RegisterMainWindow(mainWindow);\r\n    renderer->RegisterMainWindow(mainWindow);\r\n    GetCurrentController()->WindowService()->Run(mainWindow);\r\n    renderer->UnregisterMainWindow();\r\n    rendererChannel->UnregisterMainWindow();\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    auto jsonParser = Ptr(new glr::json::Parser);\r\n    GuiRemoteRendererSingle remoteRenderer;\r\n    GuiRemoteJsonChannelFromProtocol channelReceiver(&remoteRenderer);\r\n    GuiRemoteJsonChannelStringDeserializer channelJsonDeserializer(&channelReceiver, jsonParser);\r\n    RendererChannel clientRendererChannel(&remoteRenderer, &channelJsonDeserializer);\r\n\r\n    channelReceiver.BeforeWrite.Add([&](const ChannelPackageInfo& info) { clientRendererChannel.BeforeWrite(info); });\r\n    channelReceiver.BeforeOnReceive.Add([&](const ChannelPackageInfo& info) { clientRendererChannel.BeforeOnReceive(info); });\r\n\r\n    rendererChannel = &clientRendererChannel;\r\n    renderer = &remoteRenderer;\r\n    int result = SetupRawWindowsDirect2DRenderer();\r\n    clientRendererChannel.WaitForDisconnected();\r\n    renderer = nullptr;\r\n    rendererChannel = nullptr;\r\n\r\n    return result;\r\n}",
+            "code": "using namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::remoteprotocol;\r\nusing namespace vl::presentation::remoteprotocol::channeling;\r\nusing namespace vl::presentation::remote_renderer;\r\n\r\nGuiRemoteRendererSingle* remoteRenderer = nullptr;\r\nGuiRemoteProtocolAsyncJsonChannelRenderer* asyncChannel = nullptr;\r\n\r\nclass GuiMainInvoker : public IGuiRemoteProtocolAsyncRendererInvoker\r\n{\r\npublic:\r\n    void InvokeInMainThread(const Func<void()>& proc) override\r\n    {\r\n        GetApplication()->InvokeInMainThread(nullptr, proc);\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    auto mainWindow = GetCurrentController()->WindowService()->CreateNativeWindow(INativeWindow::Normal);\r\n    mainWindow->SetTitle(L\"Connecting ...\");\r\n\r\n    GuiMainInvoker invoker;\r\n    remoteRenderer->RegisterMainWindow(mainWindow);\r\n    asyncChannel->SetInvokeInMainThread(&invoker);\r\n\r\n    GetCurrentController()->WindowService()->Run(mainWindow);\r\n\r\n    asyncChannel->SetInvokeInMainThread(nullptr);\r\n    remoteRenderer->UnregisterMainWindow();\r\n}\r\n\r\nint StartNamedPipeRemoteRenderer()\r\n{\r\n    auto jsonParser = Ptr(new glr::json::Parser);\r\n    auto networkClient = Ptr(new inter_process::NamedPipeClient(L\"GacUIRemoteProtocolNamedPipe\"));\r\n\r\n    GuiRemoteProtocolChannelClient channelClient(networkClient, jsonParser);\r\n    GuiRemoteProtocolAsyncJsonChannelRenderer asyncRendererChannel(channelClient.GetProtocolChannel());\r\n    GuiRemoteRendererSingle renderer(true);\r\n    GuiRemoteProtocolRendererChannel rendererChannel(\r\n        &channelClient,\r\n        &asyncRendererChannel,\r\n        &renderer);\r\n\r\n    channelClient.WaitForServer();\r\n\r\n    remoteRenderer = &renderer;\r\n    asyncChannel = &asyncRendererChannel;\r\n    auto result = SetupRawWindowsDirect2DRenderer();\r\n    asyncChannel = nullptr;\r\n    remoteRenderer = nullptr;\r\n    return result;\r\n}",
             "language": "c++"
           }
         ]
@@ -142,7 +138,16 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            This sample simplifies all the details leaving the sending and receiving of strings to you.\n            Check out "
+            "text": "\n            GuiRemoteProtocolAsyncJsonChannelRenderer queues messages from the channel and runs them on the UI thread through IGuiRemoteProtocolAsyncRendererInvoker.\n            GuiRemoteProtocolRendererChannel converts JSON channel packages to calls on GuiRemoteRendererSingle,\n            and converts renderer events back to JSON packages for the core client id.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Override GuiRemoteProtocolChannelClient::OnReadError, OnLocalError, or OnDisconnected\n            when the renderer should show a fatal error dialog or call GuiRemoteRendererSingle::ForceExitByFatelError.\n            See "
           },
           {
             "kind": "PageLink",
@@ -150,13 +155,13 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "this test project"
+                "text": "RemotingTest_Rendering_Win32"
               }
             ]
           },
           {
             "kind": "Text",
-            "text": " for a complete example.\n        "
+            "text": "\n            for the complete named pipe and HTTP implementation.\n        "
           }
         ]
       }

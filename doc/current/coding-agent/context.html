@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Preparing Context Files -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "coding-agent",
+    "context"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Working with Coding Agent",
+      "selected": false,
+      "path": [
+        "coding-agent",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Installing required tools",
+          "selected": false,
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Windows",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "windows"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Linux",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "linux"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "macOS",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "macos"
+              ]
+            }
+          ]
+        },
+        {
+          "icon": "-",
+          "name": "Preparing Context Files",
+          "selected": true,
+          "path": [
+            "coding-agent",
+            "context"
+          ],
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Writing Project.md",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "project-md"
+              ]
+            }
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Investigate and Refine Jobs",
+          "selected": false,
+          "path": [
+            "coding-agent",
+            "jobs"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "AutomationService and Basic Computer Use",
+          "selected": false,
+          "path": [
+            "coding-agent",
+            "gacui-debugging"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Preparing Context Files",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Copy the coding-agent context from the Release repository into the root of the application repository.\n            The minimum copied set is:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": ".github"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": prompts, guidelines, scripts, Linux build helpers, local learning files, task-log files, and the copied knowledge base."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "AGENTS.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": common entry instructions used by Codex and other agents that read this file."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "CLAUDE.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": the same entry instructions for Claude-style agents."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "Project.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": application-specific repository map and verification policy, written by the application owner."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The copied "
+          },
+          {
+            "kind": "Name",
+            "text": ".github"
+          },
+          {
+            "kind": "Text",
+            "text": " folder contains several kinds of files:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "copilot-instructions.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": the main instruction file. It tells the agent to read "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Project.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", use the knowledge base, and prefer provided scripts."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "Guidelines"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": build, run, debug, source-file, coding, and GacUI resource instructions."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "prompts"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": job prompts such as "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "ask.prompt.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "investigate.prompt.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "refine.prompt.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "kb.prompt.md"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "Scripts"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Windows PowerShell wrappers for building, executing, debugging, and archiving task logs."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "Ubuntu"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": Linux build wrapper and helper commands."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "KnowledgeBase"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": copied API, design, manual, and learning documents that the agent can read without network access."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "Learning"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": project-local lessons that refine future agent behavior."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "TaskLogs"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": working documents for investigation and knowledge-base jobs."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Keep the copied context files under source control when they describe stable project behavior.\n            Task-log files may be tracked or ignored according to the repository policy, but the files referenced by the prompts should exist before asking the agent to use those prompts.\n            If the application has different build scripts, test commands, project names, generated files, or platform support, update "
+          },
+          {
+            "kind": "Name",
+            "text": "Project.md"
+          },
+          {
+            "kind": "Text",
+            "text": " first.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            See "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/coding-agent/project-md.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Writing Project.md"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for the expected contents of the application-specific file.\n        "
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

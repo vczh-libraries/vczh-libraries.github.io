@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Registration Macros and Attributes -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppreflection",
+    "registration-macros"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp Reflection",
+      "selected": false,
+      "path": [
+        "vlppreflection",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Registration Macros and Attributes",
+          "selected": true,
+          "path": [
+            "vlppreflection",
+            "registration-macros"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "vlppreflection",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppreflection",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Registration Macros and Attributes",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            VlppReflection registers C++ types by executing type loader code.\n            The source comment above "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Description<T>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in VlppReflection contains the complete macro walkthrough;\n            this page summarizes the registration workflow and documents the attribute macros used to attach metadata to registered types, members and parameters.\n            These attributes are VlppReflection metadata, not C++ language attributes.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Type registration code is compiled only when "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is not defined.\n            Code that declares reflectable classes still needs to compile without runtime reflection, but member registration and attributes are part of the reflection build.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Registration Workflow",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A registration unit usually follows this shape:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": true,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Define one typelist macro that enumerates fully qualified C++ types."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "In headers, expand the typelist with "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "DECL_TYPE_INFO"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "In one C++ file, expand the typelist with "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPL_CPP_TYPE_INFO"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "IMPL_TYPE_INFO_RENAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Register enum items, struct fields, class members or interface members."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Create an "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ITypeLoader"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and call "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ADD_TYPE_INFO"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for every type in the typelist."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Install the loader through "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GetGlobalTypeManager()->AddTypeLoader"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " before reading reflected metadata."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Member registration macros often need a temporary comma macro because parameter name lists are written inside macro arguments:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "#define MY_TYPELIST(F)\\\r\n    F(demo::DisplayNameAttribute)\\\r\n    F(demo::SampleClass)\r\n\r\nMY_TYPELIST(DECL_TYPE_INFO)\r\n\r\n// In one C++ file:\r\nMY_TYPELIST(IMPL_CPP_TYPE_INFO)\r\n\r\n#define _ ,\r\n\r\nBEGIN_STRUCT_MEMBER(demo::DisplayNameAttribute)\r\n    STRUCT_MEMBER(text)\r\nEND_STRUCT_MEMBER(demo::DisplayNameAttribute)\r\n\r\nBEGIN_CLASS_MEMBER(demo::SampleClass)\r\n    CLASS_MEMBER_CONSTRUCTOR(Ptr<demo::SampleClass>(), NO_PARAMETER)\r\n    ATTRIBUTE_TYPE(demo::DisplayNameAttribute, L\"Sample\")\r\n\r\n    CLASS_MEMBER_METHOD(Rename, { L\"value\" })\r\n    ATTRIBUTE_MEMBER(demo::DisplayNameAttribute, L\"Renaming\")\r\n    ATTRIBUTE_PARAMETER(L\"value\", demo::DisplayNameAttribute, L\"New name\")\r\nEND_CLASS_MEMBER(demo::SampleClass)\r\n\r\n#undef _\r\n\r\nclass DemoTypeLoader : public Object, public ITypeLoader\r\n{\r\npublic:\r\n    void Load(ITypeManager* manager) override\r\n    {\r\n        MY_TYPELIST(ADD_TYPE_INFO)\r\n    }\r\n\r\n    void Unload(ITypeManager* manager) override\r\n    {\r\n    }\r\n};",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The big source comment above "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Description<T>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " also lists these registration macro families:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Enums: "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_ENUM_ITEM"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_ENUM_ITEM_MERGABLE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ENUM_ITEM"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ENUM_CLASS_ITEM"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "END_ENUM_ITEM"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Structs: "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_STRUCT_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "STRUCT_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "END_STRUCT_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Classes: "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_CLASS_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_BASE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_FIELD"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_CONSTRUCTOR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_EXTERNALCTOR(_TEMPLATE)?"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_METHOD(_OVERLOAD)?_RENAME"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_(STATIC_)?METHOD(_OVERLOAD)?"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_(STATIC_)?EXTERNALMETHOD(_TEMPLATE)?"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_PROPERTY(_EVENT)?(_READONLY)?(_FAST)?"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_PROPERTY_REFERENCETEMPLATE"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "CLASS_MEMBER_EVENT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "END_CLASS_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Interfaces: "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_PROXY_NOPARENT_RAWPTR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_PROXY_RAWPTR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_PROXY_SHAREDPTR"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "END_INTERFACE_PROXY"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "BEGIN_INTERFACE_MEMBER_NOPROXY"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "END_INTERFACE_MEMBER"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A reflectable interface must directly or indirectly inherit "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IDescriptable"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If Workflow script classes should be able to implement the interface, register a proxy and use a constructor that accepts "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueInterfaceProxy>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BEGIN_INTERFACE_MEMBER_NOPROXY"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " only when script implementation is not required.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Attribute Macros",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Attribute macros create "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IAttributeInfo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " objects and store them in an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IAttributeBag"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITypeDescriptor"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IMemberInfo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IParameterInfo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expose attributes through "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetAttributeCount"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetAttribute"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Each attribute records its reflected struct type and the boxed values passed to the macro.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The attribute type must satisfy these rules:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The type must be registered in reflection."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "The registered type descriptor must be a struct, not a class or interface."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "TYPE{ARG1, ...}"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " must compile for the arguments passed to the macro."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Each argument should be "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ITypeDescriptor*"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " or a reflected serializable value type, so metadata logging and generated metadata can write it back."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Zero arguments are allowed for marker attributes."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Use these macros inside a type member registration block:\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ATTRIBUTE_TYPE(TYPE, ...)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": attaches the attribute to the current type descriptor."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ATTRIBUTE_MEMBER(TYPE, ...)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": attaches the attribute to the most recently registered field, property, event, method or constructor. Put it immediately after the member macro it decorates."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ATTRIBUTE_PARAMETER(L\"name\", TYPE, ...)"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": attaches the attribute to a named parameter of the most recently registered method or constructor. The parameter name must match exactly one parameter."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Adding a Custom Attribute",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A custom attribute is just a reflected struct that is later attached by one of the attribute macros.\n                Keep it small and data-only.\n                The field order is the argument order seen by "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TYPE{ARG1, ...}"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "namespace demo\r\n{\r\n    struct DisplayNameAttribute\r\n    {\r\n        WString text;\r\n        auto operator<=>(const DisplayNameAttribute&) const = default;\r\n    };\r\n}\r\n\r\n#define DEMO_TYPES(F)\\\r\n    F(demo::DisplayNameAttribute)\\\r\n    F(demo::SampleClass)\r\n\r\nDEMO_TYPES(DECL_TYPE_INFO)\r\n\r\nDEMO_TYPES(IMPL_CPP_TYPE_INFO)\r\n\r\n#define _ ,\r\n\r\nBEGIN_STRUCT_MEMBER(demo::DisplayNameAttribute)\r\n    STRUCT_MEMBER(text)\r\nEND_STRUCT_MEMBER(demo::DisplayNameAttribute)\r\n\r\nBEGIN_CLASS_MEMBER(demo::SampleClass)\r\n    ATTRIBUTE_TYPE(demo::DisplayNameAttribute, L\"Visible sample\")\r\n\r\n    CLASS_MEMBER_METHOD(Rename, { L\"value\" })\r\n    ATTRIBUTE_MEMBER(demo::DisplayNameAttribute, L\"Rename method\")\r\n    ATTRIBUTE_PARAMETER(L\"value\", demo::DisplayNameAttribute, L\"Target name\")\r\nEND_CLASS_MEMBER(demo::SampleClass)\r\n\r\n#undef _",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                To read attributes, iterate the "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IAttributeBag"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", check "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "IAttributeInfo::GetAttributeType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                then read each argument through "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetAttributeValueType"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GetAttributeValue"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                If an attribute argument is a type reference, the value type is "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITypeDescriptor"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and the boxed value stores an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITypeDescriptor*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Workflow source attributes use the syntax "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@category:Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The Workflow analyzer resolves this to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::workflow_attributes::att_category_Name"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The resolved type must be a reflected struct with zero fields or one field.\n                A one-field Workflow attribute takes one argument, and Workflow C++ generation currently emits only string values and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITypeDescriptor*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " values for attributes.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Existing Production Attributes",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A scan of the sibling source repositories found production attribute declarations only in the Workflow repo.\n                Test attributes in VlppReflection tests are intentionally excluded.\n                GacUI and generated sources use Workflow attributes, but they do not declare additional production attribute structs.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All existing production attributes live in C++ namespace "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::__vwsn"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and are reflected under "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::workflow_attributes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_cpp_File"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_cpp_File"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString argument"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Workflow "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "@cpp:File(\"YourFile\")"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " controls the generated C++ file pair for a class."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_cpp_UserImpl"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_cpp_UserImpl"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker. Workflow "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "@cpp:UserImpl"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " leaves a generated constructor, destructor or function body for user code merging."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_cpp_Private"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_cpp_Private"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker. Workflow "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "@cpp:Private"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " emits the decorated generated C++ class member in a private section."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_cpp_Protected"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_cpp_Protected"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker. Workflow "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "@cpp:Protected"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " emits the decorated generated C++ class member in a protected section."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_cpp_Friend"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_cpp_Friend"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ITypeDescriptor* argument"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Workflow "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "@cpp:Friend(typeof(YourType))"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " emits a C++ friend declaration."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Interface"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC validation to identify RPC interfaces."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Ctor"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Ctor"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC generation for constructor metadata."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Byval"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Byval"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC generation for by-value transport decisions."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Byref"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Byref"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC generation for by-reference transport decisions."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Cached"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Cached"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC generation for cached by-reference behavior."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_Dynamic"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_Dynamic"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": marker used by Workflow RPC generation for dynamic RPC behavior."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_IdString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_IdString"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "WString argument"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Workflow RPC metadata uses it for stable string ids."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "att_rpc_IdNumber"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " / "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "system::workflow_attributes::att_rpc_IdNumber"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": one "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "vint argument"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Workflow RPC metadata uses it for stable numeric ids."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The C++ code generation attributes affect generated C++ layout only.\n                For example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:Private"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "@cpp:Protected"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " do not change Workflow visibility rules.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

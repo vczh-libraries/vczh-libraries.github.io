@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AutomationService and Basic Computer Use -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "coding-agent",
+    "gacui-debugging"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Working with Coding Agent",
+      "selected": false,
+      "path": [
+        "coding-agent",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Installing required tools",
+          "selected": false,
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "Windows",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "windows"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "Linux",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "linux"
+              ]
+            },
+            {
+              "icon": " ",
+              "name": "macOS",
+              "selected": false,
+              "path": [
+                "coding-agent",
+                "installing",
+                "macos"
+              ]
+            }
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Preparing Context Files",
+          "selected": false,
+          "path": [
+            "coding-agent",
+            "context"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Investigate and Refine Jobs",
+          "selected": false,
+          "path": [
+            "coding-agent",
+            "jobs"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "AutomationService and Basic Computer Use",
+          "selected": true,
+          "path": [
+            "coding-agent",
+            "gacui-debugging"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "AutomationService and Basic Computer Use",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            GacUI applications need an application-level automation path so a coding agent can inspect and operate the UI while debugging.\n            On Windows, the recommended path is to start the GacUI AutomationService HTTP endpoint from the application during startup.\n            This lets the agent read the control tree or remote-renderer DOM and send IO commands without using operating-system UI Automation.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            From the agent user's perspective, this means:\n            "
+          },
+          {
+            "kind": "List",
+            "ordered": false,
+            "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The application should expose a stable localhost automation URL while it is running."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The agent should use the automation endpoint for normal GacUI windows and controls."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The agent should not rely on UI Automation as a fallback, because it can fail when the screen is locked."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "The user can keep using the computer because the agent does not need to drive the physical pointer for normal GacUI operations."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            See "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/coding-agent/automation-service.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "AutomationService"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for the service setup, exact HTTP URLs, setup-function cases, and platform implementation details.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "When the Agent Gets Blocked",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Application-level automation depends on the application UI thread.\n                A native crash dialog, message box, file dialog, color dialog, or another modal native window can block that thread.\n                When this happens, the agent should stop polling the application automation endpoint and inspect native windows from another process.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The copied "
+              },
+              {
+                "kind": "Name",
+                "text": ".github/Guidelines/Running-ComputerUse.md"
+              },
+              {
+                "kind": "Text",
+                "text": " file explains the unblocking workflow:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Identify the target process."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Enumerate top-level and child windows with Win32 APIs."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Read class names, window text, control ids, and rectangles."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Prefer direct control messages such as "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "BM_CLICK"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WM_SETTEXT"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", and combo-box messages."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Capture a screenshot only when visual confirmation is needed."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Close or answer the native dialog before returning to AutomationService."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Project Preparation",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If the application contains GacUI UI work, mention its automation endpoint in "
+              },
+              {
+                "kind": "Name",
+                "text": "Project.md"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Include the executable project name, port, URL prefix, whether hosted mode is used, and any native dialogs that commonly appear.\n                This gives the agent enough context to choose AutomationService first and native-window handling only when the application is blocked.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

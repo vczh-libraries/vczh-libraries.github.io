@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Attributes -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "attributes"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "+",
+          "name": "Running a Script",
+          "selected": false,
+          "path": [
+            "workflow",
+            "running"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Attributes",
+          "selected": true,
+          "path": [
+            "workflow",
+            "attributes"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "RPC",
+          "selected": false,
+          "path": [
+            "workflow",
+            "rpc"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Runtime Instructions",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ins"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "C++ Code Generation",
+          "selected": false,
+          "path": [
+            "workflow",
+            "codegen"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "workflow",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "workflow",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Workflow Attributes",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n\t\t\tWorkflow attributes attach metadata to declarations. They are used by analyzers and runtime frameworks, including RPC, without changing the normal type, member, or expression syntax.\n\t\t"
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n\t\t\tAn attribute has a category and a name. It can be written without a value, or with one constant value:\n\t\t\t"
+          },
+          {
+            "kind": "Program",
+            "code": "@category:Name\r\n@category:Name(value)"
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Where Attributes Can Appear",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tAttributes can be placed before declarations that participate in Workflow reflection metadata. This includes type declarations, enum items, struct members, class and interface members, and function parameters.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tFor example, RPC uses attributes on interfaces, methods, properties, and parameters:\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "@rpc:Interface\r\n@rpc:Ctor\r\ninterface IExampleService\r\n{\r\n\tfunc GetNames(@rpc:Byref names : List<string>) : void;\r\n\r\n\t@rpc:Dynamic\r\n\tprop CurrentName : string {not observe}\r\n}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Name Resolution",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tWorkflow resolves an attribute name by combining its category and name with the att_ prefix. The category and name must be non-empty identifiers containing only ASCII letters, digits, or underscores.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tFor example, @ns:Type expands to the C++ attribute type name vl::__vwsn::att_ns_Type and the reflected Workflow type name system::workflow_attributes::att_ns_Type.\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe compiler looks up the reflected type. If system::workflow_attributes::att_ns_Type is not visible in reflection metadata, @ns:Type is rejected as an unknown attribute.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Attribute Value Rules",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tThe reflected attribute type must be a struct. It can expose either zero or one reflected property:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Zero properties define a marker attribute, used as @category:Name."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "One property defines a valued attribute, used as @category:Name(value)."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA valued attribute requires a constant expression compatible with the single reflected property type. Common constant forms include booleans, strings, numbers, enum values, and type literals such as typeof(T).\n\t\t\t"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tAfter validation, the attribute instance is stored in the reflection attribute bag for the corresponding type, member, parameter, or struct field. Runtime code can inspect that metadata through the normal reflection APIs.\n\t\t\t"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Built-In Categories",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tWorkflow source repositories currently use these real attribute categories:\n\t\t\t\t"
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@rpc:* describes RPC interfaces, transfer rules, property caching, and service construction. See "
+                      },
+                      {
+                        "kind": "PageLink",
+                        "href": "/workflow/rpc.html",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "RPC"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "@cpp:* is reserved by Workflow tooling for native interop metadata. This page only documents the common attribute mechanism."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
