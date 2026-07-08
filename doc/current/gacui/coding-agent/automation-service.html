@@ -513,7 +513,15 @@
               },
               {
                 "kind": "Text",
-                "text": ", after the setup function has installed the current native controller and before entering the application event loop.\n                Call "
+                "text": ", after the setup function has installed the current native controller and before entering the application event loop.\n                Every code path that calls "
+              },
+              {
+                "kind": "Name",
+                "text": "StartWindowsHttpAutomationService"
+              },
+              {
+                "kind": "Text",
+                "text": " must later call "
               },
               {
                 "kind": "Name",
@@ -521,15 +529,7 @@
               },
               {
                 "kind": "Text",
-                "text": " during shutdown when the service lifetime is not already stopped through "
-              },
-              {
-                "kind": "Name",
-                "text": "INativeAutomationService::Stop"
-              },
-              {
-                "kind": "Text",
-                "text": ".\n            "
+                "text": " before the native controller or substituted automation service is torn down.\n                Skipping the stop leaks the process-wide HTTP service.\n                Use a local guard or equivalent try/catch so the stop runs after the start on normal returns and exceptions.\n            "
               }
             ]
           },
@@ -550,7 +550,7 @@
               },
               {
                 "kind": "Program",
-                "code": "#include \"../../../Source/PlatformProviders/Windows/WinNativeWindow.h\"\r\n\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\n\r\nvoid GuiMain()\r\n{\r\n    demo::MainWindow window;\r\n    window.ForceCalculateSizeImmediately();\r\n    window.MoveToScreenCenter();\r\n\r\n    windows::StartWindowsHttpAutomationService(\r\n        WString::Unmanaged(L\"Automation/MyApp\"),\r\n        8888);\r\n    GetApplication()->Run(&window);\r\n    windows::StopWindowsHttpAutomationService();\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)\r\n{\r\n    return SetupHostedWindowsDirect2DRenderer();\r\n}",
+                "code": "#include \"../../../Source/PlatformProviders/Windows/WinNativeWindow.h\"\r\n\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\n\r\nclass WindowsHttpAutomationServiceScope\r\n{\r\npublic:\r\n    WindowsHttpAutomationServiceScope(const WString& applicationName, vint port)\r\n    {\r\n        windows::StartWindowsHttpAutomationService(applicationName, port);\r\n    }\r\n\r\n    ~WindowsHttpAutomationServiceScope()\r\n    {\r\n        windows::StopWindowsHttpAutomationService();\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    demo::MainWindow window;\r\n    window.ForceCalculateSizeImmediately();\r\n    window.MoveToScreenCenter();\r\n\r\n    WindowsHttpAutomationServiceScope httpAutomationService(\r\n        WString::Unmanaged(L\"Automation/MyApp\"),\r\n        8888);\r\n    GetApplication()->Run(&window);\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)\r\n{\r\n    return SetupHostedWindowsDirect2DRenderer();\r\n}",
                 "language": "c++"
               }
             ]
@@ -565,14 +565,6 @@
               {
                 "kind": "Name",
                 "text": "StopWindowsHttpAutomationService"
-              },
-              {
-                "kind": "Text",
-                "text": " or "
-              },
-              {
-                "kind": "Name",
-                "text": "INativeAutomationService::Stop"
               },
               {
                 "kind": "Text",
@@ -884,11 +876,19 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                A remote protocol core can expose the core-side automation surface like this:\n                "
+                "text": "\n                A remote protocol core can expose the core-side automation surface like this:\n                The sample uses the same "
+              },
+              {
+                "kind": "Name",
+                "text": "WindowsHttpAutomationServiceScope"
+              },
+              {
+                "kind": "Text",
+                "text": " guard from the normal Windows application example.\n                "
               },
               {
                 "kind": "Program",
-                "code": "void GuiMain()\r\n{\r\n    RemoteProtocolAutomationService automationService;\r\n    GetNativeServiceSubstitution()->Substitute(&automationService, false);\r\n    windows::StartWindowsHttpAutomationService(\r\n        WString::Unmanaged(L\"Automation/RemoteCore\"),\r\n        8888);\r\n\r\n    GetApplication()->Run(mainWindow);\r\n\r\n    windows::StopWindowsHttpAutomationService();\r\n    GetNativeServiceSubstitution()->Unsubstitute(&automationService);\r\n}",
+                "code": "void GuiMain()\r\n{\r\n    RemoteProtocolAutomationService automationService;\r\n    GetNativeServiceSubstitution()->Substitute(&automationService, false);\r\n\r\n    {\r\n        WindowsHttpAutomationServiceScope httpAutomationService(\r\n            WString::Unmanaged(L\"Automation/RemoteCore\"),\r\n            8888);\r\n        GetApplication()->Run(mainWindow);\r\n    }\r\n\r\n    GetNativeServiceSubstitution()->Unsubstitute(&automationService);\r\n}",
                 "language": "c++"
               }
             ]
