@@ -235,7 +235,7 @@
               },
               {
                 "kind": "Text",
-                "text": " even if a specific feature is unsupported.\n                Unsupported features should return false from the corresponding "
+                "text": " even if a specific feature is unsupported.\n                Unsupported dump features should return false from the corresponding "
               },
               {
                 "kind": "Name",
@@ -244,6 +244,112 @@
               {
                 "kind": "Text",
                 "text": " function and return an empty string from the operation.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "CanRunIOCommands"
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Name",
+                "text": "INativeAutomationService::IOCommandAvailability"
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "Disabled"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommand"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " returns an empty string and endpoint layers should treat IO as unsupported."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "Enabled"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "RunIOCommand"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " accepts every syntactically valid command and queues accepted work."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "ExitOnly"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ": only the exact command "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "!Exit"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " is forwarded and keeps the normal "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Queued"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " result. Every other command returns exactly "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "!Application stopped responding."
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " synchronously without queuing work."
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -466,7 +572,47 @@
               },
               {
                 "kind": "Text",
-                "text": " suffixes return HTTP 404 with a text response.\n                Successful IO command parsing returns "
+                "text": " suffixes return HTTP 404 with a text response.\n                The HTTP wrapper returns 404 only when "
+              },
+              {
+                "kind": "Name",
+                "text": "CanRunIOCommands"
+              },
+              {
+                "kind": "Text",
+                "text": " returns "
+              },
+              {
+                "kind": "Name",
+                "text": "Disabled"
+              },
+              {
+                "kind": "Text",
+                "text": "; both "
+              },
+              {
+                "kind": "Name",
+                "text": "Enabled"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "ExitOnly"
+              },
+              {
+                "kind": "Text",
+                "text": " call "
+              },
+              {
+                "kind": "Name",
+                "text": "RunIOCommand"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Successful IO command parsing returns "
               },
               {
                 "kind": "Name",
@@ -474,7 +620,15 @@
               },
               {
                 "kind": "Text",
-                "text": "; this means the command was accepted and posted to the UI thread, not that every visible effect has already finished.\n                Syntax errors and command errors are returned synchronously as text beginning with "
+                "text": "; this means the command was accepted and posted to the UI thread, not that every visible effect has already finished.\n                Syntax errors, command errors, and "
+              },
+              {
+                "kind": "Name",
+                "text": "ExitOnly"
+              },
+              {
+                "kind": "Text",
+                "text": " rejections are returned synchronously as text beginning with "
               },
               {
                 "kind": "Name",
@@ -876,7 +1030,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                A remote protocol core can expose the core-side automation surface like this:\n                The sample uses the same "
+                "text": "\n                A remote protocol core can expose the core-side automation surface like this.\n                The sample uses the same "
               },
               {
                 "kind": "Name",
@@ -923,6 +1077,55 @@
               {
                 "kind": "Text",
                 "text": " becomes meaningful.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                When a remote renderer is retained after a fatal remote-protocol error, renderer automation keeps "
+              },
+              {
+                "kind": "Name",
+                "text": "GET /Dom"
+              },
+              {
+                "kind": "Text",
+                "text": " available.\n                The DOM response is still an HTTP success containing the frozen renderer DOM, and it adds a lowercase top-level "
+              },
+              {
+                "kind": "Name",
+                "text": "fatalError"
+              },
+              {
+                "kind": "Text",
+                "text": " string with the original error.\n                Renderer IO switches to "
+              },
+              {
+                "kind": "Name",
+                "text": "ExitOnly"
+              },
+              {
+                "kind": "Text",
+                "text": ": ordinary IO returns exactly "
+              },
+              {
+                "kind": "Name",
+                "text": "!Application stopped responding."
+              },
+              {
+                "kind": "Text",
+                "text": ", while exact "
+              },
+              {
+                "kind": "Name",
+                "text": "!Exit"
+              },
+              {
+                "kind": "Text",
+                "text": " is still accepted so automation can close the retained renderer.\n            "
               }
             ]
           }
