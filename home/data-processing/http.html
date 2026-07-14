@@ -93,7 +93,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "Download the HTML code from the home page."
+            "text": "Download the HTML code from the home page with the Windows asynchronous HTTP helper."
           }
         ]
       },
@@ -102,7 +102,7 @@
         "content": [
           {
             "kind": "Program",
-            "code": "HttpRequest request;\r\nrequest.SetHost(L\"http://gaclib.net\");\r\n\r\nHttpResponse response;\r\nHttpQuery(request, response);\r\n\r\nConsole::WriteLine(itow(response.statusCode));\r\nConsole::WriteLine(response.GetBodyUtf8());",
+            "code": "using namespace vl;\r\nusing namespace vl::inter_process::windows_http;\r\n\r\nEventObject completed;\r\nCHECK_ERROR(completed.CreateManualUnsignal(false), L\"Failed to create the completion event.\");\r\n\r\nHttpClientApi client(L\"vczh-libraries.github.io\", 443);\r\nHttpRequest request;\r\nrequest.method = L\"GET\";\r\nrequest.query = L\"/\";\r\nrequest.secure = true;\r\nrequest.acceptTypes.Add(L\"text/html\");\r\n\r\nclient.HttpQuery(request, [&](Variant<HttpResponse, HttpError> result)\r\n{\r\n    if (auto response = result.TryGet<HttpResponse>())\r\n    {\r\n        Console::WriteLine(itow(response->statusCode));\r\n        Console::WriteLine(response->GetBodyUtf8());\r\n    }\r\n    else\r\n    {\r\n        Console::WriteLine(result.Get<HttpError>().message);\r\n    }\r\n    completed.Signal();\r\n});\r\n\r\ncompleted.Wait();",
             "language": "C++"
           }
         ]

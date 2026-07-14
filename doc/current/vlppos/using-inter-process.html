@@ -1279,7 +1279,7 @@
               },
               {
                 "kind": "Program",
-                "code": "#include <vlppos.h>\r\n#include <VlppOS.Windows.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::inter_process;\r\n\r\nclass ChatServer\r\n    : public NetworkProtocolChannelServer<WString, WStringListSerializer, NamedPipeServer>\r\n{\r\npublic:\r\n    ChatServer(const WString& pipeName)\r\n        : NetworkProtocolChannelServer<WString, WStringListSerializer, NamedPipeServer>(pipeName)\r\n    {\r\n    }\r\n\r\n    WaitForClientResult OnClientConnected(\r\n        vint clientId,\r\n        const IChannelClient<WString>::ChannelNameList& availableChannels,\r\n        IChannelClient<WString>* localClient) override\r\n    {\r\n        return availableChannels.Contains(ChatChannelName)\r\n            ? WaitForClientResult::Accept\r\n            : WaitForClientResult::Reject;\r\n    }\r\n};\r\n\r\nauto server = Ptr(new ChatServer(L\"ExamplePipe\"));\r\nserver->Start();",
+                "code": "#include <vlppos.h>\r\n#include <VlppOS.Windows.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::inter_process;\r\n\r\nclass ChatServer\r\n    : public NetworkProtocolChannelServer<WString, WStringListSerializer, named_pipe::NamedPipeServer>\r\n{\r\npublic:\r\n    ChatServer(const WString& pipeName)\r\n        : NetworkProtocolChannelServer<WString, WStringListSerializer, named_pipe::NamedPipeServer>(pipeName)\r\n    {\r\n    }\r\n\r\n    WaitForClientResult OnClientConnected(\r\n        vint clientId,\r\n        const IChannelClient<WString>::ChannelNameList& availableChannels,\r\n        IChannelClient<WString>* localClient) override\r\n    {\r\n        return availableChannels.Contains(ChatChannelName)\r\n            ? WaitForClientResult::Accept\r\n            : WaitForClientResult::Reject;\r\n    }\r\n};\r\n\r\nauto server = Ptr(new ChatServer(L\"ExamplePipe\"));\r\nserver->Start();",
                 "language": "C++"
               }
             ]
@@ -1311,7 +1311,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "NamedPipeServer"
+                        "text": "vl::inter_process::named_pipe::NamedPipeServer"
                       }
                     ]
                   },
@@ -1337,7 +1337,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "NamedPipeClient"
+                        "text": "vl::inter_process::named_pipe::NamedPipeClient"
                       }
                     ]
                   },
@@ -1350,7 +1350,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "NamedPipeConnection"
+                        "text": "vl::inter_process::named_pipe::NamedPipeConnection"
                       }
                     ]
                   },
@@ -1376,7 +1376,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "NamedPipeConnection"
+                        "text": "vl::inter_process::named_pipe::NamedPipeConnection"
                       }
                     ]
                   },
@@ -1487,7 +1487,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServer"
+                        "text": "vl::inter_process::windows_http::HttpServer"
                       }
                     ]
                   },
@@ -1500,7 +1500,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServerApi"
+                        "text": "vl::inter_process::windows_http::HttpServerApi"
                       }
                     ]
                   },
@@ -1526,7 +1526,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpClient"
+                        "text": "vl::inter_process::windows_http::HttpClient"
                       }
                     ]
                   },
@@ -1639,7 +1639,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpClient::WaitForServer"
+                        "text": "vl::inter_process::windows_http::HttpClient::WaitForServer"
                       }
                     ]
                   },
@@ -1683,7 +1683,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServer"
+                        "text": "vl::inter_process::windows_http::HttpServer"
                       }
                     ]
                   },
@@ -1696,7 +1696,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServerConnection"
+                        "text": "vl::inter_process::windows_http::HttpServerConnection"
                       }
                     ]
                   },
@@ -1720,7 +1720,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpClientApi"
+                        "text": "vl::inter_process::windows_http::HttpClientApi"
                       }
                     ]
                   },
@@ -1733,7 +1733,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServerApi"
+                        "text": "vl::inter_process::windows_http::HttpServerApi"
                       }
                     ]
                   },
@@ -1746,7 +1746,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpClient"
+                        "text": "vl::inter_process::windows_http::HttpClient"
                       }
                     ]
                   },
@@ -1759,7 +1759,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServer"
+                        "text": "vl::inter_process::windows_http::HttpServer"
                       }
                     ]
                   },
@@ -1790,7 +1790,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpClientApi"
+                        "text": "vl::inter_process::windows_http::HttpClientApi"
                       }
                     ]
                   },
@@ -1816,7 +1816,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpRequest"
+                        "text": "vl::inter_process::windows_http::HttpRequest"
                       }
                     ]
                   },
@@ -1829,7 +1829,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpResponse"
+                        "text": "vl::inter_process::windows_http::HttpResponse"
                       }
                     ]
                   },
@@ -1842,7 +1842,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpError"
+                        "text": "vl::inter_process::windows_http::HttpError"
                       }
                     ]
                   },
@@ -1873,7 +1873,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "HttpServerApi"
+                        "text": "vl::inter_process::windows_http::HttpServerApi"
                       }
                     ]
                   },
