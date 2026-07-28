@@ -156,7 +156,20 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "vl::inter_process::named_pipe::NamedPipeServer"
+                        "text": "vl::inter_process::async_tcp_socket::NetworkProtocolServer<TAsyncSocketServer>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NetworkProtocolClient<TAsyncSocketClient>"
                       }
                     ]
                   },
@@ -169,43 +182,152 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "vl::inter_process::named_pipe::NamedPipeClient"
+                        "text": "vl::inter_process::async_tcp_socket::SocketHttpServer"
                       }
                     ]
                   },
                   {
                     "kind": "Text",
-                    "text": ", "
+                    "text": " and "
                   },
                   {
                     "kind": "Strong",
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "vl::inter_process::windows_http::HttpServer"
+                        "text": "SocketHttpClient"
                       }
                     ]
                   },
                   {
                     "kind": "Text",
-                    "text": ", "
+                    "text": ", the Windows-only named-pipe and "
                   },
                   {
                     "kind": "Strong",
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "vl::inter_process::windows_http::HttpClient"
+                        "text": "windows_http"
                       }
                     ]
                   },
                   {
                     "kind": "Text",
-                    "text": ", or custom implementations of the INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces: the underlying data-transmission implementation."
+                    "text": " implementations, or a custom "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocol"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " implementation: the underlying data-transmission mechanism."
                   }
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "INetworkProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IChannel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " interface families and channel bridge can be reused directly, but VlppOS provides them only for test-purpose local cross-process communication.\n            Product code is strongly recommended to supply its own implementation instead of treating the bundled transports and channel stack as production networking.\n            The GacUI JSON channel layer remains unchanged above that implementation.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            The GacUI "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/MiniHttp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " tests create platform-default async TCP sockets and wrap them in "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SocketHttpServer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "SocketHttpClient"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            The core can register its remote-protocol prefix and automation prefix on the exact same "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IAsyncSocketServer"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", while each prefix remains independently stoppable.\n        "
           }
         ]
       },
@@ -344,7 +466,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                Add a new underlying data-transmission implementation below GacUI by implementing the vl::inter_process INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces.\n                The names say network protocol, but the contract is only asynchronous WString message exchange.\n                The implementation can be a pipe, socket, stdio stream, shared memory, DLL function calls, or any other mechanism that can satisfy INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer.\n                Then reuse the GacUI JSON channel classes.\n            "
+                "text": "\n                Add a new underlying data-transmission implementation below GacUI by implementing the vl::inter_process INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer interfaces.\n                The names say network protocol, but the contract is only asynchronous WString message exchange.\n                The implementation can be a pipe, socket, stdio stream, shared memory, DLL function calls, a WebAssembly/JavaScript bridge, or any other mechanism that can satisfy INetworkProtocolConnection, INetworkProtocolCallback, INetworkProtocolClient and INetworkProtocolServer.\n                Then reuse the GacUI JSON channel classes.\n            "
               }
             ]
           },

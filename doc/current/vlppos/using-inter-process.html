@@ -134,7 +134,51 @@
           },
           {
             "kind": "Text",
-            "text": " messages.\n            The built-in Windows transports are composition choices that connect these two layers.\n        "
+            "text": " messages.\n            Portable async-socket transports and Windows-specific transports are composition choices that connect these two layers.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            VlppOS provides the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "INetworkProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IChannel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " interface families only for test-purpose local cross-process communication.\n            Applications may use these public interfaces as integration contracts, but product code is strongly recommended to provide its own implementations instead of treating the bundled transports and channel stack as production networking.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            Despite the names, these contracts are not tied to TCP/IP.\n            Any mechanism that provides the required asynchronous message and lifecycle behavior can fit behind them, including stdio, DLL calls, shared memory, WebAssembly host calls, pipes, sockets, HTTP or a custom network protocol.\n        "
           }
         ]
       },
@@ -688,7 +732,20 @@
               },
               {
                 "kind": "Text",
-                "text": " messages with the other side.\n            "
+                "text": " messages with the other side.\n                This message contract can be implemented by a local pipe or socket, stdio, DLL calls, shared memory, a WebAssembly host bridge or another mechanism; the name "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "INetworkProtocol"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not require an IP network.\n            "
               }
             ]
           },
@@ -1288,6 +1345,937 @@
       },
       {
         "kind": "Topic",
+        "title": "Portable Async-Socket Implementations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The types in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "vl::inter_process::async_tcp_socket"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " form a portable, loopback-only stack for asynchronous TCP bytes, HTTP/1.1 requests and Mini HTTP services.\n                Platform-neutral factories select "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "windows_socket::AsyncSocketServer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AsyncSocketClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "linux_socket::AsyncSocketServer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AsyncSocketClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "macos_socket::AsyncSocketServer"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "AsyncSocketClient"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " at the application composition boundary.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Direct Length-Framed Transport",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::NetworkProtocolServer<TAsyncSocketServer>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::NetworkProtocolClient<TAsyncSocketClient>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when both peers use VlppOS and HTTP compatibility is unnecessary.\n                    One logical connection is one physical TCP socket.\n                    Each "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WString"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is framed with its character count and native "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "wchar_t"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " bytes, so this is not a portable wire encoding between peers with different "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "wchar_t"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " representations.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    These templates construct their socket backend from forwarded constructor arguments, so choose the concrete type for the target:\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "windows_socket::AsyncSocketServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AsyncSocketClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "linux_socket::AsyncSocketServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AsyncSocketClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", or\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "macos_socket::AsyncSocketServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AsyncSocketClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", and pass the port to the protocol adapter.\n                    They do not accept an injected "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ptr<IAsyncSocketServer>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Ptr<IAsyncSocketClient>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IAsyncSocketServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IAsyncSocketClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IAsyncSocketConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IAsyncSocketCallback"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " expose the underlying ordered full-duplex byte streams.\n                    The interface-returning "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateDefaultAsyncSocketServer(port)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateDefaultAsyncSocketClient(port)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " factories are for code that consumes these socket interfaces, including the injected "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SocketHttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SocketHttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " dependencies below.\n                    Each socket exposes its immutable loopback port through "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GetPort"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IAsyncSocketClient::CreateSameEndpointClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " creates a fresh client for another physical lane on the same endpoint.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "HTTP-Compatible Socket Transport",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::SocketHttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::SocketHttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when the transport must use the VlppOS HTTP wire protocol or interoperate with the Windows HTTP implementation.\n                    They implement "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "INetworkProtocolConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " over the portable Mini HTTP stack.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The public construction surface keeps native socket composition explicit:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "SocketHttpServer(\r\n    Ptr<IAsyncSocketServer> socketServer,\r\n    const WString& urlPrefix\r\n    );\r\n\r\nSocketHttpClient(\r\n    Ptr<IAsyncSocketClient> socketClient,\r\n    const WString& server,\r\n    const WString& urlPrefix\r\n    );",
+                    "language": "C++"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The server adapter uses the injected listener and never creates another one.\n                    The client uses the injected client for its first physical lane and calls "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateSameEndpointClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for the additional lanes required by full-duplex polling and recovery.\n                    The server name must select loopback, and the URL prefix is empty for the origin root or begins with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The adapter uses the same "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/VlppInterProcess/Connect"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/VlppInterProcess/Request/{token}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "/VlppInterProcess/Response/{token}"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " routes as "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "windows_http::HttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "windows_http::HttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    The protocol has no message-level delivery acknowledgement, deduplication, heartbeat or disconnect route, so it must not be treated as exactly-once delivery.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Portable Mini HTTP Request Helpers",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::HttpRequest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpResponse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpRequestServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpRequestClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpRequestConnection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " provide the lower HTTP/1.1 message layer.\n                    Use them when code needs complete binary-safe request and response objects and controls each connection directly.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "async_tcp_socket::SocketHttpServerApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SocketHttpRequestContext"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SocketHttpClientApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " add prefix dispatch and request/response conveniences.\n                    A server API receives "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(socketServer, urlPrefix)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", and multiple APIs share one listener only when they receive the exact same server object.\n                    Override "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OnHttpRequestReceived"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", inspect the relative path, query or UTF-8 body, and complete the one-shot context with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Respond"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RespondStatus"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RespondBytes"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RespondUtf8"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Cancel"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    A client API receives "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "(socketClient, server)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and queues asynchronous "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpQuery"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " calls.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "SocketHttpClientApi"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " uses the "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "windows_http::HttpRequest"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpResponse"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "HttpError"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " value types, but those types are platform-neutral and using them here does not invoke WinHTTP.\n                    The TCP, HTTP and Mini HTTP implementations in this section are local test, validation and demonstration infrastructure rather than a production web stack.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
         "title": "Windows Implementations",
         "content": [
           {
@@ -1295,7 +2283,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                The concrete raw protocol implementations currently provided by VlppOS are Windows-only.\n                Treat them as ready-to-use Windows transports and as reference implementations for the raw protocol contract, but do not make portable feature code depend on them directly.\n            "
+                "text": "\n                Named pipes and the legacy HTTP.sys/WinHTTP transport are Windows-only.\n                They are available for local tests and as reference implementations for the raw protocol contract, but do not make portable feature code depend on them or treat them as production communication stacks.\n            "
               }
             ]
           },

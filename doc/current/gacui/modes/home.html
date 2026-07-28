@@ -398,12 +398,100 @@
           },
           {
             "kind": "Text",
-            "text": ".\n            The underlying data-transmission implementation is still selected by the application.\n            Current Windows examples use:\n            "
+            "text": ".\n            The underlying data-transmission implementation is still selected by the application.\n            VlppOS transport choices include:\n            "
           },
           {
             "kind": "List",
             "ordered": false,
             "items": [
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::inter_process::async_tcp_socket::NetworkProtocolServer<TAsyncSocketServer>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "NetworkProtocolClient<TAsyncSocketClient>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for direct length-framed loopback TCP on Windows, Linux and macOS."
+                  }
+                ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::inter_process::async_tcp_socket::SocketHttpServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "vl::inter_process::async_tcp_socket::SocketHttpClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for cross-platform Mini HTTP over loopback TCP. Create their injected sockets with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateDefaultAsyncSocketServer"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CreateDefaultAsyncSocketClient"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "."
+                  }
+                ]
+              },
               {
                 "kind": "ContentListItem",
                 "content": [
@@ -431,7 +519,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": "."
+                    "text": " on Windows."
                   }
                 ]
               },
@@ -462,7 +550,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": "."
+                    "text": ", implemented with HTTP.sys and WinHTTP, on Windows."
                   }
                 ]
               }
@@ -475,7 +563,42 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\n            A different data-transmission implementation should be added by implementing the "
+            "text": "\n            VlppOS provides the "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "INetworkProtocol"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "IChannel"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " interface families only for test-purpose local cross-process communication.\n            Applications may use these public contracts directly, but product code is strongly recommended to provide its own implementation and keep the GacUI JSON channel classes unchanged.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            A custom data-transmission implementation can be added by implementing the "
           },
           {
             "kind": "Strong",
@@ -536,7 +659,7 @@
           },
           {
             "kind": "Text",
-            "text": " interfaces.\n            They are named network protocol interfaces, but the implementation does not have to be a network protocol;\n            stdio, DLL function calls, shared memory, sockets or any other message transport can fit this layer.\n            so the GacUI JSON channel classes can stay unchanged.\n            This part will be covered in "
+            "text": " interfaces.\n            They are named network protocol interfaces, but the implementation does not have to be a network protocol;\n            stdio, DLL function calls, shared memory, a WebAssembly/JavaScript bridge, sockets or any other asynchronous message transport can fit this layer.\n            This part will be covered in "
           },
           {
             "kind": "PageLink",
@@ -587,7 +710,46 @@
           },
           {
             "kind": "Text",
-            "text": ".\n            They show the current named pipe and HTTP setup.\n        "
+            "text": ".\n            They expose "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/Pipe"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/Http"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " and "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "/MiniHttp"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " modes for the Windows named-pipe, Windows HTTP and portable Mini HTTP setups.\n        "
           }
         ]
       }
