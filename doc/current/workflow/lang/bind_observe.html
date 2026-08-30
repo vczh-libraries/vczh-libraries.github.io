@@ -474,7 +474,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return A + B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.observe as x(x.C on x.AChanged, x.BChanged));\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.A = 3;\r\n    numbers.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Numbers\n{\n    prop A: int = 0 {}\n    prop B: int = 0 {}\n\n    func GetC(): int\n    {\n        return A + B;\n    }\n\n    prop C: int {GetC}\n}\n\nfunc main(): string\n{\n    var numbers = new Numbers^();\n    var sub = bind(numbers.observe as x(x.C on x.AChanged, x.BChanged));\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    numbers.A = 1;\n    numbers.B = 2;\n    numbers.A = 3;\n    numbers.B = 4;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -662,7 +662,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return A + B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var n1 = new Numbers^();\r\n    var n2 = new Numbers^();\r\n    var sub = bind(\r\n        n1.observe as x(\r\n            x.C + n2.observe as y(\r\n                y.C\r\n                on y.AChanged, y.BChanged\r\n            )\r\n            on x.AChanged, x.BChanged\r\n        )\r\n    );\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    n1.A = 1;\r\n    n1.B = 2;\r\n    n2.A = 3;\r\n    n2.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Numbers\n{\n    prop A: int = 0 {}\n    prop B: int = 0 {}\n\n    func GetC(): int\n    {\n        return A + B;\n    }\n\n    prop C: int {GetC}\n}\n\nfunc main(): string\n{\n    var n1 = new Numbers^();\n    var n2 = new Numbers^();\n    var sub = bind(\n        n1.observe as x(\n            x.C + n2.observe as y(\n                y.C\n                on y.AChanged, y.BChanged\n            )\n            on x.AChanged, x.BChanged\n        )\n    );\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    n1.A = 1;\n    n1.B = 2;\n    n2.A = 3;\n    n2.B = 4;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -928,7 +928,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Pair\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n}\r\n\r\nclass Sum\r\n{\r\n    prop AB: Pair^ = new Pair^() {}\r\n\r\n    func GetC(): int\r\n    {\r\n        return AB.A + AB.B;\r\n    }\r\n\r\n    prop C: int {GetC}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var s = new Sum^();\r\n    var sub = bind(s.observe as x(x.C on x.AB.AChanged, x.AB.BChanged));\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    s.AB = new Pair^();\r\n    s.AB.A = 1;\r\n    s.AB.B = 2;\r\n    s.AB.A = 3;\r\n    s.AB.B = 4;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Pair\n{\n    prop A: int = 0 {}\n    prop B: int = 0 {}\n}\n\nclass Sum\n{\n    prop AB: Pair^ = new Pair^() {}\n\n    func GetC(): int\n    {\n        return AB.A + AB.B;\n    }\n\n    prop C: int {GetC}\n}\n\nfunc main(): string\n{\n    var s = new Sum^();\n    var sub = bind(s.observe as x(x.C on x.AB.AChanged, x.AB.BChanged));\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    s.AB = new Pair^();\n    s.AB.A = 1;\n    s.AB.B = 2;\n    s.AB.A = 3;\n    s.AB.B = 4;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",

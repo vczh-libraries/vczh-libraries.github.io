@@ -157,7 +157,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc main(): string\r\n{\r\n    var r = {\"\"};\r\n    var c = $coroutine(arg)\r\n    {\r\n        for (i in range [1, 3])\r\n        {\r\n            r[0] = $\"$(r[0])$(cast string arg.Result);\";\r\n            $pause;\r\n        }\r\n        raise \"Something happened!\";\r\n    };\r\n\r\n    var counter = 0;\r\n    while (c.Status != CoroutineStatus::Stopped)\r\n    {\r\n        counter = counter + 1;\r\n        var cr = new CoroutineResult^();\r\n        cr.Result = counter;\r\n        c.Resume(false, cr);\r\n    }\r\n\r\n    if (c.Failure is not null)\r\n    {\r\n        r[0] = $\"$(r[0])$(c.Failure.Message)\";\r\n    }\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nusing system::*;\n\nfunc main(): string\n{\n    var r = {\"\"};\n    var c = $coroutine(arg)\n    {\n        for (i in range [1, 3])\n        {\n            r[0] = $\"$(r[0])$(cast string arg.Result);\";\n            $pause;\n        }\n        raise \"Something happened!\";\n    };\n\n    var counter = 0;\n    while (c.Status != CoroutineStatus::Stopped)\n    {\n        counter = counter + 1;\n        var cr = new CoroutineResult^();\n        cr.Result = counter;\n        c.Resume(false, cr);\n    }\n\n    if (c.Failure is not null)\n    {\n        r[0] = $\"$(r[0])$(c.Failure.Message)\";\n    }\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -618,7 +618,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc GetNumbers() : int{}\r\n${\r\n    for (i in range [1, 10])\r\n    {\r\n        $Yield i;\r\n    }\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var r = \"\";\r\n    for (i in GetNumbers())\r\n    {\r\n        r = $\"$(r)$(i); \";\r\n    }\r\n    return r;\r\n}"
+                "code": "module sampleModule;\n\nusing system::*;\n\nfunc GetNumbers() : int{}\n${\n    for (i in range [1, 10])\n    {\n        $Yield i;\n    }\n}\n\nfunc main(): string\n{\n    var r = \"\";\n    for (i in GetNumbers())\n    {\n        r = $\"$(r)$(i); \";\n    }\n    return r;\n}"
               },
               {
                 "kind": "Text",
@@ -674,7 +674,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc GetNumbers() : int{}\r\n{\r\n    return EnumerableCoroutine::Create(\r\n        [$coroutine{\r\n            for (i in range [1, 10])\r\n            {\r\n                EnumerableCoroutine::YieldAndPause($1, i);\r\n                $pause;\r\n            }\r\n        }]\r\n    ) as int{};\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var r = \"\";\r\n    for (i in GetNumbers())\r\n    {\r\n        r = $\"$(r)$(i); \";\r\n    }\r\n    return r;\r\n}"
+                "code": "module sampleModule;\n\nusing system::*;\n\nfunc GetNumbers() : int{}\n{\n    return EnumerableCoroutine::Create(\n        [$coroutine{\n            for (i in range [1, 10])\n            {\n                EnumerableCoroutine::YieldAndPause($1, i);\n                $pause;\n            }\n        }]\n    ) as int{};\n}\n\nfunc main(): string\n{\n    var r = \"\";\n    for (i in GetNumbers())\n    {\n        r = $\"$(r)$(i); \";\n    }\n    return r;\n}"
               },
               {
                 "kind": "Text",

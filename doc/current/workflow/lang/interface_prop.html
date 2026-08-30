@@ -226,7 +226,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {}\r\n}"
+                    "code": "interface IWithProp\n{\n    prop Name: string {}\n}"
                   },
                   {
                     "kind": "Text",
@@ -234,7 +234,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    event NameChanged();\r\n    func GetName(): string;\r\n    func SetName(value: string): void;\r\n    prop Name: string {GetName, SetName : NameChanged}\r\n}"
+                    "code": "interface IWithProp\n{\n    event NameChanged();\n    func GetName(): string;\n    func SetName(value: string): void;\n    prop Name: string {GetName, SetName : NameChanged}\n}"
                   }
                 ]
               }
@@ -249,7 +249,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {const}\r\n}"
+                    "code": "interface IWithProp\n{\n    prop Name: string {const}\n}"
                   },
                   {
                     "kind": "Text",
@@ -257,7 +257,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    event NameChanged();\r\n    func GetName(): string;\r\n    prop Name: string {GetName : NameChanged}\r\n}"
+                    "code": "interface IWithProp\n{\n    event NameChanged();\n    func GetName(): string;\n    prop Name: string {GetName : NameChanged}\n}"
                   }
                 ]
               }
@@ -272,7 +272,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {not observe}\r\n}"
+                    "code": "interface IWithProp\n{\n    prop Name: string {not observe}\n}"
                   },
                   {
                     "kind": "Text",
@@ -280,7 +280,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    func GetName(): string;\r\n    func SetName(value: string): void;\r\n    prop Name: string {GetName, SetName}\r\n}"
+                    "code": "interface IWithProp\n{\n    func GetName(): string;\n    func SetName(value: string): void;\n    prop Name: string {GetName, SetName}\n}"
                   }
                 ]
               }
@@ -295,7 +295,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    prop Name: string {const, not observe}\r\n}"
+                    "code": "interface IWithProp\n{\n    prop Name: string {const, not observe}\n}"
                   },
                   {
                     "kind": "Text",
@@ -303,7 +303,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "interface IWithProp\r\n{\r\n    func GetName(): string;\r\n    prop Name: string {GetName}\r\n}"
+                    "code": "interface IWithProp\n{\n    func GetName(): string;\n    prop Name: string {GetName}\n}"
                   }
                 ]
               }
@@ -324,7 +324,7 @@
               },
               {
                 "kind": "Program",
-                "code": "var withProp = new IWithProp^\r\n{\r\n    override prop Name: string = \"an-initialized-value\" {}\r\n};"
+                "code": "var withProp = new IWithProp^\n{\n    override prop Name: string = \"an-initialized-value\" {}\n};"
               },
               {
                 "kind": "List",
@@ -378,7 +378,7 @@
               },
               {
                 "kind": "Program",
-                "code": "var withProp = new IWithProp^\r\n{\r\n    var name: string = \"an-initialized-value\";\r\n\r\n    override func GetName(): string\r\n    {\r\n        return name;\r\n    }\r\n\r\n    override func SetName(value: string): void\r\n    {\r\n        if (name != value)\r\n        {\r\n            name = value;\r\n            NameChanged();\r\n        }\r\n    }\r\n};"
+                "code": "var withProp = new IWithProp^\n{\n    var name: string = \"an-initialized-value\";\n\n    override func GetName(): string\n    {\n        return name;\n    }\n\n    override func SetName(value: string): void\n    {\n        if (name != value)\n        {\n            name = value;\n            NameChanged();\n        }\n    }\n};"
               },
               {
                 "kind": "Text",
@@ -533,7 +533,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\ninterface IWithEvent\r\n{\r\n    event SomethingHappened(string);\r\n    func MakeItHappen(something: string): void;\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var withEvent = new IWithEvent^\r\n    {\r\n        override func MakeItHappen(something: string): void\r\n        {\r\n            SomethingHappened(something);\r\n        }\r\n    };\r\n\r\n    var r = {\"\"};\r\n    var handler = attach(\r\n        withEvent.SomethingHappened,\r\n        func (something:string): void\r\n        {\r\n            r[0] = r[0] & $\"$(something); \";\r\n        }\r\n    );\r\n\r\n    withEvent.MakeItHappen(\"Good\");\r\n    withEvent.MakeItHappen(\"Cool\");\r\n    withEvent.SomethingHappened(\"Wonderful\");\r\n\r\n    detach(withEvent.SomethingHappened, handler);\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\ninterface IWithEvent\n{\n    event SomethingHappened(string);\n    func MakeItHappen(something: string): void;\n}\n\nfunc main(): string\n{\n    var withEvent = new IWithEvent^\n    {\n        override func MakeItHappen(something: string): void\n        {\n            SomethingHappened(something);\n        }\n    };\n\n    var r = {\"\"};\n    var handler = attach(\n        withEvent.SomethingHappened,\n        func (something:string): void\n        {\n            r[0] = r[0] & $\"$(something); \";\n        }\n    );\n\n    withEvent.MakeItHappen(\"Good\");\n    withEvent.MakeItHappen(\"Cool\");\n    withEvent.SomethingHappened(\"Wonderful\");\n\n    detach(withEvent.SomethingHappened, handler);\n    return r[0];\n}"
               },
               {
                 "kind": "List",

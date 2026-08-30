@@ -332,7 +332,7 @@
           },
           {
             "kind": "Program",
-            "code": "<Xml name=\"IDE\">\r\n  <IDEs>\r\n    <IDE name=\"Visual Studio\" dev=\"Microsoft\" />\r\n    <IDE name=\"Visual Studio Code\" dev=\"Microsoft\" />\r\n    <IDE name=\"XCode\" dev=\"Apple\" />\r\n    <IDE name=\"CLion\" dev=\"JetBrains\" />\r\n    <IDE name=\"C++ Builder\" dev=\"Embarcadero\" />\r\n    <IDE name=\"Eclipse\" dev=\"Eclipse Foundation\" />\r\n  </IDEs>\r\n</Xml>"
+            "code": "<Xml name=\"IDE\">\n  <IDEs>\n    <IDE name=\"Visual Studio\" dev=\"Microsoft\" />\n    <IDE name=\"Visual Studio Code\" dev=\"Microsoft\" />\n    <IDE name=\"XCode\" dev=\"Apple\" />\n    <IDE name=\"CLion\" dev=\"JetBrains\" />\n    <IDE name=\"C++ Builder\" dev=\"Embarcadero\" />\n    <IDE name=\"Eclipse\" dev=\"Eclipse Foundation\" />\n  </IDEs>\n</Xml>"
           }
         ]
       },
@@ -345,7 +345,7 @@
           },
           {
             "kind": "Program",
-            "code": "module sharedscript;\r\n\r\nusing system::*;\r\nusing system::xml::*;\r\n\r\nnamespace sample\r\n{\r\n  class IDE\r\n  {\r\n    prop Name: string = \"\" {}\r\n    prop Developer: string = \"\" {}\r\n  }\r\n\r\n  func Fill(doc: XmlDocument^, ides: observe IDE^[]): void\r\n  {\r\n    for (nodeIde in doc.rootElement.subNodes)\r\n    {\r\n      var xIde = cast (XmlElement^) nodeIde;\r\n      var oIde = new IDE^();\r\n      for (att in xIde.attributes)\r\n      {\r\n        switch (att.name)\r\n        {\r\n          case \"name\": { oIde.Name = att.value; }\r\n          case \"dev\": { oIde.Developer = att.value; }\r\n        }\r\n      }\r\n      ides.Add(oIde);\r\n    }\r\n  }\r\n}"
+            "code": "module sharedscript;\n\nusing system::*;\nusing system::xml::*;\n\nnamespace sample\n{\n  class IDE\n  {\n    prop Name: string = \"\" {}\n    prop Developer: string = \"\" {}\n  }\n\n  func Fill(doc: XmlDocument^, ides: observe IDE^[]): void\n  {\n    for (nodeIde in doc.rootElement.subNodes)\n    {\n      var xIde = cast (XmlElement^) nodeIde;\n      var oIde = new IDE^();\n      for (att in xIde.attributes)\n      {\n        switch (att.name)\n        {\n          case \"name\": { oIde.Name = att.value; }\n          case \"dev\": { oIde.Developer = att.value; }\n        }\n      }\n      ides.Add(oIde);\n    }\n  }\n}"
           }
         ]
       },
@@ -432,7 +432,7 @@
           },
           {
             "kind": "Program",
-            "code": "<BindableListView View=\"Detail\" HorizontalAlwaysVisible=\"false\" VerticalAlwaysVisible=\"false\" env.ItemType=\"sample::IDE^\">\r\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n  <att.ItemSource-bind>self.ides</att.ItemSource-bind>\r\n\r\n  <att.Columns>\r\n    <ListViewColumn Text=\"IDE\" TextProperty=\"Name\" Size=\"180\"/>\r\n    <ListViewColumn Text=\"Developer\" TextProperty=\"Developer\" Size=\"240\"/>\r\n  </att.Columns>\r\n</BindableListView>"
+            "code": "<BindableListView View=\"Detail\" HorizontalAlwaysVisible=\"false\" VerticalAlwaysVisible=\"false\" env.ItemType=\"sample::IDE^\">\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\n  <att.ItemSource-bind>self.ides</att.ItemSource-bind>\n\n  <att.Columns>\n    <ListViewColumn Text=\"IDE\" TextProperty=\"Name\" Size=\"180\"/>\n    <ListViewColumn Text=\"Developer\" TextProperty=\"Developer\" Size=\"240\"/>\n  </att.Columns>\n</BindableListView>"
           },
           {
             "kind": "Text",
@@ -574,7 +574,7 @@
           },
           {
             "kind": "Program",
-            "code": "<Button ref.Name=\"buttonLoad\" Text=\"Click Me To Load Data\">\r\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\r\n  <ev.Clicked-eval><![CDATA[\r\n    {\r\n      var doc = cast (system::XmlDocument^) self.ResolveResource('res', 'MainWindow/XmlPage/IDE', true);\r\n      Fill(doc, self.ides);\r\n      buttonLoad.Enabled = false;\r\n    }\r\n  ]]></ev.Clicked-eval>\r\n</Button>"
+            "code": "<Button ref.Name=\"buttonLoad\" Text=\"Click Me To Load Data\">\n  <att.BoundsComposition-set AlignmentToParent=\"left:0 top:0 right:0 bottom:0\"/>\n  <ev.Clicked-eval><![CDATA[\n    {\n      var doc = cast (system::XmlDocument^) self.ResolveResource('res', 'MainWindow/XmlPage/IDE', true);\n      Fill(doc, self.ides);\n      buttonLoad.Enabled = false;\n    }\n  ]]></ev.Clicked-eval>\n</Button>"
           }
         ]
       },

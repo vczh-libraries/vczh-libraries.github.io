@@ -102,7 +102,7 @@
         "content": [
           {
             "kind": "Program",
-            "code": "List<Ptr<ParsingError>> errors;\r\nList<WString> codes;\r\ncodes.Add(THE_WORKFLOW_SCRIPT);\r\n\r\nauto table = WfLoadTable();\r\nauto assembly = Compile(table, codes, errors);\r\n\r\n// saving the compiled assembly to a file is optional\r\n{\r\n    FileStream stream(L\"C:/script.bin\", FileStream::WriteOnly);\r\n    assembly->Serialize(stream);\r\n}\r\n{\r\n    WfAssemblyLoadErrors loadErrors;\r\n    FileStream stream(L\"C:/script.bin\", FileStream::ReadOnly);\r\n    assembly = WfAssembly::Deserialize(stream, loadErrors);\r\n}\r\n\r\n// initialize\r\nglobalContext = Ptr(new WfRuntimeGlobalContext(assembly));\r\nLoadFunction<void()>(globalContext, L\"<initialize>\")();\r\n\r\n// load and run MyScript::Main\r\nValue myScript = Value::Create(GetTypeDescriptor(L\"MyScript));\r\nmyScript.Invoke(myScript);",
+            "code": "List<Ptr<ParsingError>> errors;\nList<WString> codes;\ncodes.Add(THE_WORKFLOW_SCRIPT);\n\nauto table = WfLoadTable();\nauto assembly = Compile(table, codes, errors);\n\n// saving the compiled assembly to a file is optional\n{\n    FileStream stream(L\"C:/script.bin\", FileStream::WriteOnly);\n    assembly->Serialize(stream);\n}\n{\n    WfAssemblyLoadErrors loadErrors;\n    FileStream stream(L\"C:/script.bin\", FileStream::ReadOnly);\n    assembly = WfAssembly::Deserialize(stream, loadErrors);\n}\n\n// initialize\nglobalContext = Ptr(new WfRuntimeGlobalContext(assembly));\nLoadFunction<void()>(globalContext, L\"<initialize>\")();\n\n// load and run MyScript::Main\nValue myScript = Value::Create(GetTypeDescriptor(L\"MyScript));\nmyScript.Invoke(myScript);",
             "language": "C++"
           }
         ]

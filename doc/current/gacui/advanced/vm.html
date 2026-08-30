@@ -782,7 +782,7 @@
               },
               {
                 "kind": "Program",
-                "code": "interface IViewModel\r\n{\r\n    func GetUserName() : string;\r\n    func SetUserName(value : string) : void;\r\n    prop UserName : string {GetUserName, SetUserName}\r\n        \r\n    func GetPassword() : string;\r\n    func SetPassword(value : string) : void;\r\n    prop Password : string {GetPassword, SetPassword}\r\n        \r\n    func GetUserNameError() : string;\r\n    event UserNameErrorChanged();\r\n    prop UserNameError : string {GetUserNameError : UserNameErrorChanged}\r\n        \r\n    func GetPasswordError() : string;\r\n    event PasswordErrorChanged();\r\n    prop PasswordError : string {GetPasswordError : PasswordErrorChanged}\r\n        \r\n    func SignUp() : bool;\r\n}"
+                "code": "interface IViewModel\n{\n    func GetUserName() : string;\n    func SetUserName(value : string) : void;\n    prop UserName : string {GetUserName, SetUserName}\n        \n    func GetPassword() : string;\n    func SetPassword(value : string) : void;\n    prop Password : string {GetPassword, SetPassword}\n        \n    func GetUserNameError() : string;\n    event UserNameErrorChanged();\n    prop UserNameError : string {GetUserNameError : UserNameErrorChanged}\n        \n    func GetPasswordError() : string;\n    event PasswordErrorChanged();\n    prop PasswordError : string {GetPasswordError : PasswordErrorChanged}\n        \n    func SignUp() : bool;\n}"
               },
               {
                 "kind": "Text",
@@ -836,7 +836,7 @@
               },
               {
                 "kind": "Program",
-                "code": "<ref.Parameter Name=\"ViewModel\" Class=\"vm::IViewModel\"/>\r\n<Window ref.Name=\"self\" Text=\"Let's Sign Up!\" ClientSize=\"x:320 y:320\">\r\n    <att.ViewModel-set UserName-bind=\"textBoxUserName.Text\" Password-bind=\"textBoxPassword.Text\"/>\r\n    ..."
+                "code": "<ref.Parameter Name=\"ViewModel\" Class=\"vm::IViewModel\"/>\n<Window ref.Name=\"self\" Text=\"Let's Sign Up!\" ClientSize=\"x:320 y:320\">\n    <att.ViewModel-set UserName-bind=\"textBoxUserName.Text\" Password-bind=\"textBoxPassword.Text\"/>\n    ..."
               }
             ]
           },
@@ -862,7 +862,7 @@
               },
               {
                 "kind": "Program",
-                "code": "class ViewModel : public Object, public virtual vm::IViewModel\r\n{\r\nprivate:\r\n    WString userName;\r\n    WString password;\r\n    Regex regexLcLetters;\r\n    Regex regexUcLetters;\r\n    Regex regexNumbers;\r\n\r\npublic:\r\n    ViewModel()\r\n        :regexLcLetters(L\"[a-z]\")\r\n        , regexUcLetters(L\"[A-Z]\")\r\n        , regexNumbers(L\"[0-9]\")\r\n    {\r\n    }\r\n\r\n    ...\r\n\r\n    WString GetPassword()override\r\n    {\r\n        return password;\r\n    }\r\n\r\n    void SetPassword(const WString& value)override\r\n    {\r\n        password = value;\r\n        PasswordErrorChanged();\r\n    }\r\n\r\n    WString GetPasswordError()override\r\n    {\r\n        if (password == L\"\")\r\n        {\r\n            return L\"Password should not be empty.\";\r\n        }\r\n        bool containsLowerCases = regexLcLetters.Match(password);\r\n        bool containsUpperCases = regexUcLetters.Match(password);\r\n        bool containsNumbers = regexNumbers.Match(password);\r\n        if (!containsLowerCases || !containsUpperCases || !containsNumbers)\r\n        {\r\n            return L\"Password should contains at least one lower case letter, one upper case letter and one digit.\";\r\n        }\r\n        return L\"\";\r\n    }\r\n};"
+                "code": "class ViewModel : public Object, public virtual vm::IViewModel\n{\nprivate:\n    WString userName;\n    WString password;\n    Regex regexLcLetters;\n    Regex regexUcLetters;\n    Regex regexNumbers;\n\npublic:\n    ViewModel()\n        :regexLcLetters(L\"[a-z]\")\n        , regexUcLetters(L\"[A-Z]\")\n        , regexNumbers(L\"[0-9]\")\n    {\n    }\n\n    ...\n\n    WString GetPassword()override\n    {\n        return password;\n    }\n\n    void SetPassword(const WString& value)override\n    {\n        password = value;\n        PasswordErrorChanged();\n    }\n\n    WString GetPasswordError()override\n    {\n        if (password == L\"\")\n        {\n            return L\"Password should not be empty.\";\n        }\n        bool containsLowerCases = regexLcLetters.Match(password);\n        bool containsUpperCases = regexUcLetters.Match(password);\n        bool containsNumbers = regexNumbers.Match(password);\n        if (!containsLowerCases || !containsUpperCases || !containsNumbers)\n        {\n            return L\"Password should contains at least one lower case letter, one upper case letter and one digit.\";\n        }\n        return L\"\";\n    }\n};"
               }
             ]
           },
@@ -901,7 +901,7 @@
               },
               {
                 "kind": "Program",
-                "code": "void GuiMain()\r\n{\r\n    ...\r\n    auto viewModel = Ptr(new ViewModel);\r\n    auto window = new helloworld::MainWindow(viewModel);\r\n    ...\r\n}"
+                "code": "void GuiMain()\n{\n    ...\n    auto viewModel = Ptr(new ViewModel);\n    auto window = new helloworld::MainWindow(viewModel);\n    ...\n}"
               }
             ]
           },

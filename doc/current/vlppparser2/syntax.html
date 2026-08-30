@@ -475,7 +475,7 @@
           },
           {
             "kind": "Program",
-            "code": "RuleName : TypeName\r\n::= Clause1\r\n...\r\n;",
+            "code": "RuleName : TypeName\n::= Clause1\n...\n;",
             "language": "Syntax"
           },
           {
@@ -1035,7 +1035,7 @@
               },
               {
                 "kind": "Program",
-                "code": "class Expr\r\n{\r\n}\r\n\r\nclass NumExpr : Expr\r\n{\r\n    var value : token;\r\n}\r\n\r\nenum UnaryOp\r\n{\r\n    Positive,\r\n    Negative,\r\n}\r\n\r\nclass Unary : Expr\r\n{\r\n    var op : UnaryOp;\r\n    var operand : Expr;\r\n}\r\n\r\nenum BinaryOp\r\n{\r\n    Add,\r\n    Minus,\r\n    Multiply,\r\n    Divid,\r\n}\r\n\r\nclass Binary : Expr\r\n{\r\n    var op : BinaryOp;\r\n    var left : Expr;\r\n    var right : Expr;\r\n}",
+                "code": "class Expr\n{\n}\n\nclass NumExpr : Expr\n{\n    var value : token;\n}\n\nenum UnaryOp\n{\n    Positive,\n    Negative,\n}\n\nclass Unary : Expr\n{\n    var op : UnaryOp;\n    var operand : Expr;\n}\n\nenum BinaryOp\n{\n    Add,\n    Minus,\n    Multiply,\n    Divid,\n}\n\nclass Binary : Expr\n{\n    var op : BinaryOp;\n    var left : Expr;\n    var right : Expr;\n}",
                 "language": "AST"
               },
               {
@@ -1044,7 +1044,7 @@
               },
               {
                 "kind": "Program",
-                "code": "ADD:/+\r\nSUB:-\r\nMUL:/*\r\nDIV://\r\nOPEN_BRACE:/(\r\nCLOSE_BRACE:/)\r\nNUM:/d+(./d+)?\r\ndiscard SPACE:/s+",
+                "code": "ADD:/+\nSUB:-\nMUL:/*\nDIV://\nOPEN_BRACE:/(\nCLOSE_BRACE:/)\nNUM:/d+(./d+)?\ndiscard SPACE:/s+",
                 "language": "LEXER"
               },
               {
@@ -1053,7 +1053,7 @@
               },
               {
                 "kind": "Program",
-                "code": "Exp0\r\n  ::= NUM:value as NumExpr\r\n  ::= \"(\" !Exp \")\"\r\n  ;\r\n\r\nExp1\r\n  ::= !Exp0\r\n  ::= \"+\" Exp1:operand as Unary {op = Positive}\r\n  ::= \"-\" Exp1:operand as Unary {op = Negative}\r\n  ;\r\n\r\nExp2\r\n  ::= !Exp1\r\n  ::= Exp2:left \"*\" Exp1:right as Binary {op = Multiply}\r\n  ::= Exp2:left \"/\" Exp1:right as Binary {op = Divid}\r\n  ;\r\n\r\n@parser Exp\r\n  ::= !Exp2\r\n  ::= Exp3:left \"+\" Exp2:right as Binary {op = Add}\r\n  ::= Exp3:left \"-\" Exp2:right as Binary {op = Minus}\r\n  ;",
+                "code": "Exp0\n  ::= NUM:value as NumExpr\n  ::= \"(\" !Exp \")\"\n  ;\n\nExp1\n  ::= !Exp0\n  ::= \"+\" Exp1:operand as Unary {op = Positive}\n  ::= \"-\" Exp1:operand as Unary {op = Negative}\n  ;\n\nExp2\n  ::= !Exp1\n  ::= Exp2:left \"*\" Exp1:right as Binary {op = Multiply}\n  ::= Exp2:left \"/\" Exp1:right as Binary {op = Divid}\n  ;\n\n@parser Exp\n  ::= !Exp2\n  ::= Exp3:left \"+\" Exp2:right as Binary {op = Add}\n  ::= Exp3:left \"-\" Exp2:right as Binary {op = Minus}\n  ;",
                 "language": "SYNTAX"
               }
             ]
@@ -1086,7 +1086,7 @@
               },
               {
                 "kind": "Program",
-                "code": "switch allow_half_if;\r\n\r\nDo\r\n  ::= \"do\" \";\" as DoStat\r\n  ;\r\n\r\nBlock\r\n  ::= \"{\" { Stat:stats } \"}\" as BlockStat\r\n  ;\r\n\r\nIfTail\r\n  ::= OtherStat:thenBranch (\"else\" Stat:elseBranch | ?(allow_half_if: ;)) as partial IfStat\r\n  ::= !(!allow_half_if; If:thenBranch) \"else\" Stat:elseBranch as partial IfStat\r\n  ::= ?(allow_half_if: If:thenBranch) as partial IfStat\r\n  ;\r\n\r\nIf\r\n  ::= \"if\" \"cond\" \"then\" IfTail as IfStat\r\n  ;\r\n\r\nOtherStat\r\n  ::= !Do\r\n  ::= !Block\r\n  ;\r\n\r\n@parser Stat\r\n  ::= !OtherStat\r\n  ::= !(allow_half_if; !If)\r\n  ;",
+                "code": "switch allow_half_if;\n\nDo\n  ::= \"do\" \";\" as DoStat\n  ;\n\nBlock\n  ::= \"{\" { Stat:stats } \"}\" as BlockStat\n  ;\n\nIfTail\n  ::= OtherStat:thenBranch (\"else\" Stat:elseBranch | ?(allow_half_if: ;)) as partial IfStat\n  ::= !(!allow_half_if; If:thenBranch) \"else\" Stat:elseBranch as partial IfStat\n  ::= ?(allow_half_if: If:thenBranch) as partial IfStat\n  ;\n\nIf\n  ::= \"if\" \"cond\" \"then\" IfTail as IfStat\n  ;\n\nOtherStat\n  ::= !Do\n  ::= !Block\n  ;\n\n@parser Stat\n  ::= !OtherStat\n  ::= !(allow_half_if; !If)\n  ;",
                 "language": "SYNTAX"
               },
               {

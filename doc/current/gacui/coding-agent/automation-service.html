@@ -722,7 +722,7 @@
               },
               {
                 "kind": "Program",
-                "code": "#include \"../../../Source/PlatformProviders/Windows/WinNativeWindow.h\"\r\n\r\nusing namespace vl;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\n\r\nclass WindowsHttpAutomationServiceScope\r\n{\r\npublic:\r\n    WindowsHttpAutomationServiceScope(const WString& applicationName, vint port)\r\n    {\r\n        windows::StartWindowsHttpAutomationService(applicationName, port);\r\n    }\r\n\r\n    ~WindowsHttpAutomationServiceScope()\r\n    {\r\n        windows::StopWindowsHttpAutomationService();\r\n    }\r\n};\r\n\r\nvoid GuiMain()\r\n{\r\n    demo::MainWindow window;\r\n    window.ForceCalculateSizeImmediately();\r\n    window.MoveToScreenCenter();\r\n\r\n    WindowsHttpAutomationServiceScope httpAutomationService(\r\n        WString::Unmanaged(L\"Automation/MyApp\"),\r\n        8888);\r\n    GetApplication()->Run(&window);\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)\r\n{\r\n    return SetupHostedWindowsDirect2DRenderer();\r\n}",
+                "code": "#include \"../../../Source/PlatformProviders/Windows/WinNativeWindow.h\"\n\nusing namespace vl;\nusing namespace vl::presentation;\nusing namespace vl::presentation::controls;\n\nclass WindowsHttpAutomationServiceScope\n{\npublic:\n    WindowsHttpAutomationServiceScope(const WString& applicationName, vint port)\n    {\n        windows::StartWindowsHttpAutomationService(applicationName, port);\n    }\n\n    ~WindowsHttpAutomationServiceScope()\n    {\n        windows::StopWindowsHttpAutomationService();\n    }\n};\n\nvoid GuiMain()\n{\n    demo::MainWindow window;\n    window.ForceCalculateSizeImmediately();\n    window.MoveToScreenCenter();\n\n    WindowsHttpAutomationServiceScope httpAutomationService(\n        WString::Unmanaged(L\"Automation/MyApp\"),\n        8888);\n    GetApplication()->Run(&window);\n}\n\nint CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)\n{\n    return SetupHostedWindowsDirect2DRenderer();\n}",
                 "language": "c++"
               }
             ]
@@ -1125,7 +1125,7 @@
               },
               {
                 "kind": "Program",
-                "code": "void GuiMain()\r\n{\r\n    RemoteProtocolAutomationService automationService;\r\n    GetNativeServiceSubstitution()->Substitute(&automationService, false);\r\n\r\n    {\r\n        WindowsHttpAutomationServiceScope httpAutomationService(\r\n            WString::Unmanaged(L\"Automation/RemoteCore\"),\r\n            8888);\r\n        GetApplication()->Run(mainWindow);\r\n    }\r\n\r\n    GetNativeServiceSubstitution()->Unsubstitute(&automationService);\r\n}",
+                "code": "void GuiMain()\n{\n    RemoteProtocolAutomationService automationService;\n    GetNativeServiceSubstitution()->Substitute(&automationService, false);\n\n    {\n        WindowsHttpAutomationServiceScope httpAutomationService(\n            WString::Unmanaged(L\"Automation/RemoteCore\"),\n            8888);\n        GetApplication()->Run(mainWindow);\n    }\n\n    GetNativeServiceSubstitution()->Unsubstitute(&automationService);\n}",
                 "language": "c++"
               }
             ]

@@ -406,7 +406,7 @@
               },
               {
                 "kind": "Program",
-                "code": "class C\r\n{\r\n    prop A: int = 0; {}\r\n\r\n    new()\r\n    {\r\n        var x = bind(A + 1);\r\n        var self = this;\r\n        var y = bind(self.A + 1);\r\n    }\r\n}"
+                "code": "class C\n{\n    prop A: int = 0; {}\n\n    new()\n    {\n        var x = bind(A + 1);\n        var self = this;\n        var y = bind(self.A + 1);\n    }\n}"
               },
               {
                 "kind": "List",
@@ -669,7 +669,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Numbers\n{\n    prop A: int = 0 {}\n    prop B: int = 0 {}\n    prop C: int = 0 {}\n}\n\nfunc main(): string\n{\n    var numbers = new Numbers^();\n    var sub = bind(numbers.A + numbers.B + numbers.C);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    numbers.A = 1;\n    numbers.B = 2;\n    numbers.C = 3;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -757,7 +757,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    {\r\n        a.B.C.X = 100;\r\n    }\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 200;\r\n        a.B.C = c;\r\n    }\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 300;\r\n        a.B = b;\r\n    }\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass ClassA\n{\n    prop B: ClassB^ = new ClassB^() {}\n}\n\nclass ClassB\n{\n    prop C: ClassC^ = new ClassC^() {}\n}\n\nclass ClassC\n{\n    prop X: int = 0 {}\n}\n\nfunc main(): string\n{\n    var a = new ClassA^();\n    var sub = bind(a.B.C.X);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    {\n        a.B.C.X = 100;\n    }\n    {\n        var c = new ClassC^();\n        c.X = 200;\n        a.B.C = c;\n    }\n    {\n        var b = new ClassB^();\n        b.C.X = 300;\n        a.B = b;\n    }\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -845,7 +845,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {}\r\n    prop B: int = 0 {}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var init = 0;\r\n    var numbers = new Numbers^();\r\n    var sub = bind(init + numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    init = 100;\r\n    numbers.A = 1;\r\n    init = 200;\r\n    numbers.B = 2;\r\n    init = 300;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Numbers\n{\n    prop A: int = 0 {}\n    prop B: int = 0 {}\n    prop C: int = 0 {}\n}\n\nfunc main(): string\n{\n    var init = 0;\n    var numbers = new Numbers^();\n    var sub = bind(init + numbers.A + numbers.B + numbers.C);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    init = 100;\n    numbers.A = 1;\n    init = 200;\n    numbers.B = 2;\n    init = 300;\n    numbers.C = 3;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -903,7 +903,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Numbers\r\n{\r\n    prop A: int = 0 {not observe}\r\n    prop B: int = 0 {not observe}\r\n    prop C: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var numbers = new Numbers^();\r\n    var sub = bind(numbers.A + numbers.B + numbers.C);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    numbers.A = 1;\r\n    numbers.B = 2;\r\n    numbers.C = 3;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Numbers\n{\n    prop A: int = 0 {not observe}\n    prop B: int = 0 {not observe}\n    prop C: int = 0 {}\n}\n\nfunc main(): string\n{\n    var numbers = new Numbers^();\n    var sub = bind(numbers.A + numbers.B + numbers.C);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    numbers.A = 1;\n    numbers.B = 2;\n    numbers.C = 3;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -985,7 +985,7 @@
               },
               {
                 "kind": "Program",
-                "code": "numbers.A = 1;\r\nsub.Update();\r\nnumbers.B = 2;\r\nsub.Update();\r\nnumbers.C = 3;"
+                "code": "numbers.A = 1;\nsub.Update();\nnumbers.B = 2;\nsub.Update();\nnumbers.C = 3;"
               },
               {
                 "kind": "Text",
@@ -1047,7 +1047,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {not observe}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {not observe}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    var oldC = a.B.C;\r\n    {\r\n        a.B.C.X = 100;\r\n    }\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 200;\r\n        a.B.C = c;\r\n    }\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 300;\r\n        a.B = b;\r\n    }\r\n    oldC.X = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass ClassA\n{\n    prop B: ClassB^ = new ClassB^() {not observe}\n}\n\nclass ClassB\n{\n    prop C: ClassC^ = new ClassC^() {not observe}\n}\n\nclass ClassC\n{\n    prop X: int = 0 {}\n}\n\nfunc main(): string\n{\n    var a = new ClassA^();\n    var sub = bind(a.B.C.X);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    var oldC = a.B.C;\n    {\n        a.B.C.X = 100;\n    }\n    {\n        var c = new ClassC^();\n        c.X = 200;\n        a.B.C = c;\n    }\n    {\n        var b = new ClassB^();\n        b.C.X = 300;\n        a.B = b;\n    }\n    oldC.X = 400;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -1400,7 +1400,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass ClassA\r\n{\r\n    prop B: ClassB^ = new ClassB^() {}\r\n}\r\n\r\nclass ClassB\r\n{\r\n    prop C: ClassC^ = new ClassC^() {not observe}\r\n}\r\n\r\nclass ClassC\r\n{\r\n    prop X: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var a = new ClassA^();\r\n    var sub = bind(a.B.C.X);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    {\r\n        var b = new ClassB^();\r\n        b.C.X = 100;\r\n        a.B = b;\r\n    }\r\n    {\r\n        a.B.C.X = 200;\r\n    }\r\n    var oldC = a.B.C;\r\n    {\r\n        var c = new ClassC^();\r\n        c.X = 300;\r\n        a.B.C = c;\r\n    }\r\n    oldC.X = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass ClassA\n{\n    prop B: ClassB^ = new ClassB^() {}\n}\n\nclass ClassB\n{\n    prop C: ClassC^ = new ClassC^() {not observe}\n}\n\nclass ClassC\n{\n    prop X: int = 0 {}\n}\n\nfunc main(): string\n{\n    var a = new ClassA^();\n    var sub = bind(a.B.C.X);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    {\n        var b = new ClassB^();\n        b.C.X = 100;\n        a.B = b;\n    }\n    {\n        a.B.C.X = 200;\n    }\n    var oldC = a.B.C;\n    {\n        var c = new ClassC^();\n        c.X = 300;\n        a.B.C = c;\n    }\n    oldC.X = 400;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -1589,7 +1589,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Cond\r\n{\r\n    prop Value: bool = false {}\r\n}\r\n\r\nclass Int\r\n{\r\n    prop Value: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var c = new Cond^();\r\n    var a = new Int^();\r\n    var b = new Int^();\r\n    var sub = bind(c.Value ? a.Value : b.Value);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    c.Value = true;\r\n    a.Value = 100;\r\n    b.Value = 200;\r\n    c.Value = false;\r\n    a.Value = 300;\r\n    b.Value = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Cond\n{\n    prop Value: bool = false {}\n}\n\nclass Int\n{\n    prop Value: int = 0 {}\n}\n\nfunc main(): string\n{\n    var c = new Cond^();\n    var a = new Int^();\n    var b = new Int^();\n    var sub = bind(c.Value ? a.Value : b.Value);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    c.Value = true;\n    a.Value = 100;\n    b.Value = 200;\n    c.Value = false;\n    a.Value = 300;\n    b.Value = 400;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",
@@ -1715,7 +1715,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nclass Cond\r\n{\r\n    prop Value: bool = false {}\r\n}\r\n\r\nclass Holder\r\n{\r\n    prop Value: Int^ = new Int^() {}\r\n}\r\n\r\nclass Int\r\n{\r\n    prop Value: int = 0 {}\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var c = new Cond^();\r\n    var a = new Holder^();\r\n    var b = new Holder^();\r\n    var sub = bind((c.Value ? a.Value : b.Value).Value);\r\n\r\n    var r = {\"\"};\r\n    attach(sub.ValueChanged, func(newValue: object): void\r\n    {\r\n        r[0] = $\"$(r[0])$(cast int newValue); \";\r\n    });\r\n    sub.Open();\r\n\r\n    c.Value = true;\r\n    a.Value.Value = 100;\r\n    b.Value.Value = 200;\r\n    c.Value = false;\r\n    a.Value.Value = 300;\r\n    b.Value.Value = 400;\r\n\r\n    sub.Close();\r\n    return r[0];\r\n}"
+                "code": "module sampleModule;\n\nclass Cond\n{\n    prop Value: bool = false {}\n}\n\nclass Holder\n{\n    prop Value: Int^ = new Int^() {}\n}\n\nclass Int\n{\n    prop Value: int = 0 {}\n}\n\nfunc main(): string\n{\n    var c = new Cond^();\n    var a = new Holder^();\n    var b = new Holder^();\n    var sub = bind((c.Value ? a.Value : b.Value).Value);\n\n    var r = {\"\"};\n    attach(sub.ValueChanged, func(newValue: object): void\n    {\n        r[0] = $\"$(r[0])$(cast int newValue); \";\n    });\n    sub.Open();\n\n    c.Value = true;\n    a.Value.Value = 100;\n    b.Value.Value = 200;\n    c.Value = false;\n    a.Value.Value = 300;\n    b.Value.Value = 400;\n\n    sub.Close();\n    return r[0];\n}"
               },
               {
                 "kind": "Text",

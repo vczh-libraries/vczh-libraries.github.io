@@ -110,7 +110,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            After running the GacUI unit test,\r\n            snapshots will be stored in a folder specified by "
+            "text": "\n            After running the GacUI unit test,\n            snapshots will be stored in a folder specified by "
           },
           {
             "kind": "Strong",
@@ -123,7 +123,7 @@
           },
           {
             "kind": "Text",
-            "text": ",\r\n            which is passed to "
+            "text": ",\n            which is passed to "
           },
           {
             "kind": "Strong",
@@ -149,11 +149,11 @@
           },
           {
             "kind": "Text",
-            "text": " function.\r\n            You can write your own snapshot viewer to render any snapshot from a test run like this.\r\n            "
+            "text": " function.\n            You can write your own snapshot viewer to render any snapshot from a test run like this.\n            "
           },
           {
             "kind": "Program",
-            "code": "#include <GacUI.UnitTest.UI.h>\r\n#include <Windows.h>\r\n\r\nusing namespace vl;\r\nusing namespace vl::filesystem;\r\nusing namespace vl::presentation;\r\nusing namespace vl::presentation::controls;\r\nusing namespace vl::presentation::unittest;\r\nusing namespace gaclib_controls;\r\n\r\nvoid GuiMain()\r\n{\r\n    theme::RegisterTheme(Ptr(new darkskin::Theme));\r\n    {\r\n        // you can use GetApplication()->GetExecutablePath() if hardcoding a relative path to the folder contains the executable is possible.\r\n        FilePath snapshotFolderPath = ...;\r\n        UnitTestSnapshotViewerAppWindow window(Ptr(new UnitTestSnapshotViewerViewModel(snapshotFolderPath)));\r\n        window.ForceCalculateSizeImmediately();\r\n        window.MoveToScreenCenter();\r\n        window.WindowOpened.AttachLambda([&](auto&&...)\r\n        {\r\n            window.ShowMaximized();\r\n        });\r\n        GetApplication()->Run(&window);\r\n    }\r\n}\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+            "code": "#include <GacUI.UnitTest.UI.h>\n#include <Windows.h>\n\nusing namespace vl;\nusing namespace vl::filesystem;\nusing namespace vl::presentation;\nusing namespace vl::presentation::controls;\nusing namespace vl::presentation::unittest;\nusing namespace gaclib_controls;\n\nvoid GuiMain()\n{\n    theme::RegisterTheme(Ptr(new darkskin::Theme));\n    {\n        // you can use GetApplication()->GetExecutablePath() if hardcoding a relative path to the folder contains the executable is possible.\n        FilePath snapshotFolderPath = ...;\n        UnitTestSnapshotViewerAppWindow window(Ptr(new UnitTestSnapshotViewerViewModel(snapshotFolderPath)));\n        window.ForceCalculateSizeImmediately();\n        window.MoveToScreenCenter();\n        window.WindowOpened.AttachLambda([&](auto&&...)\n        {\n            window.ShowMaximized();\n        });\n        GetApplication()->Run(&window);\n    }\n}\n\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\n{\n    return SetupWindowsDirect2DRenderer();\n}",
             "language": "c++"
           },
           {
@@ -193,7 +193,7 @@
           },
           {
             "kind": "Text",
-            "text": ".\r\n        "
+            "text": ".\n        "
           }
         ]
       }

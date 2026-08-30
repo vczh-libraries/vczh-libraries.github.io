@@ -179,7 +179,7 @@
           },
           {
             "kind": "Program",
-            "code": "namespace myapi\r\n{\r\n    class App : public Object, public AggregatableDescription<App>\r\n    {\r\n    private:\r\n        WString name;\r\n        List<Ptr<IValueSubscription>> subscriptions;\r\n\r\n    public:\r\n        static WString Get();\r\n        static WString Get(const WString& message);\r\n        static void Print(const WString& text);\r\n\r\n        App() = default;\r\n        ~App()\r\n        {\r\n            FOREACH(Ptr<IValueSubscription>, sub, subscriptions)\r\n            {\r\n                sub->Close();\r\n            }\r\n            FinalizeAggregation();\r\n        }\r\n\r\n        Event<void()> NameChanged;\r\n        WString GetName();\r\n        void SetName(const WString& value);\r\n        List<Ptr<IValueSubscription>>& GetSubscriptions();\r\n    };\r\n}"
+            "code": "namespace myapi\n{\n    class App : public Object, public AggregatableDescription<App>\n    {\n    private:\n        WString name;\n        List<Ptr<IValueSubscription>> subscriptions;\n\n    public:\n        static WString Get();\n        static WString Get(const WString& message);\n        static void Print(const WString& text);\n\n        App() = default;\n        ~App()\n        {\n            FOREACH(Ptr<IValueSubscription>, sub, subscriptions)\n            {\n                sub->Close();\n            }\n            FinalizeAggregation();\n        }\n\n        Event<void()> NameChanged;\n        WString GetName();\n        void SetName(const WString& value);\n        List<Ptr<IValueSubscription>>& GetSubscriptions();\n    };\n}"
           },
           {
             "kind": "Text",
@@ -249,7 +249,7 @@
         "content": [
           {
             "kind": "Program",
-            "code": "module sampleModule;\r\nusing myapi::*;\r\n\r\nnamespace myscript\r\n{\r\n    class MyApp : App\r\n    {\r\n        new(name: string)\r\n        {\r\n            Name = name;\r\n            /* \"this\" is not allowed in binding, copy it to a variable */\r\n            var self = this;\r\n            var subscription = bind($\"Hello, $(self.Name)\");\r\n            attach(subscription.ValueChanged,\r\n                func (value: object): void\r\n                {\r\n                    Print(cast string value);\r\n                });\r\n            subscription.Open();\r\n            Subscriptions.Add(subscription);\r\n        }\r\n\r\n        delete\r\n        {\r\n            Print(\"Destructing myscript::MyApp\");\r\n        }\r\n    }\r\n}"
+            "code": "module sampleModule;\nusing myapi::*;\n\nnamespace myscript\n{\n    class MyApp : App\n    {\n        new(name: string)\n        {\n            Name = name;\n            /* \"this\" is not allowed in binding, copy it to a variable */\n            var self = this;\n            var subscription = bind($\"Hello, $(self.Name)\");\n            attach(subscription.ValueChanged,\n                func (value: object): void\n                {\n                    Print(cast string value);\n                });\n            subscription.Open();\n            Subscriptions.Add(subscription);\n        }\n\n        delete\n        {\n            Print(\"Destructing myscript::MyApp\");\n        }\n    }\n}"
           },
           {
             "kind": "Text",
@@ -349,7 +349,7 @@
           },
           {
             "kind": "Program",
-            "code": "auto myapp = UnboxValue<Ptr<App>>(Value::Create(\r\n    L\"myscript::MyApp\",\r\n    (\r\n        Value_xs(), WString(L\"vczh\")\r\n    )));\r\n\r\nmyapp->SetName(L\"Vczh Libraries++\");\r\nmyapp->SetName(L\"Workflow\");\r\nmyapp->SetName(L\"Gaclib\");"
+            "code": "auto myapp = UnboxValue<Ptr<App>>(Value::Create(\n    L\"myscript::MyApp\",\n    (\n        Value_xs(), WString(L\"vczh\")\n    )));\n\nmyapp->SetName(L\"Vczh Libraries++\");\nmyapp->SetName(L\"Workflow\");\nmyapp->SetName(L\"Gaclib\");"
           },
           {
             "kind": "Text",

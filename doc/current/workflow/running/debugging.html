@@ -179,7 +179,7 @@
           },
           {
             "kind": "Program",
-            "code": "module sampleModule;\r\nusing myapi::*;\r\n\r\nfunc main(): void\r\n{\r\n    var name = App::Get(\"Please enter your name:\");\r\n    App::Print($\"Hello, $(name)!\");\r\n}"
+            "code": "module sampleModule;\nusing myapi::*;\n\nfunc main(): void\n{\n    var name = App::Get(\"Please enter your name:\");\n    App::Print($\"Hello, $(name)!\");\n}"
           },
           {
             "kind": "Text",
@@ -222,7 +222,7 @@
           },
           {
             "kind": "Program",
-            "code": "auto debugger = Ptr(new MyDebugger);\r\nSetDebuggerForCurrentThread(debugger);"
+            "code": "auto debugger = Ptr(new MyDebugger);\nSetDebuggerForCurrentThread(debugger);"
           },
           {
             "kind": "Strong",
@@ -304,7 +304,7 @@
           },
           {
             "kind": "Program",
-            "code": "auto mainFunction = LoadFunction<void()>(globalContext, L\"main\");\r\nmainFunction();\r\nSetDebuggerForCurrentThread(nullptr);"
+            "code": "auto mainFunction = LoadFunction<void()>(globalContext, L\"main\");\nmainFunction();\nSetDebuggerForCurrentThread(nullptr);"
           }
         ]
       },
@@ -374,7 +374,7 @@
           },
           {
             "kind": "Program",
-            "code": "class MyDebugger : public WfDebugger\r\n{\r\nprotected:\r\n    void OnBlockExecution()override\r\n    {\r\n        // get the context for the current thread\r\n        auto context = GetCurrentThreadContext();\r\n\r\n        // whatever the input is, change the \"name\" variable to be \"MyDebugger\"\r\n        // it will print \"Hello, MyDebugger!\" after continuing\r\n        auto assembly = context->globalContext->assembly;\r\n        vint functionIndex = context->GetCurrentStackFrame().functionIndex;\r\n        auto functionMetadata = assembly->functions[functionIndex];\r\n        vint indexName = functionMetadata->localVariableNames.IndexOf(L\"name\");\r\n        context->StoreLocalVariable(indexName, BoxValue(WString(L\"MyDebugger\")));\r\n\r\n        // continue\r\n        Run();\r\n    }\r\n};"
+            "code": "class MyDebugger : public WfDebugger\n{\nprotected:\n    void OnBlockExecution()override\n    {\n        // get the context for the current thread\n        auto context = GetCurrentThreadContext();\n\n        // whatever the input is, change the \"name\" variable to be \"MyDebugger\"\n        // it will print \"Hello, MyDebugger!\" after continuing\n        auto assembly = context->globalContext->assembly;\n        vint functionIndex = context->GetCurrentStackFrame().functionIndex;\n        auto functionMetadata = assembly->functions[functionIndex];\n        vint indexName = functionMetadata->localVariableNames.IndexOf(L\"name\");\n        context->StoreLocalVariable(indexName, BoxValue(WString(L\"MyDebugger\")));\n\n        // continue\n        Run();\n    }\n};"
           }
         ]
       },

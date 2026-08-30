@@ -81,11 +81,11 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            The most simple way to start the unit test framework would be:\r\n            "
+            "text": "\n            The most simple way to start the unit test framework would be:\n            "
           },
           {
             "kind": "Program",
-            "code": "#include <Vlpp.h>\r\nusing namespace vl;\r\nusing namespace vl::unittest;\r\n\r\n#ifdef VCZH_MSVC\r\nint wmain(int argc , wchar_t* argv[])\r\n#else\r\nint main(int argc, char** argv)\r\n#endif\r\n{\r\n\tint result = unittest::UnitTest::RunAndDisposeTests(argc, argv);\r\n\tvl::FinalizeGlobalStorage();\r\n#ifdef VCZH_CHECK_MEMORY_LEAKS\r\n\t_CrtDumpMemoryLeaks();\r\n#endif\r\n\treturn result;\r\n}",
+            "code": "#include <Vlpp.h>\nusing namespace vl;\nusing namespace vl::unittest;\n\n#ifdef VCZH_MSVC\nint wmain(int argc , wchar_t* argv[])\n#else\nint main(int argc, char** argv)\n#endif\n{\n\tint result = unittest::UnitTest::RunAndDisposeTests(argc, argv);\n\tvl::FinalizeGlobalStorage();\n#ifdef VCZH_CHECK_MEMORY_LEAKS\n\t_CrtDumpMemoryLeaks();\n#endif\n\treturn result;\n}",
             "language": "c++"
           }
         ]
@@ -95,7 +95,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            In this way you could pass "
+            "text": "\n            In this way you could pass "
           },
           {
             "kind": "Strong",
@@ -147,7 +147,7 @@
           },
           {
             "kind": "Text",
-            "text": " directly to your unit test binary\r\n            and they will be handled by the unit test framework properly.\r\n        "
+            "text": " directly to your unit test binary\n            and they will be handled by the unit test framework properly.\n        "
           }
         ]
       },
@@ -156,7 +156,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            You can create multiple cpp files for your test cases,\r\n            "
+            "text": "\n            You can create multiple cpp files for your test cases,\n            "
           },
           {
             "kind": "Strong",
@@ -169,11 +169,11 @@
           },
           {
             "kind": "Text",
-            "text": " will automatically react to them.\r\n            A typical test file would be:\r\n            "
+            "text": " will automatically react to them.\n            A typical test file would be:\n            "
           },
           {
             "kind": "Program",
-            "code": "#include <Vlpp.h>\r\nusing namespace vl;\r\nusing namespace vl::unittest;\r\n\r\nvoid AnError()\r\n{\r\n    CHECK_FAIL(L\"Not Implemented!\");\r\n}\r\n\r\nvoid AnException()\r\n{\r\n    throw Exception(L\"A message\");\r\n}\r\n\r\nTEST_FILE\r\n{\r\n    TEST_CASE(L\"This is a test case\")\r\n    {\r\n        TEST_ASSERT(1 + 1 == 2);\r\n    });\r\n\r\n    TEST_CATEGORY(L\"This is a test category\")\r\n    {\r\n        TEST_CASE(L\"This is another test case\")\r\n        {\r\n            TEST_ERROR(AnError());\r\n            TEST_EXCEPTION(AnException(), Exception, [](const Exception& e)\r\n            {\r\n                TEST_ASSERT(e.Message() == L\"A message\");\r\n            });\r\n        });\r\n    });\r\n}",
+            "code": "#include <Vlpp.h>\nusing namespace vl;\nusing namespace vl::unittest;\n\nvoid AnError()\n{\n    CHECK_FAIL(L\"Not Implemented!\");\n}\n\nvoid AnException()\n{\n    throw Exception(L\"A message\");\n}\n\nTEST_FILE\n{\n    TEST_CASE(L\"This is a test case\")\n    {\n        TEST_ASSERT(1 + 1 == 2);\n    });\n\n    TEST_CATEGORY(L\"This is a test category\")\n    {\n        TEST_CASE(L\"This is another test case\")\n        {\n            TEST_ERROR(AnError());\n            TEST_EXCEPTION(AnException(), Exception, [](const Exception& e)\n            {\n                TEST_ASSERT(e.Message() == L\"A message\");\n            });\n        });\n    });\n}",
             "language": "c++"
           },
           {
@@ -290,7 +290,7 @@
           },
           {
             "kind": "Text",
-            "text": "\r\n            Please be aware that these are macros, commas may be interepreted unexpectedly.\r\n        "
+            "text": "\n            Please be aware that these are macros, commas may be interepreted unexpectedly.\n        "
           }
         ]
       },
@@ -334,7 +334,7 @@
           },
           {
             "kind": "Text",
-            "text": ".\r\n            "
+            "text": ".\n            "
           },
           {
             "kind": "Strong",
@@ -386,7 +386,7 @@
           },
           {
             "kind": "Text",
-            "text": ".\r\n            "
+            "text": ".\n            "
           },
           {
             "kind": "Strong",
@@ -425,7 +425,7 @@
           },
           {
             "kind": "Text",
-            "text": ".\r\n        "
+            "text": ".\n        "
           }
         ]
       },
@@ -434,7 +434,7 @@
         "content": [
           {
             "kind": "Text",
-            "text": "\r\n            If you get "
+            "text": "\n            If you get "
           },
           {
             "kind": "Strong",
@@ -473,7 +473,7 @@
           },
           {
             "kind": "Text",
-            "text": ",\r\n            using no "
+            "text": ",\n            using no "
           },
           {
             "kind": "Strong",
@@ -486,7 +486,7 @@
           },
           {
             "kind": "Text",
-            "text": " will run tests in all three files,\r\n            using "
+            "text": " will run tests in all three files,\n            using "
           },
           {
             "kind": "Strong",
@@ -499,7 +499,7 @@
           },
           {
             "kind": "Text",
-            "text": " will run tests in all three files,\r\n            using "
+            "text": " will run tests in all three files,\n            using "
           },
           {
             "kind": "Strong",
@@ -538,7 +538,7 @@
           },
           {
             "kind": "Text",
-            "text": " only.\r\n        "
+            "text": " only.\n        "
           }
         ]
       }

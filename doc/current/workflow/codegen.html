@@ -634,7 +634,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "module SampleModule;\r\n\r\nclass DummyClass\r\n{\r\n    func CallPrivateMethod(my: MyClass^): void\r\n    {\r\n        my.Method();\r\n    }\r\n}\r\n\r\n@cpp:File(\"MyClass\")\r\n@cpp:Friend(typeof(DummyClass))\r\nclass MyClass\r\n{\r\n    @cpp:UserImpl\r\n    @cpp:Private\r\n    func Method(): void\r\n    {\r\n        raise \"Not Implemented!\";\r\n    }\r\n}"
+                    "code": "module SampleModule;\n\nclass DummyClass\n{\n    func CallPrivateMethod(my: MyClass^): void\n    {\n        my.Method();\n    }\n}\n\n@cpp:File(\"MyClass\")\n@cpp:Friend(typeof(DummyClass))\nclass MyClass\n{\n    @cpp:UserImpl\n    @cpp:Private\n    func Method(): void\n    {\n        raise \"Not Implemented!\";\n    }\n}"
                   }
                 ]
               }
@@ -727,7 +727,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "class DummyClass;\r\nclass MyClass;\r\n\r\nclass DummyClass : public ::vl::Object, public ::vl::reflection::Description<DummyClass>\r\n{\r\n#ifndef VCZH_DEBUG_NO_REFLECTION\r\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<DummyClass>;\r\n#endif\r\npublic:\r\n    void CallPrivateMethod(::vl::Ptr<::MyClass> my);\r\n    DummyClass();\r\n};\r\n\r\n/***********************************************************************\r\nGlobal Variables and Functions\r\n***********************************************************************/\r\n\r\nnamespace vl_workflow_global\r\n{\r\n    class W05Script\r\n    {\r\n    public:\r\n\r\n        static W05Script& Instance();\r\n    };\r\n}"
+                    "code": "class DummyClass;\nclass MyClass;\n\nclass DummyClass : public ::vl::Object, public ::vl::reflection::Description<DummyClass>\n{\n#ifndef VCZH_DEBUG_NO_REFLECTION\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<DummyClass>;\n#endif\npublic:\n    void CallPrivateMethod(::vl::Ptr<::MyClass> my);\n    DummyClass();\n};\n\n/***********************************************************************\nGlobal Variables and Functions\n***********************************************************************/\n\nnamespace vl_workflow_global\n{\n    class W05Script\n    {\n    public:\n\n        static W05Script& Instance();\n    };\n}"
                   }
                 ]
               },
@@ -745,7 +745,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\r\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\r\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\r\n\r\n/***********************************************************************\r\nGlobal Variables\r\n***********************************************************************/\r\n\r\nBEGIN_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\r\n    vl_workflow_global::W05Script instance;\r\n    INITIALIZE_GLOBAL_STORAGE_CLASS\r\n    FINALIZE_GLOBAL_STORAGE_CLASS\r\nEND_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\r\n\r\nnamespace vl_workflow_global\r\n{\r\n/***********************************************************************\r\nGlobal Functions\r\n***********************************************************************/\r\n\r\n    W05Script& W05Script::Instance()\r\n    {\r\n        return Getvl_workflow_global_W05Script().instance;\r\n    }\r\n}\r\n\r\n/***********************************************************************\r\nClass (::DummyClass)\r\n***********************************************************************/\r\n\r\nvoid DummyClass::CallPrivateMethod(::vl::Ptr<::MyClass> my)\r\n{\r\n    ::vl::__vwsn::This(my.Obj())->Method();\r\n}\r\n\r\nDummyClass::DummyClass()\r\n{\r\n}\r\n\r\n#undef GLOBAL_SYMBOL\r\n#undef GLOBAL_NAME\r\n#undef GLOBAL_OBJ"
+                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\n\n/***********************************************************************\nGlobal Variables\n***********************************************************************/\n\nBEGIN_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\n    vl_workflow_global::W05Script instance;\n    INITIALIZE_GLOBAL_STORAGE_CLASS\n    FINALIZE_GLOBAL_STORAGE_CLASS\nEND_GLOBAL_STORAGE_CLASS(vl_workflow_global_W05Script)\n\nnamespace vl_workflow_global\n{\n/***********************************************************************\nGlobal Functions\n***********************************************************************/\n\n    W05Script& W05Script::Instance()\n    {\n        return Getvl_workflow_global_W05Script().instance;\n    }\n}\n\n/***********************************************************************\nClass (::DummyClass)\n***********************************************************************/\n\nvoid DummyClass::CallPrivateMethod(::vl::Ptr<::MyClass> my)\n{\n    ::vl::__vwsn::This(my.Obj())->Method();\n}\n\nDummyClass::DummyClass()\n{\n}\n\n#undef GLOBAL_SYMBOL\n#undef GLOBAL_NAME\n#undef GLOBAL_OBJ"
                   }
                 ]
               },
@@ -763,7 +763,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "class MyClass : public ::vl::Object, public ::vl::reflection::Description<MyClass>\r\n{\r\n    friend class ::DummyClass;\r\n#ifndef VCZH_DEBUG_NO_REFLECTION\r\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MyClass>;\r\n#endif\r\nprivate:\r\n    void Method();\r\npublic:\r\n    MyClass();\r\n\r\n/* USER_CONTENT_BEGIN(custom members of ::MyClass) */\r\n/* USER_CONTENT_END() */\r\n};"
+                    "code": "class MyClass : public ::vl::Object, public ::vl::reflection::Description<MyClass>\n{\n    friend class ::DummyClass;\n#ifndef VCZH_DEBUG_NO_REFLECTION\n    friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MyClass>;\n#endif\nprivate:\n    void Method();\npublic:\n    MyClass();\n\n/* USER_CONTENT_BEGIN(custom members of ::MyClass) */\n/* USER_CONTENT_END() */\n};"
                   }
                 ]
               },
@@ -781,7 +781,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\r\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\r\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\r\n\r\n/* USER_CONTENT_BEGIN(custom global declarations) */\r\n/* USER_CONTENT_END() */\r\n\r\n/***********************************************************************\r\nClass (::MyClass)\r\n***********************************************************************/\r\n\r\nvoid MyClass::Method()\r\n{/* USER_CONTENT_BEGIN(::MyClass) */\r\n    throw ::vl::Exception(L\"You should implement this function.\");\r\n}/* USER_CONTENT_END() */\r\n\r\nMyClass::MyClass()\r\n{\r\n}\r\n\r\n#undef GLOBAL_SYMBOL\r\n#undef GLOBAL_NAME\r\n#undef GLOBAL_OBJ"
+                    "code": "#define GLOBAL_SYMBOL ::vl_workflow_global::W05Script::\n#define GLOBAL_NAME ::vl_workflow_global::W05Script::Instance().\n#define GLOBAL_OBJ &::vl_workflow_global::W05Script::Instance()\n\n/* USER_CONTENT_BEGIN(custom global declarations) */\n/* USER_CONTENT_END() */\n\n/***********************************************************************\nClass (::MyClass)\n***********************************************************************/\n\nvoid MyClass::Method()\n{/* USER_CONTENT_BEGIN(::MyClass) */\n    throw ::vl::Exception(L\"You should implement this function.\");\n}/* USER_CONTENT_END() */\n\nMyClass::MyClass()\n{\n}\n\n#undef GLOBAL_SYMBOL\n#undef GLOBAL_NAME\n#undef GLOBAL_OBJ"
                   }
                 ]
               }

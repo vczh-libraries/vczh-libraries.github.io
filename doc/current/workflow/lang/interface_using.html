@@ -166,7 +166,7 @@
           },
           {
             "kind": "Program",
-            "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\ninterface Reader\r\n{\r\n}\r\n\r\n$interface IntReader: Reader<int?>;\r\n$interface StringReader: Reader<string?>;\r\n\r\nfunc Read(): Reader^\r\n{\r\n    return new Reader^{};\r\n}\r\n\r\nfunc ReadInt(): IntReader^\r\n{\r\n    return new IntReader^(using Read());\r\n}\r\n\r\nfunc ReadString(): StringReader^\r\n{\r\n    return new StringReader^(using Read());\r\n}\r\n\r\nclass ReaderCoroutine\r\n{\r\n    class Executor\r\n    {\r\n        var readObject: bool = false;\r\n        var source: Enumerable^ = {};\r\n        var enumerator: Enumerator^ = null;\r\n        var co: Coroutine^ = null;\r\n        var result: object = null;\r\n\r\n        func Continue(): bool\r\n        {\r\n            if (co.Status == CoroutineStatus::Stopped)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            var cr = new CoroutineResult^();\r\n            if (co.Failure is not null)\r\n            {\r\n                cr.Failure = co.Failure;\r\n            }\r\n            else if (readObject and enumerator is not null)\r\n            {\r\n                if (enumerator.Next())\r\n                {\r\n                    cr.Result = enumerator.Current;\r\n                }\r\n            }\r\n            co.Resume(false, cr);\r\n            return true;\r\n        }\r\n    }\r\n\r\n    static func SetAndPause(impl: Executor*, numbers: Enumerable^): void\r\n    {\r\n        impl.source = numbers;\r\n        impl.enumerator = numbers.CreateEnumerator();\r\n        impl.readObject = false;\r\n    }\r\n\r\n    static func GetAndRead(impl: Executor*, reader: Reader^): void\r\n    {\r\n        impl.readObject = true;\r\n    }\r\n\r\n    static func ReturnAndExit(impl: Executor*, value: object): void\r\n    {\r\n        impl.result = value;\r\n    }\r\n\r\n    static func Create(creator: func(Executor*): (Coroutine^)): ReaderCoroutine::Executor^\r\n    {\r\n        var e = new Executor^();\r\n        e.co = creator(cast Executor* e);\r\n        return e;\r\n    }\r\n}\r\n\r\nfunc Sum(): ReaderCoroutine::Executor^\r\n$Reader{\r\n    $Set range [1, 10];\r\n    var sum = 0;\r\n    while (true)\r\n    {\r\n        var current = $Get ReadInt();\r\n        if (current is null)\r\n        {\r\n            break;\r\n        }\r\n        sum = sum + current;\r\n    }\r\n    return sum;\r\n}\r\n\r\nfunc main(): string\r\n{\r\n    var e = Sum();\r\n    while (e.Continue()) {}\r\n    return cast string e.result;\r\n}"
+            "code": "module sampleModule;\n\nusing system::*;\n\ninterface Reader\n{\n}\n\n$interface IntReader: Reader<int?>;\n$interface StringReader: Reader<string?>;\n\nfunc Read(): Reader^\n{\n    return new Reader^{};\n}\n\nfunc ReadInt(): IntReader^\n{\n    return new IntReader^(using Read());\n}\n\nfunc ReadString(): StringReader^\n{\n    return new StringReader^(using Read());\n}\n\nclass ReaderCoroutine\n{\n    class Executor\n    {\n        var readObject: bool = false;\n        var source: Enumerable^ = {};\n        var enumerator: Enumerator^ = null;\n        var co: Coroutine^ = null;\n        var result: object = null;\n\n        func Continue(): bool\n        {\n            if (co.Status == CoroutineStatus::Stopped)\n            {\n                return false;\n            }\n\n            var cr = new CoroutineResult^();\n            if (co.Failure is not null)\n            {\n                cr.Failure = co.Failure;\n            }\n            else if (readObject and enumerator is not null)\n            {\n                if (enumerator.Next())\n                {\n                    cr.Result = enumerator.Current;\n                }\n            }\n            co.Resume(false, cr);\n            return true;\n        }\n    }\n\n    static func SetAndPause(impl: Executor*, numbers: Enumerable^): void\n    {\n        impl.source = numbers;\n        impl.enumerator = numbers.CreateEnumerator();\n        impl.readObject = false;\n    }\n\n    static func GetAndRead(impl: Executor*, reader: Reader^): void\n    {\n        impl.readObject = true;\n    }\n\n    static func ReturnAndExit(impl: Executor*, value: object): void\n    {\n        impl.result = value;\n    }\n\n    static func Create(creator: func(Executor*): (Coroutine^)): ReaderCoroutine::Executor^\n    {\n        var e = new Executor^();\n        e.co = creator(cast Executor* e);\n        return e;\n    }\n}\n\nfunc Sum(): ReaderCoroutine::Executor^\n$Reader{\n    $Set range [1, 10];\n    var sum = 0;\n    while (true)\n    {\n        var current = $Get ReadInt();\n        if (current is null)\n        {\n            break;\n        }\n        sum = sum + current;\n    }\n    return sum;\n}\n\nfunc main(): string\n{\n    var e = Sum();\n    while (e.Continue()) {}\n    return cast string e.result;\n}"
           },
           {
             "kind": "Text",
@@ -289,7 +289,7 @@
               },
               {
                 "kind": "Program",
-                "code": "$interface IntReader: Reader<int?>;\r\n$interface StringReader: Reader<string?>;"
+                "code": "$interface IntReader: Reader<int?>;\n$interface StringReader: Reader<string?>;"
               },
               {
                 "kind": "Text",
@@ -297,7 +297,7 @@
               },
               {
                 "kind": "Program",
-                "code": "interface IntReader : Reader\r\n{\r\n    static func CastResult(value : ::system::Object) : (int?)\r\n    {\r\n        return (cast (int?) value);\r\n    }\r\n\r\n    static func StoreResult(value : int?) : (::system::Object)\r\n    {\r\n        return value;\r\n    }\r\n}"
+                "code": "interface IntReader : Reader\n{\n    static func CastResult(value : ::system::Object) : (int?)\n    {\n        return (cast (int?) value);\n    }\n\n    static func StoreResult(value : int?) : (::system::Object)\n    {\n        return value;\n    }\n}"
               },
               {
                 "kind": "Text",
@@ -703,7 +703,7 @@
               },
               {
                 "kind": "Program",
-                "code": "interface Reader\r\n{\r\n    func Dummy(): void;\r\n}\r\n\r\n$interface IntReader: Reader<int?>;\r\n\r\nfunc ReadInt(): IntReader^\r\n{\r\n    return new IntReader^(using Read());\r\n}"
+                "code": "interface Reader\n{\n    func Dummy(): void;\n}\n\n$interface IntReader: Reader<int?>;\n\nfunc ReadInt(): IntReader^\n{\n    return new IntReader^(using Read());\n}"
               },
               {
                 "kind": "Strong",
@@ -720,7 +720,7 @@
               },
               {
                 "kind": "Program",
-                "code": "func ReadInt() : (IntReader^)\r\n{\r\n    return new (IntReader^)\r\n    {\r\n        var source = Read();\r\n\r\n        override func Dummy() : (::system::Void)\r\n        {\r\n            source.Dummy();\r\n        }\r\n    };\r\n}"
+                "code": "func ReadInt() : (IntReader^)\n{\n    return new (IntReader^)\n    {\n        var source = Read();\n\n        override func Dummy() : (::system::Void)\n        {\n            source.Dummy();\n        }\n    };\n}"
               },
               {
                 "kind": "Text",

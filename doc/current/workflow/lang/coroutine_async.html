@@ -181,7 +181,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): Async^\r\n${\r\n    /* legal */\r\n}"
+                    "code": "using system::*;\n\nfunc GetNumbers(): Async^\n${\n    /* legal */\n}"
                   }
                 ]
               }
@@ -226,7 +226,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "using system::*;\r\n\r\nfunc GetNumbers(): void\r\n$Async{\r\n    /* legal */\r\n}"
+                    "code": "using system::*;\n\nfunc GetNumbers(): void\n$Async{\n    /* legal */\n}"
                   }
                 ]
               }
@@ -284,7 +284,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "$Await EXPR; /* legal */\r\nvar NAME = $YieAwaitld EXPR; /* legal */"
+                    "code": "$Await EXPR; /* legal */\nvar NAME = $YieAwaitld EXPR; /* legal */"
                   }
                 ]
               }
@@ -583,7 +583,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nusing system::*;\r\n\r\nfunc Do1(): void\r\n$Async {\r\n    return null;\r\n}\r\n\r\nfunc Do2(): Async^\r\n${\r\n    return null;\r\n}\r\n\r\n$interface StringAsync : Async<string>;\r\n\r\nfunc Do3(): StringAsync^\r\n${\r\n    return \"Text\";\r\n}"
+                "code": "module sampleModule;\n\nusing system::*;\n\nfunc Do1(): void\n$Async {\n    return null;\n}\n\nfunc Do2(): Async^\n${\n    return null;\n}\n\n$interface StringAsync : Async<string>;\n\nfunc Do3(): StringAsync^\n${\n    return \"Text\";\n}"
               },
               {
                 "kind": "List",
@@ -1980,7 +1980,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "class SyncScheduler : public Object, public IAsyncScheduler, public Description<SyncScheduler>\r\n{\r\npublic:\r\n    List<Func<void()>>\t\ttasks;\r\n\r\n    void Run(const Func<void()>& callback)\r\n    {\r\n        auto scheduler = Ptr(new SyncScheduler);\r\n        IAsyncScheduler::RegisterDefaultScheduler(scheduler);\r\n        callback();\r\n        while (scheduler->tasks.Count() > 0)\r\n        {\r\n            auto firstTask = scheduler->tasks[0];\r\n            scheduler->tasks.RemoveAt(0);\r\n            firstTask();\r\n        }\r\n        IAsyncScheduler::UnregisterDefaultScheduler();\r\n    }\r\n\r\n    void Execute(const Func<void()>& callback) override\r\n    {\r\n        tasks.Add(callback);\r\n    }\r\n\r\n    void ExecuteInBackground(const Func<void()>& callback) override\r\n    {\r\n        tasks.Add(callback);\r\n    }\r\n\r\n    void DelayExecute(const Func<void()>& callback, vint milliseconds) override\r\n    {\r\n        // the required waiting time is ignored\r\n        tasks.Add(callback);\r\n    }\r\n};"
+                "code": "class SyncScheduler : public Object, public IAsyncScheduler, public Description<SyncScheduler>\n{\npublic:\n    List<Func<void()>>\t\ttasks;\n\n    void Run(const Func<void()>& callback)\n    {\n        auto scheduler = Ptr(new SyncScheduler);\n        IAsyncScheduler::RegisterDefaultScheduler(scheduler);\n        callback();\n        while (scheduler->tasks.Count() > 0)\n        {\n            auto firstTask = scheduler->tasks[0];\n            scheduler->tasks.RemoveAt(0);\n            firstTask();\n        }\n        IAsyncScheduler::UnregisterDefaultScheduler();\n    }\n\n    void Execute(const Func<void()>& callback) override\n    {\n        tasks.Add(callback);\n    }\n\n    void ExecuteInBackground(const Func<void()>& callback) override\n    {\n        tasks.Add(callback);\n    }\n\n    void DelayExecute(const Func<void()>& callback, vint milliseconds) override\n    {\n        // the required waiting time is ignored\n        tasks.Add(callback);\n    }\n};"
               },
               {
                 "kind": "Text",
@@ -2058,7 +2058,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module sampleModule;\r\n\r\nusing system::*;\r\nusing test::*;\r\n\r\nvar s = \"\";\r\n\r\n$interface IStringAsync : Async<string>;\r\n\r\nfunc GetStringAsync(x : int) : IStringAsync^\r\n${\r\n    s = $\"$(s)[$(x)]\";\r\n    return cast string x;\r\n}\r\n\r\nfunc GetStringAsync2(x : int) : IStringAsync^\r\n{\r\n    var future = Future::Create();\r\n    AsyncScheduler::GetSchedulerForCurrentThread().ExecuteInBackground(func():void\r\n    {\r\n        s = $\"$(s)[$(x)]\";\r\n        future.Promise.SendResult(cast string x);\r\n    });\r\n    \r\n    return new IStringAsync^(using future of Async^);\r\n}\r\n\r\nfunc GetMultipleStrings() : void\r\n$Async{\r\n    for(i in range[0, 1])\r\n    {\r\n        var x = $Await GetStringAsync(i);\r\n        s = $\"$(s)[+$(x)]\";\r\n        var y = $Await GetStringAsync2(i);\r\n        s = $\"$(s)[-$(y)]\";\r\n        $Await Async::Delay(0);\r\n        s = $\"$(s)!\";\r\n    }\r\n}\r\n\r\nfunc main():string\r\n{\r\n    SyncScheduler::Run(GetMultipleStrings);\r\n    return s;\r\n}"
+                "code": "module sampleModule;\n\nusing system::*;\nusing test::*;\n\nvar s = \"\";\n\n$interface IStringAsync : Async<string>;\n\nfunc GetStringAsync(x : int) : IStringAsync^\n${\n    s = $\"$(s)[$(x)]\";\n    return cast string x;\n}\n\nfunc GetStringAsync2(x : int) : IStringAsync^\n{\n    var future = Future::Create();\n    AsyncScheduler::GetSchedulerForCurrentThread().ExecuteInBackground(func():void\n    {\n        s = $\"$(s)[$(x)]\";\n        future.Promise.SendResult(cast string x);\n    });\n    \n    return new IStringAsync^(using future of Async^);\n}\n\nfunc GetMultipleStrings() : void\n$Async{\n    for(i in range[0, 1])\n    {\n        var x = $Await GetStringAsync(i);\n        s = $\"$(s)[+$(x)]\";\n        var y = $Await GetStringAsync2(i);\n        s = $\"$(s)[-$(y)]\";\n        $Await Async::Delay(0);\n        s = $\"$(s)!\";\n    }\n}\n\nfunc main():string\n{\n    SyncScheduler::Run(GetMultipleStrings);\n    return s;\n}"
               },
               {
                 "kind": "List",

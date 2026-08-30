@@ -206,7 +206,7 @@
               },
               {
                 "kind": "Program",
-                "code": "ThreadPoolLite::Queue([]()\r\n{\r\n    // do something\r\n});"
+                "code": "ThreadPoolLite::Queue([]()\n{\n    // do something\n});"
               }
             ]
           },
@@ -219,7 +219,7 @@
               },
               {
                 "kind": "Program",
-                "code": "Thread::CreateAndStart([]()\r\n{\r\n    // do something\r\n}, true);"
+                "code": "Thread::CreateAndStart([]()\n{\n    // do something\n}, true);"
               },
               {
                 "kind": "Text",
@@ -301,7 +301,7 @@
               },
               {
                 "kind": "Program",
-                "code": "EventObject stopEvent;\r\nstopEvent.CreateManualUnsignal(false);\r\n\r\nThreadPoolLite::Queue([&]()\r\n{\r\n    // do something\r\n    stopEvent.Signal();\r\n});\r\n\r\nstopEvent.Wait();"
+                "code": "EventObject stopEvent;\nstopEvent.CreateManualUnsignal(false);\n\nThreadPoolLite::Queue([&]()\n{\n    // do something\n    stopEvent.Signal();\n});\n\nstopEvent.Wait();"
               }
             ]
           }
@@ -333,7 +333,7 @@
               },
               {
                 "kind": "Program",
-                "code": "ThreadVariable<int> v;\r\n\r\nThreadPoolLite::Queue([&]()\r\n{\r\n    // this thread has a copy of v\r\n    v.Set(1);\r\n});\r\n\r\nThreadPoolLite::Queue([&]()\r\n{\r\n    // this thread has another copy of v too\r\n    v.Set(2);\r\n});\r\n\r\n// the main thread also has a different copy of v\r\nv.Set(3);"
+                "code": "ThreadVariable<int> v;\n\nThreadPoolLite::Queue([&]()\n{\n    // this thread has a copy of v\n    v.Set(1);\n});\n\nThreadPoolLite::Queue([&]()\n{\n    // this thread has another copy of v too\n    v.Set(2);\n});\n\n// the main thread also has a different copy of v\nv.Set(3);"
               }
             ]
           }
@@ -550,7 +550,7 @@
               },
               {
                 "kind": "Program",
-                "code": "CriticalSection cs;\r\n\r\nCS_LOCK(cs)\r\n{\r\n    // do something when owning the lock\r\n}"
+                "code": "CriticalSection cs;\n\nCS_LOCK(cs)\n{\n    // do something when owning the lock\n}"
               }
             ]
           },
@@ -605,7 +605,7 @@
               },
               {
                 "kind": "Program",
-                "code": "SpinLock lock;\r\n\r\nSPIN_LOCK(lock)\r\n{\r\n    // do something when owning the lock\r\n}"
+                "code": "SpinLock lock;\n\nSPIN_LOCK(lock)\n{\n    // do something when owning the lock\n}"
               }
             ]
           }
@@ -909,7 +909,7 @@
               },
               {
                 "kind": "Program",
-                "code": "ReaderWriterLock lock;\r\n\r\nREADER_LOCK(lock)\r\n{\r\n    // do something when owning the lock in reader mode\r\n}\r\n\r\nWRITER_LOCK(lock)\r\n{\r\n    // do something when owning the lock in writer mode\r\n}"
+                "code": "ReaderWriterLock lock;\n\nREADER_LOCK(lock)\n{\n    // do something when owning the lock in reader mode\n}\n\nWRITER_LOCK(lock)\n{\n    // do something when owning the lock in writer mode\n}"
               }
             ]
           }
@@ -1081,7 +1081,7 @@
               },
               {
                 "kind": "Program",
-                "code": "CriticalSection lock;\r\nConditionVariable cv;\r\n\r\nCS_LOCK(lock)\r\n{\r\n    // do something before sleeping.\r\n    DoSomething();\r\n\r\n    // give up the lock and become pending on the condition variable,\r\n    // so that another thread could own this lock.\r\n    // cv.WaitOnePending(); or cv.WaitAllPendings(); could wake up this thread.\r\n    // but the lock need to be owned by this thread again in order to actually wake up.\r\n    cv.SleepWith(lock);\r\n\r\n    // do something after sleeping, lock is owned by this thread again.\r\n    DoSomething();\r\n}\r\n\r\nWRITER_LOCK(lock)\r\n{\r\n    // do something when owning the lock in writer mode\r\n}"
+                "code": "CriticalSection lock;\nConditionVariable cv;\n\nCS_LOCK(lock)\n{\n    // do something before sleeping.\n    DoSomething();\n\n    // give up the lock and become pending on the condition variable,\n    // so that another thread could own this lock.\n    // cv.WaitOnePending(); or cv.WaitAllPendings(); could wake up this thread.\n    // but the lock need to be owned by this thread again in order to actually wake up.\n    cv.SleepWith(lock);\n\n    // do something after sleeping, lock is owned by this thread again.\n    DoSomething();\n}\n\nWRITER_LOCK(lock)\n{\n    // do something when owning the lock in writer mode\n}"
               }
             ]
           },

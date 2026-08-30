@@ -173,7 +173,7 @@
               },
               {
                 "kind": "Program",
-                "code": "module Rpc;\r\nusing system::*;\r\n\r\nnamespace Chat\r\n{\r\n\t@rpc:Interface\r\n\t@rpc:Ctor\r\n\tinterface IChatService\r\n\t{\r\n\t\tfunc Send(text : string) : void;\r\n\t\tfunc LastMessage() : string;\r\n\t}\r\n}"
+                "code": "module Rpc;\nusing system::*;\n\nnamespace Chat\n{\n\t@rpc:Interface\n\t@rpc:Ctor\n\tinterface IChatService\n\t{\n\t\tfunc Send(text : string) : void;\n\t\tfunc LastMessage() : string;\n\t}\n}"
               }
             ]
           },
@@ -369,7 +369,7 @@
               },
               {
                 "kind": "Program",
-                "code": "func serviceMain(lc : IRpcLifecycle*) : void\r\n{\r\n\tvar service = new Chat::IChatService^\r\n\t{\r\n\t\tvar last : string = \"\";\r\n\r\n\t\toverride func Send(text : string) : void\r\n\t\t{\r\n\t\t\tlast = text;\r\n\t\t}\r\n\r\n\t\toverride func LastMessage() : string\r\n\t\t{\r\n\t\t\treturn last;\r\n\t\t}\r\n\t};\r\n\r\n\tlc.RegisterLocalService(rpc_GetIds()[\"Chat::IChatService\"], service);\r\n}\r\n\r\nfunc clientMain(lc : IRpcLifecycle*) : string\r\n{\r\n\tvar service = cast (Chat::IChatService^) lc.RequestService(\"Chat::IChatService\");\r\n\tservice.Send(\"hello\");\r\n\treturn service.LastMessage();\r\n}"
+                "code": "func serviceMain(lc : IRpcLifecycle*) : void\n{\n\tvar service = new Chat::IChatService^\n\t{\n\t\tvar last : string = \"\";\n\n\t\toverride func Send(text : string) : void\n\t\t{\n\t\t\tlast = text;\n\t\t}\n\n\t\toverride func LastMessage() : string\n\t\t{\n\t\t\treturn last;\n\t\t}\n\t};\n\n\tlc.RegisterLocalService(rpc_GetIds()[\"Chat::IChatService\"], service);\n}\n\nfunc clientMain(lc : IRpcLifecycle*) : string\n{\n\tvar service = cast (Chat::IChatService^) lc.RequestService(\"Chat::IChatService\");\n\tservice.Send(\"hello\");\n\treturn service.LastMessage();\n}"
               }
             ]
           },

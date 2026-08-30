@@ -590,7 +590,7 @@
                 "content": [
                   {
                     "kind": "Program",
-                    "code": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Resource>\r\n<Folder name=\"GacGenConfig\">\r\n    <Folder name=\"Cpp\">\r\n    <Text name=\"SourceFolder\">Source</Text>\r\n    <Text name=\"Resource\">..\\HelloWorld.bin</Text>\r\n    <Text name=\"NormalInclude\">GacUI.h</Text>\r\n    <Text name=\"Name\">HelloWorld</Text>\r\n    </Folder>\r\n</Folder>\r\n<Folder name=\"MainWindow\">\r\n    <Instance name=\"MainWindowResource\">\r\n        <Instance ref.CodeBehind=\"false\" ref.Class=\"helloworld::MainWindow\">\r\n            <Window Text=\"Hello, world!\" ClientSize=\"x:480 y:320\">\r\n                <att.BoundsComposition-set PreferredMinSize=\"x:480 y:320\"/>\r\n                <Label Text=\"Welcome to GacUI Library!\">\r\n                    <att.Font>fontFamily:\"Segoe UI\" size:32 antialias:true</att.Font>\r\n                </Label>\r\n            </Window>\r\n        </Instance>\r\n    </Instance>\r\n</Folder>\r\n</Resource>",
+                    "code": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Resource>\n<Folder name=\"GacGenConfig\">\n    <Folder name=\"Cpp\">\n    <Text name=\"SourceFolder\">Source</Text>\n    <Text name=\"Resource\">..\\HelloWorld.bin</Text>\n    <Text name=\"NormalInclude\">GacUI.h</Text>\n    <Text name=\"Name\">HelloWorld</Text>\n    </Folder>\n</Folder>\n<Folder name=\"MainWindow\">\n    <Instance name=\"MainWindowResource\">\n        <Instance ref.CodeBehind=\"false\" ref.Class=\"helloworld::MainWindow\">\n            <Window Text=\"Hello, world!\" ClientSize=\"x:480 y:320\">\n                <att.BoundsComposition-set PreferredMinSize=\"x:480 y:320\"/>\n                <Label Text=\"Welcome to GacUI Library!\">\n                    <att.Font>fontFamily:\"Segoe UI\" size:32 antialias:true</att.Font>\n                </Label>\n            </Window>\n        </Instance>\n    </Instance>\n</Folder>\n</Resource>",
                     "language": "xml"
                   }
                 ]
@@ -926,7 +926,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include \"UI/Source/HelloWorld.h\"\r\n\r\nusing namespace vl::collections;\r\nusing namespace vl::stream;\r\n\r\nvoid GuiMain()\r\n{\r\n    {\r\n        FileStream fileStream(L\"HelloWorld.bin\", FileStream::ReadOnly);\r\n        GetResourceManager()->LoadResourceOrPending(fileStream);\r\n    }\r\n    helloworld::MainWindow window;\r\n    window.MoveToScreenCenter();\r\n    GetApplication()->Run(&window);\r\n}",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\n#include \"UI/Source/HelloWorld.h\"\n\nusing namespace vl::collections;\nusing namespace vl::stream;\n\nvoid GuiMain()\n{\n    {\n        FileStream fileStream(L\"HelloWorld.bin\", FileStream::ReadOnly);\n        GetResourceManager()->LoadResourceOrPending(fileStream);\n    }\n    helloworld::MainWindow window;\n    window.MoveToScreenCenter();\n    GetApplication()->Run(&window);\n}",
                 "language": "c++"
               }
             ]
@@ -1021,7 +1021,7 @@
             "content": [
               {
                 "kind": "Program",
-                "code": "#define GAC_HEADER_USE_NAMESPACE\r\n#include <GacUI.h>\r\n#include <Skins\\DarkSkin\\DarkSkin.h>\r\n#include <Windows.h>\r\n\r\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\r\n{\r\npublic:\r\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\r\n    {\r\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\r\n    }\r\n\r\n    void Load(bool, bool)override\r\n    {\r\n        RegisterTheme(Ptr(new darkskin::Theme));\r\n    }\r\n\r\n    void Unload(bool, bool)override\r\n    {\r\n    }\r\n};\r\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\r\n\r\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\r\n{\r\n    return SetupWindowsDirect2DRenderer();\r\n}",
+                "code": "#define GAC_HEADER_USE_NAMESPACE\n#include <GacUI.h>\n#include <Skins\\DarkSkin\\DarkSkin.h>\n#include <Windows.h>\n\nclass DefaultSkinPlugin : public Object, public IGuiPlugin\n{\npublic:\n    GUI_PLUGIN_NAME(Custom_DefaultSkinPlugin)\n    {\n        GUI_PLUGIN_DEPEND(GacGen_DarkSkinResourceLoader);\n    }\n\n    void Load(bool, bool)override\n    {\n        RegisterTheme(Ptr(new darkskin::Theme));\n    }\n\n    void Unload(bool, bool)override\n    {\n    }\n};\nGUI_REGISTER_PLUGIN(DefaultSkinPlugin)\n\nint CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)\n{\n    return SetupWindowsDirect2DRenderer();\n}",
                 "language": "c++"
               }
             ]
