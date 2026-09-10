@@ -404,6 +404,139 @@
             "code": "<Instance ref.CodeBehind=\"false\" ref.Class=\"darkskin::Theme\" xmlns:x=\"darkskin::*\">\n  <ThemeTemplates Name=\"DarkSkin\" PreferCustomFrameWindow=\"true\">\n    <att.SystemFrameWindow>x:SystemFrameWindowTemplate</att.SystemFrameWindow>\n    <att.CustomFrameWindow>x:CustomFrameWindowTemplate</att.CustomFrameWindow>\n    <att.CustomControl>x:CustomControlTemplate</att.CustomControl>\n    <att.Tooltip>x:TooltipTemplate</att.Tooltip>\n    <att.Label>x:LabelTemplate</att.Label>\n    <att.ShortcutKey>x:ShortcutKeyTemplate</att.ShortcutKey>\n    <att.ScrollView>x:ScrollViewTemplate</att.ScrollView>\n    <att.GroupBox>x:GroupBoxTemplate</att.GroupBox>\n    <att.Tab>x:TabTemplate</att.Tab>\n    <att.ComboBox>x:ComboBoxTemplate</att.ComboBox>\n    <att.MultilineTextBox>x:DocumentViewerTemplate</att.MultilineTextBox>\n    <att.SinglelineTextBox>x:DocumentLabelTemplate</att.SinglelineTextBox>\n    <att.DocumentViewer>x:DocumentViewerTemplate</att.DocumentViewer>\n    <att.DocumentLabel>x:DocumentLabelTemplate</att.DocumentLabel>\n    <att.DocumentTextBox>x:DocumentTextBoxTemplate</att.DocumentTextBox>\n    <att.ListView>x:ListViewTemplate</att.ListView>\n    <att.TreeView>x:TreeViewTemplate</att.TreeView>\n    <att.TextList>x:TextListTemplate</att.TextList>\n    <att.Menu>x:ToolstripMenuTemplate</att.Menu>\n    <att.MenuBar>x:ToolstripTemplate</att.MenuBar>\n    <att.MenuSplitter>x:MenuSplitterTemplate</att.MenuSplitter>\n    <att.MenuBarButton>x:MenuBarButtonTemplate</att.MenuBarButton>\n    <att.MenuItemButton>x:MenuItemButtonTemplate</att.MenuItemButton>\n    <att.ToolstripToolBar>x:ToolstripTemplate</att.ToolstripToolBar>\n    <att.ToolstripToolBarInMenu>x:ToolstripInMenuTemplate</att.ToolstripToolBarInMenu>\n    <att.ToolstripButton>x:ToolstripButtonTemplate</att.ToolstripButton>\n    <att.ToolstripDropdownButton>x:ToolstripDropdownButtonTemplate</att.ToolstripDropdownButton>\n    <att.ToolstripSplitButton>x:ToolstripSplitButtonTemplate</att.ToolstripSplitButton>\n    <att.ToolstripSplitter>x:ToolstripSplitterTemplate</att.ToolstripSplitter>\n    <att.ToolstripSplitterInMenu>x:ToolstripSplitterInMenuTemplate</att.ToolstripSplitterInMenu>\n    <att.Button>x:ButtonTemplate</att.Button>\n    <att.CheckBox>x:CheckBoxTemplate</att.CheckBox>\n    <att.RadioButton>x:RadioButtonTemplate</att.RadioButton>\n    <att.DatePicker>x:DatePickerTemplate</att.DatePicker>\n    <att.DateComboBox>x:ComboBoxTemplate</att.DateComboBox>\n    <att.HScroll>x:HScrollTemplate</att.HScroll>\n    <att.VScroll>x:VScrollTemplate</att.VScroll>\n    <att.HTracker>x:HTrackerTemplate</att.HTracker>\n    <att.VTracker>x:VTrackerTemplate</att.VTracker>\n    <att.ProgressBar>x:ProgressBarTemplate</att.ProgressBar>\n    <att.RibbonTab>x:TabTemplate</att.RibbonTab>\n    <att.RibbonSmallButton>x:RibbonSmallButtonTemplate</att.RibbonSmallButton>\n    <att.RibbonSmallDropdownButton>x:RibbonSmallDropdownButtonTemplate</att.RibbonSmallDropdownButton>\n    <att.RibbonSmallSplitButton>x:RibbonSmallSplitButtonTemplate</att.RibbonSmallSplitButton>\n    <att.RibbonLargeButton>x:RibbonLargeButtonTemplate</att.RibbonLargeButton>\n    <att.RibbonLargeDropdownButton>x:RibbonLargeDropdownButtonTemplate</att.RibbonLargeDropdownButton>\n    <att.RibbonLargeSplitButton>x:RibbonLargeSplitButtonTemplate</att.RibbonLargeSplitButton>\n    <att.RibbonGroup>x:RibbonGroupTemplate</att.RibbonGroup>\n    <att.RibbonGroupMenu>x:RibbonGroupMenuTemplate</att.RibbonGroupMenu>\n    <att.RibbonSplitter>x:ToolstripSplitterTemplate</att.RibbonSplitter>\n    <att.RibbonSmallIconLabel>x:RibbonSmallIconLabelTemplate</att.RibbonSmallIconLabel>\n    <att.RibbonIconLabel>x:RibbonIconLabelTemplate</att.RibbonIconLabel>\n    <att.RibbonButtons>x:RibbonButtonsTemplate</att.RibbonButtons>\n    <att.RibbonToolstrips>x:RibbonToolstripsTemplate</att.RibbonToolstrips>\n    <att.RibbonToolstripHeader>x:RibbonToolstripHeaderTemplate</att.RibbonToolstripHeader>\n    <att.RibbonGallery>x:RibbonGalleryTemplate</att.RibbonGallery>\n    <att.RibbonGalleryList>x:RibbonGalleryTemplate</att.RibbonGalleryList>\n    <att.RibbonGalleryItemList>x:RibbonGalleryItemListTemplate</att.RibbonGalleryItemList>\n    <att.RibbonToolstripMenu>x:RibbonToolstripMenuTemplate</att.RibbonToolstripMenu>\n  </ThemeTemplates>\n</Instance>"
           }
         ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Refreshing existing controls",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "RegisterTheme"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "UnregisterTheme"
+              },
+              {
+                "kind": "Text",
+                "text": " change how later template lookups resolve; existing controls keep their current template objects until refreshed.\n                After changing the registered themes or a skin's palette, call "
+              },
+              {
+                "kind": "Name",
+                "text": "GetApplication()->RefreshThemes()"
+              },
+              {
+                "kind": "Text",
+                "text": " to apply the current defaults to all live windows.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiApplication::RefreshThemes()"
+              },
+              {
+                "kind": "Text",
+                "text": " includes hidden windows, menus and popups.\n                Call "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiControl::RefreshThemes()"
+              },
+              {
+                "kind": "Text",
+                "text": " when only one control and its descendants should be refreshed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Both methods run synchronously on the UI thread.\n                A control whose "
+              },
+              {
+                "kind": "Name",
+                "text": "ControlTemplate"
+              },
+              {
+                "kind": "Text",
+                "text": " factory is empty rebuilds its template using its "
+              },
+              {
+                "kind": "Name",
+                "text": "ControlThemeName"
+              },
+              {
+                "kind": "Text",
+                "text": " and the current registered themes.\n                Explicitly assigned "
+              },
+              {
+                "kind": "Name",
+                "text": "ControlTemplate"
+              },
+              {
+                "kind": "Text",
+                "text": " factories are preserved, and traversal still visits their child controls.\n                The refresh snapshots the windows and child controls being visited and skips those disposed during rebuilding.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Controls keep their application state while their template objects are replaced: existing children, text and document models, selection and editing state, focus, and logical scroll positions survive rebuilding.\n                A new template can change layout, so the final viewport can clamp a scroll position to its new valid range.\n                Keep references to controls and application data; reacquire template-owned compositions or controls after refreshing.\n                If an event is running inside the template being replaced, queue the refresh with "
+              },
+              {
+                "kind": "Name",
+                "text": "InvokeInMainThread"
+              },
+              {
+                "kind": "Text",
+                "text": " so that event dispatch can finish first.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For TuiSkin, call "
+              },
+              {
+                "kind": "Name",
+                "text": "tuiskin::SetColorPackage"
+              },
+              {
+                "kind": "Text",
+                "text": " before refreshing.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/tui.html#Change-the-theme-while-running",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Change the theme while running"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for a palette-switching example.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Refreshing-existing-controls"
       }
     ]
   }

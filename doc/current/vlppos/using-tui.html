@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Using Terminal UI -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "vlppos",
+    "using-tui"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Vlpp OS",
+      "selected": false,
+      "path": [
+        "vlppos",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Using Streams",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-streams"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Using Threads and Locks",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-threads"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Using Inter-Process Channels",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "using-inter-process"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Using Terminal UI",
+          "selected": true,
+          "path": [
+            "vlppos",
+            "using-tui"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "vlppos",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": true,
+  "topic": {
+    "kind": "Topic",
+    "title": "Using Terminal UI",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Name",
+            "text": "vl::console::TUI"
+          },
+          {
+            "kind": "Text",
+            "text": " provides terminal input, cell drawing and screen updates on Windows, Linux and macOS.\n            Its public types are declared in "
+          },
+          {
+            "kind": "Name",
+            "text": "Source/TUI/TUI.h"
+          },
+          {
+            "kind": "Text",
+            "text": " and shipped in "
+          },
+          {
+            "kind": "Name",
+            "text": "VlppOS.h"
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            For an application built from GacUI controls, use the "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/tui.html",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacUI terminal setup functions"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ", which manage this lower-level session for you.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Session and callbacks",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Implement "
+              },
+              {
+                "kind": "Name",
+                "text": "ITuiCallback"
+              },
+              {
+                "kind": "Text",
+                "text": ", install the listener with "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::InstallListener"
+              },
+              {
+                "kind": "Text",
+                "text": ", and call "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::Start(TuiStartOptions{})"
+              },
+              {
+                "kind": "Text",
+                "text": " on the thread that owns the session.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "Start"
+              },
+              {
+                "kind": "Text",
+                "text": " takes over the terminal and runs until "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::Stop()"
+              },
+              {
+                "kind": "Text",
+                "text": " is requested on that thread; it restores terminal state before returning or rethrowing a callback exception.\n                Keep the listener alive until it is uninstalled, including when startup throws.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "Starting"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "BufferSizeChanged"
+              },
+              {
+                "kind": "Text",
+                "text": ", keyboard and mouse callbacks, and "
+              },
+              {
+                "kind": "Name",
+                "text": "Timer"
+              },
+              {
+                "kind": "Text",
+                "text": " run on the owner thread.\n                Use "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::StartTimer(milliseconds)"
+              },
+              {
+                "kind": "Text",
+                "text": " with a positive interval for periodic work.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "Stop"
+              },
+              {
+                "kind": "Text",
+                "text": " requests exit; it does not immediately destroy the active session.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::IsStopRequested()"
+              },
+              {
+                "kind": "Text",
+                "text": " distinguishes that request from "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::IsInUse()"
+              },
+              {
+                "kind": "Text",
+                "text": ", which remains true while the session is active.\n                Active-session APIs require the owner thread.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Run with interactive terminal input and output, without redirecting them to files or pipes.\n                Ordinary "
+              },
+              {
+                "kind": "Name",
+                "text": "Console"
+              },
+              {
+                "kind": "Text",
+                "text": " operations are disabled while TUI owns the terminal.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiStartOptions::colorMode"
+              },
+              {
+                "kind": "Text",
+                "text": " accepts "
+              },
+              {
+                "kind": "Name",
+                "text": "Auto"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "TrueColor"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "Color256"
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Name",
+                "text": "Color16"
+              },
+              {
+                "kind": "Text",
+                "text": " from "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiColorMode"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Query the selected mode with "
+              },
+              {
+                "kind": "Name",
+                "text": "TUI::GetColorMode()"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                On POSIX, automatic detection uses "
+              },
+              {
+                "kind": "Name",
+                "text": "COLORTERM"
+              },
+              {
+                "kind": "Text",
+                "text": " for true color and "
+              },
+              {
+                "kind": "Name",
+                "text": "TERM"
+              },
+              {
+                "kind": "Text",
+                "text": " for 256 colors, falling back to 16 colors.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Cell drawing and clipping",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The active buffer is available through "
+              },
+              {
+                "kind": "Name",
+                "text": "GetBuffer"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "GetBufferWidth"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "GetBufferHeight"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Reacquire its pointer and dimensions after "
+              },
+              {
+                "kind": "Name",
+                "text": "BufferSizeChanged"
+              },
+              {
+                "kind": "Text",
+                "text": "; resizing can replace the buffer.\n                Draw with "
+              },
+              {
+                "kind": "Name",
+                "text": "PrintChar"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "DrawLineV"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "DrawLineH"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "DrawRect"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "Clear"
+              },
+              {
+                "kind": "Text",
+                "text": ", then call "
+              },
+              {
+                "kind": "Name",
+                "text": "RenderBuffer"
+              },
+              {
+                "kind": "Text",
+                "text": " to update the terminal.\n                Each helper also has an overload taking "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiPixel* buffer, vint width, vint height"
+              },
+              {
+                "kind": "Text",
+                "text": " for caller-owned buffers without an active terminal session.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Every drawing overload accepts a final optional "
+              },
+              {
+                "kind": "Name",
+                "text": "const TuiClipper* clipper = nullptr"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The clipper covers "
+              },
+              {
+                "kind": "Name",
+                "text": "[x1, x2)"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "[y1, y2)"
+              },
+              {
+                "kind": "Text",
+                "text": " and is intersected with the buffer bounds; a null clipper uses the entire buffer.\n                Its fields default to zero, so a pointer to a default-constructed clipper selects an empty area. Inverted bounds also paint nothing; clipping does not reorder them.\n                Line, rectangle and "
+              },
+              {
+                "kind": "Name",
+                "text": "Clear"
+              },
+              {
+                "kind": "Text",
+                "text": " drawing coordinates include their endpoints.\n                Clipping masks the original geometry, so it does not move a rectangle's border to the clip edge.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example, draw into a caller-owned 12 by 4 cell buffer while limiting writes to its inner area:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "using namespace vl::console;\n\nTuiPixel cells[12 * 4] = {};\nTuiClipper clip{ 1, 1, 11, 3 };\nTuiPrintOptions text;\nTUI::Clear(cells, 12, 4, TuiColor{ 0, 0, 32 }, 0, 0, 11, 3, &clip);\nTUI::PrintChar(cells, 12, 4, text, U'A', 1, 1, &clip);",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "MeasureChar"
+              },
+              {
+                "kind": "Text",
+                "text": " reports a scalar's cell width. A width-two character requires both cells inside the clip; a clipped half is not drawn.\n                Drawing over either half of an existing wide character repairs its paired cell, even if that paired cell lies outside the clip, to keep the buffer valid.\n                Prefer the drawing helpers over directly modifying wide-character and continuation cells.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Portable input",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Keyboard, character and mouse events use the shared native input types from "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::presentation"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Modifier fields, including "
+              },
+              {
+                "kind": "Name",
+                "text": "osSuper"
+              },
+              {
+                "kind": "Text",
+                "text": ", describe the events received from the terminal.\n                The terminal or desktop can consume shortcuts before delivery, and POSIX terminal protocols do not always report physical key releases or distinguish every key combination.\n                Check essential commands in the target terminal and provide alternatives for intercepted shortcuts.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -348,6 +348,69 @@
                     "text": ".\n                "
                   }
                 ]
+              },
+              {
+                "kind": "ContentListItem",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For a local terminal application, call "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "SetupTuiWindowsRenderer()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on Windows,\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "vl::presentation::wayland::SetupTuiWaylandRenderer()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on Linux, or\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "vl::presentation::osx::SetupTuiCocoaRenderer()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on macOS from a console entry point.\n                    Each accepts an optional "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "const vl::presentation::TuiConfiguration&"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and calls "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiMain()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " with terminal rendering and hosted windows.\n                    See "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/tui.html",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Build a terminal application"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for platform headers and TuiSkin registration.\n                "
+                  }
+                ]
               }
             ]
           }
@@ -473,6 +536,53 @@
           {
             "kind": "Text",
             "text": " can be used to manage all registered themes.\n            A single theme object is not required to provide control templates for all controls,\n            but all registered themes must cover all controls.\n            The latest registered theme has the top priority.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            After changing registered themes or their palette, call "
+          },
+          {
+            "kind": "Name",
+            "text": "GuiApplication::RefreshThemes()"
+          },
+          {
+            "kind": "Text",
+            "text": " through "
+          },
+          {
+            "kind": "Name",
+            "text": "GetApplication()->RefreshThemes()"
+          },
+          {
+            "kind": "Text",
+            "text": " on the UI thread.\n            It synchronously refreshes all live windows, including hidden popups and menus.\n            "
+          },
+          {
+            "kind": "Name",
+            "text": "GuiControl::RefreshThemes()"
+          },
+          {
+            "kind": "Text",
+            "text": " refreshes one control and its descendants instead.\n            Both preserve explicitly assigned control templates while rebuilding templates obtained from the registered themes.\n            See "
+          },
+          {
+            "kind": "PageLink",
+            "href": "/gacui/kb/dtemplates.html#Refreshing-existing-controls",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Refreshing existing controls"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " for the timing and lifetime rules.\n        "
           }
         ]
       },

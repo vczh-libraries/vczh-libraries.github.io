@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Build a terminal application -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "tui"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": " ",
+          "name": "Build your first GacUI Application!",
+          "selected": false,
+          "path": [
+            "gacui",
+            "running"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Build a terminal application",
+          "selected": true,
+          "path": [
+            "gacui",
+            "tui"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Knowledge Base",
+          "selected": false,
+          "path": [
+            "gacui",
+            "kb",
+            "home"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "GacUI XML Resource",
+          "selected": false,
+          "path": [
+            "gacui",
+            "xmlres",
+            "home"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Advanced Topics",
+          "selected": false,
+          "path": [
+            "gacui",
+            "advanced",
+            "home"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "Hosted Mode and Remote Protocol",
+          "selected": false,
+          "path": [
+            "gacui",
+            "modes",
+            "home"
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Coding Agent Supports",
+          "selected": false,
+          "subNodes": [
+            {
+              "icon": " ",
+              "name": "AutomationService",
+              "selected": false,
+              "path": [
+                "gacui",
+                "coding-agent",
+                "automation-service"
+              ]
+            }
+          ]
+        },
+        {
+          "icon": " ",
+          "name": "Breaking changes from 1.0",
+          "selected": false,
+          "path": [
+            "gacui",
+            "upgrade"
+          ]
+        },
+        {
+          "icon": "+",
+          "name": "References",
+          "selected": false,
+          "path": [
+            "gacui",
+            "ref"
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": true,
+  "topic": {
+    "kind": "Topic",
+    "title": "Build a terminal application",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Text",
+            "text": "\n            GacUI's text user interface (TUI) runs locally in a terminal on Windows, Linux and macOS.\n            It uses the same controls, compositions, data binding and XML resource compiler as a graphical application,\n            with "
+          },
+          {
+            "kind": "Name",
+            "text": "TuiSkin"
+          },
+          {
+            "kind": "Text",
+            "text": " templates sized in terminal cells.\n            The "
+          },
+          {
+            "kind": "PageLink",
+            "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_ControlTemplate/TuiSkin",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "TuiSkin tutorial"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "\n            contains a complete control showcase, localized dialogs, rich text and window-closing examples.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Choose the platform entry point",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Define "
+              },
+              {
+                "kind": "Name",
+                "text": "void GuiMain()"
+              },
+              {
+                "kind": "Text",
+                "text": " as for a graphical GacUI application, and call the platform's terminal setup function from your console entry point:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Windows: "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "SetupTuiWindowsRenderer()"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", declared in GacUI's "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "GacUI.h"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Use Windows Terminal."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Linux: "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "vl::presentation::wayland::SetupTuiWaylandRenderer()"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", declared in wGac's "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "WGac/TUI/TuiWGacController.h"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "macOS: "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "vl::presentation::osx::SetupTuiCocoaRenderer()"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", declared in iGac's "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Mac/TUI/TuiCocoaController.h"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                All three return "
+              },
+              {
+                "kind": "Name",
+                "text": "int"
+              },
+              {
+                "kind": "Text",
+                "text": " and accept an optional "
+              },
+              {
+                "kind": "Name",
+                "text": "const vl::presentation::TuiConfiguration& configuration = {}"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Its "
+              },
+              {
+                "kind": "Name",
+                "text": "tabInterval"
+              },
+              {
+                "kind": "Text",
+                "text": " field defaults to 4 and must be positive; it controls tab stops in terminal text layout.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The setup function initializes GacUI and calls "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiMain()"
+              },
+              {
+                "kind": "Text",
+                "text": " inside the terminal session.\n                It combines the shared terminal renderer and hosted-window support with the platform's native services.\n                For example, wGac supplies native image services and a terminal clipboard service using XWayland when available, while iGac uses Cocoa services without creating an AppKit window or taking focus away from the terminal.\n                Linux and macOS startup initialize "
+              },
+              {
+                "kind": "Name",
+                "text": "LC_CTYPE"
+              },
+              {
+                "kind": "Text",
+                "text": " from the environment before creating services; use a UTF-8 locale.\n                The "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/wGac/tree/master/WGacTuiControlTest",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "wGac showcase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/iGac/tree/master/MacTuiControlTest",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "iGac showcase"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " provide platform entry points and projects.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                GacUI uses "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/vlppos/using-tui.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VlppOS TUI"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for terminal input, cell buffers and output.\n                The setup functions select its automatic color mode. "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiConfiguration"
+              },
+              {
+                "kind": "Text",
+                "text": " configures GacUI text layout; it does not contain the lower-level "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiStartOptions::colorMode"
+              },
+              {
+                "kind": "Text",
+                "text": " option.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Build and run the Windows showcase",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": true,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "PageLink",
+                        "href": "https://github.com/vczh-libraries/Release",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Download the Release repository"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", including its Import, Tools and Tutorial folders."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Open "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Tutorial/GacUI_ControlTemplate/GacUI_ControlTemplate.sln"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " with the Visual Studio C++ toolset configured by its projects. Build the TuiSkin project in Debug or Release, for Win32 or x64. The solution also builds its GacUILite dependency."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Open Windows Terminal and change directory to "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "Tutorial/GacUI_ControlTemplate/TuiSkin"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Keep this as the working directory: the application loads "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "../UIRes/TuiSkin.bin"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Run the executable from the solution's output folder. Debug Win32 uses "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "../Debug/TuiSkin.exe"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "; Debug x64 uses "
+                      },
+                      {
+                        "kind": "Name",
+                        "text": "../x64/Debug/TuiSkin.exe"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Substitute Release for a Release build."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Run interactively with the terminal's input and output handles; do not redirect application output into a file or pipe.\n                The first frame fits the current viewport, even when it differs from the showcase's authored 120 by 40 size.\n                Resize the terminal to check layout and scrolling. The Exit page demonstrates direct and queued Hide/Close requests,\n                a close veto and explicit Stop calls. An accepted close returns to the shell and restores terminal state.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Console startup and TuiSkin registration",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The tutorial is a Console application. Its reusable startup source,\n                "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/blob/master/Tutorial/Lib/GacUILite/TuiMain.cpp",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "GacUILite/TuiMain.cpp"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                calls the local terminal setup function:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "int wmain()\n{\n    return SetupTuiWindowsRenderer();\n}",
+                "language": "C++"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Define "
+              },
+              {
+                "kind": "Name",
+                "text": "GACUILITE_TUI_APPLICATION"
+              },
+              {
+                "kind": "Text",
+                "text": " for every configuration of the console project.\n                Compile both GacUILite startup sources directly in that project:\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "WinMain.cpp"
+              },
+              {
+                "kind": "Text",
+                "text": " is wholly guarded by "
+              },
+              {
+                "kind": "Name",
+                "text": "#ifndef GACUILITE_TUI_APPLICATION"
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                and "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiMain.cpp"
+              },
+              {
+                "kind": "Text",
+                "text": " by "
+              },
+              {
+                "kind": "Name",
+                "text": "#ifdef GACUILITE_TUI_APPLICATION"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The shared static library is compiled separately, so an executable's macro cannot change its compilation.\n                Existing graphical projects use the library's GUI startup without defining this macro.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                GacUILite compiles "
+              },
+              {
+                "kind": "Name",
+                "text": "Import/Skins/TuiSkin/TuiSkin.cpp"
+              },
+              {
+                "kind": "Text",
+                "text": " with "
+              },
+              {
+                "kind": "Name",
+                "text": "/bigobj"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The startup plugin depends on "
+              },
+              {
+                "kind": "Name",
+                "text": "GacGen_TuiSkinResourceLoader"
+              },
+              {
+                "kind": "Text",
+                "text": " and initializes the palette before registering the theme:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "tuiskin::SetColorPackage(tuiskin::CreateDefaultColorPackage());\nRegisterTheme(Ptr(new tuiskin::TuiTheme));",
+                "language": "C++"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                These calls run before controls are constructed in "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiMain()"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Keep the plugin registration and dependency from the supplied startup source when reusing it.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Compile and load resources",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Authored resources live in "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiSkin/UI/TuiControlTest"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                After editing XML, localized text or document resources, run the supplied resource builder and rebuild the C++ project.\n                For a checkout at "
+              },
+              {
+                "kind": "Name",
+                "text": "C:/Code/Release"
+              },
+              {
+                "kind": "Text",
+                "text": ", use:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "& 'C:\\Code\\Release\\Tools\\GacBuild.ps1' -FileName 'C:\\Code\\Release\\Tutorial\\GacUI.xml'",
+                "language": "PowerShell"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The builder generates and merges C++ for both architectures.\n                The tutorial compiles "
+              },
+              {
+                "kind": "Name",
+                "text": "Source/TuiControlTestPartialClasses.cpp"
+              },
+              {
+                "kind": "Text",
+                "text": " and includes "
+              },
+              {
+                "kind": "Name",
+                "text": "Source/TuiControlTest.h"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Generated ordinary includes name "
+              },
+              {
+                "kind": "Name",
+                "text": "GacUI.h"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "Skins/TuiSkin/TuiSkin.h"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The resource's "
+              },
+              {
+                "kind": "Name",
+                "text": "GacGenConfig/Cpp/Resource"
+              },
+              {
+                "kind": "Text",
+                "text": " setting is\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "../../../UIRes/TuiSkin.bin"
+              },
+              {
+                "kind": "Text",
+                "text": ", relative to its resource directory.\n                Generated C++ supplies the UI classes; the binary supplies non-code resources such as rich text documents.\n                The tutorial loads the binary before constructing its main window:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "void GuiMain()\n{\n    {\n        FileStream fileStream(L\"../UIRes/TuiSkin.bin\", FileStream::ReadOnly);\n        GetResourceManager()->LoadResourceOrPending(fileStream);\n    }\n    tuidemo::TuiMainWindow window;\n    window.ForceCalculateSizeImmediately();\n    GetApplication()->Run(&window);\n}",
+                "language": "C++"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Build from the packaged project to retain its required imports and preprocessor definitions.\n                It uses "
+              },
+              {
+                "kind": "Name",
+                "text": "VCZH_DEBUG_NO_REFLECTION"
+              },
+              {
+                "kind": "Text",
+                "text": "; the separate "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiSkinReflection"
+              },
+              {
+                "kind": "Text",
+                "text": " pair is unnecessary for this generated-C++ application.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Change the theme while running",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                After changing a TuiSkin color package or replacing a registered theme, call "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiApplication::RefreshThemes()"
+              },
+              {
+                "kind": "Text",
+                "text": " on the UI thread to update existing windows, including hidden menus and popups.\n                For a single control subtree, call "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiControl::RefreshThemes()"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Both methods rebuild templates supplied by the registered themes and preserve explicitly assigned "
+              },
+              {
+                "kind": "Name",
+                "text": "ControlTemplate"
+              },
+              {
+                "kind": "Text",
+                "text": " factories.\n                An explicit template does not prevent its child controls from being refreshed.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For example, queue a palette change from a button's event handler so that the current event finishes before its template is replaced:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "GetApplication()->InvokeInMainThread(GetApplication()->GetMainWindow(), []()\n{\n    tuiskin::SetColorPackage(tuiskin::CreatePurplePackage());\n    GetApplication()->RefreshThemes();\n});",
+                "language": "C++"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Updating the palette alone does not rebuild existing templates.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/kb/dtemplates.html#Refreshing-existing-controls",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Refreshing existing controls"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for refresh scope and state preservation.\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Layout, controls and terminal limits",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                One layout unit is one terminal cell. Use "
+              },
+              {
+                "kind": "Name",
+                "text": "TuiFont"
+              },
+              {
+                "kind": "Text",
+                "text": " at size 1;\n                the application does not select the terminal's physical font or cell size.\n                CJK text can occupy two columns. Text styles and colors depend on the terminal's rendering capabilities.\n                Size templates for cell geometry instead of reusing pixel-sized graphical templates.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Keyboard shortcuts can only use events the terminal delivers. Window-manager and terminal shortcuts may consume combinations such as Alt+F4, Super/Windows keys or Command keys before the application receives them.\n                POSIX terminals often do not report physical key releases, and modifier state comes from received terminal events.\n                Test shortcuts in the target terminal and provide a visible command for essential actions.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The main showcase uses "
+              },
+              {
+                "kind": "Name",
+                "text": "SystemFrameWindow"
+              },
+              {
+                "kind": "Text",
+                "text": " and\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "MinSizeLimitation=\"NoLimit\""
+              },
+              {
+                "kind": "Text",
+                "text": " on its bounds so a large hidden page cannot enlarge the physical viewport.\n                Child windows, menus and fake Message/Color/Font/File dialogs are hosted inside that viewport.\n                Normal main-window Hide/Close is cancellable through the existing closing events;\n                dismissing a child dialog keeps the application running, and an open modal retains normal close interception.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                TuiSkin includes buttons, text boxes, menus, tabs, lists, trees, detail/grid views,\n                scroll controls and text-based document controls. The showcase demonstrates their supported templates.\n                ImageFrame, polygons, gradients, 3D elements and other unregistered graphical elements have no TUI renderer.\n                The document image demonstrations use textual placeholders.\n                Ribbon and toolbar templates are not supplied. Use supported menu/button controls when adapting such an interface.\n            "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
