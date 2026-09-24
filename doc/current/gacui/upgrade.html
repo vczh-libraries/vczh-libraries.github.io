@@ -179,21 +179,594 @@
           },
           {
             "kind": "Text",
-            "text": " and explains how to update existing code.\n            The mouse-button and Win/Command/Super migration notes include the breaking changes in\n            "
-          },
+            "text": " and explains how to update existing code.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Mouse buttons and Win/Command/Super shortcuts (1.4.1.1)",
+        "content": [
           {
-            "kind": "PageLink",
-            "href": "https://github.com/vczh-libraries/Release/releases/tag/1.4.1.1",
+            "kind": "Paragraph",
             "content": [
               {
                 "kind": "Text",
-                "text": "release 1.4.1.1"
+                "text": "\n                Update applications and native platform providers as follows. The API sections below contain signatures and migration examples.\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Replace composition "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "leftButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "middleButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "rightButtonDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " with "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "; replace the corresponding Up and DoubleClick events with "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseUp"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "mouseDoubleClick"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Apply the same renames to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ev."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " bindings in GacUI Resource XML. Filter "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "arguments.button"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " to retain a handler's original button restriction."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NativeMouseButton"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " identifies "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Middle"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Right"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Mouse4"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", or "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Mouse5"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". The new "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GuiMouseEventArgs::button"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Left"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and is inherited by item and node arguments. Existing button-specific Item and Node events remain available."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Replace the nine button-specific "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeWindowListener"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " callbacks with "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "MouseDown"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "MouseUp"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "MouseDoubleClick"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", each taking "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "NativeMouseButton"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " before "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "const NativeWindowMouseInfo&"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Populate "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "osSuper"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in mouse, key, and character input information. Mouse movement and wheel callbacks keep their signatures and receive this state through "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "info.osSuper"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Insert "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bool osSuper"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " between "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "alt"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "key"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in shortcut-manager calls and overrides, shortcut-item construction and modifier matching, and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "RegisterGlobalShortcutKey"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Add "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "bool& _osSuper"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " before "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "_key"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " in "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ReadKeyConfig"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ". Pass "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " for shortcuts without Win/Command/Super."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "ShortcutBuilder::osSuper"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " defaults to "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "false"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "; "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "SHORTCUT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " accepts "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Win"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Command"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": ", and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "Super"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " as aliases. Implement the new pure virtual "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "INativeResourceService::GetOSSuperKeyName()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " with the platform label used by "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "GuiShortcutKeyItem::GetName()"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": "."
+                      }
+                    ]
+                  }
+                ]
               }
             ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n        "
           }
         ]
       },
