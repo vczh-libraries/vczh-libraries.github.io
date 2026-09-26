@@ -1,90 +1,125 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Gaclib --  GPU Accelerated C++ User Interface (vczh)</title>
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="/global.css" />
-<link rel="stylesheet" type="text/css" href="/article.css" />
-<link rel="stylesheet" type="text/css" href="/navigation.css" />
-<script src="/scripts/rootView.js"></script>
-<script src="/scripts/articleView.js"></script>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gaclib: a cross platform UI library working with all languages, with declarative layouts, data binding, and renderers for desktop, terminal, and the browser.">
+    <title>Gaclib -- Cross Platform UI Library Working with All Languages</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/homeres/index.css">
+    <script type="module" src="/homeres/index.js"></script>
 </head>
 <body>
-<div id="MVC-ViewContainer"></div>
-<script lang="javascript">
-{
-  const mvcModel = {
-  "page": "index"
-};
-  const mvcViews = [
-  {
-    "targetObject": "MVC-ViewContainer",
-    "viewName": "Gaclib-RootView"
-  },
-  {
-    "targetObject": "rootViewContainer",
-    "viewName": "Gaclib-ArticleView"
-  }
-];
-  const activeButton = "Home";
-  const article = {
-  "index": false,
-  "numberBeforeTitle": false,
-  "topic": {
-    "kind": "Topic",
-    "title": "Welcome to Gaclib!",
-    "content": [
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Text",
-            "text": "\n            Gaclib is a GPU accelerated C++ User Interface library.\n            It is flexible, customizable with rich amount of built-in layout and controls.\n            It also supports control templates, list item templates, MVVM, localization, animation, etc.\n            More importantly, even if the UI is very complex, it still has good performance in interaction.\n            You can find it at "
-          },
-          {
-            "kind": "PageLink",
-            "href": "https://github.com/vczh-libraries/Release",
-            "content": [
-              {
-                "kind": "Text",
-                "text": "github"
-              }
-            ]
-          },
-          {
-            "kind": "Text",
-            "text": ".\n            This library provide many useful features.\n            If you don't need all features,\n            you can just use a subset of released C++ files to reduce the size of the executable.\n        "
-          }
-        ]
-      },
-      {
-        "kind": "Paragraph",
-        "content": [
-          {
-            "kind": "Image",
-            "src": "/resources/home/xml_HelloWorld.png"
-          }
-        ]
-      }
-    ]
-  }
-};
-  window["MVC-Resources.mvcModel"] = mvcModel;
-  window["MVC-Resources.mvcViews"] = mvcViews;
-  window["MVC-Resources.activeButton"] = activeButton;
-  window["MVC-Resources.article"] = article;
-  for (const view of mvcViews) {
-    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
-  }
-  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
-  for (const scriptTag of renderedScriptTags) {
-    eval(
-      "(function(){" + scriptTag.innerHTML + "})()"
-    );
-  }
-}
-</script>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <a class="brand" href="/index.html" aria-label="Gaclib home"><img id="brand-logo" width="320" height="128" alt="Gaclib"></a>
+        <nav id="navigation" aria-label="Main navigation"></nav>
+        <fieldset class="appearance"><legend class="sr-only">Page appearance</legend>
+            <label><input type="radio" name="appearance" id="style-gui" value="gui" checked><span>GUI</span></label>
+            <label><input type="radio" name="appearance" id="style-tui" value="tui"><span>TUI</span></label>
+        </fieldset>
+    </header>
+    <main id="main">
+        <p id="load-status" role="status">Loading Gaclib…</p>
+        <noscript><p>This introduction needs JavaScript to load its content. Read the <a href="/doc/current/home.html">Gaclib documentation</a> or <a href="https://github.com/vczh-libraries/Release" target="_blank" rel="noopener">browse the source</a>.</p></noscript>
+        <div id="home-content" hidden>
+            <section class="hero" aria-labelledby="hero-title">
+                <div>
+                    <h1 id="hero-title"></h1>
+                    <p class="intro" id="hero-description"></p>
+                    <div class="hero-actions" id="hero-actions"></div>
+                </div>
+            </section>
+
+            <section id="examples" class="section" aria-labelledby="examples-title">
+                <div class="section-heading"><div><p class="eyebrow" id="examples-eyebrow"></p><h2 id="examples-title"></h2></div><p id="examples-description"></p></div>
+                <div class="workbench">
+                    <div class="tab-list example-tabs" role="tablist" aria-label="Code examples">
+                        <button type="button" id="tab-hello" role="tab" aria-selected="true" aria-controls="example-hello" data-tab="hello">01 <span>Hello world</span></button>
+                        <button type="button" id="tab-binding" role="tab" aria-selected="false" aria-controls="example-binding" tabindex="-1" data-tab="binding">02 <span>Data binding</span></button>
+                        <button type="button" id="tab-viewmodel" role="tab" aria-selected="false" aria-controls="example-viewmodel" tabindex="-1" data-tab="viewmodel">03 <span>View model</span></button>
+                    </div>
+                    <div id="example-hello" role="tabpanel" aria-labelledby="tab-hello"></div>
+                    <div id="example-binding" role="tabpanel" aria-labelledby="tab-binding" hidden></div>
+                    <div id="example-viewmodel" role="tabpanel" aria-labelledby="tab-viewmodel" hidden></div>
+                </div>
+            </section>
+
+            <section id="platforms" class="section" aria-labelledby="platforms-title">
+                <div class="section-heading"><div><p class="eyebrow" id="platforms-eyebrow"></p><h2 id="platforms-title"></h2></div><p id="platforms-description"></p></div>
+                <div class="platform-workbench">
+                    <div class="tab-list platform-tabs" role="tablist" aria-label="Platforms">
+                        <button type="button" role="tab" id="tab-windows" data-tab="windows" aria-selected="true" aria-controls="platform-windows"><span class="platform-graphic" aria-hidden="true"></span><span class="platform-icon" aria-hidden="true">⊞</span><span>Windows<small>DirectX · GDI · TUI · Remote Protocol</small></span></button>
+                        <button type="button" role="tab" id="tab-linux" data-tab="linux" aria-selected="false" aria-controls="platform-linux" tabindex="-1"><span class="platform-graphic" aria-hidden="true"></span><span class="platform-icon" aria-hidden="true">&gt;_</span><span>Linux<small>Wayland · TUI · Remote Protocol</small></span></button>
+                        <button type="button" role="tab" id="tab-macos" data-tab="macos" aria-selected="false" aria-controls="platform-macos" tabindex="-1"><span class="platform-graphic" aria-hidden="true"></span><span class="platform-icon" aria-hidden="true">⌘</span><span>macOS<small>Cocoa · TUI · Remote Protocol</small></span></button>
+                        <button type="button" role="tab" id="tab-html5" data-tab="html5" aria-selected="false" aria-controls="platform-html5" tabindex="-1"><span class="platform-graphic" aria-hidden="true"></span><span class="platform-icon" aria-hidden="true">&lt;/&gt;</span><span>Web<small>HTML · Remote Protocol · WASM (planning)</small></span></button>
+                    </div>
+                    <div id="platform-windows" role="tabpanel" aria-labelledby="tab-windows"></div>
+                    <div id="platform-linux" role="tabpanel" aria-labelledby="tab-linux" hidden></div>
+                    <div id="platform-macos" role="tabpanel" aria-labelledby="tab-macos" hidden></div>
+                    <div id="platform-html5" role="tabpanel" aria-labelledby="tab-html5" hidden></div>
+                </div>
+            </section>
+
+            <section class="section" id="start" aria-labelledby="start-title">
+                <div class="section-heading"><div><p class="eyebrow" id="start-eyebrow"></p><h2 id="start-title"></h2></div><p id="start-description"></p></div>
+                <div class="quick-links" id="quick-links"></div>
+            </section>
+
+            <section class="section" id="coding-agents" aria-labelledby="agents-title">
+                <div class="section-heading"><div><p class="eyebrow" id="agents-eyebrow"></p><h2 id="agents-title"></h2></div></div>
+                <div class="agent-guide"><p id="agents-description"></p><div id="agents-link"></div></div>
+                <div class="agent-guide"><p id="agents-integration-description"></p><div id="agents-integration-link"></div></div>
+            </section>
+
+            <section class="section" id="features" aria-labelledby="features-title">
+                <div class="section-heading"><div><p class="eyebrow" id="features-eyebrow"></p><h2 id="features-title"></h2></div><p id="features-description"></p></div>
+                <div class="feature-grid" id="feature-grid"></div>
+            </section>
+            <footer><div id="footer-links"></div><a href="#main" id="back-to-top"></a></footer>
+        </div>
+    </main>
+
+    <template id="example-template">
+        <div class="example-grid">
+            <div class="source-pane"><fieldset class="source-options pane-label"><legend class="sr-only">Source file</legend></fieldset><pre tabindex="0"><code></code></pre><a class="source-link" data-field="docs"></a></div>
+            <div class="preview-pane"><div class="pane-label"><span data-field="resultLabel"></span></div><div class="preview-stage"></div></div>
+        </div>
+    </template>
+    <template id="gallery-template">
+        <div class="platform-info"><p></p><a></a></div>
+        <div class="tab-list mode-tabs" role="tablist" aria-label="Renderer appearance">
+            <button type="button" role="tab" data-tab="gui" aria-selected="true">GUI</button>
+            <button type="button" role="tab" data-tab="tui" aria-selected="false" tabindex="-1">TUI</button>
+        </div>
+        <div class="gallery-body"></div>
+    </template>
+    <template id="gui-themes-template">
+        <div class="tab-list theme-tabs" role="tablist" aria-label="GUI color theme" aria-orientation="vertical">
+            <button type="button" role="tab" data-tab="default"><span class="swatch default"></span>Default</button>
+            <button type="button" role="tab" data-tab="aurora"><span class="swatch aurora"></span>Aurora</button>
+            <button type="button" role="tab" data-tab="ember"><span class="swatch ember"></span>Ember</button>
+            <button type="button" role="tab" data-tab="lagoon"><span class="swatch lagoon"></span>Lagoon</button>
+            <button type="button" role="tab" data-tab="moonstone"><span class="swatch moonstone"></span>Moonstone</button>
+            <button type="button" role="tab" data-tab="rosewood"><span class="swatch rosewood"></span>Rosewood</button>
+        </div>
+    </template>
+    <template id="tui-themes-template">
+        <div class="tab-list theme-tabs" role="tablist" aria-label="TUI color theme" aria-orientation="vertical">
+            <button type="button" role="tab" data-tab="skyblue"><span class="swatch skyblue"></span>Sky Blue</button>
+            <button type="button" role="tab" data-tab="emerald"><span class="swatch emerald"></span>Emerald</button>
+            <button type="button" role="tab" data-tab="grass"><span class="swatch grass"></span>Grass</button>
+            <button type="button" role="tab" data-tab="orange"><span class="swatch orange"></span>Orange</button>
+            <button type="button" role="tab" data-tab="pink"><span class="swatch pink"></span>Pink</button>
+            <button type="button" role="tab" data-tab="purple"><span class="swatch purple"></span>Purple</button>
+        </div>
+    </template>
+    <template id="html5-themes-template">
+        <div class="tab-list theme-tabs" role="tablist" aria-label="HTML5 screenshots" aria-orientation="vertical">
+            <button type="button" role="tab" data-tab="windows">Windows host</button>
+            <button type="button" role="tab" data-tab="linux">Ubuntu host</button>
+            <button type="button" role="tab" data-tab="macos">macOS host</button>
+        </div>
+    </template>
 </body>
 </html>

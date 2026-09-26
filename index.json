@@ -1,0 +1,691 @@
+{
+  "title": "Gaclib -- Cross Platform UI Library Working with All Languages",
+  "logo": {
+    "src": "/logo.gif",
+    "alt": "Gaclib"
+  },
+  "navigation": [
+    {
+      "label": "Examples",
+      "href": "#examples"
+    },
+    {
+      "label": "Platforms",
+      "href": "#platforms"
+    },
+    {
+      "label": "Documentation",
+      "href": "/document.html"
+    },
+    {
+      "label": "GitHub ↗",
+      "href": "https://github.com/vczh-libraries"
+    }
+  ],
+  "text": {
+    "hero-title": "Gaclib -- Cross Platform UI Library\nWorking with All Languages",
+    "hero-description": "Build interfaces with declarative layouts, rich controls, and reactive data binding. Gaclib brings your application to Windows, Linux, macOS with GPU accelerated rendering or TUI, and the browser.",
+    "examples-eyebrow": "01 / A simple definition, a working interface",
+    "examples-title": "Start with something small.",
+    "examples-description": "Describe a window in XML. Arrange its controls. Bind properties to controls or a view model.",
+    "platforms-eyebrow": "02 / Choose your canvas",
+    "platforms-title": "From GPU to Web",
+    "platforms-description": "Real screenshots from the platform repositories. Explore graphical and terminal renderers, then pick a color theme.",
+    "start-eyebrow": "03 / Make it yours",
+    "start-title": "Your next step.",
+    "start-description": "Build your first window, explore the manual, or start with an existing example.",
+    "features-eyebrow": "05 / More than a window",
+    "features-title": "The pieces for a complete application.",
+    "features-description": "Use C++ directly, describe your UI in XML, and choose the parts of the library your application needs.",
+    "back-to-top": "Back to top ↑",
+    "agents-eyebrow": "04 / Build with an agent",
+    "agents-title": "Using coding agents.",
+    "agents-description": "The release includes instructions, documentation, and build and debugging scripts to help coding agents create GacUI applications on every platform. Describe your application in your own language, and give your agent the project guidance it needs to build it.",
+    "agents-integration-description": "A coding agent can help you integrate any programming language with GacUI for view model implementation. GacJS provides a working TypeScript example, and the release includes instructions for creating and verifying support for your preferred language."
+  },
+  "actions": [
+    {
+      "label": "Build your first app →",
+      "href": "/doc/current/gacui/running.html"
+    },
+    {
+      "label": "Get the source ↗",
+      "href": "https://github.com/vczh-libraries/Release"
+    }
+  ],
+  "examples": {
+    "hello": {
+      "resultLabel": "Result / Direct2D",
+      "docs": {
+        "label": "Explore Easy Layout →",
+        "href": "/doc/current/gacui/components/compositions/eazylayout.html"
+      },
+      "snapshot": {
+        "height": 86,
+        "alt": "The Hello world sample running with the GacUI Direct2D renderer.",
+        "width": 320,
+        "src": "/homeres/samples/hello.png"
+      },
+      "sources": [
+        {
+          "id": "instance",
+          "label": "Source / Instance.xml",
+          "code": "<Instance ref.CodeBehind=\"false\"\n          ref.Class=\"demo::TestWindow\">\n  <Window ref.Name=\"self\" Text=\"Hello, world!\"\n          ClientSize=\"x:320 y:0\" SizeBox=\"false\"\n          MinimizedBox=\"false\" MaximizedBox=\"false\">\n    <ez:Layout Padding=\"5\" Border=\"false\">\n      <ez:Fill>\n        <Label Text=\"Welcome to Gaclib.\"/>\n      </ez:Fill>\n      <ez:Bottom>\n        <ez:Right>\n          <Button Text=\"OK\" ev.Clicked-eval=\"{ self.Close(); }\">\n            <att.BoundsComposition-set PreferredMinSize=\"x:72\"/>\n          </Button>\n        </ez:Right>\n      </ez:Bottom>\n    </ez:Layout>\n  </Window>\n</Instance>"
+        }
+      ]
+    },
+    "binding": {
+      "resultLabel": "Result / Direct2D",
+      "docs": {
+        "label": "Read about data binding →",
+        "href": "/doc/current/gacui/advanced/bindings.html"
+      },
+      "snapshot": {
+        "height": 109,
+        "alt": "The data binding sample running with the GacUI Direct2D renderer, greeting GacUI.",
+        "width": 360,
+        "src": "/homeres/samples/binding.png"
+      },
+      "sources": [
+        {
+          "id": "instance",
+          "label": "Source / Instance.xml",
+          "code": "<Instance ref.CodeBehind=\"false\"\n          ref.Class=\"demo::TestWindow\">\n  <Window Text=\"Say hello\"\n          ClientSize=\"x:360 y:0\" SizeBox=\"false\"\n          MinimizedBox=\"false\" MaximizedBox=\"false\">\n    <ez:Layout Padding=\"5\" Border=\"false\">\n      <ez:Top>\n        <Label Text=\"Your name\"/>\n      </ez:Top>\n      <ez:Top>\n        <SinglelineTextBox ref.Name=\"nameInput\" Text=\"world\"/>\n      </ez:Top>\n      <ez:Top>\n        <Label Text-format=\"Hello, $(nameInput.Text)!\"/>\n      </ez:Top>\n    </ez:Layout>\n  </Window>\n</Instance>"
+        }
+      ]
+    },
+    "viewmodel": {
+      "resultLabel": "Result / Direct2D",
+      "docs": {
+        "label": "Read about view models →",
+        "href": "/doc/current/gacui/advanced/vm.html"
+      },
+      "snapshot": {
+        "height": 109,
+        "alt": "The C++ view model sample running with the GacUI Direct2D renderer, greeting GacUI.",
+        "width": 360,
+        "src": "/homeres/samples/viewmodel.png"
+      },
+      "sources": [
+        {
+          "id": "instance",
+          "label": "Source / Instance.xml",
+          "code": "<Instance ref.CodeBehind=\"false\"\n          ref.Class=\"demo::TestWindow\">\n  <ref.Parameter Name=\"ViewModel\" Class=\"IHelloViewModel\"/>\n  <Window Text=\"Say hello\"\n          ClientSize=\"x:360 y:0\" SizeBox=\"false\"\n          MinimizedBox=\"false\" MaximizedBox=\"false\">\n    <att.ViewModel-set Name-bind=\"nameInput.Text\"/>\n    <ez:Layout Padding=\"5\" Border=\"false\">\n      <ez:Top>\n        <Label Text=\"Your name\"/>\n      </ez:Top>\n      <ez:Top>\n        <SinglelineTextBox ref.Name=\"nameInput\" Text=\"world\"/>\n      </ez:Top>\n      <ez:Top>\n        <Label Text-bind=\"ViewModel.Welcome\"/>\n      </ez:Top>\n    </ez:Layout>\n  </Window>\n</Instance>"
+        },
+        {
+          "id": "cpp",
+          "label": "Source / ViewModel.cpp",
+          "code": "class HelloViewModel : public Object, public virtual IHelloViewModel\n{\nprivate:\n    WString name = L\"world\";\n    WString welcome = L\"Hello, world!\";\n\npublic:\n    WString GetName() override\n    {\n        return name;\n    }\n\n    void SetName(const WString& value) override\n    {\n        if (name != value)\n        {\n            name = value;\n            welcome = L\"Hello, \" + name + L\"!\";\n            NameChanged();\n            WelcomeChanged();\n        }\n    }\n\n    WString GetWelcome() override\n    {\n        return welcome;\n    }\n};"
+        },
+        {
+          "id": "workflow",
+          "label": "Source / ViewModel.workflow",
+          "code": "class HelloViewModel\n{\n    static func Create(): IHelloViewModel^\n    {\n        return new (IHelloViewModel^)\n        {\n            var name: string = \"world\";\n            var welcome: string = \"Hello, world!\";\n\n            override func GetName(): string\n            {\n                return name;\n            }\n\n            override func SetName(value: string): void\n            {\n                if (name != value)\n                {\n                    name = value;\n                    welcome = $\"Hello, $(name)!\";\n                    NameChanged();\n                    WelcomeChanged();\n                }\n            }\n\n            override func GetWelcome(): string\n            {\n                return welcome;\n            }\n        };\n    }\n}"
+        },
+        {
+          "id": "ts",
+          "label": "Source / ViewModel.ts",
+          "code": "class HelloViewModel implements IHelloViewModelLocal {\n    private name = 'world';\n    private welcome = 'Hello, world!';\n\n    readonly NameChanged = new RpcEvent<[]>();\n    readonly WelcomeChanged = new RpcEvent<[]>();\n\n    GetName(): string {\n        return this.name;\n    }\n\n    async SetName(value: string): Promise<void> {\n        if (this.name !== value) {\n            this.name = value;\n            this.welcome = `Hello, ${this.name}!`;\n            await this.NameChanged.emit();\n            await this.WelcomeChanged.emit();\n        }\n    }\n\n    GetWelcome(): string {\n        return this.welcome;\n    }\n}"
+        }
+      ]
+    }
+  },
+  "galleryLabels": {
+    "openImage": "Open full-size screenshot"
+  },
+  "platforms": [
+    {
+      "id": "windows",
+      "label": "Windows",
+      "description": "Native desktop rendering with DirectX or GDI, terminal rendering with TUI, and remote rendering through the Remote Protocol.",
+      "modes": [
+        {
+          "id": "gui",
+          "label": "GUI",
+          "themes": [
+            {
+              "id": "default",
+              "label": "Default",
+              "src": "/homeres/GacUI/windows-gui-default.jpg",
+              "alt": "Windows FullControlTest using the Default color theme.",
+              "width": 656,
+              "height": 519
+            },
+            {
+              "id": "aurora",
+              "label": "Aurora",
+              "src": "/homeres/GacUI/windows-gui-aurora.jpg",
+              "alt": "Windows FullControlTest using the Aurora color theme.",
+              "width": 656,
+              "height": 519
+            },
+            {
+              "id": "ember",
+              "label": "Ember",
+              "src": "/homeres/GacUI/windows-gui-ember.jpg",
+              "alt": "Windows FullControlTest using the Ember color theme.",
+              "width": 656,
+              "height": 519
+            },
+            {
+              "id": "lagoon",
+              "label": "Lagoon",
+              "src": "/homeres/GacUI/windows-gui-lagoon.jpg",
+              "alt": "Windows FullControlTest using the Lagoon color theme.",
+              "width": 656,
+              "height": 519
+            },
+            {
+              "id": "moonstone",
+              "label": "Moonstone",
+              "src": "/homeres/GacUI/windows-gui-moonstone.jpg",
+              "alt": "Windows FullControlTest using the Moonstone color theme.",
+              "width": 656,
+              "height": 519
+            },
+            {
+              "id": "rosewood",
+              "label": "Rosewood",
+              "src": "/homeres/GacUI/windows-gui-rosewood.jpg",
+              "alt": "Windows FullControlTest using the Rosewood color theme.",
+              "width": 656,
+              "height": 519
+            }
+          ]
+        },
+        {
+          "id": "tui",
+          "label": "TUI",
+          "themes": [
+            {
+              "id": "skyblue",
+              "label": "Sky blue (default)",
+              "src": "/homeres/GacUI/windows-tui-skyblue.png",
+              "alt": "Windows TuiControlTest using the Sky blue (default) color theme.",
+              "width": 1115,
+              "height": 818
+            },
+            {
+              "id": "emerald",
+              "label": "Emerald",
+              "src": "/homeres/GacUI/windows-tui-emerald.png",
+              "alt": "Windows TuiControlTest using the Emerald color theme.",
+              "width": 1115,
+              "height": 818
+            },
+            {
+              "id": "grass",
+              "label": "Grass",
+              "src": "/homeres/GacUI/windows-tui-grass.png",
+              "alt": "Windows TuiControlTest using the Grass color theme.",
+              "width": 1115,
+              "height": 818
+            },
+            {
+              "id": "orange",
+              "label": "Orange",
+              "src": "/homeres/GacUI/windows-tui-orange.png",
+              "alt": "Windows TuiControlTest using the Orange color theme.",
+              "width": 1115,
+              "height": 818
+            },
+            {
+              "id": "pink",
+              "label": "Pink",
+              "src": "/homeres/GacUI/windows-tui-pink.png",
+              "alt": "Windows TuiControlTest using the Pink color theme.",
+              "width": 1115,
+              "height": 818
+            },
+            {
+              "id": "purple",
+              "label": "Purple",
+              "src": "/homeres/GacUI/windows-tui-purple.png",
+              "alt": "Windows TuiControlTest using the Purple color theme.",
+              "width": 1115,
+              "height": 818
+            }
+          ]
+        }
+      ],
+      "link": {
+        "label": "GacUI source ↗",
+        "href": "https://github.com/vczh-libraries/GacUI"
+      },
+      "icon": {
+        "height": 128,
+        "alt": "",
+        "width": 128,
+        "src": "/homeres/icons/windows.svg"
+      }
+    },
+    {
+      "id": "linux",
+      "label": "Linux",
+      "description": "Native Linux windows through Wayland, terminal rendering with TUI, and remote rendering through the Remote Protocol.",
+      "modes": [
+        {
+          "id": "gui",
+          "label": "GUI",
+          "themes": [
+            {
+              "id": "default",
+              "label": "Default",
+              "src": "/homeres/wGac/linux-gui-default.png",
+              "alt": "Linux FullControlTest using the Default color theme.",
+              "width": 932,
+              "height": 644
+            },
+            {
+              "id": "aurora",
+              "label": "Aurora",
+              "src": "/homeres/wGac/linux-gui-aurora.png",
+              "alt": "Linux FullControlTest using the Aurora color theme.",
+              "width": 932,
+              "height": 644
+            },
+            {
+              "id": "ember",
+              "label": "Ember",
+              "src": "/homeres/wGac/linux-gui-ember.png",
+              "alt": "Linux FullControlTest using the Ember color theme.",
+              "width": 932,
+              "height": 644
+            },
+            {
+              "id": "lagoon",
+              "label": "Lagoon",
+              "src": "/homeres/wGac/linux-gui-lagoon.png",
+              "alt": "Linux FullControlTest using the Lagoon color theme.",
+              "width": 932,
+              "height": 644
+            },
+            {
+              "id": "moonstone",
+              "label": "Moonstone",
+              "src": "/homeres/wGac/linux-gui-moonstone.png",
+              "alt": "Linux FullControlTest using the Moonstone color theme.",
+              "width": 932,
+              "height": 644
+            },
+            {
+              "id": "rosewood",
+              "label": "Rosewood",
+              "src": "/homeres/wGac/linux-gui-rosewood.png",
+              "alt": "Linux FullControlTest using the Rosewood color theme.",
+              "width": 932,
+              "height": 644
+            }
+          ]
+        },
+        {
+          "id": "tui",
+          "label": "TUI",
+          "themes": [
+            {
+              "id": "skyblue",
+              "label": "Sky blue (default)",
+              "src": "/homeres/wGac/linux-tui-skyblue.png",
+              "alt": "Linux TuiControlTest using the Sky blue (default) color theme.",
+              "width": 1216,
+              "height": 930
+            },
+            {
+              "id": "emerald",
+              "label": "Emerald",
+              "src": "/homeres/wGac/linux-tui-emerald.png",
+              "alt": "Linux TuiControlTest using the Emerald color theme.",
+              "width": 1216,
+              "height": 930
+            },
+            {
+              "id": "grass",
+              "label": "Grass",
+              "src": "/homeres/wGac/linux-tui-grass.png",
+              "alt": "Linux TuiControlTest using the Grass color theme.",
+              "width": 1216,
+              "height": 930
+            },
+            {
+              "id": "orange",
+              "label": "Orange",
+              "src": "/homeres/wGac/linux-tui-orange.png",
+              "alt": "Linux TuiControlTest using the Orange color theme.",
+              "width": 1216,
+              "height": 930
+            },
+            {
+              "id": "pink",
+              "label": "Pink",
+              "src": "/homeres/wGac/linux-tui-pink.png",
+              "alt": "Linux TuiControlTest using the Pink color theme.",
+              "width": 1216,
+              "height": 930
+            },
+            {
+              "id": "purple",
+              "label": "Purple",
+              "src": "/homeres/wGac/linux-tui-purple.png",
+              "alt": "Linux TuiControlTest using the Purple color theme.",
+              "width": 1216,
+              "height": 930
+            }
+          ]
+        }
+      ],
+      "link": {
+        "label": "wGac source ↗",
+        "href": "https://github.com/vczh-libraries/wGac"
+      },
+      "icon": {
+        "height": 128,
+        "alt": "",
+        "width": 128,
+        "src": "/homeres/icons/linux.svg"
+      }
+    },
+    {
+      "id": "macos",
+      "label": "macOS",
+      "description": "Native macOS windows through Cocoa, terminal rendering with TUI, and remote rendering through the Remote Protocol.",
+      "modes": [
+        {
+          "id": "gui",
+          "label": "GUI",
+          "themes": [
+            {
+              "id": "default",
+              "label": "Default",
+              "src": "/homeres/iGac/macos-gui-default.png",
+              "alt": "macOS FullControlTest using the Default color theme.",
+              "width": 1200,
+              "height": 650
+            },
+            {
+              "id": "aurora",
+              "label": "Aurora",
+              "src": "/homeres/iGac/macos-gui-aurora.png",
+              "alt": "macOS FullControlTest using the Aurora color theme.",
+              "width": 1200,
+              "height": 650
+            },
+            {
+              "id": "ember",
+              "label": "Ember",
+              "src": "/homeres/iGac/macos-gui-ember.png",
+              "alt": "macOS FullControlTest using the Ember color theme.",
+              "width": 1200,
+              "height": 650
+            },
+            {
+              "id": "lagoon",
+              "label": "Lagoon",
+              "src": "/homeres/iGac/macos-gui-lagoon.png",
+              "alt": "macOS FullControlTest using the Lagoon color theme.",
+              "width": 1200,
+              "height": 650
+            },
+            {
+              "id": "moonstone",
+              "label": "Moonstone",
+              "src": "/homeres/iGac/macos-gui-moonstone.png",
+              "alt": "macOS FullControlTest using the Moonstone color theme.",
+              "width": 1200,
+              "height": 650
+            },
+            {
+              "id": "rosewood",
+              "label": "Rosewood",
+              "src": "/homeres/iGac/macos-gui-rosewood.png",
+              "alt": "macOS FullControlTest using the Rosewood color theme.",
+              "width": 1200,
+              "height": 650
+            }
+          ]
+        },
+        {
+          "id": "tui",
+          "label": "TUI",
+          "themes": [
+            {
+              "id": "skyblue",
+              "label": "Sky blue (default)",
+              "src": "/homeres/iGac/macos-tui-skyblue.png",
+              "alt": "macOS TuiControlTest using the Sky blue (default) color theme.",
+              "width": 877,
+              "height": 609
+            },
+            {
+              "id": "emerald",
+              "label": "Emerald",
+              "src": "/homeres/iGac/macos-tui-emerald.png",
+              "alt": "macOS TuiControlTest using the Emerald color theme.",
+              "width": 877,
+              "height": 609
+            },
+            {
+              "id": "grass",
+              "label": "Grass",
+              "src": "/homeres/iGac/macos-tui-grass.png",
+              "alt": "macOS TuiControlTest using the Grass color theme.",
+              "width": 877,
+              "height": 609
+            },
+            {
+              "id": "orange",
+              "label": "Orange",
+              "src": "/homeres/iGac/macos-tui-orange.png",
+              "alt": "macOS TuiControlTest using the Orange color theme.",
+              "width": 877,
+              "height": 609
+            },
+            {
+              "id": "pink",
+              "label": "Pink",
+              "src": "/homeres/iGac/macos-tui-pink.png",
+              "alt": "macOS TuiControlTest using the Pink color theme.",
+              "width": 877,
+              "height": 609
+            },
+            {
+              "id": "purple",
+              "label": "Purple",
+              "src": "/homeres/iGac/macos-tui-purple.png",
+              "alt": "macOS TuiControlTest using the Purple color theme.",
+              "width": 877,
+              "height": 609
+            }
+          ]
+        }
+      ],
+      "link": {
+        "label": "iGac source ↗",
+        "href": "https://github.com/vczh-libraries/iGac"
+      },
+      "icon": {
+        "height": 128,
+        "alt": "",
+        "width": 128,
+        "src": "/homeres/icons/macos.svg"
+      }
+    },
+    {
+      "id": "html5",
+      "label": "HTML5",
+      "description": "GacJS renders GacUI applications as HTML through the Remote Protocol, with the application core running on Windows, Linux, or macOS. WebAssembly (planning) is also on the roadmap.",
+      "modes": [
+        {
+          "id": "gui",
+          "label": "HTML5",
+          "themes": [
+            {
+              "id": "windows",
+              "label": "Windows host",
+              "src": "/homeres/GacJS/html5-windows.png",
+              "alt": "GacJS rendering a remote GacUI application hosted on Windows in a browser.",
+              "width": 804,
+              "height": 590
+            },
+            {
+              "id": "linux",
+              "label": "Linux host",
+              "src": "/homeres/GacJS/html5-linux.png",
+              "alt": "GacJS rendering a remote GacUI application hosted on Ubuntu Linux in a browser.",
+              "width": 1071,
+              "height": 651
+            },
+            {
+              "id": "macos",
+              "label": "macOS host",
+              "src": "/homeres/GacJS/html5-macos.png",
+              "alt": "GacJS rendering a remote GacUI application hosted on macOS in a browser.",
+              "width": 1184,
+              "height": 524
+            }
+          ]
+        }
+      ],
+      "link": {
+        "label": "GacJS source ↗",
+        "href": "https://github.com/vczh-libraries/GacJS"
+      },
+      "icon": {
+        "height": 128,
+        "alt": "",
+        "width": 128,
+        "src": "/homeres/icons/html5.svg"
+      }
+    }
+  ],
+  "links": [
+    {
+      "icon": "↗",
+      "label": "Getting started",
+      "description": "Build a C++ application, step by step.",
+      "href": "/doc/current/gacui/running.html"
+    },
+    {
+      "icon": "↓",
+      "label": "Download",
+      "description": "Choose the source files you need.",
+      "href": "/doc/current/home/download.html"
+    },
+    {
+      "icon": "▤",
+      "label": "Documentation",
+      "description": "Guides, concepts, and API references.",
+      "href": "/document.html"
+    },
+    {
+      "icon": "▷",
+      "label": "Demos & samples",
+      "description": "See the controls and library in action.",
+      "href": "/demo.html"
+    },
+    {
+      "icon": ">_",
+      "label": "Terminal apps",
+      "description": "Build with GacUI and TuiSkin.",
+      "href": "/doc/current/gacui/tui.html"
+    },
+    {
+      "icon": "⌘",
+      "label": "XML resources",
+      "description": "Describe layouts, styles, and behavior.",
+      "href": "/doc/current/gacui/xmlres/home.html"
+    }
+  ],
+  "features": [
+    {
+      "title": "Easy, adaptive layouts",
+      "description": "Arrange controls with docking, proportional space, and grids. Responsive compositions can switch views as the window changes size while preserving shared controls.",
+      "link": {
+        "label": "Explore compositions →",
+        "href": "/doc/current/gacui/components/compositions/eazylayout.html"
+      }
+    },
+    {
+      "title": "Reactive data binding",
+      "description": "Bind control properties to expressions and C++ view models. Observable property changes update the interface; bindable lists, trees, and grids connect collections to controls.",
+      "code": "<Label Text-bind=\"nameInput.Text\"/>",
+      "link": {
+        "label": "Connect your data →",
+        "href": "/doc/current/gacui/advanced/bindings.html"
+      }
+    },
+    {
+      "title": "Workflow scripting",
+      "description": "Use an embedded language that works with registered C++ classes and interfaces. Workflow supports observable expressions, coroutines, and state machines, with runtime execution or C++ output.",
+      "link": {
+        "label": "Meet Workflow →",
+        "href": "/doc/current/workflow/home.html"
+      }
+    },
+    {
+      "title": "XML to C++",
+      "description": "Describe windows, resources, animations, and localized strings in XML. Generate C++20 source to link into your application without requiring runtime reflection for the generated interface.",
+      "link": {
+        "label": "See code generation →",
+        "href": "/doc/current/gacui/xmlres/cgc.html"
+      }
+    },
+    {
+      "title": "Templates and styles",
+      "description": "Replace a control's appearance with a control template, customize collection items with item templates, and share XML property settings through XPath-like style selectors.",
+      "link": {
+        "label": "Design your controls →",
+        "href": "/doc/current/gacui/kb/ctemplates.html"
+      }
+    },
+    {
+      "title": "Rich controls and documents",
+      "description": "Build with trees, lists, editable data grids, menus, ribbons, and rich text. Virtual list controls create visual items for the visible part of a collection.",
+      "link": {
+        "label": "Browse the controls →",
+        "href": "/doc/current/gacui/components/controls/home.html"
+      }
+    },
+    {
+      "title": "Runtime localization",
+      "description": "Define translated strings in one resource and bind them to the interface. Changing the active locale updates text and supports localized date, time, and number formatting.",
+      "link": {
+        "label": "Speak your users' language →",
+        "href": "/doc/current/gacui/xmlres/tag_localizedstrings.html"
+      }
+    },
+    {
+      "title": "Declarative animation",
+      "description": "Describe animated state in XML and bind its numeric or color fields to control properties. Choose interpolation functions to control how values change over time.",
+      "link": {
+        "label": "Bring the UI to life →",
+        "href": "/doc/current/gacui/advanced/animations.html"
+      }
+    },
+    {
+      "title": "Remote protocol",
+      "description": "Separate the application from its renderer. A headless C++ core sends rendering commands to a native client or GacJS in a browser through a configurable transport.",
+      "link": {
+        "label": "Explore execution modes →",
+        "href": "/doc/current/gacui/modes/home.html"
+      }
+    }
+  ],
+  "footerLinks": [
+    {
+      "label": "Contact",
+      "href": "/contact.html"
+    },
+    {
+      "label": "License",
+      "href": "https://github.com/vczh-libraries/Release/blob/master/LICENSE.md"
+    }
+  ],
+  "agentsLink": {
+    "href": "/doc/current/coding-agent/home.html",
+    "label": "Set up your coding agent →"
+  },
+  "agentsIntegrationLink": {
+    "href": "https://github.com/vczh-libraries/Release#implementing-view-model-in-other-programming-languages",
+    "label": "Integrate your language →"
+  }
+}
