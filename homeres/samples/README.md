@@ -1,14 +1,14 @@
 # Native homepage samples
 
-`hello.xml`, `binding.xml`, and `viewmodel.xml` are the exact `Instance` resources shown on the homepage. Their PNGs are unmodified captures of GacUI's Windows Direct2D renderer with the default DarkSkin.
+`hello.xml`, `binding.xml`, and `viewmodel.xml` are the exact `Instance` resources shown on the homepage. Their PNGs are unmodified captures of GacUI's Windows Direct2D renderer with the default DarkSkin. The additional `ViewModel.xml` source option displays `viewmodel.vm.xml`, the shared interface declaration.
 
 Each example uses one Easy Layout with five-pixel spacing and `Border="false"`. `ClientSize` requests the width and lets minimum-size propagation determine the height. The OK button requests only a minimum width of 72; the skin determines control heights. The hello window measures 320 by 86 pixels; both greeting windows measure 360 by 109 pixels.
 
 Both greeting screenshots were captured after focusing the textbox, selecting its initial `world` text, and typing `GacUI` through GacUI's automation endpoint. The label changed to `Hello, GacUI!`. UI Automation independently verified each textbox and greeting, including a SetValue round trip to `Reader` and back to `GacUI`. The hello dialog's OK event closed its process normally.
 
-`viewmodel.cpp` contains the class used for the view-model capture. The shared `IHelloViewModel` contract exposes `Name` through `GetName`/`SetName`, read-only `Welcome` through `GetWelcome`, and the corresponding `NameChanged`/`WelcomeChanged` events. The XML receives this interface as a constructor parameter, binds the textbox into `Name`, and observes `Welcome` on the label.
+`viewmodel.cpp` contains the class used for the view-model capture. The shared `IHelloViewModel` contract in `viewmodel.vm.xml` uses Workflow auto-properties to declare `GetName`/`SetName`, `GetWelcome`, and the corresponding `NameChanged`/`WelcomeChanged` events. `Name` is writable; `Welcome` is read-only. `@rpc:Interface` enables generating the TypeScript RPC contract. The Instance XML receives this interface as a constructor parameter, binds the textbox into `Name`, and observes `Welcome` on the label.
 
-The language alternatives contain only their class definitions; interface declarations, generated bindings, registration, namespaces, and host setup belong to the surrounding application. `viewmodel.workflow` uses a static factory to return an interface implementation, following Workflow's `new (IHelloViewModel^)` pattern. Its unchanged class was compiled with a matching Workflow interface in a temporary Playground resource. `viewmodel.ts` follows GacJS's generated local RPC interface and `RpcEvent` API. Only the C++ implementation supplies the committed view-model screenshot.
+The language alternatives contain only their class definitions; generated bindings, registration, namespaces, and host setup belong to the surrounding application. Include `viewmodel.vm.xml` as a Script resource, for example `<Script name="ViewModelResource" content="File">viewmodel.vm.xml</Script>`. `viewmodel.workflow` uses a static factory to return an interface implementation, following Workflow's `new (IHelloViewModel^)` pattern. Its unchanged class was compiled with a matching Workflow interface in a temporary Playground resource. `viewmodel.ts` follows GacJS's generated local RPC interface and `RpcEvent` API. Only the C++ implementation supplies the committed view-model screenshot.
 
 ## Recreating the captures
 
@@ -57,6 +57,6 @@ auto window = UnboxValue<GuiWindow*>(Value::Create(
     L"demo::TestWindow", (Value_xs(), viewModel)));
 ```
 
-Build `Test/GacUISrc` with `copilotBuild.ps1 -Configuration Debug -Platform x64`, and copy the resulting executable into the temporary capture folder. Load `viewmodel.xml` through the same resource wrapper and perform the greeting checks above. Afterwards restore the original `Main.cpp`, update its modification time so the build detects the restoration, and rebuild the ordinary Playground executable. No GacUI source changes are committed for these captures.
+Build `Test/GacUISrc` with `copilotBuild.ps1 -Configuration Debug -Platform x64`, and copy the resulting executable into the temporary capture folder. Load `viewmodel.xml` through the same resource wrapper and perform the greeting checks above. This manual registration supplies the interface for the capture fixture, so do not also load the Script declaration there. Afterwards restore the original `Main.cpp`, update its modification time so the build detects the restoration, and rebuild the ordinary Playground executable. No GacUI source changes are committed for these captures.
 
 The temporary capture fixture is not committed and is not needed to serve the website. These coordinates and screenshot dimensions correspond to the captured 100% DPI environment; derive fresh control bounds at other DPI settings.

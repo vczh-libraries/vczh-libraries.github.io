@@ -113,6 +113,11 @@
           "code": "<Instance ref.CodeBehind=\"false\"\n          ref.Class=\"demo::TestWindow\">\n  <ref.Parameter Name=\"ViewModel\" Class=\"IHelloViewModel\"/>\n  <Window Text=\"Say hello\"\n          ClientSize=\"x:360 y:0\" SizeBox=\"false\"\n          MinimizedBox=\"false\" MaximizedBox=\"false\">\n    <att.ViewModel-set Name-bind=\"nameInput.Text\"/>\n    <ez:Layout Padding=\"5\" Border=\"false\">\n      <ez:Top>\n        <Label Text=\"Your name\"/>\n      </ez:Top>\n      <ez:Top>\n        <SinglelineTextBox ref.Name=\"nameInput\" Text=\"world\"/>\n      </ez:Top>\n      <ez:Top>\n        <Label Text-bind=\"ViewModel.Welcome\"/>\n      </ez:Top>\n    </ez:Layout>\n  </Window>\n</Instance>"
         },
         {
+          "id": "interface",
+          "label": "Source / ViewModel.xml",
+          "code": "<Workflow><![CDATA[\nmodule viewmodel;\n\n@rpc:Interface\ninterface IHelloViewModel\n{\n    prop Name: string {}\n    prop Welcome: string {const}\n}\n]]></Workflow>"
+        },
+        {
           "id": "cpp",
           "label": "Source / ViewModel.cpp",
           "code": "class HelloViewModel : public Object, public virtual IHelloViewModel\n{\nprivate:\n    WString name = L\"world\";\n    WString welcome = L\"Hello, world!\";\n\npublic:\n    WString GetName() override\n    {\n        return name;\n    }\n\n    void SetName(const WString& value) override\n    {\n        if (name != value)\n        {\n            name = value;\n            welcome = L\"Hello, \" + name + L\"!\";\n            NameChanged();\n            WelcomeChanged();\n        }\n    }\n\n    WString GetWelcome() override\n    {\n        return welcome;\n    }\n};"
