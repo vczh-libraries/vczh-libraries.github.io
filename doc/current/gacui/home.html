@@ -785,7 +785,21 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    It allows a GacUI application to run in two different binaries: core and renderer. You could run them in exe-dll, or in two different processes.\n                    In the near future, GacUI will release a renderer implementation in TypeScript, allow a GacUI application to be rendered in a browser.\n                    At that moment, the core could be a background process, or even a WASM binary also running in the browser.\n                "
+                    "text": "\n                    The remote protocol separates a GacUI application into a headless core and a renderer.\n                    Native renderers are available on Windows, Linux and macOS.\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/GacJS",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacJS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " supplies an HTML5 renderer;\n                    its primary feature is running the core in the browser as WebAssembly, with working demos available.\n                "
                   }
                 ]
               },
@@ -1150,47 +1164,153 @@
           },
           {
             "kind": "Topic",
-            "title": "In the future ...",
+            "title": "GacJS: WebAssembly and HTML5",
             "content": [
               {
                 "kind": "Paragraph",
                 "content": [
                   {
-                    "kind": "Text",
-                    "text": "\n                    In the future, more platforms will be included in GacUI like:\n                    "
-                  },
-                  {
-                    "kind": "List",
-                    "ordered": false,
-                    "items": [
+                    "kind": "Strong",
+                    "content": [
                       {
-                        "kind": "ContentListItem",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "UWP"
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "ContentListItem",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "WASM running on browsers"
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "ContentListItem",
-                        "content": [
-                          {
-                            "kind": "Text",
-                            "text": "etc ..."
-                          }
-                        ]
+                        "kind": "Text",
+                        "text": "WebAssembly"
                       }
                     ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the primary feature and purpose of "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/GacJS",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacJS"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    It builds on HTML5 rendering and the remote protocol: the browser loads the GacUI core from a "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": ".wasm"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " file in a worker,\n                    then exposed functions and callbacks carry channel messages between JavaScript and the core.\n                    The HTML5 renderer uses the remote protocol channel, and a TypeScript view model can use Workflow RPC channels over the same WebAssembly transport.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    WebAssembly and HTTP are alternative transports, independent of HTML5 rendering and view-model implementation.\n                    The HTTP option connects to a native core on Windows, Linux or macOS and is used mainly to test HTML5 rendering without WebAssembly.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Working demos in "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/GacUI/tree/master/Test/Linux",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacUI's Test/Linux"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " are\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "WasmFCT"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " (FullControlTest), "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "WasmRPT"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " (RemoteProtocolTest) and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "WasmRVMT"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " (RemoteViewModelTest).\n                    Their GacJS pages are "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "/wasm-fct/"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "/wasm-rpt/"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "/wasm-rvmt/"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ";\n                    the last runs its TypeScript view model in the page.\n                    See "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/GacJS/blob/master/doc/NetworkProtocol.md",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacJS Network Protocol"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for the transport contract\n                    and "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/GacJS/blob/master/doc/Projects.md",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GacJS Projects"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " for building and serving the demos.\n                "
                   }
                 ]
               }
