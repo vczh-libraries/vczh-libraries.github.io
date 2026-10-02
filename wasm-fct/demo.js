@@ -20,6 +20,12 @@ function showMask(success, text) {
 }
 
 async function prepareThreads() {
+    if (!globalThis.isSecureContext && location.protocol === 'http:') {
+        const secureUrl = new URL(location.href);
+        secureUrl.protocol = 'https:';
+        location.replace(secureUrl.href);
+        return false;
+    }
     if (!globalThis.isSecureContext || !('serviceWorker' in navigator)) {
         throw new Error('Open this demo over HTTPS in a browser with WebAssembly thread support.');
     }
