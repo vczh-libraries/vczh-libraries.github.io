@@ -437,7 +437,7 @@
               },
               {
                 "kind": "Program",
-                "code": "<ez:Layout>\n  <ez:Fill><MultilineTextBox/></ez:Fill>\n  <ez:Bottom>\n    <ez:Right><Button Text=\"OK\"/></ez:Right>\n    <ez:Right><Button Text=\"Cancel\"/></ez:Right>\n  </ez:Bottom>\n</ez:Layout>",
+                "code": "<ez:Layout>\r\n  <ez:Fill><MultilineTextBox/></ez:Fill>\r\n  <ez:Bottom>\r\n    <ez:Right><Button Text=\"OK\"/></ez:Right>\r\n    <ez:Right><Button Text=\"Cancel\"/></ez:Right>\r\n  </ez:Bottom>\r\n</ez:Layout>",
                 "language": "XML"
               }
             ]
@@ -461,6 +461,41 @@
               {
                 "kind": "Text",
                 "text": " is supported but strongly discouraged for combining arrangements.\n                Use nested description groups within one owning layout instead;\n                different groups can have different arrangements without an extra layout owner.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Declare controls, compositions and layout descriptions as direct children.\n                The named "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Composition"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Layouts"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " properties are unsupported in resource XML,\n                including attributes, property elements and bindings.\n                Their C++ and Workflow APIs remain available for programmatic changes.\n            "
               }
             ]
           }
@@ -538,7 +573,20 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                XML resources build the layout automatically, and normal resizing needs no extra work.\n                Call "
+                "text": "\n                XML resources build the layout automatically after assignments, initial bindings and event handlers are ready.\n                Nested layouts build before their owners, and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ref.Ctor"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " observes the built layouts.\n                Normal resizing needs no extra work.\n                Call "
               },
               {
                 "kind": "Strong",
@@ -595,7 +643,7 @@
               },
               {
                 "kind": "Text",
-                "text": ", and "
+                "text": ", "
               },
               {
                 "kind": "Strong",
@@ -608,20 +656,7 @@
               },
               {
                 "kind": "Text",
-                "text": " support bindings;\n                later changes take effect when "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "BuildLayout()"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " is called.\n                "
+                "text": ", "
               },
               {
                 "kind": "Strong",
@@ -634,7 +669,7 @@
               },
               {
                 "kind": "Text",
-                "text": " and "
+                "text": ", and "
               },
               {
                 "kind": "Strong",
@@ -647,7 +682,55 @@
               },
               {
                 "kind": "Text",
-                "text": " must be constants in XML.\n            "
+                "text": "\n                support ordinary well-typed expressions and bindings.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CellOption"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " uses the same struct expressions as table options,\n                including runtime field expressions and default values for omitted fields.\n                Initial bindings affect the automatic build; later changes take effect only when "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BuildLayout()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is called.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Layout grammar, conflicting options and invalid numeric values fail during the automatic initialization build\n                or a later explicit "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "BuildLayout()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ". Ownership checks can fail during assignment.\n                Multiple control/composition payloads in the same default content fail XML compilation.\n                Later programmatic content replacement remains supported, as do bindings on the configuration properties described above.\n                Ordinary XML syntax, type and binder restrictions are also checked at compilation.\n            "
               }
             ]
           }
