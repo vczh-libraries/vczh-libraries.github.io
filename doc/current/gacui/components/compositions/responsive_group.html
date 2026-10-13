@@ -548,7 +548,20 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                This property represents how many different view it could have.\n                It is the largest "
+                "text": "\n                This property represents how many different views the group can have.\n                It is the largest of 1, the number of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ViewSizes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " entries,\n                and the "
               },
               {
                 "kind": "Strong",
@@ -561,7 +574,7 @@
               },
               {
                 "kind": "Text",
-                "text": " of all managed "
+                "text": " of every managed "
               },
               {
                 "kind": "Strong",
@@ -582,21 +595,17 @@
             "kind": "Paragraph",
             "content": [
               {
-                "kind": "Text",
-                "text": "\n                If there is no managed "
-              },
-              {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "GuiResponsiveCompositionBase"
+                    "text": "ViewSizes"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": ",\n                "
+                "text": " contributes permanent levels even without managed children.\n                With an empty array and no managed children, "
               },
               {
                 "kind": "Strong",
@@ -659,7 +668,20 @@
               },
               {
                 "kind": "Text",
-                "text": " - 1.\n            "
+                "text": " - 1.\n                The group takes the largest current level among its permanent "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ViewSizes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " contribution\n                and its managed children.\n            "
               }
             ]
           }
@@ -723,6 +745,67 @@
               {
                 "kind": "Text",
                 "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An array with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "N"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " entries contributes "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "N"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " permanent levels.\n                Assigning it initializes its own current level to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "N - 1"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", like a newly configured "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "<ResponsiveView/>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                These levels and their current state remain available when all responsive children are removed.\n                Children can contribute additional levels; children with fewer levels stay at their largest view.\n            "
               }
             ]
           },
@@ -809,20 +892,7 @@
               },
               {
                 "kind": "Text",
-                "text": " selects 64, 230 and 231 at levels 0, 1 and 2.\n                Entries beyond the child-derived "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "LevelCount"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " are stored but unused; they do not create levels.\n            "
+                "text": " contributes levels 0 and 1 with sizes 64 and 230.\n                If a child contributes level 2, its preferred size is 231.\n            "
               }
             ]
           },
@@ -927,7 +997,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                The default empty array disables this behavior.\n                Clearing an assigned array stops further overrides and keeps the current stored "
+                "text": "\n                The default empty array leaves levels entirely determined by managed children and disables size overrides.\n                Clearing an assigned array removes its permanent level contribution, stops further overrides and keeps the current stored "
               },
               {
                 "kind": "Strong",
@@ -989,46 +1059,33 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "\n                With virtualized lists, initialize newly realized responsive rows to their group's established level before attaching them.\n                Removing all rows temporarily leaves "
+                "text": "\n                With virtualized lists, initialize newly realized responsive rows to their group's established level before attaching them.\n                With "
               },
               {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "LevelCount == 1"
+                    "text": "ViewSizes"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": " and "
+                "text": " supplying the row appearances, removing all rows preserves the configured levels and the group's own current level.\n                Replacement rows can use "
               },
               {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "CurrentLevel == 0"
+                    "text": "group.CurrentLevel"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": ", regardless of the array length.\n                Retain the intended level separately while reloading rows.\n                "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "ReloadVisibleStyles()"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " clears rows immediately; replacement rows can appear during the call or during later layout. Suppress nested reloads until replacement rows restore that level.\n                Restoring level zero may change the level count without raising "
+                "text": " directly, without separate application fields or restoration handlers.\n                Keep the movie group's original "
               },
               {
                 "kind": "Strong",
@@ -1041,7 +1098,20 @@
               },
               {
                 "kind": "Text",
-                "text": ".\n                Keep the arranger's row-height reset when switching between compact and detailed templates.\n            "
+                "text": " handler calling "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ReloadVisibleStyles()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                to reset the arranger's row height when switching between compact and detailed templates.\n                Only configured levels are permanent; levels contributed solely by removed children disappear.\n            "
               }
             ]
           }
