@@ -2107,6 +2107,639 @@
       },
       {
         "kind": "Topic",
+        "title": "<Raw>: owner drawing",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "<Raw/>"
+              },
+              {
+                "kind": "Text",
+                "text": " is the standard, recommended way to implement owner drawing in GacUI,\n                both in native applications and through the remote protocol.\n                It places application-defined drawing inside a composition while keeping layout and input handling in GacUI.\n                TUI does not support "
+              },
+              {
+                "kind": "Name",
+                "text": "<Raw/>"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Place one "
+              },
+              {
+                "kind": "Name",
+                "text": "<Raw/>"
+              },
+              {
+                "kind": "Text",
+                "text": " inside the composition that owns the drawing area.\n                Its optional string properties are "
+              },
+              {
+                "kind": "Name",
+                "text": "Id"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "Data"
+              },
+              {
+                "kind": "Text",
+                "text": "; both default to an empty string.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "ref.Name"
+              },
+              {
+                "kind": "Text",
+                "text": " exposes the element to generated code as "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiRawElementBase"
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The element has no intrinsic minimum size, so set a size on the composition when needed.\n                For example, this fragment can appear inside an instance's composition tree:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "<Bounds PreferredMinSize=\"x:240 y:240\">\n  <Raw ref.Name=\"clock\" Id=\"Example.Clock\" Data=\"10:20:30\"/>\n</Bounds>",
+                "language": "xml"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "Id"
+              },
+              {
+                "kind": "Text",
+                "text": " selects the application's drawing convention; it is not a unique element key.\n                Empty and duplicate IDs are valid, so track drawing attachments by element identity.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "Data"
+              },
+              {
+                "kind": "Text",
+                "text": " carries application-defined state, such as the clock's "
+              },
+              {
+                "kind": "Name",
+                "text": "HH:mm:ss"
+              },
+              {
+                "kind": "Text",
+                "text": " string.\n                Changing "
+              },
+              {
+                "kind": "Name",
+                "text": "Data"
+              },
+              {
+                "kind": "Text",
+                "text": " requests a repaint. Changing "
+              },
+              {
+                "kind": "Name",
+                "text": "Id"
+              },
+              {
+                "kind": "Text",
+                "text": " alone does not request one,\n                and equal assignments do nothing. With the remote protocol, an ID-only change is sent on the next frame.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Native rendering APIs",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The active graphics resource manager chooses the concrete element for "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "<Raw/>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    All four native implementations derive from "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiRawElementBase"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and expose a C++ "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Rendering"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " event:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "GuiDirect2DElement"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " on Windows provides "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiDirect2DElementEventArgs"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " with "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "element"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "rt"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " ("
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "ID2D1RenderTarget*"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "), Direct2D/DirectWrite factories and "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "bounds"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ". Release target-bound resources in "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "BeforeRenderTargetChanged"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and recreate them for the new target in "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "AfterRenderTargetChanged"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "; late subscribers can initialize them on their first render."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "GuiGDIElement"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " on Windows provides "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiGDIElementEventArgs"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " with "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "element"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "dc"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " ("
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "windows::WinDC*"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ") and "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "bounds"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ". Use the supplied wrapper or its "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GetHandle()"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " for GDI drawing."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "GuiWaylandElement"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " in wGac provides "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiWaylandElementEventArgs"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " with "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "element"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "context"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " ("
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "cairo_t*"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ") and "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "bounds"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "GuiCocoaElement"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " in iGac provides "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiCocoaElementEventArgs"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " with "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "element"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "context"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " ("
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "CGContextRef"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ") and "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "bounds"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Attach handlers to the concrete native element after creating the UI, and keep them attached through its drawing lifetime.\n                    Draw within the supplied bounds using the current clip and coordinate transform.\n                    Borrow drawing contexts only for the callback; do not retain or destroy them, start another frame, or present the target.\n                    In particular, Wayland and Cocoa contexts may change between paint calls.\n                    Detach handlers before destroying their owning drawing objects.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Windows/RawClock",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "RawClock tutorial"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    demonstrates this API with Direct2D by default and GDI when launched with "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "/Gdi"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Its XML owns the clock state; native callbacks paint the supplied state.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Remote rendering",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A remote core creates a portable "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiRemoteRawElement"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", exposing the shared "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiRawElementBase"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " state.\n                    The protocol sends the numeric renderer element "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "id"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", application string "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "rawId"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and string "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "data"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    The receiving renderer draws locally; native pointers, drawing callbacks and rendered pixels are not transferred.\n                    Install a matching drawing implementation in each renderer that the application supports.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The native "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiRemoteRendererSingle"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " exposes "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GetRawElements()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "RawElementInstalled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "RawElementUninstalled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "RawElementChanged"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Subscribe before processing messages and enumerate existing elements for late attachment.\n                    An installed element initially has empty state; select or replace its drawing attachment when its ID changes.\n                    Changed callbacks see both updated descriptor fields, including data-only changes.\n                    Uninstallation is the point to remove attachments; a temporarily hidden element or retained disconnected picture may still exist.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    GacJS exposes "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "getRawElements()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "rawElementInstalled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "rawElementUninstalled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "rawElementUpdated"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "IGacUIRenderer"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    A "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GacUIRawElement"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " contains a persistent "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "element"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " div plus application "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "id"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "data"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " strings.\n                    Application code owns any canvas or other drawing content placed inside that div, and must dispose its subscriptions and observers at teardown.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "anchor": "Raw"
+      },
+      {
+        "kind": "Topic",
         "title": "<ColorizedTextElement> and <DocumentElement>",
         "content": [
           {
