@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Variants -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "workflow",
+    "lang",
+    "variant"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "Workflow Script",
+      "selected": false,
+      "path": [
+        "workflow",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "Syntax",
+          "selected": false,
+          "path": [
+            "workflow",
+            "lang"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Types",
+              "selected": false,
+              "path": [
+                "workflow",
+                "lang",
+                "type"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "Variants",
+                  "selected": true,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "variant"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Enums",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "enum"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "Structs",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "struct"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Interfaces",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "interface"
+                  ]
+                },
+                {
+                  "icon": "+",
+                  "name": "Classes",
+                  "selected": false,
+                  "path": [
+                    "workflow",
+                    "lang",
+                    "class"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": true,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "Variants",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "variant<A, B, ...>"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " is a value type that stores one declared option and its value.\n            It maps to "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "vl::Variant"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " in generated C++.\n            The active option is preserved when the value is copied, passed through reflection, or stored in a typed collection.\n        "
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Type identity and valid options",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A variant requires at least two valid value types. Options are ordered:\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant<int, string>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant<string, int>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are different Workflow types.\n                Resolved aliases refer to the same option, so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "string"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::String"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " cannot both appear.\n                The target architecture determines what "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "int"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "uint"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " mean.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An option cannot be "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "void"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or itself be a variant.\n                A variant itself cannot have a pointer or optional decoration.\n                Collections of variant elements are supported.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Options must also produce distinct native C++ alternatives.\n                For example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "int[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "string[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " both map to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", so they cannot be two options in one variant.\n                This restriction does not make those two list types equal elsewhere in Workflow.\n                Function signatures in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Func"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and enumerable element types in "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "LazyList"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " remain distinct native types.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A native untyped collection option retains its declared metadata.\n                Reflection does not inspect a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Ptr<IValueList>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " payload to turn it into an exact "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "int[]"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " option.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Type-identity"
+      },
+      {
+        "kind": "Topic",
+        "title": "Construction, assignment and conversion",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Assignment, arguments and returns require the same ordered variant type.\n                There is no implicit conversion between a variant and its options, between different variants, or from a variant to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Use an explicit "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "of"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " expression:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var number = cast variant<int, string> 42;\nvar text = \"hello\" of variant<int, string>;\nvar reordered = cast variant<string, int> number;\nvar widened = text of variant<double, string, int>;"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                The active values are respectively "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "42"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"hello\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "42"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\"hello\""
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "cast VARIANT value"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " and "
+                      },
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "value of VARIANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " select the exact declared type of a nonvariant value. Numeric, inheritance, pointer-ownership and optional conversions do not make an option match."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "cast OPTION value"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " requires that exact option to be declared. It throws when a different option is active."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "cast TARGET_VARIANT value"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " requires a nonempty intersection of option types. It throws when the active option is outside that intersection."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Strong",
+                        "content": [
+                          {
+                            "kind": "Text",
+                            "text": "value of TARGET_VARIANT"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " requires every source option to occur in the target. It preserves the active option and permits reordering."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                For the example above, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast string number"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is a runtime failure: "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "string"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is declared, but "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "int"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is active.\n                A cast to an option that is not declared is a compiler error.\n                Bare "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and other expressions needing an expected type cannot choose an option implicitly; first give the payload an explicit type.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This declaration is rejected because a variant does not implicitly convert to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func f(x:variant<int, string>):void { var y:object = x; }"
+              }
+            ]
+          }
+        ],
+        "anchor": "Construction-and-conversion"
+      },
+      {
+        "kind": "Topic",
+        "title": "Weak casts, null and defaults",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "value as T*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "value as T^"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " requires that exact pointer option.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "value as T?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " requires an option of "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "T"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "T?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and accepts either when active.\n                A different active option returns "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Weak casts to a variant or to a nonnullable value type are unsupported.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var plain = cast variant<int, int?, string> 7;\nvar optional : int? = 8;\nvar present = optional of variant<int, int?, string>;\nvar empty : int? = null;\nvar missing = cast variant<int, int?, string> empty;"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "plain as int?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns 7, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "present as int?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns 8, and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "missing as int?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns null.\n                Strong extraction remains exact: "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast int? plain"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " throws.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Null does not erase the active option.\n                Strong extraction of a matching null pointer or empty optional succeeds; extraction of another declared option throws even when both payloads would be null.\n                Likewise, a base-pointer option containing a derived object remains the base-pointer option.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "is null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "is not null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " require at least one null-bearing option and inspect the active payload.\n                They do not test whether the outer variant box exists.\n                A compiler-generated default, including an unassigned struct field, selects the first declared option and uses that option's default value.\n                Thus a default "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant<int, string>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " contains integer zero; a default "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant<int?, string>"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " contains an empty optional tagged as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "int?"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Weak-casts-and-null"
+      },
+      {
+        "kind": "Topic",
+        "title": "The object option and explicit escape",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An explicit "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " option takes precedence.\n                Converting an object-typed value to such a variant selects that option without inspecting the payload.\n                Casting that variant to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " extracts only an active "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " option; another active option causes a runtime failure.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                If "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is not an option, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast object value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " preserves the complete outer variant box.\n                A later ordinary cast does not extract its payload.\n                This function compiles but fails when called:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "func EscapedPayload():int\n{\n  var value = 1 of variant<int, string>;\n  var escaped : object = cast object value;\n  return cast int escaped;\n}"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                Casting an object-typed value back to a variant without an exact "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " option is rejected at compile time.\n                There is no dynamic recovery cast.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Object-option-and-escape"
+      },
+      {
+        "kind": "Topic",
+        "title": "Comparison and other operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The six comparison operators compare active payloads, including a variant and a nonvariant operand or two different variant types.\n                They do not order by option position or require a common variant type.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var a = 3 of variant<int, string>;\nvar b = 3.0 of variant<double, bool>;\nvar text = \"three\" of variant<int, string>;"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a == b"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a == 3.0"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are true.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a != text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is true, while all four relational comparisons between "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "a"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "text"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are false.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Comparison is a partial ordering. Unordered payloads, including NaN, produce false for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "=="
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and all relational operators, and true for "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "!="
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Pointer payloads retain the existing pointer-identity semantics.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Extract an option before arithmetic, logical operations, indexing, invocation or member access.\n                Type tests with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "is TYPE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "is not TYPE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", and variant type queries, are unsupported.\n                Reading a variant-valued field or property is supported; extracting a value makes a copy, and writing back requires assigning a complete valid variant.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Comparison"
+      },
+      {
+        "kind": "Topic",
+        "title": "Bindings and RPC",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                A "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/bind.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "binding"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " publishes through "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ValueChanged(object)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                A direct variant result is therefore rejected.\n                The authored expression must extract a payload or explicitly produce an allowed nonvariant result.\n                Observing and caching a variant while producing such a result is supported.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "/workflow/rpc.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "RPC"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not support variants, including variants contained in collection arguments, optional wrappers or struct fields.\n                Escaping a variant to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " does not make it JSON serializable.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Bindings-and-RPC"
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>

@@ -353,6 +353,64 @@
                 "text": "\n\t\t\t\tReserved framework types such as object references and RPC exceptions are part of the transport protocol and are not valid as ordinary RPC member payloads.\n\t\t\t"
               }
             ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/variant.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Variants"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " are not serializable by RPC.\n\t\t\t\tThe compiler rejects them in method parameters and returns, properties and event arguments, including occurrences inside collection type arguments, nullable wrappers and struct fields.\n\t\t\t\tFor example, this interface is rejected before RPC metadata or serializers are generated:\n\t\t\t\t"
+              },
+              {
+                "kind": "Program",
+                "code": "module test;\n@rpc:Interface\ninterface IVariantService\n{\n  func Send(value:variant<int, string>):void;\n}"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n\t\t\t\tA variant explicitly escaped to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " still contains the outer variant box.\n\t\t\t\tThe JSON serializer rejects it with "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Unsupported RPC JSON serialization value."
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", including when reached through an object list or dictionary.\n\t\t\t\tIt does not serialize the active payload and does not generate a variant schema.\n\t\t\t"
+              }
+            ]
           }
         ]
       },
