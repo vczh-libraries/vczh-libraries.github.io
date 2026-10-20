@@ -913,7 +913,224 @@
       },
       {
         "kind": "Topic",
-        "title": "The object option and explicit escape",
+        "title": "Extracting the active payload as object",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant in VALUE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " extracts the active payload and has static type "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                The compiler requires "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VALUE"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to have a variant type; an object containing a native-provided variant box is not accepted.\n                The operand is evaluated once. Null pointer, empty optional and null object payloads produce null.\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "var number = 42 of variant<int, string>;\nvar payload : object = variant in number;\nvar result = cast int payload;"
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "result"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " is 42. The ordinary cast operates on the extracted integer payload.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This operator has the same "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/expr_precedences.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "precedence"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " as unary "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "+"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "-"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "not"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Unary operators group from right to left, so "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "cast int variant in number"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " first extracts the payload and then casts it.\n                Calls, indexing and member access bind more tightly: "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant in values[0].Get()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " extracts the returned variant.\n                Use parentheses around a lower-precedence operand or around the extraction before a type test, such as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "(variant in value) is null"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Extraction removes exactly one variant layer.\n                If an "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " option contains a variant box supplied by native C++ code, the result is that inner box.\n                It is not recursively extracted, and its static type remains "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "Payload-extraction"
+      },
+      {
+        "kind": "Topic",
+        "title": "The object option",
         "content": [
           {
             "kind": "Paragraph",
@@ -994,11 +1211,37 @@
               },
               {
                 "kind": "Text",
-                "text": " preserves the complete outer variant box.\n                A later ordinary cast does not extract its payload.\n                This function compiles but fails when called:\n                "
+                "text": " is a compiler error, just like a cast to any other undeclared option.\n                Workflow has no conversion that boxes a complete variant as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant in value"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to extract the active payload instead.\n                This function is rejected at compile time:\n                "
               },
               {
                 "kind": "Program",
-                "code": "func EscapedPayload():int\n{\n  var value = 1 of variant<int, string>;\n  var escaped : object = cast object value;\n  return cast int escaped;\n}"
+                "code": "func f(x:variant<int, string>):void\n{\n  var y = cast object x;\n}"
               },
               {
                 "kind": "Text",
@@ -1213,7 +1456,33 @@
               },
               {
                 "kind": "Text",
-                "text": ".\n                A direct variant result is therefore rejected.\n                The authored expression must extract a payload or explicitly produce an allowed nonvariant result.\n                Observing and caching a variant while producing such a result is supported.\n            "
+                "text": ".\n                A direct variant result is therefore rejected.\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "bind(variant in source.Value)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to publish the active payload as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ", or produce another allowed nonvariant result.\n                Observing and caching a variant while producing such a result is supported.\n            "
               }
             ]
           },
@@ -1232,20 +1501,7 @@
               },
               {
                 "kind": "Text",
-                "text": " does not support variants, including variants contained in collection arguments, optional wrappers or struct fields.\n                Escaping a variant to "
-              },
-              {
-                "kind": "Strong",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "object"
-                  }
-                ]
-              },
-              {
-                "kind": "Text",
-                "text": " does not make it JSON serializable.\n            "
+                "text": " does not support variants, including variants contained in collection arguments, optional wrappers or struct fields.\n                An extracted payload can be serialized only if its value is supported by RPC.\n                A variant box supplied by native C++ code remains unsupported, including a box nested inside an extracted object payload.\n            "
               }
             ]
           }

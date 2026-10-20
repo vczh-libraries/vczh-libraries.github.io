@@ -381,8 +381,17 @@
             "kind": "Paragraph",
             "content": [
               {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant in VALUE"
+                  }
+                ]
+              },
+              {
                 "kind": "Text",
-                "text": "\n\t\t\t\tA variant explicitly escaped to "
+                "text": " explicitly extracts the active payload as "
               },
               {
                 "kind": "Strong",
@@ -395,7 +404,20 @@
               },
               {
                 "kind": "Text",
-                "text": " still contains the outer variant box.\n\t\t\t\tThe JSON serializer rejects it with "
+                "text": ".\n\t\t\t\tThat payload can be serialized only if its value is supported by RPC; extraction does not generate a variant schema.\n\t\t\t\tWorkflow casts cannot box a complete variant as "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "object"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n\t\t\t\tIf native C++ code supplies such a box, the JSON serializer rejects it with "
               },
               {
                 "kind": "Strong",
@@ -408,7 +430,7 @@
               },
               {
                 "kind": "Text",
-                "text": ", including when reached through an object list or dictionary.\n\t\t\t\tIt does not serialize the active payload and does not generate a variant schema.\n\t\t\t"
+                "text": ", including when reached through an object list or dictionary.\n\t\t\t\tExtraction removes only one layer, so an object option holding a native-provided variant box still cannot be serialized.\n\t\t\t"
               }
             ]
           }
