@@ -989,35 +989,105 @@
       },
       {
         "kind": "Topic",
-        "title": "Define the $ expression",
+        "title": "Define the $.NAME expression",
         "content": [
           {
             "kind": "Paragraph",
             "content": [
               {
-                "kind": "Text",
-                "text": "\n                If you want to suppor the "
-              },
-              {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "$"
+                    "text": "$.NAME"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": " expression,\n                you are required to add this method to your coroutine provider:\n                "
+                "text": " accesses a member of the coroutine's context.\n                Add this static method to the coroutine provider:\n                "
               },
               {
                 "kind": "Program",
-                "code": "static QueryContext(internalState: InternalState*): Something { /* ... */ }"
+                "code": "static func QueryContext(internalState: InternalState*): Context^ { /* ... */ }"
               },
               {
                 "kind": "Text",
-                "text": "\n                and the return value from "
+                "text": "\n                The compiler passes the current internal-state object to "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "QueryContext"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ",\n                then accesses "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "NAME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " on its result. "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$.Method(arguments)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " calls a method on that context.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                This expression is only available inside a coroutine function with a "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "${ ... }"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " or "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$Provider { ... }"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " body.\n                It does not pause the coroutine. Bare "
               },
               {
                 "kind": "Strong",
@@ -1030,14 +1100,28 @@
               },
               {
                 "kind": "Text",
-                "text": " becomes "
+                "text": " is not an expression.\n                For example, "
               },
               {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Something"
+                    "text": "$.IsCancelled()"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " queries the context of an "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/coroutine_async.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "async coroutine"
                   }
                 ]
               },
@@ -1047,7 +1131,8 @@
               }
             ]
           }
-        ]
+        ],
+        "anchor": "Context-members"
       },
       {
         "kind": "Topic",

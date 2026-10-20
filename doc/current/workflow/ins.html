@@ -254,7 +254,7 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "ConvertToType(flag, type)"
+                "text": "ConvertToType(flag, typeDescriptor)"
               }
             ]
           },
@@ -273,7 +273,7 @@
           },
           {
             "kind": "Text",
-            "text": ",\n            and embedded arguments are stored in field "
+            "text": ",\n            and embedded arguments are stored in fields "
           },
           {
             "kind": "Strong",
@@ -293,7 +293,59 @@
             "content": [
               {
                 "kind": "Text",
-                "text": "typeParameter"
+                "text": "typeDescriptorParameter"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": ".\n            A "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "type"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " argument is a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "WfInsType"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": "; a "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "typeInfo"
+              }
+            ]
+          },
+          {
+            "kind": "Text",
+            "text": " argument stores a complete "
+          },
+          {
+            "kind": "Strong",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "ITypeInfo"
               }
             ]
           },
@@ -510,7 +562,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\n(int) value of the variable"
+                    "code": "--> top\nvalue of the variable"
                   }
                 ]
               },
@@ -674,7 +726,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top"
+                    "code": "--> top\nvalue of the object"
                   }
                 ]
               },
@@ -696,20 +748,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Push the closure of the "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "IMethodInfo*"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": " object to the stack.\n                    It is created by calling "
+                    "text": "\n                    Pop the object and push a callable closure of the specified method bound to that object.\n                    The closure is created by "
                   },
                   {
                     "kind": "Strong",
@@ -722,7 +761,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": ",\n                    this function returns a function object that can be invoked.\n                "
+                    "text": ".\n                "
                   }
                 ]
               }
@@ -763,7 +802,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Push the closure context of the current stack frame to the stack.\n                    Local variables are stored in the current stack frame.\n                "
+                    "text": "\n                    Push the closure context of the current stack frame to the stack.\n                    This context stores captured variables.\n                "
                   }
                 ]
               }
@@ -894,7 +933,7 @@
           },
           {
             "kind": "Topic",
-            "title": "Duplicate",
+            "title": "Duplicate(count)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -905,7 +944,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\nvalue"
+                    "code": "--> top\n... count values\nvalue to copy"
                   }
                 ]
               },
@@ -918,7 +957,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\nvalue\nvalue"
+                    "code": "--> top\ncopied value\n... count values\nvalue to copy"
                   }
                 ]
               },
@@ -927,7 +966,33 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Duplicate the top value in the stack.\n                "
+                    "text": "\n                    Push a copy of the value "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "count"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " positions below the top.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Duplicate(0)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " duplicates the top value. Existing values remain on the stack.\n                "
                   }
                 ]
               }
@@ -1235,7 +1300,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop a new trap frame.\n                    Keep the specified number of stack values right after this trap frame.\n                    This happens when no exception occurs while evaluating the left operand of the "
+                    "text": "\n                    Pop the top trap frame.\n                    Keep the specified number of stack values right after this trap frame.\n                    This happens when no exception occurs while evaluating the left operand of the "
                   },
                   {
                     "kind": "Strong",
@@ -1263,7 +1328,33 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Raise an exception.\n                "
+                    "text": "\n                    Pop an exception value and raise it. The value can be a string,\n                    a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "WfRuntimeExceptionInfo"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", or an "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IValueException"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
                   }
                 ]
               },
@@ -1286,7 +1377,7 @@
         "content": [
           {
             "kind": "Topic",
-            "title": "CreateArray(count)",
+            "title": "NewArray(count)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1310,7 +1401,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\n(Ptr<IValueList>) value of created array"
+                    "code": "--> top\n(Ptr<IValueArray>) value of created array"
                   }
                 ]
               },
@@ -1327,7 +1418,48 @@
           },
           {
             "kind": "Topic",
-            "title": "CreateObservableList(count)",
+            "title": "NewList(count)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Stack pattern before:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\nitem-1\n...\nitem-n"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Stack pattern after:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "--> top\n(Ptr<IValueList>) value of created list"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Pop the specified number of values from the stack,\n                    push the created list containing these values in popping order.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "NewObservableList(count)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1368,7 +1500,7 @@
           },
           {
             "kind": "Topic",
-            "title": "CreateMap(count)",
+            "title": "NewDictionary(count)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1392,7 +1524,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\n(Ptr<IValueDictionary>) value of created map"
+                    "code": "--> top\n(Ptr<IValueDictionary>) value of created dictionary"
                   }
                 ]
               },
@@ -1401,7 +1533,33 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop the specified number of value-key-pair from the stack,\n                    push the created observable map.\n                    A pair is two values on the stack instead of being a pair object.\n                    The order of keys in the map depends on value of keys.\n                "
+                    "text": "\n                    Pop "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "count"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " stack values as value-key pairs and push the created dictionary.\n                    Each pair occupies two stack values, so "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "count"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is twice the number of entries.\n                "
                   }
                 ]
               }
@@ -1537,7 +1695,20 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop the specified number of function-method-pair from the stack.\n                    Push the created interface to the stack.\n                    A pair is two values on the stack instead of being a pair object,\n                    declaring that which method is implemented by which global function.\n                "
+                    "text": "\n                    Pop "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "count"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " stack values as function-method pairs, then pop the closure context.\n                    Push the created interface to the stack.\n                    Each pair occupies two stack values and identifies the global function implementing a method.\n                    A null method identifies the destructor function.\n                "
                   }
                 ]
               },
@@ -1553,7 +1724,7 @@
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "methodParamter"
+                        "text": "methodParameter"
                       }
                     ]
                   },
@@ -1576,11 +1747,11 @@
                   },
                   {
                     "kind": "PageLink",
-                    "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION.html",
+                    "href": "/vlppreflection/registration-macros.html#Registration-Workflow",
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "class Description"
+                        "text": "Registration Workflow"
                       }
                     ]
                   },
@@ -1594,7 +1765,7 @@
           },
           {
             "kind": "Topic",
-            "title": "CreateRange",
+            "title": "CreateRange(type)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1627,7 +1798,20 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop the value of ending and beginning in order,\n                    push the created range,\n                    which is a enumerable collection,\n                    including the value of beginning but excluding the value of ending.\n                    Each value is one greater than the previous one in this collection.\n                "
+                    "text": "\n                    Pop the value of ending and beginning in order,\n                    push the created range,\n                    which is a enumerable collection,\n                    including both endpoints.\n                    Each value is one greater than the previous one in this collection.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "type"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " specifies the integer type of both endpoints.\n                    The compiler adjusts the endpoints for open ranges before executing this instruction.\n                "
                   }
                 ]
               }
@@ -1635,7 +1819,7 @@
           },
           {
             "kind": "Topic",
-            "title": "CreateStruct(flag, type)",
+            "title": "CreateStruct(flag, typeDescriptor)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1712,8 +1896,7 @@
                     "text": "\n                    Pop a value from the stack and delete it.\n                    If the value is not a raw pointer,\n                    then it is just popped but not deleted.\n                    Otherwise, "
                   },
                   {
-                    "kind": "PageLink",
-                    "href": "/vlppreflection/ref/VL__REFLECTION__DESCRIPTION__VALUE__DELETERAWPTR@BOOL().html",
+                    "kind": "Strong",
                     "content": [
                       {
                         "kind": "Text",
@@ -1737,7 +1920,7 @@
         "content": [
           {
             "kind": "Topic",
-            "title": "ConvertToType(flag, type)",
+            "title": "ConvertToType(flag, typeDescriptor)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1792,7 +1975,7 @@
           },
           {
             "kind": "Topic",
-            "title": "TryConvertToType(flag, type)",
+            "title": "TryConvertToType(flag, typeDescriptor)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -1825,21 +2008,20 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop a value from the stack and push the converted value to the stack.\n                    This instruction performs a "
+                    "text": "\n                    Pop a value from the stack and push the converted value to the stack.\n                    This instruction attempts the same conversion as "
                   },
                   {
-                    "kind": "PageLink",
-                    "href": "/workflow/lang/expr.html#Strong-casting-expression-cast-TYPE-OBJECT-cast-OBJECT",
+                    "kind": "Strong",
                     "content": [
                       {
                         "kind": "Text",
-                        "text": "strong casting"
+                        "text": "ConvertToType"
                       }
                     ]
                   },
                   {
                     "kind": "Text",
-                    "text": " on a value.\n                    "
+                    "text": ".\n                    "
                   },
                   {
                     "kind": "Strong",
@@ -1860,7 +2042,7 @@
           },
           {
             "kind": "Topic",
-            "title": "TestType(flag, type)",
+            "title": "TestType(flag, typeDescriptor)",
             "content": [
               {
                 "kind": "Paragraph",
@@ -2010,6 +2192,207 @@
       },
       {
         "kind": "Topic",
+        "title": "Variant Operations",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Each instruction pops one operand and pushes one result when it succeeds:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "before              after\n--> top             --> top\noperand             result"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                A variant box stores the active option's declared "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "ITypeInfo"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and its payload.\n                These instructions implement "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/variant.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "variant conversions and extraction"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VBox(typeInfo)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Wrap the operand in a variant box and push it.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "typeInfo"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is the declared active option type, not the complete variant type.\n                    The compiler has already checked that the operand matches this option.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VUnbox",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Pop a variant box and push its active payload without checking its option type.\n                    This implements "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "variant in VALUE"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", whose result type is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "object"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    It removes exactly one box; a null payload remains null.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VCast(typeInfo)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Pop a variant box and check its active option against the target "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "typeInfo"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    If the target is a variant containing that exact option, push the existing box.\n                    Otherwise, if the target exactly matches the active option, push its payload.\n                    A mismatch raises an exception.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "VTryCast(typeInfo)",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Apply the option check of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VCast"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", but push null on a mismatch.\n                    A nullable target "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T?"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " also accepts an active "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "T"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " option.\n                    The compiler uses this instruction for weak casts from variants to pointer or nullable option types.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
         "title": "Reflection Operations",
         "content": [
           {
@@ -2107,7 +2490,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "--> top\nvalue of the object\nvalue of the property"
+                    "code": "--> top\nvalue of the property\nvalue of the object"
                   }
                 ]
               },
@@ -2129,7 +2512,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop a value from the stack as the object,\n                    pop a value as the new value of the property\n                    update the value of the specified property of this object.\n                    Unlike "
+                    "text": "\n                    Pop the new property value, then pop the object and update its specified property.\n                    Unlike "
                   },
                   {
                     "kind": "Strong",
@@ -2528,7 +2911,20 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Pop the set and the value from the stack,\n                    test if the element is in the set.\n                    "
+                    "text": "\n                    Pop the set and the value from the stack,\n                    enumerate the set and compare each item with the element using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Value"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " equality.\n                    Push "
                   },
                   {
                     "kind": "Strong",
@@ -2541,7 +2937,46 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " will be pushed to the stack if the testing succeeds.\n                "
+                    "text": " if a matching item is found, otherwise "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "not in"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " negates this result with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OpNot(Bool)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
                   }
                 ]
               }
@@ -2588,7 +3023,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Compare booleans, numbers or strings.\n                "
+                    "text": "\n                    Compare booleans, numbers or strings of the specified type. Null sorts before a nonnull value.\n                "
                   }
                 ]
               },
@@ -2623,7 +3058,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " to the stack if the left operand is larger.\n                    Push "
+                    "text": " to the stack if the left operand is larger.\n                    Otherwise push "
                   },
                   {
                     "kind": "Strong",
@@ -2636,7 +3071,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " to the stack if operands are equal to each other.\n                "
+                    "text": ", including when neither floating-point comparison succeeds because an operand is NaN.\n                "
                   }
                 ]
               }
@@ -2651,7 +3086,83 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Compare two pointers.\n                "
+                    "text": "\n                    Compare pointer identity. Operands are raw pointers, shared pointers or null.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to the stack if operands are equal to each other.\n                    Otherwise push "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". Two null values are equal.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareValue",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Compare two values using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Value"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " equality.\n                    For variant operands, the compiler emits "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VUnbox"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " first to compare their active payloads.\n                "
                   }
                 ]
               },
@@ -2686,7 +3197,33 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " to the stack if operands are not equal to each other, or any of them is not a pointer.\n                "
+                    "text": " to the stack if operands are not equal to each other or are unordered.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "!="
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " negates this result with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "OpNot(Bool)"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
                   }
                 ]
               }
@@ -2694,64 +3231,14 @@
           },
           {
             "kind": "Topic",
-            "title": "CompareValue",
+            "title": "CompareValueLT",
             "content": [
               {
                 "kind": "Paragraph",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    Compare two values.\n                "
-                  }
-                ]
-              },
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "\n                    Push "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "true"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": " to the stack if operands are equal to each other.\n                    Push "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "true"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": " to the stack if operands are not equal to each other.\n                "
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "Topic",
-            "title": "OpLT",
-            "content": [
-              {
-                "kind": "Paragraph",
-                "content": [
-                  {
-                    "kind": "Text",
-                    "text": "\n                    This instruction executes "
+                    "text": "\n                    Pop the right and left values and push the result of "
                   },
                   {
                     "kind": "Strong",
@@ -2764,7 +3251,203 @@
                   },
                   {
                     "kind": "Text",
-                    "text": ".\n                "
+                    "text": " using "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Value"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " partial ordering.\n                    For variant operands, the compiler emits "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "VUnbox"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " first to compare their active payloads.\n                    Unordered values produce false.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareValueGT",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CompareValueLT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", but push the result of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left > right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Unordered values produce false.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareValueLE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CompareValueLT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", but push the result of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left <= right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Unordered values produce false.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "CompareValueGE",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Like "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "CompareValueLT"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ", but push the result of "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "left >= right"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Unordered values produce false.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Comparison Result Tests",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                These instructions consume one integer result from "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "CompareLiteral"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and push a boolean:\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "before              after\n--> top             --> top\ncomparison-result   bool"
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "OpLT",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Push whether the comparison result is less than zero.\n                "
                   }
                 ]
               }
@@ -2779,20 +3462,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    This instruction executes "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "left > right"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": ".\n                "
+                    "text": "\n                    Push whether the comparison result is greater than zero.\n                "
                   }
                 ]
               }
@@ -2807,20 +3477,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    This instruction executes "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "left <= right"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": ".\n                "
+                    "text": "\n                    Push whether the comparison result is less than or equal to zero.\n                "
                   }
                 ]
               }
@@ -2835,20 +3492,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    This instruction executes "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "left >= right"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": ".\n                "
+                    "text": "\n                    Push whether the comparison result is greater than or equal to zero.\n                "
                   }
                 ]
               }
@@ -2863,20 +3507,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    This instruction executes "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "left == right"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": ".\n                "
+                    "text": "\n                    Push whether the comparison result is zero.\n                "
                   }
                 ]
               }
@@ -2891,20 +3522,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    This instruction executes "
-                  },
-                  {
-                    "kind": "Strong",
-                    "content": [
-                      {
-                        "kind": "Text",
-                        "text": "left != right"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "Text",
-                    "text": ".\n                "
+                    "text": "\n                    Push whether the comparison result is not zero.\n                "
                   }
                 ]
               }

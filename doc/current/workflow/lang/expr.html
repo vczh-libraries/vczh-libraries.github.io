@@ -239,7 +239,7 @@
           },
           {
             "kind": "Text",
-            "text": " inference, and "
+            "text": " inference, "
           },
           {
             "kind": "Strong",
@@ -252,7 +252,7 @@
           },
           {
             "kind": "Text",
-            "text": " payload extraction.\n            Ordinary numeric, pointer and object conversions do not select a variant option implicitly.\n        "
+            "text": " payload extraction, and collection membership.\n            Ordinary numeric, pointer and object conversions do not select a variant option implicitly.\n        "
           }
         ]
       },
@@ -497,7 +497,7 @@
               },
               {
                 "kind": "Text",
-                "text": ", if the place receiving an interger does not have an explicit type,\n                it is "
+                "text": ", if the place receiving a floating-point number does not have an explicit type,\n                it is "
               },
               {
                 "kind": "Strong",
@@ -510,7 +510,7 @@
               },
               {
                 "kind": "Text",
-                "text": " when the Workflow compiler is running in a 64-bits process.\n                An error is generated if the number exceeds the range supported by the expected type.\n            "
+                "text": " on both 32-bit and 64-bit targets.\n                An error is generated if the number exceeds the range supported by the expected type.\n            "
               }
             ]
           }
@@ -1065,7 +1065,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "A"
+                    "text": "C"
                   }
                 ]
               },
@@ -1078,7 +1078,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "true"
+                    "text": "false"
                   }
                 ]
               },
@@ -1409,7 +1409,7 @@
               },
               {
                 "kind": "Program",
-                "code": "var f: func(string, string):string = [$`Hello, $($1) and $($2)!`];"
+                "code": "var f: func(string, string):string = [$\"Hello, $($1) and $($2)!\"];"
               },
               {
                 "kind": "Text",
@@ -1417,7 +1417,7 @@
               },
               {
                 "kind": "Program",
-                "code": "var f = func(a: string, b: string): string\n{\n    return `Hello, $(a) and $(b)!`;\n}"
+                "code": "var f = func(a: string, b: string): string\n{\n    return $\"Hello, $(a) and $(b)!\";\n}"
               }
             ]
           }
@@ -1647,35 +1647,44 @@
             "kind": "Paragraph",
             "content": [
               {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "VALUE in OBJECT"
+                  }
+                ]
+              },
+              {
                 "kind": "Text",
-                "text": "\n                See "
+                "text": " returns whether a collection contains an equal element.\n                "
               },
               {
                 "kind": "Strong",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Collection types"
+                    "text": "VALUE not in OBJECT"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": " in "
+                "text": " returns the opposite result.\n                See "
               },
               {
                 "kind": "PageLink",
-                "href": "/workflow/lang/type.html#Collection-types",
+                "href": "/workflow/lang/type.html#Collection-membership",
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "Types"
+                    "text": "Collection membership"
                   }
                 ]
               },
               {
                 "kind": "Text",
-                "text": ".\n            "
+                "text": " for operand types, ranges, and examples.\n            "
               }
             ]
           }
@@ -2026,14 +2035,128 @@
       },
       {
         "kind": "Topic",
-        "title": "Static member accessing: OBJECT::MEMBER, ::MEMBER",
+        "title": "Current instance: this",
         "content": [
           {
             "kind": "Paragraph",
             "content": [
               {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this"
+                  }
+                ]
+              },
+              {
                 "kind": "Text",
-                "text": "\n                See "
+                "text": " refers to the current instance in instance member code.\n                Use "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "this.MEMBER"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " to select an instance member when a local name would hide it.\n                It is unavailable in global functions and static methods.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/class.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Classes"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/interface_new.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Implementing an interface"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "This"
+      },
+      {
+        "kind": "Topic",
+        "title": "Qualified member accessing: PARENT::MEMBER, ::MEMBER",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "PARENT::MEMBER"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " looks up a name inside a namespace or type, including static members.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::MEMBER"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " starts lookup at the root scope, so a local name cannot hide that root name.\n                For example, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "::system::DateTime"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " names the type in the root "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " namespace.\n                See "
               },
               {
                 "kind": "PageLink",
@@ -2047,7 +2170,7 @@
               },
               {
                 "kind": "Text",
-                "text": ".\n            "
+                "text": " for namespaces and imports.\n            "
               }
             ]
           }
@@ -2586,7 +2709,7 @@
               },
               {
                 "kind": "Text",
-                "text": " fails, it throws an expression.\n            "
+                "text": " fails, it throws an exception.\n            "
               }
             ]
           },
@@ -2973,6 +3096,137 @@
               {
                 "kind": "Text",
                 "text": ".\n            "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Type queries: typeof(TYPE), type(EXPRESSION)",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "typeof(TYPE)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " returns the reflection type descriptor for a declared type.\n                "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "type(EXPRESSION)"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " evaluates the expression and returns its runtime type descriptor.\n                Both return "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "system::reflection::TypeDescriptor*"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ".\n                Variant types do not have a type descriptor and are rejected by these queries.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                These expressions are supported by the Workflow virtual machine; C++ generation rejects them.\n                For example, both comparisons below return "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "true"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                "
+              },
+              {
+                "kind": "Program",
+                "code": "typeof(bool) == type(true)\ntypeof(string) == type(\"text\")"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Coroutine context member: $.NAME",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Inside a provider coroutine, "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "$.NAME"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " accesses a member of the context returned by the provider's "
+              },
+              {
+                "kind": "Strong",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "QueryContext"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " method.\n                It does not pause the coroutine.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/workflow/lang/coroutine_custom.html#Context-members",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Context members"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for the provider contract.\n            "
               }
             ]
           }

@@ -2524,7 +2524,7 @@
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "Round parenthesis means the value on that side is included."
+                            "text": "A round parenthesis excludes the value on that side."
                           }
                         ]
                       },
@@ -2533,7 +2533,7 @@
                         "content": [
                           {
                             "kind": "Text",
-                            "text": "Square parenthesis means the value on that side is not included."
+                            "text": "A square bracket includes the value on that side."
                           }
                         ]
                       }
@@ -2542,6 +2542,278 @@
                 ]
               }
             ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Collection membership",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ITEM in COLLECTION"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when an equal item is found.\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ITEM not in COLLECTION"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns the opposite result.\n                    The collection can be a list, read-only list, observable list, array supplied by C++, or enumerable.\n                    A dictionary itself is not accepted.\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var values = {1 2 3};\nvar found = 2 in values;       /* true */\nvar missing = 4 not in values; /* true */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Both operands are evaluated once.\n                    For an empty collection, "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "in"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "not in"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " returns "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The item type and the collection's element type must be the same, or one must implicitly convert to the other.\n                    An untyped collection has element type "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "object"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    A "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/workflow/lang/variant.html#Membership",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "variant item"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " therefore requires a typed collection with exactly the same ordered variant type.\n                    An option value, a reordered variant, or a variant with only some common options does not satisfy this rule.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Variant membership compares active payloads using the variant "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "=="
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " rules.\n                    Equal numeric payloads can match even when different numeric options are active.\n                    NaN does not match any item, including itself.\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var integer = 7 of variant<int, double>;\nvar real = 7.0 of variant<int, double>;\nvar values : variant<int, double>[] = {integer};\nvar found = real in values; /* true */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Collection methods such as "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Contains"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "IndexOf"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " take "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "object"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " arguments.\n                    They do not accept a variant directly because variants do not implicitly convert to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "object"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Use "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ITEM in COLLECTION"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to search a typed variant collection.\n                    Extracting the payload with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "variant in ITEM"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " does not supply the variant value stored in that collection.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A direct range expression tests its bounds:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "var included = 1 in range [1, 5); /* true */\nvar excluded = 5 not in range [1, 5); /* true */"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Round parentheses exclude an endpoint; square brackets include it.\n                    A variant item is not accepted with a direct range expression.\n                    Extract a suitable numeric option before testing a range.\n                "
+                  }
+                ]
+              }
+            ],
+            "anchor": "Collection-membership"
           },
           {
             "kind": "Topic",
@@ -2639,7 +2911,7 @@
                   },
                   {
                     "kind": "Program",
-                    "code": "func main(): string\n{\n    var xs = {1 2 3 4 5};\n    var sum = 0;\n    for (x in revsersed xs)\n    {\n        sum = sum + x;\n    }\n    return sum;\n}"
+                    "code": "func main(): string\n{\n    var xs = {1 2 3 4 5};\n    var sum = 0;\n    for (x in reversed xs)\n    {\n        sum = sum + x;\n    }\n    return sum;\n}"
                   }
                 ]
               },
