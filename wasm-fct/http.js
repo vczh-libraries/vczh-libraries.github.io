@@ -1170,6 +1170,55 @@ var EventToJson = class {
       arguments: eventArgs
     });
   }
+  OnIOPointStarted(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointStarted",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointDown(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointDown",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointUpdate(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointUpdate",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointUp(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointUp",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointEnter(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointEnter",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointLeave(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointLeave",
+      arguments: eventArgs
+    });
+  }
+  OnIOPointEnded(eventArgs) {
+    this.callback({
+      semantic: "Event",
+      name: "IOPointEnded",
+      arguments: eventArgs
+    });
+  }
 };
 
 // ../../gaclib/remote-protocol/lib/src/remoteProtocolDefinition.js
@@ -1227,6 +1276,14 @@ var IOMouseButton;
   IOMouseButton2["Mouse4"] = "Mouse4";
   IOMouseButton2["Mouse5"] = "Mouse5";
 })(IOMouseButton || (IOMouseButton = {}));
+var IOPointEndReason;
+(function(IOPointEndReason2) {
+  IOPointEndReason2["Succeeded"] = "Succeeded";
+  IOPointEndReason2["Canceled_Unknown"] = "Canceled_Unknown";
+  IOPointEndReason2["Canceled_PlatformCanceled"] = "Canceled_PlatformCanceled";
+  IOPointEndReason2["Canceled_CaptureLost"] = "Canceled_CaptureLost";
+  IOPointEndReason2["Canceled_WindowDestroyed"] = "Canceled_WindowDestroyed";
+})(IOPointEndReason || (IOPointEndReason = {}));
 var ElementShapeType;
 (function(ElementShapeType2) {
   ElementShapeType2["Rectangle"] = "Rectangle";

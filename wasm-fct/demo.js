@@ -1,5 +1,6 @@
 import { createHtmlRenderer, GacUIHtmlRendererExitError, isShortcutReservedForBrowser } from './gacui.js';
 import { connectWasmServer, WasmApplication } from './wasm.js';
+import { installFullControlTestRawElements } from './fullControlTestRaw.js';
 
 const screen = document.getElementById('gacui-screen');
 const loading = document.getElementById('gacui-loading');
@@ -8,6 +9,17 @@ const progress = document.getElementById('gacui-progress');
 const buttons = [...document.querySelectorAll('button')];
 let application;
 let renderer;
+let disposeRawElements;
+let rendererStarted = false;
+
+function stopRenderer(disconnected = false) {
+    disposeRawElements?.();
+    disposeRawElements = undefined;
+    if (rendererStarted) {
+        rendererStarted = false;
+        renderer.stop(disconnected);
+    }
+}
 
 function showMask(success, text) {
     loading.hidden = true;
@@ -65,7 +77,10 @@ async function main() {
         workerUrl: new URL('./wasm-worker.js', location.href),
         channels: [['GacUIRemoteProtocol']],
     });
-    window.addEventListener('pagehide', () => { application.stop(); }, { once: true });
+    window.addEventListener('pagehide', () => {
+        stopRenderer();
+        application.stop();
+    }, { once: true });
     renderer = createHtmlRenderer({
         target: screen,
         isShortcutReservedForBrowser,
@@ -76,12 +91,15 @@ async function main() {
         idle: () => { window.__gacui_playwright_idle?.(); },
         blink: () => { window.__gacui_playwright_blink?.(); },
     });
-    const client = await connectWasmServer(application, renderer.requests);
-    renderer.start(client.responses, client.events);
-    loading.hidden = true;
-    screen.focus();
-    for (const button of buttons) button.disabled = false;
+    disposeRawElements = installFullControlTestRawElements(renderer);
+    let client;
     try {
+        client = await connectWasmServer(application, renderer.requests);
+        renderer.start(client.responses, client.events);
+        rendererStarted = true;
+        loading.hidden = true;
+        screen.focus();
+        for (const button of buttons) button.disabled = false;
         try {
             await client.start();
         } catch (error) {
@@ -91,8 +109,8 @@ async function main() {
         if (result !== 0) throw new Error(`The demo stopped with code ${result}.`);
         showMask(true, 'The demo has closed. Refresh the page to start again.');
     } finally {
-        client.stop();
-        renderer.stop();
+        client?.stop();
+        stopRenderer(true);
     }
 }
 
@@ -100,6 +118,7 @@ screen.addEventListener('contextmenu', (event) => { event.preventDefault(); });
 document.getElementById('gacui-exit').onclick = () => { renderer?.requestStopToCore(false); };
 document.getElementById('gacui-force-exit').onclick = () => { renderer?.requestStopToCore(true); };
 void main().catch((error) => {
+    stopRenderer();
     showMask(false, error instanceof Error ? error.message : String(error));
     application?.stop();
     throw error;

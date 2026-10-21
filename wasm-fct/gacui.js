@@ -272,6 +272,14 @@ var IOMouseButton;
   IOMouseButton2["Mouse4"] = "Mouse4";
   IOMouseButton2["Mouse5"] = "Mouse5";
 })(IOMouseButton || (IOMouseButton = {}));
+var IOPointEndReason;
+(function(IOPointEndReason2) {
+  IOPointEndReason2["Succeeded"] = "Succeeded";
+  IOPointEndReason2["Canceled_Unknown"] = "Canceled_Unknown";
+  IOPointEndReason2["Canceled_PlatformCanceled"] = "Canceled_PlatformCanceled";
+  IOPointEndReason2["Canceled_CaptureLost"] = "Canceled_CaptureLost";
+  IOPointEndReason2["Canceled_WindowDestroyed"] = "Canceled_WindowDestroyed";
+})(IOPointEndReason || (IOPointEndReason = {}));
 var ElementShapeType;
 (function(ElementShapeType2) {
   ElementShapeType2["Rectangle"] = "Rectangle";
@@ -1689,6 +1697,7 @@ var VirtualDomHtmlValidArea = class _VirtualDomHtmlValidArea extends VirtualDomB
   constructor(id, validArea) {
     super(id, validArea);
     this.htmlElement = document.createElement("div");
+    applyCommonStyle(this.htmlElement);
   }
   getExpectedChildType() {
     return "VirtualDomHtmlValidArea or VirtualDomHtmlOrdinary";
@@ -1711,6 +1720,7 @@ var VirtualDomHtmlOrdinary = class _VirtualDomHtmlOrdinary extends VirtualDomBas
   }
   elements;
   htmlElement;
+  _rawElement;
   constructor(id, props, elements, pendingElements) {
     super(id, props);
     this.elements = elements;
@@ -1731,13 +1741,22 @@ var VirtualDomHtmlOrdinary = class _VirtualDomHtmlOrdinary extends VirtualDomBas
     return child instanceof VirtualDomHtmlValidArea || child instanceof _VirtualDomHtmlOrdinary;
   }
   onUpdateTypedDesc(elementId, typedDesc) {
-    void elementId;
+    const rawElement = typedDesc?.type === RendererType.Raw && elementId !== void 0 ? this.elements.getRawElement(elementId).element : void 0;
+    if (this._rawElement !== rawElement) {
+      if (this._rawElement?.parentElement === this.htmlElement) {
+        this._rawElement.remove();
+      }
+      this._rawElement = rawElement;
+    }
     if (typedDesc === void 0) {
       applyCommonStyle(this.htmlElement);
     } else {
       applyTypedStyle(this.htmlElement, typedDesc, this.elements);
     }
     this.applyCursorStyle(this.props);
+    if (rawElement !== void 0 && this.htmlElement.firstChild !== rawElement) {
+      this.htmlElement.insertBefore(rawElement, this.htmlElement.firstChild);
+    }
   }
   applyCursorStyle(props) {
     let cursorCSS;
@@ -1758,6 +1777,9 @@ var VirtualDomHtmlOrdinary = class _VirtualDomHtmlOrdinary extends VirtualDomBas
   }
   onUpdateChildren(children) {
     const htmlChildren = children.map((child) => child.htmlElement);
+    if (this._rawElement !== void 0) {
+      htmlChildren.unshift(this._rawElement);
+    }
     this.htmlElement.replaceChildren(...htmlChildren);
     const border = getExtraBorder(this.htmlElement);
     if (border) {
@@ -1825,6 +1847,7 @@ var ElementManager = class {
     __name(this, "ElementManager");
   }
   _elements = /* @__PURE__ */ new Map();
+  _rawElements = /* @__PURE__ */ new Map();
   _config;
   constructor(config) {
     this._config = getDefaultElementManagerConfig();
@@ -1848,7 +1871,7 @@ var ElementManager = class {
     if (this._elements.has(id)) {
       throw new Error(`Element with id ${id} already exists`);
     }
-    this._elements.set(id, { type });
+    this._elements.set(id, type === RendererType.Raw ? { type, desc: { type, desc: { id, rawId: "", data: "" } } } : { type });
   }
   createWithDesc(id, typedDesc) {
     this.create(id, typedDesc.type);
@@ -1856,6 +1879,29 @@ var ElementManager = class {
   }
   destroy(id) {
     this._elements.delete(id);
+    this._rawElements.delete(id);
+  }
+  getRawElement(id) {
+    const record = this._elements.get(id);
+    if (record === void 0 || record.type !== RendererType.Raw) {
+      throw new Error(`Element with id ${id} is not a Raw element`);
+    }
+    let raw = this._rawElements.get(id);
+    if (raw === void 0) {
+      const element = document.createElement("div");
+      element.style.cssText = "position:absolute; inset:0; width:100%; height:100%; min-width:0; min-height:0; overflow:hidden; pointer-events:none;";
+      raw = Object.freeze({
+        element,
+        get id() {
+          return record.desc?.type === RendererType.Raw ? record.desc.desc.rawId : "";
+        },
+        get data() {
+          return record.desc?.type === RendererType.Raw ? record.desc.desc.data : "";
+        }
+      });
+      this._rawElements.set(id, raw);
+    }
+    return raw;
   }
   getType(id) {
     const element = this._elements.get(id);
@@ -2481,6 +2527,10 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   _renderingRecord;
   _images = /* @__PURE__ */ new Map();
   _pendingElements = /* @__PURE__ */ new Map();
+  _rawElements = /* @__PURE__ */ new Map();
+  _rawInstalledListeners = /* @__PURE__ */ new Set();
+  _rawUninstalledListeners = /* @__PURE__ */ new Set();
+  _rawUpdatedListeners = /* @__PURE__ */ new Set();
   _screenConfig;
   _windowConfig;
   _fontConfig;
@@ -2545,6 +2595,10 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
    ***************************************************************************************/
   constructor(_settings) {
     this._settings = _settings;
+    this._pointStyle = document.createElement("style");
+    this._pointStyle.textContent = ".gacui-point-surface, .gacui-point-surface * { touch-action: none !important; }";
+    document.head.appendChild(this._pointStyle);
+    this._settings.target.classList.add("gacui-point-surface");
     this._settings.target.innerText = "Starting GacUI HTML Renderer ...";
     const bounds = this._getBounds();
     const customFramePadding = {
@@ -2570,6 +2624,27 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   get requests() {
     return this;
   }
+  getRawElements() {
+    return Object.freeze([...this._rawElements.values()]);
+  }
+  rawElementInstalled(listener) {
+    this._rawInstalledListeners.add(listener);
+    return () => {
+      this._rawInstalledListeners.delete(listener);
+    };
+  }
+  rawElementUninstalled(listener) {
+    this._rawUninstalledListeners.add(listener);
+    return () => {
+      this._rawUninstalledListeners.delete(listener);
+    };
+  }
+  rawElementUpdated(listener) {
+    this._rawUpdatedListeners.add(listener);
+    return () => {
+      this._rawUpdatedListeners.delete(listener);
+    };
+  }
   _start(responses, events, elements, provider, measurer) {
     this._responses = responses;
     this._events = events;
@@ -2591,8 +2666,22 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     this._resizeObserver = new ResizeObserver(() => this._onSizeChanged());
     this._resizeObserver.observe(this._settings.target);
   }
-  stop() {
+  stop(disconnected = false) {
+    if (this._stopping)
+      return;
     this._stopping = true;
+    if (!disconnected && this._pointContacts.size !== 0) {
+      this._endPoints(IOPointEndReason.Canceled_WindowDestroyed, performance.now());
+    }
+    for (const pointerId of this._pointContacts.keys()) {
+      if (this._settings.target.hasPointerCapture(pointerId))
+        this._settings.target.releasePointerCapture(pointerId);
+    }
+    this._pointContacts.clear();
+    document.removeEventListener("pointerup", this._drainPoint, true);
+    document.removeEventListener("pointercancel", this._drainPoint, true);
+    this._pointStyle.remove();
+    this._settings.target.classList.remove("gacui-point-surface");
     this._stopCaretBlink();
     this._resizeObserver.disconnect();
     this._uninstallEvents();
@@ -2649,7 +2738,7 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     this._events.OnWindowActivatedUpdated(true);
   }
   RequestControllerConnectionStopped() {
-    this.stop();
+    this.stop(true);
     throw new GacUIHtmlRendererExitError();
   }
   /****************************************************************************************
@@ -3212,10 +3301,17 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     if (this._stopping) {
       return;
     }
+    const raw = this._rawElements.get(id);
+    const rawChanged = raw !== void 0 && typedDesc.type === RendererType.Raw && (raw.id !== typedDesc.desc.rawId || raw.data !== typedDesc.desc.data);
     this._renderingRecord.elements.updateDesc(id, typedDesc);
     const virtualDom = this._renderingRecord.elementToDoms.get(id);
     if (virtualDom) {
       virtualDom.updateTypedDesc(id, typedDesc);
+    }
+    if (raw !== void 0 && rawChanged) {
+      for (const listener of [...this._rawUpdatedListeners]) {
+        listener(raw);
+      }
     }
   }
   RequestRendererCreated(requestArgs) {
@@ -3224,8 +3320,14 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     }
     for (const creation of requestArgs) {
       this._renderingRecord.elements.create(creation.id, creation.type);
-      if (creation.type === RendererType.FocusRectangle || creation.type === RendererType.Raw) {
+      if (creation.type === RendererType.FocusRectangle) {
         this._updateElement(creation.id, { type: creation.type });
+      } else if (creation.type === RendererType.Raw) {
+        const raw = this._renderingRecord.elements.getRawElement(creation.id);
+        this._rawElements.set(creation.id, raw);
+        for (const listener of [...this._rawInstalledListeners]) {
+          listener(raw);
+        }
       }
     }
   }
@@ -3239,7 +3341,17 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       }
       this._paragraphElements.delete(id);
       this._paragraphCarets.delete(id);
-      this._renderingRecord.elements.destroy(id);
+      try {
+        const raw = this._rawElements.get(id);
+        if (raw !== void 0) {
+          for (const listener of [...this._rawUninstalledListeners]) {
+            listener(raw);
+          }
+        }
+      } finally {
+        this._rawElements.delete(id);
+        this._renderingRecord.elements.destroy(id);
+      }
     }
   }
   RequestRendererIdle() {
@@ -3249,6 +3361,9 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     if (requestArgs.updatedElements) {
       for (const elementDesc of requestArgs.updatedElements) {
         switch (elementDesc[0]) {
+          case "ElementDesc_Raw":
+            this._updateElement(elementDesc[1].id, { type: RendererType.Raw, desc: elementDesc[1] });
+            break;
           case "ElementDesc_SolidBorder":
             this.RequestRendererUpdateElement_SolidBorder(elementDesc[1]);
             break;
@@ -3430,10 +3545,176 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   }
   // Helper method to hook any type of event
   _ioHookEvent(eventName, handler) {
-    this._eventHandlers.set(eventName, handler);
-    this._settings.target.addEventListener(eventName, handler);
+    const wrapped = /* @__PURE__ */ __name((event) => {
+      if (!eventName.startsWith("pointer") && eventName !== "lostpointercapture" && this._isTouchCompatibility(event)) {
+        if (event.cancelable)
+          event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      handler(event);
+    }, "wrapped");
+    this._eventHandlers.set(eventName, wrapped);
+    this._settings.target.addEventListener(eventName, wrapped, { passive: false });
+  }
+  _pointSequence = 0n;
+  _pointIndex = 0;
+  _nextPointId = 0;
+  _pointContacts = /* @__PURE__ */ new Map();
+  _pointCanceled = false;
+  _lastPointerType = "";
+  _pointStyle;
+  _drainPoint = /* @__PURE__ */ __name((event) => {
+    if (this._pointCanceled && event.pointerType === "touch")
+      this._pointContacts.delete(event.pointerId);
+  }, "_drainPoint");
+  _nextPointEventIndex() {
+    if (this._pointIndex >= 2147483646)
+      throw new Error("Point event indices exhausted.");
+    return ++this._pointIndex;
+  }
+  _pointTimestamp(milliseconds) {
+    const microseconds = Math.round(milliseconds * 1e3);
+    if (!Number.isSafeInteger(microseconds) || microseconds < 0) {
+      throw new Error("Point timestamp must be nonnegative safe integer microseconds.");
+    }
+    return BigInt(microseconds).toString();
+  }
+  _pointSample(event, pointId) {
+    const { x, y } = this._ioGetRelativeCoordinates(event);
+    return {
+      sequenceId: this._pointSequence.toString(),
+      pointId,
+      timestamp: this._pointTimestamp(event.timeStamp),
+      activePointCount: this._pointContacts.size,
+      position: { x: { value: x }, y: { value: y } },
+      primary: event.isPrimary,
+      ctrl: event.ctrlKey,
+      shift: event.shiftKey,
+      alt: event.altKey,
+      osSuper: event.metaKey,
+      contactBounds: {
+        x1: { value: Math.round(x - event.width / 2) },
+        y1: { value: Math.round(y - event.height / 2) },
+        x2: { value: Math.round(x + event.width / 2) },
+        y2: { value: Math.round(y + event.height / 2) }
+      },
+      pressure: event.pressure,
+      orientation: null,
+      platformFrameId: null
+    };
+  }
+  _endPoints(reason, timestamp) {
+    if (this._pointCanceled)
+      return;
+    this._pointCanceled = true;
+    this._events.OnIOPointEnded({
+      sequenceId: this._pointSequence.toString(),
+      eventIndex: this._nextPointEventIndex(),
+      timestamp: this._pointTimestamp(timestamp),
+      accepted: true,
+      reason
+    });
+  }
+  _onPoint(event) {
+    this._lastPointerType = event.pointerType;
+    if (event.pointerType !== "touch" || this._stopping)
+      return;
+    if (event.cancelable)
+      event.preventDefault();
+    const target = this._settings.target;
+    if (event.type === "pointerdown") {
+      if (this._pointContacts.has(event.pointerId))
+        return;
+      const starting = this._pointContacts.size === 0;
+      if (starting) {
+        if (this._pointSequence === 18446744073709551615n)
+          throw new Error("Point sequence IDs exhausted.");
+        this._pointSequence++;
+        this._pointIndex = 0;
+        this._nextPointId = 0;
+        this._pointCanceled = false;
+      }
+      if (this._nextPointId >= 2147483647)
+        throw new Error("Point IDs exhausted.");
+      const pointId2 = this._nextPointId++;
+      this._pointContacts.set(event.pointerId, pointId2);
+      target.setPointerCapture(event.pointerId);
+      if (this._pointCanceled)
+        return;
+      const info = this._pointSample(event, pointId2);
+      if (starting)
+        this._events.OnIOPointStarted({ eventIndex: 0, info });
+      this._events.OnIOPointDown({ eventIndex: this._nextPointEventIndex(), info });
+      return;
+    }
+    const pointId = this._pointContacts.get(event.pointerId);
+    if (pointId === void 0)
+      return;
+    if (event.type === "pointercancel" || event.type === "lostpointercapture") {
+      this._endPoints(event.type === "pointercancel" ? IOPointEndReason.Canceled_PlatformCanceled : IOPointEndReason.Canceled_CaptureLost, event.timeStamp);
+      if (event.type === "pointercancel")
+        this._pointContacts.delete(event.pointerId);
+      return;
+    }
+    if (event.type === "pointerup")
+      this._pointContacts.delete(event.pointerId);
+    if (this._pointCanceled)
+      return;
+    const send = /* @__PURE__ */ __name((sample) => {
+      const action = { eventIndex: this._nextPointEventIndex(), info: this._pointSample(sample, pointId) };
+      switch (event.type) {
+        case "pointermove":
+          this._events.OnIOPointUpdate(action);
+          break;
+        case "pointerup":
+          this._events.OnIOPointUp(action);
+          break;
+        case "pointerenter":
+          this._events.OnIOPointEnter(action);
+          break;
+        case "pointerleave":
+          this._events.OnIOPointLeave(action);
+          break;
+      }
+    }, "send");
+    const samples = event.type === "pointermove" ? event.getCoalescedEvents?.() ?? [] : [];
+    if (samples.length === 0)
+      send(event);
+    else
+      for (const sample of samples)
+        send(sample);
+    if (event.type === "pointerup" && this._pointContacts.size === 0) {
+      this._endPoints(IOPointEndReason.Succeeded, event.timeStamp);
+    }
+  }
+  _isTouchCompatibility(event) {
+    if (!(event instanceof MouseEvent) || event instanceof WheelEvent)
+      return false;
+    if (event instanceof PointerEvent && event.pointerType === "touch")
+      return true;
+    const capabilities = event.sourceCapabilities;
+    if (capabilities !== void 0 && capabilities !== null)
+      return capabilities.firesTouchEvents;
+    if (["click", "auxclick", "contextmenu"].includes(event.type) && event.detail === 0)
+      return false;
+    return this._lastPointerType === "touch";
   }
   _installEvents() {
+    document.addEventListener("pointerup", this._drainPoint, true);
+    document.addEventListener("pointercancel", this._drainPoint, true);
+    for (const name of ["pointerdown", "pointermove", "pointerup", "pointercancel", "pointerenter", "pointerleave", "lostpointercapture"]) {
+      this._ioHookEvent(name, (event) => this._onPoint(event));
+    }
+    for (const name of ["pointerover", "pointerout"]) {
+      this._ioHookEvent(name, (event) => {
+        this._lastPointerType = event.pointerType;
+      });
+    }
+    for (const name of ["click", "auxclick", "contextmenu", "dblclick"]) {
+      this._ioHookEvent(name, () => {
+      });
+    }
     this._ioHookEvent("mousedown", (event) => {
       const mouseEvent = event;
       const button = this._ioGetMouseButton(mouseEvent);
