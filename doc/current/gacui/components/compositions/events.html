@@ -1459,6 +1459,545 @@
       },
       {
         "kind": "Topic",
+        "title": "Touch and Built-in Gestures",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Windows and the GacJS browser renderer support touch input.\n                The native wGac (Wayland) and iGac (macOS) providers do not support touch input.\n                This limitation does not apply to GacJS running in a browser on Linux or macOS, with either WebAssembly or HTTP transport.\n                Physical mouse and pen input continue through the mouse events.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Accepting a Touch Sequence",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A sequence starts with the first contact and ends when all contacts lift or the sequence is canceled.\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiGraphicsEventReceiver"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " exposes four point events:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "pointSequenceStarted"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " queries the hit composition and its ancestors. Set "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "acceptedComposition"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " to a composition in the same graphics host to capture the sequence. The first non-null choice wins."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "pointAction"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " reports Down, Update, Up, Enter and Leave through "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "eventType"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": "."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "pointGesture"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " offers a built-in scrolling or manipulation payload."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Name",
+                            "text": "pointSequenceEnded"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " reports successful completion or cancellation exactly once to the accepted composition."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Only the Started query traverses the parent chain. It continues even when "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "handled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is true,\n                    allowing an explicit handler to accept the sequence. Action, Gesture and End go only to the accepted composition and never bubble.\n                    Setting "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiControl.AcceptPointEvents"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "true"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " enables default acceptance at its bounds when the Started query is unhandled and has no owner.\n                    This property defaults to "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "false"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "; "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiScrollView"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " enables it by default.\n                    Setting it to "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "false"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " disables that control's default acceptance, but custom Started handlers or ancestors can still accept the sequence.\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiControl.PointEventComposition"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " identifies capture within a control's bounds subtree, including during End, and becomes null after cleanup.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Started, Action and End expose a borrowed "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Points"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " list in the receiving composition's logical coordinates.\n                    Slots follow contact Down order; lifted slots are empty and are not reused within the sequence.\n                    Copy values needed after the callback. Queue control removal with "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GetApplication()->InvokeInMainThread"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ",\n                    just as for mouse handlers; deleting the receiving composition synchronously is unsupported.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Gesture Selection and Payloads",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The graphics host has four built-in recognizers, in priority order:\n                    "
+                  },
+                  {
+                    "kind": "List",
+                    "ordered": true,
+                    "items": [
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Right click:"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " a successful single-contact sequence lasting at least 500 milliseconds, with no excursion beyond a radius of eight logical units from its initial position. Recognition occurs on successful release, not while holding."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Left click:"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " the same single-contact movement limit without the duration minimum. Right click wins when its duration requirement is met."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Scrolling:"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " movement beyond that radius locks to the axis with the larger absolute displacement; horizontal wins a tie. "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiPointGesture_Scrolling"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " supplies "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "isVertical"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " and signed incremental "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "distance"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": ", positive towards right or down. The first distance includes all movement from Down. A second contact permanently stops scrolling offers for this sequence."
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ContentListItem",
+                        "content": [
+                          {
+                            "kind": "Strong",
+                            "content": [
+                              {
+                                "kind": "Text",
+                                "text": "Dragging, rotation and scaling:"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiPointGesture_DraggingAndRotation"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " is offered with identity values at Started and must be selected immediately to continue. One contact translates; two translate, rotate and uniformly scale; more than two pause. Contact membership changes establish a new baseline without a jump."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    For an unhandled "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "pointGesture"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " offer, set "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "selected"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "true"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to choose that recognizer for the rest of the sequence,\n                    and set "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "handled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "true"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " when consuming the payload.\n                    Selection is sticky and independent of "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "handled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ". Raw Action and End events still arrive.\n                    A declined scrolling offer can be offered again; a declined initial manipulation offer cannot.\n                    These recognizers are fixed; applications cannot register additional recognizers or select an OS gesture implementation.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Name",
+                    "text": "GuiPointGestureEventArgs.gesture"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a writable\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Variant<GuiPointGesture_Scrolling, GuiPointGesture_DraggingAndRotation>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in C++,\n                    reflected as the corresponding "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "variant<...>"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in Workflow.\n                    Read the lowercase "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "gesture"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " field; there is no "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Gesture"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property or "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GetGesture()"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " method.\n                    A Workflow handler can extract the active alternative with a nullable weak cast:\n                    "
+                  },
+                  {
+                    "kind": "Program",
+                    "code": "if (not arguments.handled)\n{\n    if (var scrolling : GuiPointGesture_Scrolling? = arguments.gesture as GuiPointGesture_Scrolling?)\n    {\n        arguments.selected = true;\n        arguments.handled = true;\n        // Apply scrolling.distance along the scrolling.isVertical axis.\n    }\n}",
+                    "language": "Workflow"
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Extracted payloads are copies. Apply manipulation in the order\n                    "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "p' = scale * R(rotation) * p + distance"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " in accepted-composition logical coordinates.\n                    Positive rotation is clockwise in radians. Payloads are incremental, including centroid-aware translation for two contacts.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
+            "title": "Clicks and Existing Controls",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    An accepted sequence with an eligible click and no selected scrolling or manipulation gesture automatically produces a deferred mouse click.\n                    It uses the original contact position with current layout after point cleanup.\n                    Cancellation, any additional contact, or movement outside the click radius prevents this fallback; returning inside the radius does not restore it.\n                    End "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "handled"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " does not veto the click.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    A rejected sequence uses mouse compatibility immediately, so ordinary controls and text selection can keep their existing mouse behavior.\n                    For remote input, only the original first contact drives that stream; later contacts never replace it.\n                    See "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/components/controls/container/scrollcontainer.html#touch",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiScrollView touch behavior"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    for scrolling, nested controls, selectable text and gestures that scroll views do not consume.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Windows/Touching",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "Touching sample"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    applies manipulation to a custom-drawn rectangle.\n                    "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Windows/TouchingList",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "TouchingList"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "\n                    adds application-specific horizontal swipe-to-delete behavior while retaining built-in vertical scrolling.\n                    Swipe-to-delete is not a default behavior of list controls.\n                "
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "anchor": "touch"
+      },
+      {
+        "kind": "Topic",
         "title": "Focus Events",
         "content": [
           {

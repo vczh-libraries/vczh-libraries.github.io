@@ -310,6 +310,116 @@
       },
       {
         "kind": "Topic",
+        "title": "Touch Scrolling",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "GuiScrollView"
+              },
+              {
+                "kind": "Text",
+                "text": " enables "
+              },
+              {
+                "kind": "Name",
+                "text": "AcceptPointEvents"
+              },
+              {
+                "kind": "Text",
+                "text": " by default and consumes the built-in\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiPointGesture_Scrolling"
+              },
+              {
+                "kind": "Text",
+                "text": " gesture. This behavior is inherited by scroll containers, list controls and other scroll-view subclasses.\n                Windows and GacJS support touch input; the native wGac and iGac providers do not.\n                GacJS browser touch remains supported on Linux and macOS.\n                Set "
+              },
+              {
+                "kind": "Name",
+                "text": "AcceptPointEvents"
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Name",
+                "text": "false"
+              },
+              {
+                "kind": "Text",
+                "text": " to disable this control's default acceptance;\n                custom Started handlers and ancestor controls can still accept the sequence.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Single-contact movement beyond a radius of eight logical units locks the gesture to its dominant axis, with horizontal winning a tie.\n                A scroll view consumes an unhandled scrolling offer only when it owns the sequence at its bounds,\n                is visually enabled, and the scrollbar for the locked axis exists, is visible and is visually enabled.\n                It subtracts the signed movement from the current view coordinate through the normal range-clamped scrolling API,\n                so content follows the contact and reversing direction responds immediately at a boundary.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The default scroll view does not consume "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiPointGesture_DraggingAndRotation"
+              },
+              {
+                "kind": "Text",
+                "text": ":\n                free two-dimensional translation, two-contact panning, pinch-to-zoom and rotation require a custom consumer.\n                It provides no inertia or overscroll effect. A second contact stops scrolling offers for the rest of the sequence,\n                even after that contact lifts. An unavailable axis does not switch to the other axis.\n                Neither an unavailable axis nor reaching the scroll limit transfers the sequence to a parent scroll view.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                The nearest accepting child owns the entire sequence; point gestures do not bubble.\n                Enabled selectable or editable document text marks the Started query handled without accepting it,\n                preventing default ancestor scroll-view acceptance and allowing immediate mouse-compatible text selection.\n                View-only text and scrollbar or surrounding control chrome retain scrolling behavior.\n                A custom Started handler can still explicitly accept a handled query.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                An accepted single-contact tap can still activate a control through the automatic click fallback;\n                an eligible stationary hold produces a right click on successful release.\n                A selected scrolling gesture does not click on release.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/compositions/events.html#touch",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Touch and Built-in Gestures"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "\n                for acceptance, capture, cancellation, gesture payloads and custom manipulation.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "touch"
+      },
+      {
+        "kind": "Topic",
         "title": "GuiScrollView Properties",
         "content": [
           {
