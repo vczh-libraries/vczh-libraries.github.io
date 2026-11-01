@@ -428,6 +428,151 @@
             "text": ") implementations.\n        "
           }
         ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Optional renderer services",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Pass "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiRemoteControllerConfig"
+              },
+              {
+                "kind": "Text",
+                "text": " to "
+              },
+              {
+                "kind": "Name",
+                "text": "SetupRemoteNativeController"
+              },
+              {
+                "kind": "Text",
+                "text": ". Its three independent flags default to "
+              },
+              {
+                "kind": "Name",
+                "text": "false"
+              },
+              {
+                "kind": "Text",
+                "text": ":"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "injectDateTime"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " uses the renderer's local timezone conversions. UTC time, construction and arithmetic remain with the predecessor implementation."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "injectLocale"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " uses renderer locale defaults, enumeration and names; formatting and comparisons remain local."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Name",
+                        "text": "injectFileSystem"
+                      },
+                      {
+                        "kind": "Text",
+                        "text": " uses renderer filesystem operations. When enabled but unavailable, it exposes an empty root rather than the Core filesystem."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Both Core and the renderer must enable the corresponding capability. DateTime and Locale fall back to predecessor implementations on missing support or disconnection. Capabilities are checked again when a renderer is replaced. See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/modes/remote_client.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "renderer configuration"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Core and native renderers can independently replace their underlying process services with "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::InjectDateTimeImpl"
+              },
+              {
+                "kind": "Text",
+                "text": ", "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::InjectLocaleImpl"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "vl::filesystem::InjectFileSystemImpl"
+              },
+              {
+                "kind": "Text",
+                "text": ". Installing an underlying implementation does not enable remote injection or advertise a capability."
+              }
+            ]
+          }
+        ]
       }
     ]
   }

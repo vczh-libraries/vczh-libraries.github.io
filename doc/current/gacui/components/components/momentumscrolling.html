@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>MomentumScrolling -- GPU Accelerated C++ User Interface (vczh)</title>
+<link rel="shortcut icon" href="/doc/current/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/doc/current/global.css" />
+<link rel="stylesheet" type="text/css" href="/doc/current/article.css" />
+<script src="/doc/current/scripts/rootView.js"></script>
+<script src="/doc/current/scripts/directoryView.js"></script>
+<script src="/doc/current/scripts/articleView.js"></script>
+
+</head>
+<body>
+<div id="MVC-ViewContainer"></div>
+<script lang="javascript">
+{
+  const mvcModel = {
+  "path": [
+    "gacui",
+    "components",
+    "components",
+    "momentumscrolling"
+  ]
+};
+  const mvcViews = [
+  {
+    "targetObject": "MVC-ViewContainer",
+    "viewName": "Gaclib-RootView"
+  },
+  {
+    "targetObject": "rootViewContainer",
+    "viewName": "Gaclib-DirectoryView"
+  },
+  {
+    "targetObject": "directoryViewContainer",
+    "viewName": "Gaclib-ArticleView"
+  }
+];
+  const hrefPrefix = "/doc/current";
+  const directoryInfo = {
+  "subNodes": [
+    {
+      "icon": "-",
+      "name": "GacUI",
+      "selected": false,
+      "path": [
+        "gacui",
+        "home"
+      ],
+      "subNodes": [
+        {
+          "icon": "-",
+          "name": "GacUI Components",
+          "selected": false,
+          "path": [
+            "gacui",
+            "components",
+            "home"
+          ],
+          "subNodes": [
+            {
+              "icon": "-",
+              "name": "Components",
+              "selected": false,
+              "path": [
+                "gacui",
+                "components",
+                "components",
+                "home"
+              ],
+              "subNodes": [
+                {
+                  "icon": " ",
+                  "name": "MomentumScrolling",
+                  "selected": true,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "momentumscrolling"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<MessageDialog>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "messagedialog"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<ColorDialog>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "colordialog"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<FontDialog>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "fontdialog"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<OpenFileDialog>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "openfiledialog"
+                  ]
+                },
+                {
+                  "icon": " ",
+                  "name": "<SaveFileDialog>",
+                  "selected": false,
+                  "path": [
+                    "gacui",
+                    "components",
+                    "components",
+                    "savefiledialog"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+  const article = {
+  "index": false,
+  "numberBeforeTitle": false,
+  "topic": {
+    "kind": "Topic",
+    "title": "MomentumScrolling",
+    "content": [
+      {
+        "kind": "Paragraph",
+        "content": [
+          {
+            "kind": "Name",
+            "text": "vl::presentation::compositions::MomentumScrolling"
+          },
+          {
+            "kind": "Text",
+            "text": " is an optional "
+          },
+          {
+            "kind": "Name",
+            "text": "GuiComponent"
+          },
+          {
+            "kind": "Text",
+            "text": " that continues a single-contact scrolling gesture after successful release. Ordinary scroll views do not enable momentum automatically. The component runs on the UI thread and emits the existing scrolling payload; it needs no renderer-specific messages."
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Ownership and attachment",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Create the component with the parameterless constructor returning "
+              },
+              {
+                "kind": "Name",
+                "text": "MomentumScrolling*"
+              },
+              {
+                "kind": "Text",
+                "text": ", then transfer ownership to one root with "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiInstanceRootObject::AddComponent"
+              },
+              {
+                "kind": "Text",
+                "text": ". Call "
+              },
+              {
+                "kind": "Name",
+                "text": "AttachControl"
+              },
+              {
+                "kind": "Text",
+                "text": " for each target. Attachments do not own controls, and duplicate attachment is a no-op. Each control has independent sampling and playback state."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "DetachControl"
+              },
+              {
+                "kind": "Text",
+                "text": " stops that control and removes its listeners; detaching an unattached control is a no-op. Component detachment or destruction stops all targets. Disposed controls are retired without accessing destroyed receivers. A fresh Started, cancellation, an extra contact or a graphics-host change prevents stale continuation."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Set "
+              },
+              {
+                "kind": "Name",
+                "text": "AcceptPointEvents"
+              },
+              {
+                "kind": "Text",
+                "text": " explicitly on non-scroll views when default acceptance is wanted. Attachment does not change that property. "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiScrollView"
+              },
+              {
+                "kind": "Text",
+                "text": " and derived controls already default it to true. Subscribe at the persistent "
+              },
+              {
+                "kind": "Name",
+                "text": "BoundsComposition"
+              },
+              {
+                "kind": "Text",
+                "text": ": "
+              },
+              {
+                "kind": "Name",
+                "text": "GetPointEventComposition()"
+              },
+              {
+                "kind": "Text",
+                "text": " queries active capture and returns null while idle or after End. An accepting child remains the sole owner of its sequence."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Selection and movement",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Momentum preserves selected list items and document ranges while scrolling the viewport. Selectable and Editable document content still reject point acceptance so mouse compatibility can select text immediately. Attaching the component does not convert that selection drag into scrolling. ViewOnly content and scrollable chrome can initiate momentum."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "The component selects scrolling offers without marking them handled. Normal controls and application handlers consume movement. Generated events start unhandled, target both source fields at the bounds and do not contribute to velocity sampling. Existing axis locking, enabled/visible scrollbar checks and range clamping still apply."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Deceleration",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "Deceleration"
+              },
+              {
+                "kind": "Text",
+                "text": " is a finite positive double, initially "
+              },
+              {
+                "kind": "Name",
+                "text": "1.0"
+              },
+              {
+                "kind": "Text",
+                "text": ". Velocity is the signed average over the final half second, or the shorter sequence duration, including stationary time through End. Playback captures the current setting and decelerates at "
+              },
+              {
+                "kind": "Name",
+                "text": "320 * Deceleration"
+              },
+              {
+                "kind": "Text",
+                "text": " logical pixels per second squared."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Scrolling 160 logical pixels in the last 0.5 seconds yields 320 pixels per second. At the default setting, continuation stops after one second and adds 160 logical pixels before clamping. A value of 2.0 stops in 0.5 seconds; 0.5 stops in two seconds. Increments are integrated at 0.1-second elapsed boundaries plus the final partial interval, carrying fractional distance. Delayed timer callbacks catch up using elapsed time."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "XML example",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "This root owns one component. The initially unchecked checkbox attaches or detaches its scroll container."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Program",
+                "code": "<Instance ref.Class=\"demo::MomentumWindow\">\n  <ref.Members><![CDATA[\n    var momentum: MomentumScrolling* = new MomentumScrolling*();\n  ]]></ref.Members>\n  <ref.Ctor><![CDATA[{ self.AddComponent(momentum); }]]></ref.Ctor>\n  <Window ref.Name=\"self\" Text=\"Momentum\" ClientSize=\"x:480 y:320\">\n    <ez:Layout>\n      <ez:Top>\n        <CheckBox ref.Name=\"enabled\" Text=\"Momentum Scrolling\" Selected=\"false\">\n          <ev.SelectedChanged-eval><![CDATA[{\n            if (enabled.Selected) { self.momentum.AttachControl(view); }\n            else { self.momentum.DetachControl(view); }\n          }]]></ev.SelectedChanged-eval>\n        </CheckBox>\n      </ez:Top>\n      <ez:Fill>\n        <ScrollContainer ref.Name=\"view\">\n          <Label Text=\"Scrollable content\">\n            <att.BoundsComposition-set PreferredMinSize=\"x:600 y:1200\"/>\n          </Label>\n        </ScrollContainer>\n      </ez:Fill>\n    </ez:Layout>\n  </Window>\n</Instance>",
+                "language": "XML"
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "See the "
+              },
+              {
+                "kind": "PageLink",
+                "href": "https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Windows/TouchingList",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "TouchingList tutorial"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for list selection and horizontal swipe deletion alongside optional vertical momentum."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+  window["MVC-Resources.mvcModel"] = mvcModel;
+  window["MVC-Resources.mvcViews"] = mvcViews;
+  window["MVC-Resources.hrefPrefix"] = hrefPrefix;
+  window["MVC-Resources.directoryInfo"] = directoryInfo;
+  window["MVC-Resources.article"] = article;
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
+}
+</script>
+</body>
+</html>
