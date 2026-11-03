@@ -2294,6 +2294,248 @@
           },
           {
             "kind": "Topic",
+            "title": "ContextMenu and DisplayContextMenuOnRightClick",
+            "content": [
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ContextMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " is a "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiPopup*"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " property whose default is "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "null"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DisplayContextMenuOnRightClick"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " defaults to "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Both properties are writable and have no change events.\n                    A "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiToolstripMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " or another "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "GuiPopup"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " can be used.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    The control borrows the popup. Replacing or clearing this property, or deleting the control,\n                    does not delete the popup. The caller owns its lifetime and must clear or replace the pointer\n                    before deleting the popup. Keep the popup's owner alive while the popup is shown.\n                    In an XML resource, a named "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ToolstripMenu"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " directly under the root control is owned\n                    through "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "AddControlHostComponent"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "; assign it to a child with "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ContextMenu-eval"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    When automatic display is enabled and the menu is non-null, an unhandled right-button\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "mouseUp"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " on the persistent "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "BoundsComposition"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " opens the popup.\n                    The handler calls "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "ShowPopup(this, Point(arguments.x, arguments.y))"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ":\n                    these coordinates are already relative to this receiver, and the popup converts them\n                    to the native window and adjusts its placement at screen edges.\n                    Right-button down and other buttons do not open it.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Opening the menu marks the event handled, so a child and ancestor do not both open menus.\n                    A null menu or disabled automatic display leaves the event unchanged and allows an ancestor\n                    to handle it. A descendant can suppress the menu by handling the event first.\n                    For custom handling on the same bounds, set "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "DisplayContextMenuOnRightClick"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " to\n                    "
+                  },
+                  {
+                    "kind": "Strong",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "false"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": "; a later handler cannot cancel a menu that has already opened.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Both settings survive control-template replacement and theme refresh.\n                    Eligible long presses use the existing right-click fallback on release.\n                    Opening a context menu preserves the document's current caret and selection.\n                "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Topic",
             "title": "TooltipControl",
             "content": [
               {
