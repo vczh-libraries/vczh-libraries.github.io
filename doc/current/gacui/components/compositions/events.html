@@ -1544,7 +1544,7 @@
                           },
                           {
                             "kind": "Text",
-                            "text": " offers a built-in scrolling or manipulation payload."
+                            "text": " offers a built-in scrolling, manipulation or End-time short/long press payload."
                           }
                         ]
                       },
@@ -1610,7 +1610,15 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " enables it by default.\n                    Setting it to "
+                    "text": " and the "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "GuiDocumentLabel"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " family enable it by default.\n                    Setting it to "
                   },
                   {
                     "kind": "Name",
@@ -1686,7 +1694,15 @@
                           },
                           {
                             "kind": "Text",
-                            "text": " a successful single-contact sequence lasting at least 500 milliseconds, with no excursion beyond a radius of eight logical units from its initial position. Recognition occurs on successful release, not while holding."
+                            "text": " offers "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiPointGesture_LongPressing"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " at successful End for a single-contact sequence lasting at least 500000 microseconds, with no excursion beyond a radius of eight logical units from its initial position."
                           }
                         ]
                       },
@@ -1704,7 +1720,15 @@
                           },
                           {
                             "kind": "Text",
-                            "text": " the same single-contact movement limit without the duration minimum. Right click wins when its duration requirement is met."
+                            "text": " offers "
+                          },
+                          {
+                            "kind": "Name",
+                            "text": "GuiPointGesture_ShortPressing"
+                          },
+                          {
+                            "kind": "Text",
+                            "text": " at successful End for the same single-contact movement limit and a duration below 500000 microseconds. A declined long press never produces a later short-press offer."
                           }
                         ]
                       },
@@ -1837,6 +1861,31 @@
                 "kind": "Paragraph",
                 "content": [
                   {
+                    "kind": "Text",
+                    "text": "\n                    Each eligible sequence offers exactly one short or long press, independently of the click-generation flags.\n                    Long press recognition waits for successful release and End; holding alone produces no press offer.\n                    Final-Up movement counts towards the eight-unit radial limit. An excursion followed by a return, any extra contact or cancellation disqualifies the press.\n                    Both press payloads expose "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Point position"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ": the original screen start reprojected into the accepted composition's current logical coordinates at End.\n                    Successful End already has empty contact slots, so use this payload rather than "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "Points[0]"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Raw Action precedes recognition; the press offer precedes public End, with capture valid through both.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
                     "kind": "Name",
                     "text": "GuiPointGestureEventArgs.gesture"
                   },
@@ -1846,7 +1895,7 @@
                   },
                   {
                     "kind": "Name",
-                    "text": "Variant<GuiPointGesture_Scrolling, GuiPointGesture_DraggingAndRotation>"
+                    "text": "Variant<GuiPointGesture_Scrolling, GuiPointGesture_DraggingAndRotation, GuiPointGesture_ShortPressing, GuiPointGesture_LongPressing>"
                   },
                   {
                     "kind": "Text",
@@ -1904,7 +1953,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " in accepted-composition logical coordinates.\n                    Positive rotation is clockwise in radians. Payloads are incremental, including centroid-aware translation for two contacts.\n                "
+                    "text": " in accepted-composition logical coordinates.\n                    Positive rotation is clockwise in radians. Payloads are incremental, including centroid-aware translation for two contacts.\n                    The same nullable weak-cast syntax extracts either press type; inactive alternatives return null.\n                    To write a changed payload back, assign the whole variant with all four alternatives in the exact order above.\n                "
                   }
                 ]
               }
@@ -1919,7 +1968,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    An accepted sequence with an eligible click and no selected scrolling or manipulation gesture automatically produces a deferred mouse click.\n                    It uses the original contact position with current layout after point cleanup.\n                    Cancellation, any additional contact, or movement outside the click radius prevents this fallback; returning inside the radius does not restore it.\n                    End "
+                    "text": "\n                    An accepted sequence with an eligible press and no selected gesture automatically produces a deferred mouse click.\n                    It uses the original contact position with current layout after point cleanup.\n                    Cancellation, any additional contact, or movement outside the click radius prevents this fallback; returning inside the radius does not restore it.\n                    Selecting any gesture, including either press, suppresses both deferred clicks. Setting only "
                   },
                   {
                     "kind": "Name",
@@ -1927,7 +1976,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": " does not veto the click.\n                "
+                    "text": " on the offer or public End does not veto the click.\n                "
                   }
                 ]
               },
@@ -1965,7 +2014,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "These flags do not change physical mouse input or rejected-sequence mouse compatibility. Movement beyond the click radius, multiple contacts, cancellation and selected scrolling or manipulation still disqualify deferred clicks."
+                    "text": "These flags control only deferred mouse generation; disabling both still permits eligible short/long press offers. They do not change physical mouse input or rejected-sequence mouse compatibility. Movement beyond the click radius, multiple contacts, cancellation and any selected gesture still disqualify deferred clicks."
                   }
                 ]
               },
@@ -2001,7 +2050,7 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    A rejected sequence uses mouse compatibility immediately, so ordinary controls and text selection can keep their existing mouse behavior.\n                    For remote input, only the original first contact drives that stream; later contacts never replace it.\n                    See "
+                    "text": "\n                    A rejected sequence uses mouse compatibility immediately, so ordinary controls can keep their existing mouse behavior.\n                    For remote input, only the original first contact drives that stream; later contacts never replace it.\n                    See "
                   },
                   {
                     "kind": "PageLink",
@@ -2016,6 +2065,29 @@
                   {
                     "kind": "Text",
                     "text": "\n                    for scrolling, nested controls, selectable text and gestures that scroll views do not consume.\n                "
+                  }
+                ]
+              },
+              {
+                "kind": "Paragraph",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "\n                    Both document families support "
+                  },
+                  {
+                    "kind": "PageLink",
+                    "href": "/gacui/components/controls/editor/home.html#touch",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "press selection"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Text",
+                    "text": ".\n                    Enabled Selectable/Editable documents preserve an existing range on an inside short press and extend a collapsed caret on a different long press.\n                    Scrollable document content accepts drags for viewport scrolling while retaining selection; labels provide press selection without a scroll-view gesture consumer.\n                "
                   }
                 ]
               },

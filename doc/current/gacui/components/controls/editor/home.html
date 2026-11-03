@@ -628,6 +628,212 @@
       },
       {
         "kind": "Topic",
+        "title": "Touch Selection and Scrolling",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Both document families accept touch by default. "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiDocumentViewer"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiMultilineTextBox"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                inherit gesture scrolling from "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiScrollView"
+              },
+              {
+                "kind": "Text",
+                "text": ". "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiDocumentLabel"
+              },
+              {
+                "kind": "Text",
+                "text": ", XML "
+              },
+              {
+                "kind": "Name",
+                "text": "DocumentTextBox"
+              },
+              {
+                "kind": "Text",
+                "text": "\n                and "
+              },
+              {
+                "kind": "Name",
+                "text": "GuiSinglelineTextBox"
+              },
+              {
+                "kind": "Text",
+                "text": " support press selection without a scroll-view gesture consumer;\n                they retain their internal offset for keeping the caret visible.\n                Windows and GacJS acquire touch, including browsers on Linux/macOS. Native wGac and iGac do not acquire touch.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Enabled "
+              },
+              {
+                "kind": "Name",
+                "text": "Selectable"
+              },
+              {
+                "kind": "Text",
+                "text": " and "
+              },
+              {
+                "kind": "Name",
+                "text": "Editable"
+              },
+              {
+                "kind": "Text",
+                "text": " documents apply these rules at successful End:\n                "
+              },
+              {
+                "kind": "List",
+                "ordered": false,
+                "items": [
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A short press inside a nonempty selection focuses the control and preserves both endpoints. Either endpoint counts as inside, including reversed ranges. Other short presses use ordinary deferred left-click caret positioning and modifiers."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A long press with a collapsed selection at a different caret focuses the control and extends the range from the old caret to the pressed caret."
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "ContentListItem",
+                    "content": [
+                      {
+                        "kind": "Text",
+                        "text": "A long press at the current caret, or anywhere when a nonempty range already exists, keeps the endpoints and falls back to the normal right click. This also applies outside an existing range."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Short presses last less than 500000 microseconds; long presses last at least that long.\n                Holding alone does not create a selection: recognition waits for release and End.\n                A second contact, cancellation or movement beyond the eight-logical-unit radius disqualifies both presses and click fallback.\n                Press positions use the original screen start with current window/DPI and document layout, including margins, scrolling and label offsets.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Name",
+                "text": "ViewOnly"
+              },
+              {
+                "kind": "Text",
+                "text": " leaves the caret range unchanged and keeps hyperlink activation through click fallback.\n                "
+              },
+              {
+                "kind": "Name",
+                "text": "Selectable"
+              },
+              {
+                "kind": "Text",
+                "text": " allows selection but no editing; "
+              },
+              {
+                "kind": "Name",
+                "text": "Editable"
+              },
+              {
+                "kind": "Text",
+                "text": " retains normal editing.\n                Disabled controls do not focus or change selection. Physical mouse dragging, Shift-click and keyboard selection keep their existing behavior.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Accepted drags over scrollable document content scroll while preserving the range.\n                The optional "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/components/momentumscrolling.html",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "MomentumScrolling component"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " can continue that motion after release in all edit modes.\n                Stationary presses start no momentum, and a new contact stops existing momentum before its selection action.\n                Neither document family automatically consumes manipulation gestures.\n            "
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "\n                Shared handlers stay on the persistent bounds composition across template refreshes.\n                Selection applies only to document-content starts; scrollbars, surrounding chrome and embedded controls retain their own behavior.\n                Earlier child acceptance remains authoritative, and gestures do not bubble.\n                Applications may suppress either deferred click through Started flags without suppressing press offers.\n                See "
+              },
+              {
+                "kind": "PageLink",
+                "href": "/gacui/components/compositions/events.html#touch",
+                "content": [
+                  {
+                    "kind": "Text",
+                    "text": "Touch and Built-in Gestures"
+                  }
+                ]
+              },
+              {
+                "kind": "Text",
+                "text": " for typed payloads, selection and fallback rules.\n            "
+              }
+            ]
+          }
+        ],
+        "anchor": "touch"
+      },
+      {
+        "kind": "Topic",
         "title": "Mouse Operations",
         "content": [
           {
