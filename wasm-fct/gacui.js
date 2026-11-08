@@ -224,6 +224,50 @@ var CharacterEncoding;
   CharacterEncoding2["UTF16"] = "UTF16";
   CharacterEncoding2["UTF32"] = "UTF32";
 })(CharacterEncoding || (CharacterEncoding = {}));
+var InjectionLocaleOperation;
+(function(InjectionLocaleOperation2) {
+  InjectionLocaleOperation2["Invariant"] = "Invariant";
+  InjectionLocaleOperation2["SystemDefault"] = "SystemDefault";
+  InjectionLocaleOperation2["UserDefault"] = "UserDefault";
+  InjectionLocaleOperation2["Enumerate"] = "Enumerate";
+  InjectionLocaleOperation2["ShortDateFormats"] = "ShortDateFormats";
+  InjectionLocaleOperation2["LongDateFormats"] = "LongDateFormats";
+  InjectionLocaleOperation2["YearMonthDateFormats"] = "YearMonthDateFormats";
+  InjectionLocaleOperation2["LongTimeFormats"] = "LongTimeFormats";
+  InjectionLocaleOperation2["ShortTimeFormats"] = "ShortTimeFormats";
+  InjectionLocaleOperation2["ShortDayOfWeekName"] = "ShortDayOfWeekName";
+  InjectionLocaleOperation2["LongDayOfWeekName"] = "LongDayOfWeekName";
+  InjectionLocaleOperation2["ShortMonthName"] = "ShortMonthName";
+  InjectionLocaleOperation2["LongMonthName"] = "LongMonthName";
+  InjectionLocaleOperation2["ToLower"] = "ToLower";
+  InjectionLocaleOperation2["ToUpper"] = "ToUpper";
+  InjectionLocaleOperation2["ToLinguisticLower"] = "ToLinguisticLower";
+  InjectionLocaleOperation2["ToLinguisticUpper"] = "ToLinguisticUpper";
+})(InjectionLocaleOperation || (InjectionLocaleOperation = {}));
+var InjectionFileOperation;
+(function(InjectionFileOperation2) {
+  InjectionFileOperation2["PathDelimiter"] = "PathDelimiter";
+  InjectionFileOperation2["CompatibleDelimiters"] = "CompatibleDelimiters";
+  InjectionFileOperation2["Initialize"] = "Initialize";
+  InjectionFileOperation2["Concat"] = "Concat";
+  InjectionFileOperation2["Relative"] = "Relative";
+  InjectionFileOperation2["IsRoot"] = "IsRoot";
+  InjectionFileOperation2["IsFile"] = "IsFile";
+  InjectionFileOperation2["IsFolder"] = "IsFolder";
+  InjectionFileOperation2["Info"] = "Info";
+  InjectionFileOperation2["Copy"] = "Copy";
+  InjectionFileOperation2["DeleteFile"] = "DeleteFile";
+  InjectionFileOperation2["RenameFile"] = "RenameFile";
+  InjectionFileOperation2["Folders"] = "Folders";
+  InjectionFileOperation2["Files"] = "Files";
+  InjectionFileOperation2["CreateFolder"] = "CreateFolder";
+  InjectionFileOperation2["DeleteFolder"] = "DeleteFolder";
+  InjectionFileOperation2["RenameFolder"] = "RenameFolder";
+  InjectionFileOperation2["OpenRead"] = "OpenRead";
+  InjectionFileOperation2["OpenWrite"] = "OpenWrite";
+  InjectionFileOperation2["OpenReadWrite"] = "OpenReadWrite";
+  InjectionFileOperation2["Commit"] = "Commit";
+})(InjectionFileOperation || (InjectionFileOperation = {}));
 var WindowHitTestResult;
 (function(WindowHitTestResult2) {
   WindowHitTestResult2["BorderNoSizing"] = "BorderNoSizing";
@@ -367,6 +411,8 @@ var RenderingDom_DiffType;
 
 // ../../gaclib/renderer/lib/src/domRenderer/elementStyles_Image.js
 function getImageFormatType(imageData) {
+  if (imageData === null)
+    throw new Error("Image data is unavailable.");
   const bin = atob(imageData);
   if (bin.substring(0, 2) === "BM") {
     return ImageFormatType.Bmp;
@@ -1930,6 +1976,338 @@ var ElementManager = class {
   }
 };
 
+// ../../gaclib/renderer/lib/src/injections/injectDateTime.js
+function dateTimeFields(date, utc) {
+  return utc ? {
+    year: date.getUTCFullYear(),
+    month: date.getUTCMonth() + 1,
+    day: date.getUTCDate(),
+    hour: date.getUTCHours(),
+    minute: date.getUTCMinutes(),
+    second: date.getUTCSeconds(),
+    milliseconds: date.getUTCMilliseconds()
+  } : {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    hour: date.getHours(),
+    minute: date.getMinutes(),
+    second: date.getSeconds(),
+    milliseconds: date.getMilliseconds()
+  };
+}
+__name(dateTimeFields, "dateTimeFields");
+function injectLocalToUtc(value) {
+  const date = /* @__PURE__ */ new Date(0);
+  date.setFullYear(value.year, value.month - 1, value.day);
+  date.setHours(value.hour, value.minute, value.second, value.milliseconds);
+  return dateTimeFields(date, true);
+}
+__name(injectLocalToUtc, "injectLocalToUtc");
+function injectUtcToLocal(value) {
+  const date = /* @__PURE__ */ new Date(0);
+  date.setUTCFullYear(value.year, value.month - 1, value.day);
+  date.setUTCHours(value.hour, value.minute, value.second, value.milliseconds);
+  return dateTimeFields(date, false);
+}
+__name(injectUtcToLocal, "injectUtcToLocal");
+
+// ../../gaclib/renderer/lib/src/injections/injectLocale.js
+var candidates = ["en-US", "en-GB", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "fr-FR", "de-DE", "es-ES", "it-IT", "pt-BR", "ru-RU", "ar-SA", "hi-IN", "tr-TR"];
+function localeName(name) {
+  return name === "" ? "en-US" : Intl.getCanonicalLocales(name.replaceAll("_", "-"))[0];
+}
+__name(localeName, "localeName");
+function datePattern(locale, month, day) {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: "UTC",
+    year: "numeric",
+    month,
+    ...day ? { day: "2-digit" } : {}
+  });
+  return formatter.formatToParts(new Date(Date.UTC(2001, 10, 23))).map((part) => {
+    switch (part.type) {
+      case "year":
+        return "yyyy";
+      case "month":
+        return month === "long" ? "MMMM" : "MM";
+      case "day":
+        return "dd";
+      case "literal":
+        return part.value.replace(/[A-Za-z']/g, "");
+      default:
+        return "";
+    }
+  }).join("");
+}
+__name(datePattern, "datePattern");
+function injectLocale(request) {
+  switch (request.operation) {
+    case InjectionLocaleOperation.Invariant:
+      return [""];
+    case InjectionLocaleOperation.SystemDefault:
+      return [new Intl.DateTimeFormat().resolvedOptions().locale];
+    case InjectionLocaleOperation.UserDefault:
+      return [localeName(navigator.language)];
+    case InjectionLocaleOperation.Enumerate:
+      return ["", ...Intl.DateTimeFormat.supportedLocalesOf([.../* @__PURE__ */ new Set([...candidates, ...navigator.languages])])];
+  }
+  const locale = localeName(request.localeName);
+  switch (request.operation) {
+    case InjectionLocaleOperation.ShortDateFormats:
+      return [datePattern(locale, "2-digit", true)];
+    case InjectionLocaleOperation.LongDateFormats:
+      return [datePattern(locale, "long", true)];
+    case InjectionLocaleOperation.YearMonthDateFormats:
+      return [datePattern(locale, "long", false)];
+    // Core's portable 12-hour formatting differs at noon/midnight. The
+    // common 24-hour patterns work consistently on all Core platforms.
+    case InjectionLocaleOperation.LongTimeFormats:
+      return ["HH:mm:ss"];
+    case InjectionLocaleOperation.ShortTimeFormats:
+      return ["HH:mm"];
+    case InjectionLocaleOperation.ShortDayOfWeekName:
+    case InjectionLocaleOperation.LongDayOfWeekName:
+      if (request.index < 0 || request.index > 6)
+        return [""];
+      return [new Intl.DateTimeFormat(locale, { timeZone: "UTC", weekday: request.operation === InjectionLocaleOperation.ShortDayOfWeekName ? "short" : "long" }).format(new Date(Date.UTC(2023, 0, 1 + request.index)))];
+    case InjectionLocaleOperation.ShortMonthName:
+    case InjectionLocaleOperation.LongMonthName:
+      if (request.index < 1 || request.index > 12)
+        return [""];
+      return [new Intl.DateTimeFormat(locale, { calendar: "gregory", timeZone: "UTC", month: request.operation === InjectionLocaleOperation.ShortMonthName ? "short" : "long" }).format(new Date(Date.UTC(2023, request.index - 1, 1)))];
+    case InjectionLocaleOperation.ToLower:
+    case InjectionLocaleOperation.ToLinguisticLower:
+      return [request.text.toLocaleLowerCase(locale)];
+    case InjectionLocaleOperation.ToUpper:
+    case InjectionLocaleOperation.ToLinguisticUpper:
+      return [request.text.toLocaleUpperCase(locale)];
+  }
+}
+__name(injectLocale, "injectLocale");
+
+// ../../gaclib/renderer/lib/src/injections/injectFileSystem.js
+function normalizeOpfsPath(value) {
+  if (value.includes("\0"))
+    throw new Error("Illegal path.");
+  const parts = [];
+  for (const part of value.split("/")) {
+    if (part === "..") {
+      if (parts.length === 0)
+        throw new Error("Path traverses above root.");
+      parts.pop();
+    } else if (part !== "" && part !== ".")
+      parts.push(part);
+  }
+  return "/" + parts.join("/");
+}
+__name(normalizeOpfsPath, "normalizeOpfsPath");
+function joinPath(base, name) {
+  return normalizeOpfsPath(name.startsWith("/") ? name : base + "/" + name);
+}
+__name(joinPath, "joinPath");
+function parentPath(path) {
+  const parent = path.substring(0, path.lastIndexOf("/"));
+  return parent === "" ? "/" : parent;
+}
+__name(parentPath, "parentPath");
+async function getHandle(path, directory, create = false) {
+  const parts = path.split("/").filter((part) => part !== "");
+  const name = parts.pop();
+  let parent = await navigator.storage.getDirectory();
+  for (const part of parts)
+    parent = await parent.getDirectoryHandle(part);
+  if (name === void 0) {
+    if (!directory)
+      throw new Error("Root is a directory.");
+    return parent;
+  }
+  return directory ? parent.getDirectoryHandle(name, { create }) : parent.getFileHandle(name, { create });
+}
+__name(getHandle, "getHandle");
+async function exists(path, directory) {
+  try {
+    if (directory)
+      await getHandle(path, true);
+    else
+      await getHandle(path, false);
+    return true;
+  } catch {
+    return false;
+  }
+}
+__name(exists, "exists");
+function bytesToBase64(bytes) {
+  let binary = "";
+  for (let start = 0; start < bytes.length; start += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(start, start + 8192));
+  }
+  return btoa(binary);
+}
+__name(bytesToBase64, "bytesToBase64");
+async function copyEntry(source, parent, name) {
+  if (source.kind === "file") {
+    const file = await parent.getFileHandle(name, { create: true });
+    const writer = await file.createWritable();
+    await writer.write(await source.getFile());
+    await writer.close();
+  } else {
+    const folder = await parent.getDirectoryHandle(name, { create: true });
+    for await (const [childName, child] of source.entries())
+      await copyEntry(child, folder, childName);
+  }
+}
+__name(copyEntry, "copyEntry");
+async function injectFileSystem(request) {
+  const result = { success: false, text: "", paths: [], info: null, content: "" };
+  try {
+    const path = normalizeOpfsPath(request.path);
+    switch (request.operation) {
+      case InjectionFileOperation.PathDelimiter:
+        result.text = "/";
+        break;
+      case InjectionFileOperation.CompatibleDelimiters:
+        break;
+      case InjectionFileOperation.Initialize:
+        result.text = path;
+        break;
+      case InjectionFileOperation.Concat:
+        result.text = joinPath(path, request.target);
+        break;
+      case InjectionFileOperation.IsRoot:
+        result.success = path === "/";
+        return result;
+      case InjectionFileOperation.IsFile:
+        result.success = await exists(path, false);
+        return result;
+      case InjectionFileOperation.IsFolder:
+        result.success = await exists(path, true);
+        return result;
+      case InjectionFileOperation.Copy:
+        return result;
+      case InjectionFileOperation.Relative: {
+        const source = (await exists(path, true) ? path : parentPath(path)).split("/").filter((part) => part !== "");
+        const target = normalizeOpfsPath(request.target).split("/").filter((part) => part !== "");
+        let common = 0;
+        while (common < source.length && common < target.length && source[common] === target[common])
+          common++;
+        result.text = [...source.slice(common).map(() => ".."), ...target.slice(common)].join("/");
+        break;
+      }
+      case InjectionFileOperation.Info: {
+        const directory = await exists(path, true);
+        const file = directory ? void 0 : await (await getHandle(path, false)).getFile();
+        result.info = {
+          size: String(file?.size ?? 0),
+          hardLinkCount: "0",
+          creationTime: null,
+          lastAccessTime: null,
+          lastChangeTime: null,
+          lastModifiedTime: file !== void 0 && file.lastModified >= 0 ? dateTimeFields(new Date(file.lastModified), true) : null,
+          isDirectory: directory,
+          isSymbolicLink: false,
+          isReparsePoint: false,
+          canRead: true,
+          canWrite: true,
+          canExecute: false,
+          isReadOnly: false,
+          isHidden: false,
+          isSystem: false,
+          isArchive: false,
+          isCompressed: false,
+          isEncrypted: false,
+          isSparse: false,
+          isTemporary: false,
+          isOffline: false,
+          isNotContentIndexed: false,
+          isImmutable: false,
+          isAppendOnly: false
+        };
+        break;
+      }
+      case InjectionFileOperation.Folders:
+      case InjectionFileOperation.Files: {
+        const folder = await getHandle(path, true);
+        for await (const [name, child] of folder.entries()) {
+          if (child.kind === "directory" === (request.operation === InjectionFileOperation.Folders))
+            result.paths.push(joinPath(path, name));
+        }
+        result.paths.sort();
+        break;
+      }
+      case InjectionFileOperation.CreateFolder:
+        if (path === "/" || await exists(path, true) || await exists(path, false))
+          return result;
+        await getHandle(path, true, true);
+        break;
+      case InjectionFileOperation.DeleteFile:
+      case InjectionFileOperation.DeleteFolder: {
+        if (path === "/" || !await exists(path, request.operation === InjectionFileOperation.DeleteFolder))
+          return result;
+        const parent = await getHandle(parentPath(path), true);
+        await parent.removeEntry(path.substring(path.lastIndexOf("/") + 1));
+        break;
+      }
+      case InjectionFileOperation.RenameFile:
+      case InjectionFileOperation.RenameFolder: {
+        if (path === "/")
+          return result;
+        const directory = request.operation === InjectionFileOperation.RenameFolder;
+        const source = directory ? await getHandle(path, true) : await getHandle(path, false);
+        const target = joinPath(parentPath(path), request.target);
+        if (target === path)
+          break;
+        if (target === "/" || directory && target.startsWith(path + "/") || await exists(target, true) || await exists(target, false))
+          return result;
+        const destination = await getHandle(parentPath(target), true);
+        await copyEntry(source, destination, target.substring(target.lastIndexOf("/") + 1));
+        await (await getHandle(parentPath(path), true)).removeEntry(path.substring(path.lastIndexOf("/") + 1), { recursive: true });
+        break;
+      }
+      case InjectionFileOperation.OpenRead:
+      case InjectionFileOperation.OpenWrite:
+      case InjectionFileOperation.OpenReadWrite: {
+        const handle = await getHandle(path, false, request.operation !== InjectionFileOperation.OpenRead);
+        if (request.operation !== InjectionFileOperation.OpenWrite)
+          result.content = bytesToBase64(new Uint8Array(await (await handle.getFile()).arrayBuffer()));
+        break;
+      }
+      case InjectionFileOperation.Commit: {
+        if (request.content === null)
+          return result;
+        const bytes = Uint8Array.from(atob(request.content), (char) => char.charCodeAt(0));
+        const handle = await getHandle(path, false);
+        const writer = await handle.createWritable();
+        await writer.write(bytes);
+        await writer.close();
+        break;
+      }
+    }
+    result.success = true;
+  } catch {
+    return { success: false, text: "", paths: [], info: null, content: "" };
+  }
+  return result;
+}
+__name(injectFileSystem, "injectFileSystem");
+var FileSystemInjection = class {
+  static {
+    __name(this, "FileSystemInjection");
+  }
+  queue = Promise.resolve();
+  request(request, respond, active) {
+    this.queue = this.queue.then(async () => {
+      if (!active())
+        return;
+      const response = await injectFileSystem(request);
+      if (active())
+        respond(response);
+    });
+  }
+};
+
 // ../../gaclib/renderer/lib/src/dom/virtualDomBuilding.js
 function intersectRects(rect1, rect2) {
   return {
@@ -2742,6 +3120,23 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     throw new GacUIHtmlRendererExitError();
   }
   /****************************************************************************************
+   * Injections (DateTime, Locale, FileSystem)
+   ***************************************************************************************/
+  _fileSystemInjection = new FileSystemInjection();
+  RequestInjectionLocalToUtc(id, requestArgs) {
+    this._responses.RespondInjectionLocalToUtc(id, injectLocalToUtc(requestArgs));
+  }
+  RequestInjectionUtcToLocal(id, requestArgs) {
+    this._responses.RespondInjectionUtcToLocal(id, injectUtcToLocal(requestArgs));
+  }
+  RequestInjectionLocale(id, requestArgs) {
+    this._responses.RespondInjectionLocale(id, injectLocale(requestArgs));
+  }
+  RequestInjectionFileSystem(id, requestArgs) {
+    const responses = this._responses;
+    this._fileSystemInjection.request(requestArgs, (result) => responses.RespondInjectionFileSystem(id, result), () => !this._stopping && this._responses === responses);
+  }
+  /****************************************************************************************
    * MainWindow
    ***************************************************************************************/
   RequestWindowGetBounds(id) {
@@ -2844,6 +3239,41 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   }
   RequestImageDestroyed(requestArgs) {
     this._images.delete(requestArgs);
+  }
+  RequestImageSave(id, requestArgs) {
+    const creation = this._images.get(requestArgs.id);
+    if (creation === void 0)
+      throw new Error(`Unknown image ID ${requestArgs.id}.`);
+    const sourceFormat = getImageFormatType(creation.imageData);
+    if (requestArgs.format === ImageFormatType.Unknown || requestArgs.format === sourceFormat) {
+      this._responses.RespondImageSave(id, creation.imageData);
+      return;
+    }
+    const responses = this._responses;
+    const respond = /* @__PURE__ */ __name((content) => {
+      if (!this._stopping && this._responses === responses)
+        responses.RespondImageSave(id, content);
+    }, "respond");
+    if (requestArgs.format !== ImageFormatType.Png && requestArgs.format !== ImageFormatType.Jpeg) {
+      respond(null);
+      return;
+    }
+    const image = new Image();
+    image.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        const mime = getImageContentType(requestArgs.format);
+        const data = canvas.toDataURL(mime);
+        respond(data.startsWith(`data:${mime};base64,`) ? data.substring(data.indexOf(",") + 1) : null);
+      } catch {
+        respond(null);
+      }
+    };
+    image.onerror = () => respond(null);
+    image.src = getImageDataUrl(getImageContentType(sourceFormat), creation.imageData);
   }
   RequestRendererUpdateElement_ImageFrame(requestArgs) {
     if (requestArgs.imageId === null) {
@@ -3455,11 +3885,13 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   RequestWindowNotifyShow(requestArgs) {
   }
   /****************************************************************************************
-   * IO (ignored)
+   * IO capture
    ***************************************************************************************/
   RequestIORequireCapture() {
+    this._mouseCaptured = true;
   }
   RequestIOReleaseCapture() {
+    this._mouseCaptured = false;
   }
   /****************************************************************************************
    * Renderer (ignored)
@@ -3479,6 +3911,14 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
    ***************************************************************************************/
   // Event handlers map for all types of events
   _eventHandlers = /* @__PURE__ */ new Map();
+  _mouseCaptured = false;
+  _capturedMouseEvent = /* @__PURE__ */ __name((event) => {
+    if (!this._mouseCaptured)
+      return;
+    if (event.target instanceof Node && this._settings.target.contains(event.target))
+      return;
+    this._eventHandlers.get(event.type)?.(event);
+  }, "_capturedMouseEvent");
   // Key state tracking
   _pressedKeys = /* @__PURE__ */ new Set();
   // Double-click tracking: when mousedown has detail===2, we need to send
@@ -3701,6 +4141,9 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     return this._lastPointerType === "touch";
   }
   _installEvents() {
+    for (const name of ["mousedown", "mousemove", "mouseup"]) {
+      document.addEventListener(name, this._capturedMouseEvent);
+    }
     document.addEventListener("pointerup", this._drainPoint, true);
     document.addEventListener("pointercancel", this._drainPoint, true);
     for (const name of ["pointerdown", "pointermove", "pointerup", "pointercancel", "pointerenter", "pointerleave", "lostpointercapture"]) {
@@ -3797,16 +4240,16 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       if (this._events !== void 0) {
         const key = keyEvent.key;
         let charCode;
-        if (key.length === 1) {
+        if ([...key].length === 1) {
           charCode = key;
         } else if (key === "Enter") {
           charCode = "\r";
         } else if (key === "Tab") {
           charCode = "	";
         }
-        if (charCode !== void 0) {
+        for (const code of charCode?.split("") ?? []) {
           this._events.OnIOChar({
-            code: charCode,
+            code,
             ctrl: keyEvent.ctrlKey,
             shift: keyEvent.shiftKey,
             alt: keyEvent.altKey,
@@ -3838,6 +4281,10 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     });
   }
   _uninstallEvents() {
+    this._mouseCaptured = false;
+    for (const name of ["mousedown", "mousemove", "mouseup"]) {
+      document.removeEventListener(name, this._capturedMouseEvent);
+    }
     for (const [eventName, handler] of this._eventHandlers) {
       this._settings.target.removeEventListener(eventName, handler);
     }

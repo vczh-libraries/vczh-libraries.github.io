@@ -488,6 +488,30 @@ function jsonToRequest(pi, receiver) {
       case "ControllerGetScreenConfig":
         receiver.RequestControllerGetScreenConfig(pi.id);
         break;
+      case "InjectionLocalToUtc":
+        if (pi.arguments === void 0) {
+          throw new Error("Missing arguments for request: " + pi.name);
+        }
+        receiver.RequestInjectionLocalToUtc(pi.id, pi.arguments);
+        break;
+      case "InjectionUtcToLocal":
+        if (pi.arguments === void 0) {
+          throw new Error("Missing arguments for request: " + pi.name);
+        }
+        receiver.RequestInjectionUtcToLocal(pi.id, pi.arguments);
+        break;
+      case "InjectionLocale":
+        if (pi.arguments === void 0) {
+          throw new Error("Missing arguments for request: " + pi.name);
+        }
+        receiver.RequestInjectionLocale(pi.id, pi.arguments);
+        break;
+      case "InjectionFileSystem":
+        if (pi.arguments === void 0) {
+          throw new Error("Missing arguments for request: " + pi.name);
+        }
+        receiver.RequestInjectionFileSystem(pi.id, pi.arguments);
+        break;
       case "WindowGetBounds":
         receiver.RequestWindowGetBounds(pi.id);
         break;
@@ -508,6 +532,12 @@ function jsonToRequest(pi, receiver) {
           throw new Error("Missing arguments for request: " + pi.name);
         }
         receiver.RequestImageCreated(pi.id, pi.arguments);
+        break;
+      case "ImageSave":
+        if (pi.arguments === void 0) {
+          throw new Error("Missing arguments for request: " + pi.name);
+        }
+        receiver.RequestImageSave(pi.id, pi.arguments);
         break;
       case "RendererUpdateElement_DocumentParagraph":
         if (pi.arguments === void 0) {
@@ -580,6 +610,38 @@ var ResponseToJson = class {
       arguments: responseArgs
     });
   }
+  RespondInjectionLocalToUtc(id, responseArgs) {
+    this.callback({
+      semantic: "Response",
+      id,
+      name: "InjectionLocalToUtc",
+      arguments: responseArgs
+    });
+  }
+  RespondInjectionUtcToLocal(id, responseArgs) {
+    this.callback({
+      semantic: "Response",
+      id,
+      name: "InjectionUtcToLocal",
+      arguments: responseArgs
+    });
+  }
+  RespondInjectionLocale(id, responseArgs) {
+    this.callback({
+      semantic: "Response",
+      id,
+      name: "InjectionLocale",
+      arguments: responseArgs
+    });
+  }
+  RespondInjectionFileSystem(id, responseArgs) {
+    this.callback({
+      semantic: "Response",
+      id,
+      name: "InjectionFileSystem",
+      arguments: responseArgs
+    });
+  }
   RespondWindowGetBounds(id, responseArgs) {
     this.callback({
       semantic: "Response",
@@ -609,6 +671,14 @@ var ResponseToJson = class {
       semantic: "Response",
       id,
       name: "ImageCreated",
+      arguments: responseArgs
+    });
+  }
+  RespondImageSave(id, responseArgs) {
+    this.callback({
+      semantic: "Response",
+      id,
+      name: "ImageSave",
       arguments: responseArgs
     });
   }
@@ -863,6 +933,50 @@ var CharacterEncoding;
   CharacterEncoding2["UTF16"] = "UTF16";
   CharacterEncoding2["UTF32"] = "UTF32";
 })(CharacterEncoding || (CharacterEncoding = {}));
+var InjectionLocaleOperation;
+(function(InjectionLocaleOperation2) {
+  InjectionLocaleOperation2["Invariant"] = "Invariant";
+  InjectionLocaleOperation2["SystemDefault"] = "SystemDefault";
+  InjectionLocaleOperation2["UserDefault"] = "UserDefault";
+  InjectionLocaleOperation2["Enumerate"] = "Enumerate";
+  InjectionLocaleOperation2["ShortDateFormats"] = "ShortDateFormats";
+  InjectionLocaleOperation2["LongDateFormats"] = "LongDateFormats";
+  InjectionLocaleOperation2["YearMonthDateFormats"] = "YearMonthDateFormats";
+  InjectionLocaleOperation2["LongTimeFormats"] = "LongTimeFormats";
+  InjectionLocaleOperation2["ShortTimeFormats"] = "ShortTimeFormats";
+  InjectionLocaleOperation2["ShortDayOfWeekName"] = "ShortDayOfWeekName";
+  InjectionLocaleOperation2["LongDayOfWeekName"] = "LongDayOfWeekName";
+  InjectionLocaleOperation2["ShortMonthName"] = "ShortMonthName";
+  InjectionLocaleOperation2["LongMonthName"] = "LongMonthName";
+  InjectionLocaleOperation2["ToLower"] = "ToLower";
+  InjectionLocaleOperation2["ToUpper"] = "ToUpper";
+  InjectionLocaleOperation2["ToLinguisticLower"] = "ToLinguisticLower";
+  InjectionLocaleOperation2["ToLinguisticUpper"] = "ToLinguisticUpper";
+})(InjectionLocaleOperation || (InjectionLocaleOperation = {}));
+var InjectionFileOperation;
+(function(InjectionFileOperation2) {
+  InjectionFileOperation2["PathDelimiter"] = "PathDelimiter";
+  InjectionFileOperation2["CompatibleDelimiters"] = "CompatibleDelimiters";
+  InjectionFileOperation2["Initialize"] = "Initialize";
+  InjectionFileOperation2["Concat"] = "Concat";
+  InjectionFileOperation2["Relative"] = "Relative";
+  InjectionFileOperation2["IsRoot"] = "IsRoot";
+  InjectionFileOperation2["IsFile"] = "IsFile";
+  InjectionFileOperation2["IsFolder"] = "IsFolder";
+  InjectionFileOperation2["Info"] = "Info";
+  InjectionFileOperation2["Copy"] = "Copy";
+  InjectionFileOperation2["DeleteFile"] = "DeleteFile";
+  InjectionFileOperation2["RenameFile"] = "RenameFile";
+  InjectionFileOperation2["Folders"] = "Folders";
+  InjectionFileOperation2["Files"] = "Files";
+  InjectionFileOperation2["CreateFolder"] = "CreateFolder";
+  InjectionFileOperation2["DeleteFolder"] = "DeleteFolder";
+  InjectionFileOperation2["RenameFolder"] = "RenameFolder";
+  InjectionFileOperation2["OpenRead"] = "OpenRead";
+  InjectionFileOperation2["OpenWrite"] = "OpenWrite";
+  InjectionFileOperation2["OpenReadWrite"] = "OpenReadWrite";
+  InjectionFileOperation2["Commit"] = "Commit";
+})(InjectionFileOperation || (InjectionFileOperation = {}));
 var WindowHitTestResult;
 (function(WindowHitTestResult2) {
   WindowHitTestResult2["BorderNoSizing"] = "BorderNoSizing";
@@ -1013,13 +1127,18 @@ var RemoteProtocolClient = class {
   }
   requests;
   channelClient;
+  injections;
   responses;
   events;
   unsubscribe;
-  constructor(requests, channelClient) {
+  stopped = false;
+  constructor(requests, channelClient, injections = {}) {
     this.requests = requests;
     this.channelClient = channelClient;
+    this.injections = injections;
     const callback = /* @__PURE__ */ __name((invoking) => {
+      if (this.stopped)
+        return;
       void this.channelClient.sendToClient(GACUI_REMOTE_PROTOCOL_CORE_CLIENT_ID, GACUI_REMOTE_PROTOCOL_CHANNEL_NAME, JSON.stringify([invoking])).catch(() => void 0);
     }, "callback");
     this.responses = new ResponseToJson(callback);
@@ -1040,16 +1159,23 @@ var RemoteProtocolClient = class {
     }
     const platform = navigator.platform;
     const osSuperKeyName = platform.startsWith("Mac") ? "Command" : platform.startsWith("Win") ? "Win" : "Super";
-    this.events.OnControllerConnect({ documentCaretFromEncoding: CharacterEncoding.UTF16, osSuperKeyName });
+    this.events.OnControllerConnect({
+      documentCaretFromEncoding: CharacterEncoding.UTF16,
+      osSuperKeyName,
+      injectDateTime: this.injections.injectDateTime ?? false,
+      injectLocale: this.injections.injectLocale ?? false,
+      injectFileSystem: this.injections.injectFileSystem ?? false
+    });
     await this.channelClient.start();
   }
   stop() {
+    this.stopped = true;
     this.unsubscribe();
     this.channelClient.stop();
   }
 };
-function createRemoteProtocolClient(requests, channelClient) {
-  return new RemoteProtocolClient(requests, channelClient);
+function createRemoteProtocolClient(requests, channelClient, injections = {}) {
+  return new RemoteProtocolClient(requests, channelClient, injections);
 }
 __name(createRemoteProtocolClient, "createRemoteProtocolClient");
 
@@ -1311,7 +1437,11 @@ async function connectWasmServer(application, requests) {
   await application.rendererReady;
   const channel = application.channels[0];
   await channel.connect();
-  return createRemoteProtocolClient(requests, channel);
+  return createRemoteProtocolClient(requests, channel, {
+    injectDateTime: false,
+    injectLocale: false,
+    injectFileSystem: false
+  });
 }
 __name(connectWasmServer, "connectWasmServer");
 export {
