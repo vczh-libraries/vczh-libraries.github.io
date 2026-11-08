@@ -1968,7 +1968,31 @@
                 "content": [
                   {
                     "kind": "Text",
-                    "text": "\n                    An accepted sequence with an eligible press and no selected gesture automatically produces a deferred mouse click.\n                    It uses the original contact position with current layout after point cleanup.\n                    Cancellation, any additional contact, or movement outside the click radius prevents this fallback; returning inside the radius does not restore it.\n                    Selecting any gesture, including either press, suppresses both deferred clicks. Setting only "
+                    "text": "\n                    An accepted sequence with an eligible press and no selected gesture automatically produces a deferred mouse click.\n                    It uses the original contact position with current layout after point cleanup and delivers each phase directly to the accepting owner and any applicable child control.\n                    Generated mouse events have "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "generatedByPoint"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " set to true and both "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "eventSource"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " and "
+                  },
+                  {
+                    "kind": "Name",
+                    "text": "compositionSource"
+                  },
+                  {
+                    "kind": "Text",
+                    "text": " equal to their receiving composition.\n                    They do not use ordinary composition bubbling; Started remains a bubbling acceptance query and physical mouse events retain their original routing.\n                    Documents adapt bounds coordinates to their current mouse area, and lists forward item events once. Embedded buttons retain activation.\n                    An eligible click dismisses unrelated hosted popups before its mouse phases; a raw Down, scrolling or cancellation does not dismiss them.\n                    Cancellation, any additional contact, or movement outside the click radius prevents this fallback; returning inside the radius does not restore it.\n                    Selecting any gesture, including either press, suppresses both deferred clicks. Setting only "
                   },
                   {
                     "kind": "Name",
@@ -2096,7 +2120,7 @@
                   },
                   {
                     "kind": "Text",
-                    "text": ".\n                    Enabled Selectable/Editable documents preserve an existing range on an inside short press and extend a collapsed caret on a different long press.\n                    Scrollable document content accepts drags for viewport scrolling while retaining selection; labels provide press selection without a scroll-view gesture consumer.\n                "
+                    "text": ".\n                    Enabled Selectable/Editable documents use ordinary left-click caret placement for short presses, collapsing an unmodified range even at its active endpoint, and extend a collapsed caret on a different long press.\n                    Scrollable document content accepts drags for viewport scrolling while retaining selection; labels provide press selection without a scroll-view gesture consumer.\n                "
                   }
                 ]
               },
