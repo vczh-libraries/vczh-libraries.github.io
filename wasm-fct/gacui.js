@@ -793,6 +793,8 @@ function getLineEdgePosition(line, atEnd, divRect) {
 }
 __name(getLineEdgePosition, "getLineEdgePosition");
 function fillParagraphMeasurements(textDiv, layout) {
+  if (layout.browserComposition === true)
+    return;
   const units = [];
   const inlineObjectBounds = [];
   const runs = layout.paragraph.runsDiff ?? [];
@@ -1654,7 +1656,9 @@ var VirtualDomBaseOrdinary = class extends VirtualDomBase {
     };
   }
   updateProps(props) {
-    this.updateTypedDesc(props.elementId, props.typedDesc);
+    if (this._props.elementId !== props.elementId || this._props.typedDesc !== props.typedDesc) {
+      this.updateTypedDesc(props.elementId, props.typedDesc);
+    }
     this._props = {
       ...props
     };
@@ -1711,6 +1715,36 @@ function mapHitTestToCSS(hitTestResult) {
   }
 }
 __name(mapHitTestToCSS, "mapHitTestToCSS");
+function reconcileChildren(parent, children) {
+  const expected = new Set(children);
+  for (const child of Array.from(parent.childNodes)) {
+    if (!expected.has(child))
+      child.remove();
+  }
+  const focused = children.find((child) => child.parentNode === parent && child.contains(document.activeElement));
+  const focusedIndex = focused === void 0 ? -1 : children.indexOf(focused);
+  let before = focused;
+  for (let i = focusedIndex - 1; i >= 0; i--) {
+    const child = children[i];
+    if (child.nextSibling !== before)
+      parent.insertBefore(child, before);
+    before = child;
+  }
+  let next = focused === void 0 ? parent.firstChild : focused.nextSibling;
+  for (const child of children.slice(focusedIndex + 1)) {
+    if (child !== next)
+      parent.insertBefore(child, next);
+    next = child.nextSibling;
+  }
+}
+__name(reconcileChildren, "reconcileChildren");
+function reconcileRenderingChildren(parent, children) {
+  const border = getExtraBorder(parent);
+  if (border !== void 0)
+    children.unshift(border);
+  reconcileChildren(parent, children);
+}
+__name(reconcileRenderingChildren, "reconcileRenderingChildren");
 var VirtualDomHtmlRoot = class extends VirtualDomBaseRoot {
   static {
     __name(this, "VirtualDomHtmlRoot");
@@ -1728,11 +1762,7 @@ var VirtualDomHtmlRoot = class extends VirtualDomBaseRoot {
   }
   onUpdateChildren(children) {
     const htmlChildren = children.map((child) => child.htmlElement);
-    this.htmlElement.replaceChildren(...htmlChildren);
-    const border = getExtraBorder(this.htmlElement);
-    if (border) {
-      this.htmlElement.insertBefore(border, this.htmlElement.firstChild);
-    }
+    reconcileRenderingChildren(this.htmlElement, htmlChildren);
   }
 };
 var VirtualDomHtmlValidArea = class _VirtualDomHtmlValidArea extends VirtualDomBaseValidArea {
@@ -1753,11 +1783,7 @@ var VirtualDomHtmlValidArea = class _VirtualDomHtmlValidArea extends VirtualDomB
   }
   onUpdateChildren(children) {
     const htmlChildren = children.map((child) => child.htmlElement);
-    this.htmlElement.replaceChildren(...htmlChildren);
-    const border = getExtraBorder(this.htmlElement);
-    if (border) {
-      this.htmlElement.insertBefore(border, this.htmlElement.firstChild);
-    }
+    reconcileRenderingChildren(this.htmlElement, htmlChildren);
   }
 };
 var VirtualDomHtmlOrdinary = class _VirtualDomHtmlOrdinary extends VirtualDomBaseOrdinary {
@@ -1826,11 +1852,7 @@ var VirtualDomHtmlOrdinary = class _VirtualDomHtmlOrdinary extends VirtualDomBas
     if (this._rawElement !== void 0) {
       htmlChildren.unshift(this._rawElement);
     }
-    this.htmlElement.replaceChildren(...htmlChildren);
-    const border = getExtraBorder(this.htmlElement);
-    if (border) {
-      this.htmlElement.insertBefore(border, this.htmlElement.firstChild);
-    }
+    reconcileRenderingChildren(this.htmlElement, htmlChildren);
   }
 };
 var VirtualDomHtmlProvider = class {
@@ -1838,6 +1860,7 @@ var VirtualDomHtmlProvider = class {
     __name(this, "VirtualDomHtmlProvider");
   }
   elements;
+  nativeClipping = true;
   constructor(elements) {
     this.elements = elements;
   }
@@ -1861,13 +1884,16 @@ var VirtualDomHtmlProvider = class {
     virtualDom.htmlElement.style.boxSizing = "border-box";
     virtualDom.htmlElement.style.width = `${width}px`;
     virtualDom.htmlElement.style.height = `${height}px`;
-    target.replaceChildren(virtualDom.htmlElement);
+    reconcileChildren(target, [virtualDom.htmlElement]);
     this.fixBoundsRecursive(virtualDom);
   }
   fixBoundsRecursive(virtualDom) {
     for (const child of virtualDom.children) {
       if (child instanceof VirtualDomHtmlRoot || child instanceof VirtualDomHtmlValidArea || child instanceof VirtualDomHtmlOrdinary) {
         applyBounds(child.htmlElement, child.bounds);
+        const area = child.props.validArea;
+        const bounds = child.props.globalBounds;
+        child.htmlElement.style.clipPath = area === void 0 ? "" : `inset(${Math.max(0, area.y1 - bounds.y1)}px ${Math.max(0, bounds.x2 - area.x2)}px ${Math.max(0, bounds.y2 - area.y2)}px ${Math.max(0, area.x1 - bounds.x1)}px)`;
         if (this.elements.renderDebugInfo) {
           renderDebugInfo(child.htmlElement);
         }
@@ -1917,7 +1943,7 @@ var ElementManager = class {
     if (this._elements.has(id)) {
       throw new Error(`Element with id ${id} already exists`);
     }
-    this._elements.set(id, type === RendererType.Raw ? { type, desc: { type, desc: { id, rawId: "", data: "" } } } : { type });
+    this._elements.set(id, type === RendererType.Raw ? { type, desc: { type, desc: { id, rawId: "", interpretor: "", data: "" } } } : { type });
   }
   createWithDesc(id, typedDesc) {
     this.create(id, typedDesc.type);
@@ -1940,6 +1966,9 @@ var ElementManager = class {
         element,
         get id() {
           return record.desc?.type === RendererType.Raw ? record.desc.desc.rawId : "";
+        },
+        get interpretor() {
+          return record.desc?.type === RendererType.Raw ? record.desc.desc.interpretor : "";
         },
         get data() {
           return record.desc?.type === RendererType.Raw ? record.desc.desc.data : "";
@@ -2343,6 +2372,8 @@ function fillVirtualDom(content, record, provider, id, pendingElements) {
   }
   const props = {
     globalBounds: content.bounds,
+    validArea: provider.nativeClipping === true ? content.validArea : void 0,
+    editableAttribute: content.editableAttribute,
     hitTestResult: content.hitTestResult !== null ? content.hitTestResult : void 0,
     cursor: content.cursor !== null ? content.cursor : void 0,
     typedDesc,
@@ -2363,7 +2394,7 @@ function createVirtualDom(id, content, record, provider, parentValidArea, pendin
     throw new Error(`Duplicate RenderingDom ID found: ${id}. Each RenderingDom must have a unique ID.`);
   }
   const naturalValidArea = parentValidArea ? intersectRects(content.bounds, parentValidArea) : content.bounds;
-  if (areRectsEqual(content.validArea, naturalValidArea)) {
+  if (provider.nativeClipping === true || areRectsEqual(content.validArea, naturalValidArea)) {
     const virtualDom = fillVirtualDom(content, record, provider, id, pendingElements);
     if (id >= 0) {
       record.doms.set(id, virtualDom);
@@ -2386,10 +2417,14 @@ function createVirtualDomTree(renderingDom, record, provider, parentValidArea) {
   return outerVirtualDom;
 }
 __name(createVirtualDomTree, "createVirtualDomTree");
-function createVirtualDomFromRenderingDom(renderingDom, elements, provider) {
-  if (renderingDom.id !== RootVirtualDomId || renderingDom.content.hitTestResult !== null || renderingDom.content.cursor !== null || renderingDom.content.element !== null || renderingDom.content.bounds.x1 !== 0 || renderingDom.content.bounds.y1 !== 0 || renderingDom.content.bounds.x2 !== 0 || renderingDom.content.bounds.y2 !== 0 || renderingDom.content.validArea.x1 !== 0 || renderingDom.content.validArea.y1 !== 0 || renderingDom.content.validArea.x2 !== 0 || renderingDom.content.validArea.y2 !== 0) {
+function validateRoot(renderingDom) {
+  if (renderingDom.id !== RootVirtualDomId || renderingDom.content.hitTestResult !== null || renderingDom.content.cursor !== null || renderingDom.content.element !== null || renderingDom.content.editableAttribute !== null || renderingDom.content.bounds.x1 !== 0 || renderingDom.content.bounds.y1 !== 0 || renderingDom.content.bounds.x2 !== 0 || renderingDom.content.bounds.y2 !== 0 || renderingDom.content.validArea.x1 !== 0 || renderingDom.content.validArea.y1 !== 0 || renderingDom.content.validArea.x2 !== 0 || renderingDom.content.validArea.y2 !== 0) {
     throw new Error("Root RenderingDom does not match expected screen format");
   }
+}
+__name(validateRoot, "validateRoot");
+function createVirtualDomFromRenderingDom(renderingDom, elements, provider) {
+  validateRoot(renderingDom);
   const record = {
     screen: provider.createDomForRoot(),
     doms: /* @__PURE__ */ new Map(),
@@ -2413,7 +2448,7 @@ function collectPropsBeforeDiff(outerDom, parentValidArea, props) {
       parent = parent.parent;
     }
     const naturalValidArea = parentValidArea ? intersectRects(parentValidArea, innerDom.props.globalBounds) : innerDom.props.globalBounds;
-    validArea = isValidAreaDom ? outerDom.props.globalBounds : naturalValidArea;
+    validArea = innerDom.props.validArea ?? (isValidAreaDom ? outerDom.props.globalBounds : naturalValidArea);
     props.set(outerDom.id, {
       bounds: innerDom.props.globalBounds,
       validArea,
@@ -2505,6 +2540,10 @@ function ensureChildrenClippedHierarchy(innerDom, validArea, props, record, prov
 __name(ensureChildrenClippedHierarchy, "ensureChildrenClippedHierarchy");
 function ensureClippedHierarchy(virtualDom, validArea, props, record, provider) {
   const currentProps = props.get(virtualDom.id);
+  if (provider.nativeClipping === true) {
+    ensureChildrenClippedHierarchy(virtualDom, currentProps.validArea, props, record, provider);
+    return virtualDom;
+  }
   const naturalValidArea = validArea ? intersectRects(validArea, currentProps.bounds) : currentProps.bounds;
   const expectedClipped = !areRectsEqual(currentProps.validArea, naturalValidArea);
   const actualClipped = currentProps.outerDom !== currentProps.innerDom;
@@ -2553,14 +2592,16 @@ function updateVirtualDomWithRenderingDomDiff(diffsInOrder, record, provider, pe
       case RenderingDom_DiffType.Modified:
         if (diff.children) {
           if (diff.id === RootVirtualDomId) {
-            record.screen.updateChildren([]);
+            record.screen.updateChildren(record.screen.children.filter((child) => diff.children.includes(child.id)));
           } else {
-            self.innerDom.updateChildren([]);
+            self.innerDom.updateChildren(self.innerDom.children.filter((child) => diff.children.includes(child.id)));
           }
         }
         if (diff.content) {
           const newProps = {
             globalBounds: diff.content.bounds,
+            validArea: provider.nativeClipping === true ? diff.content.validArea : void 0,
+            editableAttribute: diff.content.editableAttribute,
             hitTestResult: diff.content.hitTestResult !== null ? diff.content.hitTestResult : void 0,
             cursor: diff.content.cursor !== null ? diff.content.cursor : void 0,
             typedDesc: diff.content.element !== null ? record.elements.getDescEnsured(diff.content.element) : void 0,
@@ -2602,6 +2643,738 @@ function updateVirtualDomWithRenderingDomDiff(diffsInOrder, record, provider, pe
   ensureChildrenClippedHierarchy(record.screen, void 0, props, record, provider);
 }
 __name(updateVirtualDomWithRenderingDomDiff, "updateVirtualDomWithRenderingDomDiff");
+function replaceVirtualDomFromRenderingDom(tree, record, provider, pendingElements) {
+  validateRoot(tree);
+  const ids = /* @__PURE__ */ new Set();
+  const diffsInOrder = [];
+  const visit = /* @__PURE__ */ __name((node) => {
+    if (ids.has(node.id))
+      throw new Error(`Duplicate RenderingDom ID found: ${node.id}`);
+    ids.add(node.id);
+    diffsInOrder.push({
+      id: node.id,
+      diffType: node.id === RootVirtualDomId || record.doms.has(node.id) ? RenderingDom_DiffType.Modified : RenderingDom_DiffType.Created,
+      content: node.id === RootVirtualDomId ? null : node.content,
+      children: (node.children ?? []).filter((child) => child !== null).map((child) => child.id)
+    });
+    for (const child of node.children ?? [])
+      if (child !== null)
+        visit(child);
+  }, "visit");
+  visit(tree);
+  for (const id of record.doms.keys()) {
+    if (!ids.has(id))
+      diffsInOrder.push({ id, diffType: RenderingDom_DiffType.Deleted, content: null, children: null });
+  }
+  const removed = diffsInOrder.filter((diff) => diff.diffType === RenderingDom_DiffType.Deleted);
+  const retained = diffsInOrder.filter((diff) => diff.diffType !== RenderingDom_DiffType.Deleted);
+  updateVirtualDomWithRenderingDomDiff({ diffsInOrder: [...removed, ...retained] }, record, provider, pendingElements);
+}
+__name(replaceVirtualDomFromRenderingDom, "replaceVirtualDomFromRenderingDom");
+
+// ../../gaclib/renderer/lib/src/textInput.js
+var noModifiers = { ctrl: false, shift: false, alt: false, osSuper: false, capslock: false };
+var captureGuards = "\u200B\u200B";
+function sendCommittedText(events, text, modifiers) {
+  for (const code of text.split(""))
+    events.OnIOChar({ code, ...modifiers });
+}
+__name(sendCommittedText, "sendCommittedText");
+var TextInputCoordinator = class {
+  static {
+    __name(this, "TextInputCoordinator");
+  }
+  target;
+  options;
+  events;
+  restore;
+  releaseKeys;
+  boundaries = /* @__PURE__ */ new Map();
+  prepared = /* @__PURE__ */ new Map();
+  contexts = /* @__PURE__ */ new Map();
+  session = null;
+  desiredId = null;
+  generation = 0;
+  stopped = false;
+  suspended = false;
+  modifiers = { ...noModifiers };
+  physical = /* @__PURE__ */ new Set();
+  trace = [];
+  keyboard;
+  style;
+  gesture = null;
+  nativeCaret = { x: 0, y: 0 };
+  constructorEC = globalThis.EditContext;
+  constructor(target, options, events, restore, releaseKeys) {
+    this.target = target;
+    this.options = options;
+    this.events = events;
+    this.restore = restore;
+    this.releaseKeys = releaseKeys;
+    this.keyboard = options.virtualKeyboard !== void 0 ? options.virtualKeyboard : navigator.virtualKeyboard ?? null;
+    this.style = document.createElement("style");
+    this.style.textContent = "[data-gacui-input] { caret-color:transparent!important; outline:none!important; }[data-gacui-input] * { caret-color:transparent!important; }[data-gacui-preedit]::after { content:attr(data-gacui-preedit); position:absolute; pointer-events:none;left:var(--gacui-ime-x); top:var(--gacui-ime-y); font:var(--gacui-ime-font); white-space:pre;color:var(--gacui-ime-color); text-decoration:var(--gacui-ime-decoration,underline); z-index:2147483647; }";
+    document.head.append(this.style);
+    window.addEventListener("blur", this.onWindowBlur);
+    document.addEventListener("focusin", this.onFocus);
+    window.visualViewport?.addEventListener("resize", this.updateBounds);
+    window.visualViewport?.addEventListener("scroll", this.updateBounds);
+    window.addEventListener("scroll", this.updateBounds, true);
+    this.keyboard?.addEventListener("geometrychange", this.updateBounds);
+  }
+  get state() {
+    const host = this.session?.boundary.host ?? this.target;
+    const vk = isSecureContext && this.keyboard !== null && typeof this.keyboard.show === "function" && typeof this.keyboard.hide === "function" && "virtualKeyboardPolicy" in host;
+    return {
+      adapter: this.session?.adapter ?? "legacy",
+      activeId: this.session?.boundary.id ?? null,
+      desiredId: this.desiredId,
+      pending: this.session?.pending ?? false,
+      composing: this.session?.composition !== null && this.session?.composition !== void 0,
+      generation: this.generation,
+      capabilities: {
+        editContext: typeof this.constructorEC === "function" && "editContext" in HTMLElement.prototype,
+        contenteditable: "contentEditable" in host,
+        beforeinput: "onbeforeinput" in host && typeof InputEvent === "function",
+        virtualKeyboard: vk,
+        geometry: this.keyboard?.boundingRect !== void 0,
+        // The VK specification requires a contenteditable editing host. An exposed
+        // EditContext + VK pair alone does not establish manual-show eligibility.
+        manualEligible: vk && this.session?.adapter === "contenteditable"
+      },
+      events: [...this.trace]
+    };
+  }
+  record(name) {
+    this.trace.push(name);
+    if (this.trace.length > 80)
+      this.trace.shift();
+  }
+  remember(host, name, value) {
+    let saved = this.prepared.get(host);
+    if (saved === void 0) {
+      saved = /* @__PURE__ */ new Map();
+      this.prepared.set(host, saved);
+    }
+    if (!saved.has(name))
+      saved.set(name, host.getAttribute(name));
+    host.setAttribute(name, value);
+  }
+  unprepare(host) {
+    if (this.contexts.get(host) !== void 0 && this.contexts.get(host) !== null)
+      host.editContext = null;
+    this.contexts.delete(host);
+    for (const [name, value] of this.prepared.get(host) ?? []) {
+      if (value === null)
+        host.removeAttribute(name);
+      else
+        host.setAttribute(name, value);
+    }
+    this.prepared.delete(host);
+  }
+  prepare(boundary) {
+    const host = boundary.host;
+    this.remember(host, "tabindex", "-1");
+    this.remember(host, "data-gacui-input", String(boundary.id));
+    this.remember(host, "spellcheck", "false");
+    this.remember(host, "autocorrect", "off");
+    this.remember(host, "autocapitalize", "off");
+    this.remember(host, "inputmode", "text");
+    if (!this.contexts.has(host) && this.options.adapter !== "legacy") {
+      const context = this.createContext(host);
+      this.contexts.set(host, context ?? null);
+      if (context !== void 0)
+        this.remember(host, "contenteditable", "false");
+      else if ("contentEditable" in host && "onbeforeinput" in host && typeof InputEvent === "function") {
+        this.remember(host, "contenteditable", "plaintext-only");
+        if (host.contentEditable !== "plaintext-only")
+          host.contentEditable = "true";
+      }
+    }
+  }
+  /** Validate the recovered tree, including nodes untouched by a diff. */
+  reconcile(record, completed = false) {
+    if (this.stopped)
+      return;
+    const next = /* @__PURE__ */ new Map();
+    const visit = /* @__PURE__ */ __name((node, visible) => {
+      const area = node.props.validArea ?? node.props.globalBounds;
+      visible = visible && (node.id === -1 || area.x2 > area.x1 && area.y2 > area.y1);
+      const attribute = node.props.editableAttribute;
+      if (visible && attribute !== void 0 && attribute !== null && "htmlElement" in node) {
+        const id = node.id === -2 ? node.parent.id : node.id;
+        next.set(id, { id, host: node.htmlElement, ...attribute });
+      }
+      for (const child of node.children)
+        visit(child, visible);
+    }, "visit");
+    visit(record.screen, true);
+    const focused = [...next.values()].filter((boundary) => boundary.focused);
+    if (focused.length > 1) {
+      this.stop();
+      throw new Error(`Multiple focused editing boundaries: ${focused.map((boundary) => boundary.id).join(", ")}`);
+    }
+    const desired = focused[0]?.editable === true ? focused[0].id : null;
+    if (desired !== this.desiredId)
+      this.suspended = false;
+    this.desiredId = desired;
+    const old = this.session;
+    if (old !== null) {
+      const current = next.get(old.boundary.id);
+      if (current === void 0 || !current.editable || current.host !== old.boundary.host || !old.pending && current.id !== this.desiredId)
+        this.end();
+    }
+    for (const host of this.prepared.keys()) {
+      if (![...next.values()].some((boundary) => boundary.host === host && boundary.editable))
+        this.unprepare(host);
+    }
+    this.boundaries = next;
+    for (const boundary of next.values())
+      if (boundary.editable)
+        this.prepare(boundary);
+    if (this.session?.pending === true) {
+      if (completed) {
+        if (this.session.boundary.id === this.desiredId) {
+          this.session.pending = false;
+          const queue = this.session.queue.splice(0);
+          for (const action of queue)
+            action();
+        } else
+          this.end();
+      }
+    }
+    if (this.session === null && this.desiredId !== null && !this.suspended)
+      this.activate(next.get(this.desiredId), false);
+    if (this.session?.composition === null)
+      this.syncSelection();
+    this.updateBounds();
+  }
+  alive(session) {
+    return !this.stopped && this.session === session && session.generation === this.generation;
+  }
+  listen(session, target, name, handler) {
+    const listener = /* @__PURE__ */ __name((event) => {
+      if (!this.alive(session))
+        return;
+      this.record(`${name}:${event instanceof InputEvent ? event.inputType : ""}`);
+      handler(event);
+    }, "listener");
+    target.addEventListener(name, listener);
+    session.cleanup.push(() => target.removeEventListener(name, listener));
+  }
+  createContext(host) {
+    if (this.options.adapter === "contenteditable" || this.options.adapter === "legacy" || typeof this.constructorEC !== "function" || !("editContext" in HTMLElement.prototype))
+      return void 0;
+    try {
+      const context = new this.constructorEC();
+      for (const name of ["updateText", "updateSelection", "updateControlBounds", "updateSelectionBounds", "updateCharacterBounds"]) {
+        if (typeof context[name] !== "function")
+          return void 0;
+      }
+      host.editContext = context;
+      return context;
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "NotSupportedError")
+        return void 0;
+      throw error;
+    }
+  }
+  activate(boundary, pending) {
+    if (this.stopped || this.options.adapter === "legacy")
+      return;
+    if (this.session?.boundary.host === boundary.host)
+      return;
+    this.end();
+    const host = boundary.host;
+    const context = this.contexts.get(host) ?? this.createContext(host);
+    if (context === void 0 && (!("contentEditable" in host) || !("onbeforeinput" in host) || typeof InputEvent !== "function"))
+      return;
+    const session = {
+      boundary,
+      generation: ++this.generation,
+      adapter: context === void 0 ? "contenteditable" : "edit-context",
+      pending,
+      queue: [],
+      cleanup: [],
+      composition: null,
+      context,
+      buffer: captureGuards,
+      selectionStart: 1,
+      selectionEnd: 1,
+      dirty: false,
+      ordinary: null,
+      manual: false
+    };
+    this.session = session;
+    if (context === void 0) {
+      this.remember(host, "contenteditable", "plaintext-only");
+      if (host.contentEditable !== "plaintext-only")
+        host.contentEditable = "true";
+    } else {
+      this.remember(host, "contenteditable", "false");
+      this.resetBuffer(session);
+    }
+    const compositionTarget = context ?? host;
+    this.listen(session, compositionTarget, "compositionstart", () => {
+      this.releaseKeys();
+      this.physical.clear();
+      session.composition = { text: "", paragraph: this.caret()?.paragraph?.element };
+      session.ordinary = null;
+      if (session.adapter === "contenteditable")
+        for (const paragraph of this.paragraphs(host)) {
+          paragraph.layout.browserComposition = paragraph.element === session.composition.paragraph;
+        }
+    });
+    this.listen(session, compositionTarget, "compositionend", (event) => {
+      const composition = session.composition;
+      if (composition === null)
+        return;
+      if (context === void 0)
+        composition.text = event.data;
+      queueMicrotask(() => {
+        if (!this.alive(session) || session.composition !== composition)
+          return;
+        this.finishComposition(session, composition);
+      });
+    });
+    if (context !== void 0) {
+      this.listen(session, context, "textupdate", (event) => this.textUpdate(session, event));
+      this.listen(session, context, "characterboundsupdate", (event) => {
+        const bounds = event;
+        const rectangles = [];
+        for (let i = bounds.rangeStart; i < bounds.rangeEnd; i++)
+          rectangles.push(this.characterRect(session, i));
+        context.updateCharacterBounds(bounds.rangeStart, rectangles);
+      });
+      this.listen(session, context, "textformatupdate", (event) => {
+        const formats = event.getTextFormats();
+        host.style.setProperty("--gacui-ime-decoration", formats.some((format) => format.underlineStyle !== "none") ? "underline" : "none");
+      });
+    } else {
+      this.listen(session, host, "compositionupdate", (event) => {
+        if (session.composition !== null)
+          session.composition.text = event.data;
+      });
+      this.listen(session, host, "input", (event) => this.input(session, event));
+    }
+    this.listen(session, host, "beforeinput", (event) => this.beforeInput(session, event));
+    this.listen(session, host, "paste", (event) => {
+      const paste = event;
+      paste.preventDefault();
+      if (session.composition === null)
+        this.commit(session, paste.clipboardData?.getData("text/plain") ?? "");
+    });
+    this.listen(session, host, "drop", (event) => {
+      event.preventDefault();
+    });
+    host.focus({ preventScroll: true });
+    this.syncSelection();
+    this.updateBounds();
+  }
+  finishComposition(session, composition) {
+    session.composition = null;
+    for (const paragraph of this.paragraphs(session.boundary.host))
+      paragraph.layout.browserComposition = false;
+    this.clearPreedit(session);
+    this.reconcileMutation(session);
+    this.resetBuffer(session);
+    this.commit(session, composition.text);
+  }
+  resetBuffer(session) {
+    if (session.context === void 0 || session.composition !== null)
+      return;
+    session.context.updateText(0, session.context.text.length, captureGuards);
+    session.context.updateSelection(1, 1);
+    session.buffer = captureGuards;
+    session.selectionStart = session.selectionEnd = 1;
+  }
+  textUpdate(session, event) {
+    const { updateRangeStart: start, updateRangeEnd: end, text } = event;
+    if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end < start || end > session.buffer.length)
+      throw new Error("Invalid EditContext replacement range.");
+    const previous = session.buffer;
+    session.buffer = previous.slice(0, start) + text + previous.slice(end);
+    const { selectionStart, selectionEnd } = event;
+    if (!Number.isInteger(selectionStart) || !Number.isInteger(selectionEnd) || selectionStart < 0 || selectionEnd < selectionStart || selectionEnd > session.buffer.length)
+      throw new Error("Invalid EditContext selection range.");
+    session.selectionStart = selectionStart;
+    session.selectionEnd = selectionEnd;
+    if (session.composition !== null) {
+      if (start < 1 || end > previous.length - 1 || selectionStart < 1 || selectionEnd > session.buffer.length - 1) {
+        this.cancelComposition();
+        return;
+      }
+      session.composition.text = session.buffer.slice(1, -1);
+      this.updateBounds();
+      return;
+    }
+    if (start === 1 && end === previous.length - 1)
+      this.commit(session, text);
+    else if (text === "" && start === 0 && end === 1)
+      this.command(session, "Backspace");
+    else if (text === "" && start === 1 && end === 2)
+      this.command(session, "Delete");
+    else
+      this.record("rejected:replacement-range");
+    this.resetBuffer(session);
+  }
+  beforeInput(session, event) {
+    const type = event.inputType;
+    if (session.composition !== null || event.isComposing || type === "insertCompositionText" || type === "deleteCompositionText") {
+      if (session.composition === null)
+        return;
+      if (event.data !== null)
+        session.composition.text = event.data;
+      session.dirty = session.adapter === "contenteditable";
+      return;
+    }
+    const command = type === "deleteContentBackward" ? "Backspace" : type === "deleteContentForward" ? "Delete" : type === "insertParagraph" || type === "insertLineBreak" ? "Enter" : null;
+    if (command !== null) {
+      if (event.cancelable)
+        event.preventDefault();
+      this.command(session, command);
+      session.ordinary = { text: null, handled: true, before: session.boundary.host.textContent ?? "" };
+      return;
+    }
+    if (type === "insertText" || type === "insertFromPaste") {
+      const ranges = event.getTargetRanges();
+      if (ranges.some((range) => range.startContainer !== range.endContainer || range.startOffset !== range.endOffset)) {
+        if (event.cancelable)
+          event.preventDefault();
+        session.ordinary = { text: null, handled: true, before: session.boundary.host.textContent ?? "" };
+        this.record("rejected:replacement-range");
+        return;
+      }
+      const text = event.data ?? event.dataTransfer?.getData("text/plain") ?? "";
+      session.ordinary = { text, handled: event.cancelable, before: session.boundary.host.textContent ?? "" };
+      if (event.cancelable) {
+        event.preventDefault();
+        this.commit(session, text);
+      }
+      return;
+    }
+    if (event.cancelable)
+      event.preventDefault();
+    session.ordinary = { text: null, handled: true, before: session.boundary.host.textContent ?? "" };
+    this.record(`rejected:${type}`);
+  }
+  input(session, event) {
+    session.dirty = true;
+    if (session.composition !== null) {
+      if (event.data !== null)
+        session.composition.text = event.data;
+      return;
+    }
+    const transaction = session.ordinary;
+    session.ordinary = null;
+    let text = transaction?.text ?? null;
+    if (transaction !== null && !transaction.handled && text === "") {
+      const current = session.boundary.host.textContent ?? "";
+      let prefix = 0;
+      while (prefix < transaction.before.length && current[prefix] === transaction.before[prefix])
+        prefix++;
+      let suffix = 0;
+      while (suffix < transaction.before.length - prefix && current[current.length - suffix - 1] === transaction.before[transaction.before.length - suffix - 1])
+        suffix++;
+      text = current.slice(prefix, current.length - suffix);
+    }
+    this.reconcileMutation(session);
+    if (transaction !== null && !transaction.handled && text !== null)
+      this.commit(session, text);
+  }
+  reconcileMutation(session) {
+    if (!session.dirty)
+      return;
+    session.dirty = false;
+    this.restore(session.boundary.host);
+    this.syncSelection();
+  }
+  commit(session, text) {
+    if (text === "" || !this.alive(session))
+      return;
+    const modifiers = { ...this.modifiers };
+    const action = /* @__PURE__ */ __name(() => {
+      if (!this.alive(session))
+        return;
+      sendCommittedText(this.events, text, modifiers);
+    }, "action");
+    if (session.pending)
+      session.queue.push(action);
+    else
+      action();
+  }
+  command(session, key) {
+    if (this.physical.has(key))
+      return;
+    const modifiers = { ...this.modifiers };
+    const action = /* @__PURE__ */ __name(() => {
+      if (!this.alive(session))
+        return;
+      const code = key === "Backspace" ? remoteProtocolPrimitiveTypes_exports.Key.KEY_BACK : key === "Delete" ? remoteProtocolPrimitiveTypes_exports.Key.KEY_DELETE : remoteProtocolPrimitiveTypes_exports.Key.KEY_RETURN;
+      const info = { code, ...modifiers, autoRepeatKeyDown: false };
+      this.events.OnIOKeyDown(info);
+      if (key === "Enter")
+        this.events.OnIOChar({ code: "\r", ...modifiers });
+      this.events.OnIOKeyUp(info);
+    }, "action");
+    if (session.pending)
+      session.queue.push(action);
+    else
+      action();
+  }
+  /** Returns true only for keys owned by an IME. Browser defaults stay enabled. */
+  keyDown(event) {
+    if (this.stopped)
+      return true;
+    this.modifiers = { ctrl: event.ctrlKey, shift: event.shiftKey, alt: event.altKey, osSuper: event.metaKey, capslock: event.getModifierState("CapsLock") };
+    if (this.session === null)
+      return false;
+    if (event.isComposing || event.keyCode === 229 || event.key === "Process" || this.session.composition !== null)
+      return true;
+    this.physical.add(event.key);
+    return false;
+  }
+  keyUp(event) {
+    this.physical.delete(event.key);
+    this.modifiers = { ctrl: event.ctrlKey, shift: event.shiftKey, alt: event.altKey, osSuper: event.metaKey, capslock: event.getModifierState("CapsLock") };
+    return this.session !== null && (event.isComposing || event.keyCode === 229 || event.key === "Process" || this.session.composition !== null);
+  }
+  get active() {
+    return this.session !== null;
+  }
+  get composing() {
+    return this.session?.composition !== null && this.session?.composition !== void 0;
+  }
+  hit(event) {
+    const hit = event.target;
+    if (!(hit instanceof Node))
+      return null;
+    const candidates2 = [...this.boundaries.values()].filter((boundary) => boundary.editable && boundary.host.contains(hit));
+    return candidates2.find((boundary) => !candidates2.some((other) => other !== boundary && boundary.host.contains(other.host))) ?? null;
+  }
+  mouseDown(event) {
+    if (!event.isTrusted || event.button !== 0)
+      return;
+    const boundary = this.hit(event);
+    if (boundary === null) {
+      this.cancelComposition();
+      return;
+    }
+    this.suspended = false;
+    this.activate(boundary, boundary.id !== this.desiredId);
+    boundary.host.focus({ preventScroll: true });
+    this.showKeyboard();
+    event.preventDefault();
+  }
+  point(event) {
+    if (event.pointerType !== "touch" || !event.isTrusted)
+      return;
+    if (event.type === "pointerdown") {
+      if (this.gesture !== null) {
+        this.gesture.canceled = true;
+        return;
+      }
+      this.cancelComposition();
+      this.gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp, boundary: this.hit(event), canceled: false };
+    } else if (this.gesture?.id === event.pointerId) {
+      const gesture = this.gesture;
+      if (Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) > 8)
+        gesture.canceled = true;
+      if (event.type === "pointercancel" || event.type === "lostpointercapture")
+        this.gesture = null;
+      if (event.type === "pointerup") {
+        this.gesture = null;
+        if (!gesture.canceled && event.timeStamp - gesture.time < 500 && gesture.boundary !== null) {
+          this.suspended = false;
+          this.activate(gesture.boundary, gesture.boundary.id !== this.desiredId);
+          gesture.boundary.host.focus({ preventScroll: true });
+          this.showKeyboard();
+        }
+      }
+    }
+  }
+  showKeyboard() {
+    const session = this.session;
+    if (session === null || this.options.keyboardPolicy !== "manual" || !this.state.capabilities.manualEligible)
+      return;
+    this.remember(session.boundary.host, "virtualkeyboardpolicy", "manual");
+    session.manual = true;
+    this.keyboard.show();
+  }
+  paragraphs(host) {
+    const result = [];
+    for (const element of [host, ...Array.from(host.querySelectorAll("div"))]) {
+      const layout = getParagraphLayout(element);
+      const text = getExtraBorder(element);
+      if (layout !== void 0 && text !== void 0)
+        result.push({ element, text, layout });
+    }
+    return result;
+  }
+  caret() {
+    const session = this.session;
+    if (session === null)
+      return null;
+    const host = session.boundary.host;
+    const paragraphs = this.paragraphs(host);
+    const paragraph = paragraphs.find((value) => value.layout.caret !== null) ?? paragraphs[0];
+    let node = host;
+    let offset = 0;
+    const screen = this.target.getBoundingClientRect();
+    let rect = new DOMRect(screen.x + this.nativeCaret.x, screen.y + this.nativeCaret.y, 1, 16);
+    if (paragraph !== void 0) {
+      const { layout, text } = paragraph;
+      const position = layout.caret?.caret ?? 0;
+      const line = layout.lines.find((value) => position >= value.start && position <= value.end) ?? layout.lines.at(-1);
+      const block = line.blocks.find((value) => value.text !== void 0 && position >= value.start && position <= value.end);
+      if (block?.text?.isConnected === true) {
+        node = block.text;
+        offset = Math.min(block.text.length, Math.max(0, position - block.start));
+      } else {
+        node = line.element;
+        offset = position >= line.end ? line.element.childNodes.length : 0;
+      }
+      const unit = layout.units.find((value) => position >= value.start && position < value.end) ?? layout.units.at(-1);
+      const textBounds = text.getBoundingClientRect();
+      const baseline = unit === void 0 ? { x: 0, y: layout.defaultFontSize } : position >= unit.end ? unit.backCaretBaseline : unit.frontCaretBaseline;
+      const height = unit?.caretHeight ?? layout.defaultFontSize;
+      rect = new DOMRect(textBounds.x + baseline.x, textBounds.y + baseline.y - height, 1, height);
+    }
+    const style = getComputedStyle(node instanceof Element ? node : node.parentElement);
+    return { paragraph, rect, node, offset, font: style.font, color: style.color };
+  }
+  syncSelection() {
+    const session = this.session;
+    if (session === null || session.composition !== null || session.adapter !== "contenteditable" || document.activeElement !== session.boundary.host)
+      return;
+    const caret = this.caret();
+    if (caret !== null)
+      document.getSelection()?.collapse(caret.node, caret.offset);
+  }
+  setCaret(point) {
+    this.nativeCaret = { x: point.x.value, y: point.y.value };
+    this.updateBounds();
+  }
+  updateBounds = /* @__PURE__ */ __name(() => {
+    const session = this.session;
+    const caret = this.caret();
+    if (session === null || caret === null)
+      return;
+    session.context?.updateControlBounds(session.boundary.host.getBoundingClientRect());
+    let selectionBounds = caret.rect;
+    if (session.context !== void 0 && session.composition !== null) {
+      const start = this.characterRect(session, session.selectionStart);
+      const end = this.characterRect(session, session.selectionEnd);
+      selectionBounds = new DOMRect(start.x, start.y, Math.max(1, end.x - start.x), start.height);
+    }
+    session.context?.updateSelectionBounds(selectionBounds);
+    if (session.composition !== null && session.context !== void 0)
+      this.presentPreedit(session);
+  }, "updateBounds");
+  characterRect(session, offset) {
+    const caret = this.caret();
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    context.font = caret.font;
+    const text = session.composition?.text ?? "";
+    const begin = context.measureText(text.slice(0, Math.max(0, offset - 1))).width;
+    const end = context.measureText(text.slice(0, Math.max(0, offset))).width;
+    return new DOMRect(caret.rect.x + begin, caret.rect.y, Math.max(1, end - begin), caret.rect.height);
+  }
+  presentPreedit(session) {
+    const caret = this.caret();
+    if (caret === null)
+      return;
+    const host = session.boundary.host;
+    const bounds = host.getBoundingClientRect();
+    host.setAttribute("data-gacui-preedit", session.composition?.text ?? "");
+    host.style.setProperty("--gacui-ime-x", `${caret.rect.x - bounds.x}px`);
+    host.style.setProperty("--gacui-ime-y", `${caret.rect.y - bounds.y}px`);
+    host.style.setProperty("--gacui-ime-font", caret.font);
+    host.style.setProperty("--gacui-ime-color", caret.color);
+  }
+  clearPreedit(session) {
+    session.boundary.host.removeAttribute("data-gacui-preedit");
+    for (const name of ["x", "y", "font", "color", "decoration"])
+      session.boundary.host.style.removeProperty(`--gacui-ime-${name}`);
+  }
+  /** Called before an authoritative paragraph edit can invalidate captured offsets. */
+  changing(element, newCaret = false) {
+    const composition = this.session?.composition;
+    if (composition !== void 0 && composition !== null && this.session.boundary.host.contains(element) && (newCaret || composition.paragraph === void 0 || composition.paragraph === element))
+      this.cancelComposition();
+  }
+  cancelComposition() {
+    if (this.session?.composition === null || this.session === null)
+      return;
+    const boundary = this.session.boundary;
+    const pending = this.session.pending;
+    this.end();
+    this.activate(boundary, pending);
+  }
+  onWindowBlur = /* @__PURE__ */ __name(() => {
+    this.suspended = true;
+    this.releaseKeys();
+    this.end();
+  }, "onWindowBlur");
+  onFocus = /* @__PURE__ */ __name((event) => {
+    if (this.session !== null && event.target instanceof Node && !this.session.boundary.host.contains(event.target)) {
+      this.suspended = true;
+      this.releaseKeys();
+      this.end();
+    }
+  }, "onFocus");
+  end() {
+    const session = this.session;
+    if (session === null)
+      return;
+    this.session = null;
+    this.generation++;
+    this.releaseKeys();
+    this.physical.clear();
+    for (const cleanup of session.cleanup)
+      cleanup();
+    session.queue.length = 0;
+    session.composition = null;
+    for (const paragraph of this.paragraphs(session.boundary.host))
+      paragraph.layout.browserComposition = false;
+    if (session.manual && document.activeElement === session.boundary.host)
+      this.keyboard.hide();
+    if (session.context !== void 0)
+      session.boundary.host.editContext = null;
+    this.contexts.delete(session.boundary.host);
+    this.clearPreedit(session);
+    this.reconcileMutation(session);
+    const saved = this.prepared.get(session.boundary.host);
+    for (const name of ["contenteditable", "virtualkeyboardpolicy"]) {
+      const value = saved?.get(name);
+      if (value !== void 0) {
+        if (value === null)
+          session.boundary.host.removeAttribute(name);
+        else
+          session.boundary.host.setAttribute(name, value);
+        saved.delete(name);
+      }
+    }
+  }
+  stop() {
+    if (this.stopped)
+      return;
+    this.end();
+    this.stopped = true;
+    this.desiredId = null;
+    for (const host of this.prepared.keys())
+      this.unprepare(host);
+    this.boundaries.clear();
+    window.removeEventListener("blur", this.onWindowBlur);
+    document.removeEventListener("focusin", this.onFocus);
+    window.visualViewport?.removeEventListener("resize", this.updateBounds);
+    window.visualViewport?.removeEventListener("scroll", this.updateBounds);
+    window.removeEventListener("scroll", this.updateBounds, true);
+    this.keyboard?.removeEventListener("geometrychange", this.updateBounds);
+    this.style.remove();
+  }
+};
 
 // ../../gaclib/renderer/lib/src/keyMapping.js
 function mapJavaScriptKeyToGacUIKey(event) {
@@ -2900,6 +3673,10 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   _responses;
   _events;
   _stopping = false;
+  _textInput;
+  get textInputState() {
+    return this._textInput?.state;
+  }
   _provider;
   _measurer;
   _renderingRecord;
@@ -2909,6 +3686,8 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   _rawInstalledListeners = /* @__PURE__ */ new Set();
   _rawUninstalledListeners = /* @__PURE__ */ new Set();
   _rawUpdatedListeners = /* @__PURE__ */ new Set();
+  _rawInterpretorFactories = /* @__PURE__ */ new Map();
+  _rawInterpretors = /* @__PURE__ */ new Map();
   _screenConfig;
   _windowConfig;
   _fontConfig;
@@ -2967,6 +3746,7 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     this._windowConfig.clientBounds = bounds;
     this._events.OnControllerScreenUpdated(this._screenConfig);
     this._events.OnWindowBoundsUpdated(this._windowConfig);
+    this._textInput?.updateBounds();
   }
   /****************************************************************************************
    * Constructor
@@ -3007,21 +3787,35 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   }
   rawElementInstalled(listener) {
     this._rawInstalledListeners.add(listener);
-    return () => {
+    return { unsubscribe: /* @__PURE__ */ __name(() => {
       this._rawInstalledListeners.delete(listener);
-    };
+    }, "unsubscribe") };
   }
   rawElementUninstalled(listener) {
     this._rawUninstalledListeners.add(listener);
-    return () => {
+    return { unsubscribe: /* @__PURE__ */ __name(() => {
       this._rawUninstalledListeners.delete(listener);
-    };
+    }, "unsubscribe") };
   }
   rawElementUpdated(listener) {
     this._rawUpdatedListeners.add(listener);
-    return () => {
+    return { unsubscribe: /* @__PURE__ */ __name(() => {
       this._rawUpdatedListeners.delete(listener);
-    };
+    }, "unsubscribe") };
+  }
+  registerRawElementInterpretorFactory(name, factory) {
+    if (this._rawInterpretorFactories.has(name)) {
+      throw new Error(`Raw element interpretor factory ${name} is already registered`);
+    }
+    this._rawInterpretorFactories.set(name, factory);
+  }
+  getRawElementInterpretorFactory(name) {
+    return this._rawInterpretorFactories.get(name);
+  }
+  _finalizeRawInterpretor(id) {
+    const interpretor = this._rawInterpretors.get(id);
+    this._rawInterpretors.delete(id);
+    interpretor?.finalize();
   }
   _start(responses, events, elements, provider, measurer) {
     this._responses = responses;
@@ -3032,6 +3826,7 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     this._renderingRecord = createVirtualDomFromRenderingDom({
       id: RootVirtualDomId,
       content: {
+        editableAttribute: null,
         hitTestResult: null,
         cursor: null,
         element: null,
@@ -3040,6 +3835,9 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
       },
       children: null
     }, elements, this._provider);
+    if ("htmlElement" in this._renderingRecord.screen) {
+      this._textInput = new TextInputCoordinator(this._settings.target, this._settings.textInput ?? {}, events, (host) => this._restoreInputHost(host), () => this._releasePressedKeys());
+    }
     this._installEvents();
     this._resizeObserver = new ResizeObserver(() => this._onSizeChanged());
     this._resizeObserver.observe(this._settings.target);
@@ -3048,6 +3846,7 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     if (this._stopping)
       return;
     this._stopping = true;
+    this._textInput?.stop();
     if (!disconnected && this._pointContacts.size !== 0) {
       this._endPoints(IOPointEndReason.Canceled_WindowDestroyed, performance.now());
     }
@@ -3063,6 +3862,8 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
     this._stopCaretBlink();
     this._resizeObserver.disconnect();
     this._uninstallEvents();
+    for (const id of this._rawInterpretors.keys())
+      this._finalizeRawInterpretor(id);
   }
   _stopCaretBlink() {
     if (this._caretBlinkTimer !== null) {
@@ -3158,8 +3959,8 @@ var GacUIRendererImpl = class _GacUIRendererImpl {
   RequestWindowNotifyMinSize(requestArgs) {
     this._settings.suggestMinSize(requestArgs.x.value, requestArgs.y.value);
   }
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   RequestWindowNotifySetCaret(requestArgs) {
+    this._textInput?.setCaret(requestArgs);
   }
   /****************************************************************************************
    * IO
@@ -3325,6 +4126,29 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   // Map from element ID to paragraph tracking data
   _paragraphElements = /* @__PURE__ */ new Map();
   _paragraphCarets = /* @__PURE__ */ new Map();
+  _paragraphSizes = /* @__PURE__ */ new Map();
+  _restoreInputHost(host) {
+    const visit = /* @__PURE__ */ __name((node, inside) => {
+      if (!("htmlElement" in node))
+        return;
+      const element = node.htmlElement;
+      inside = inside || element === host;
+      if (inside) {
+        if (node.props.typedDesc?.type === RendererType.DocumentParagraph) {
+          applyTypedStyle(element, node.props.typedDesc, this._renderingRecord.elements);
+          const textDiv = getExtraBorder(element);
+          this._paragraphElements.set(node.props.elementId, { htmlElement: element, textDiv });
+          this._measureParagraphDocumentSize(element, textDiv, getParagraphLayout(element));
+          this._applyStoredParagraphCaret(node.props.elementId);
+        }
+        node.updateChildren([...node.children]);
+      }
+      for (const child of node.children)
+        visit(child, inside);
+    }, "visit");
+    visit(this._renderingRecord.screen, false);
+    this._provider.fixBounds(this._renderingRecord.screen, this._settings.target, this._windowConfig.bounds.x2.value - this._windowConfig.bounds.x1.value, this._windowConfig.bounds.y2.value - this._windowConfig.bounds.y1.value);
+  }
   _reconcileParagraphElements() {
     for (const [elementId, data] of this._paragraphElements) {
       const virtualDom = this._renderingRecord.elementToDoms.get(elementId);
@@ -3391,6 +4215,8 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     return { layout, textDiv: data.textDiv };
   }
   _measureParagraphDocumentSize(htmlElement, textDiv, layout) {
+    if (layout.browserComposition === true)
+      return this._paragraphSizes.get(layout.paragraph.id);
     const isInDom = htmlElement.isConnected;
     let savedHtmlStyle;
     if (!isInDom) {
@@ -3420,6 +4246,7 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       document.body.removeChild(htmlElement);
       htmlElement.style.cssText = savedHtmlStyle;
     }
+    this._paragraphSizes.set(layout.paragraph.id, documentSize);
     return documentSize;
   }
   RequestRendererUpdateElement_DocumentParagraph(id, requestArgs) {
@@ -3454,7 +4281,13 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     }
     this._paragraphCarets.set(elementId, fullDesc.caret);
     const typedDesc = { type: RendererType.DocumentParagraph, desc: fullDesc };
-    this._updateElement(elementId, typedDesc);
+    const previous = this._paragraphElements.get(elementId);
+    const unchanged = existingTypedDesc?.type === RendererType.DocumentParagraph && JSON.stringify(existingTypedDesc.desc.paragraph) === JSON.stringify(fullDesc.paragraph);
+    if (!unchanged) {
+      if (previous !== void 0)
+        this._textInput?.changing(previous.htmlElement);
+      this._updateElement(elementId, typedDesc);
+    }
     const virtualDom = this._renderingRecord.elementToDoms.get(elementId);
     let htmlElement = virtualDom !== void 0 && "htmlElement" in virtualDom ? virtualDom.htmlElement : void 0;
     if (htmlElement === void 0) {
@@ -3717,10 +4550,18 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     this._responses.RespondDocumentParagraph_IsValidCaret(id, valid);
   }
   RequestDocumentParagraph_OpenCaret(requestArgs) {
+    const previous = this._getStoredParagraphCaret(requestArgs.id);
+    const paragraph = this._paragraphElements.get(requestArgs.id);
+    if (paragraph !== void 0 && previous?.caret !== requestArgs.caret)
+      this._textInput?.changing(paragraph.htmlElement, true);
     this._setStoredParagraphCaret(requestArgs.id, requestArgs);
     this._applyStoredParagraphCaret(requestArgs.id);
+    this._textInput?.updateBounds();
   }
   RequestDocumentParagraph_CloseCaret(requestArgs) {
+    const paragraph = this._paragraphElements.get(requestArgs);
+    if (paragraph !== void 0)
+      this._textInput?.changing(paragraph.htmlElement);
     this._setStoredParagraphCaret(requestArgs, null);
     this._applyStoredParagraphCaret(requestArgs);
   }
@@ -3732,13 +4573,23 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       return;
     }
     const raw = this._rawElements.get(id);
-    const rawChanged = raw !== void 0 && typedDesc.type === RendererType.Raw && (raw.id !== typedDesc.desc.rawId || raw.data !== typedDesc.desc.data);
+    const interpretorChanged = raw !== void 0 && typedDesc.type === RendererType.Raw && raw.interpretor !== typedDesc.desc.interpretor;
+    const rawChanged = raw !== void 0 && typedDesc.type === RendererType.Raw && (raw.id !== typedDesc.desc.rawId || interpretorChanged || raw.data !== typedDesc.desc.data);
     this._renderingRecord.elements.updateDesc(id, typedDesc);
     const virtualDom = this._renderingRecord.elementToDoms.get(id);
     if (virtualDom) {
       virtualDom.updateTypedDesc(id, typedDesc);
     }
     if (raw !== void 0 && rawChanged) {
+      if (interpretorChanged) {
+        this._finalizeRawInterpretor(id);
+        const factory = raw.interpretor === "" ? void 0 : this.getRawElementInterpretorFactory(raw.interpretor);
+        if (factory !== void 0) {
+          const interpretor = factory.create();
+          this._rawInterpretors.set(id, interpretor);
+          interpretor.initialize(raw);
+        }
+      }
       for (const listener of [...this._rawUpdatedListeners]) {
         listener(raw);
       }
@@ -3771,6 +4622,7 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       }
       this._paragraphElements.delete(id);
       this._paragraphCarets.delete(id);
+      this._paragraphSizes.delete(id);
       try {
         const raw = this._rawElements.get(id);
         if (raw !== void 0) {
@@ -3780,11 +4632,16 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
         }
       } finally {
         this._rawElements.delete(id);
-        this._renderingRecord.elements.destroy(id);
+        try {
+          this._finalizeRawInterpretor(id);
+        } finally {
+          this._renderingRecord.elements.destroy(id);
+        }
       }
     }
   }
   RequestRendererIdle() {
+    this._textInput?.reconcile(this._renderingRecord, true);
     this._settings.idle?.();
   }
   RequestRendererBeginRendering(requestArgs) {
@@ -3841,9 +4698,10 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       return;
     }
     if (requestArgs) {
-      this._renderingRecord = createVirtualDomFromRenderingDom(requestArgs, this._renderingRecord.elements, this._provider);
+      replaceVirtualDomFromRenderingDom(requestArgs, this._renderingRecord, this._provider, this._pendingElements);
       this._provider.fixBounds(this._renderingRecord.screen, this._settings.target, this._windowConfig.bounds.x2.value - this._windowConfig.bounds.x1.value, this._windowConfig.bounds.y2.value - this._windowConfig.bounds.y1.value);
       this._reconcileParagraphElements();
+      this._textInput?.reconcile(this._renderingRecord);
     }
   }
   RequestRendererRenderDomDiff(requestArgs) {
@@ -3855,6 +4713,7 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     this._pendingElements = /* @__PURE__ */ new Map();
     this._provider.fixBounds(this._renderingRecord.screen, this._settings.target, this._windowConfig.bounds.x2.value - this._windowConfig.bounds.x1.value, this._windowConfig.bounds.y2.value - this._windowConfig.bounds.y1.value);
     this._reconcileParagraphElements();
+    this._textInput?.reconcile(this._renderingRecord);
   }
   /* eslint-disable @typescript-eslint/no-unused-vars */
   /****************************************************************************************
@@ -3921,6 +4780,13 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   }, "_capturedMouseEvent");
   // Key state tracking
   _pressedKeys = /* @__PURE__ */ new Set();
+  _releasePressedKeys() {
+    if (!this._stopping)
+      for (const code of this._pressedKeys) {
+        this._events.OnIOKeyUp({ code, ctrl: false, shift: false, alt: false, osSuper: false, capslock: false, autoRepeatKeyDown: false });
+      }
+    this._pressedKeys.clear();
+  }
   // Double-click tracking: when mousedown has detail===2, we need to send
   // dblclick before the subsequent mouseup to match GacUI's expected order:
   // down → up → down → dblclick → up
@@ -4003,6 +4869,7 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   _pointContacts = /* @__PURE__ */ new Map();
   _pointCanceled = false;
   _lastPointerType = "";
+  _mousePointerId;
   _pointStyle;
   _drainPoint = /* @__PURE__ */ __name((event) => {
     if (this._pointCanceled && event.pointerType === "touch")
@@ -4058,8 +4925,20 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
   }
   _onPoint(event) {
     this._lastPointerType = event.pointerType;
-    if (event.pointerType !== "touch" || this._stopping)
+    if (this._stopping)
       return;
+    if (event.pointerType === "mouse") {
+      if (event.type === "pointerdown") {
+        this._settings.target.setPointerCapture(event.pointerId);
+        this._mousePointerId = event.pointerId;
+      } else if (this._mousePointerId === event.pointerId && ["pointerup", "pointercancel", "lostpointercapture"].includes(event.type)) {
+        this._mousePointerId = void 0;
+      }
+      return;
+    }
+    if (event.pointerType !== "touch")
+      return;
+    this._textInput?.point(event);
     if (event.cancelable)
       event.preventDefault();
     const target = this._settings.target;
@@ -4160,6 +5039,7 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     }
     this._ioHookEvent("mousedown", (event) => {
       const mouseEvent = event;
+      this._textInput?.mouseDown(mouseEvent);
       const button = this._ioGetMouseButton(mouseEvent);
       if (this._events !== void 0 && button !== void 0) {
         if (button === IOMouseButton.Mouse4 || button === IOMouseButton.Mouse5) {
@@ -4221,6 +5101,10 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
     });
     this._ioHookEvent("keydown", (event) => {
       const keyEvent = event;
+      if (this._textInput?.active === true && this._settings.isShortcutReservedForBrowser(keyEvent))
+        return;
+      if (this._textInput?.keyDown(keyEvent) === true)
+        return;
       const keyCode = mapJavaScriptKeyToGacUIKey(keyEvent);
       if (this._events !== void 0 && keyCode !== null) {
         const autoRepeatKeyDown = this._pressedKeys.has(keyCode);
@@ -4240,16 +5124,15 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       if (this._events !== void 0) {
         const key = keyEvent.key;
         let charCode;
-        if ([...key].length === 1) {
+        if ([...key].length === 1 && this._textInput?.active !== true) {
           charCode = key;
         } else if (key === "Enter") {
           charCode = "\r";
         } else if (key === "Tab") {
           charCode = "	";
         }
-        for (const code of charCode?.split("") ?? []) {
-          this._events.OnIOChar({
-            code,
+        if (charCode !== void 0) {
+          sendCommittedText(this._events, charCode, {
             ctrl: keyEvent.ctrlKey,
             shift: keyEvent.shiftKey,
             alt: keyEvent.altKey,
@@ -4258,14 +5141,17 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
           });
         }
       }
-      if (!this._settings.isShortcutReservedForBrowser(keyEvent)) {
+      const browserText = this._textInput?.active === true && [...keyEvent.key].length === 1 && !keyEvent.ctrlKey && !keyEvent.metaKey;
+      if (!browserText && !this._settings.isShortcutReservedForBrowser(keyEvent)) {
         keyEvent.preventDefault();
       }
     });
     this._ioHookEvent("keyup", (event) => {
       const keyEvent = event;
+      if (this._textInput?.keyUp(keyEvent) === true)
+        return;
       const keyCode = mapJavaScriptKeyToGacUIKey(keyEvent);
-      if (this._events !== void 0 && keyCode !== null) {
+      if (this._events !== void 0 && keyCode !== null && this._pressedKeys.has(keyCode)) {
         this._pressedKeys.delete(keyCode);
         const keyInfo = this._ioCreateKeyInfo(keyEvent, false);
         if (keyInfo !== null) {
@@ -4277,11 +5163,17 @@ Arguments: ${JSON.stringify(requestArgs, void 0, 4)}`);
       }
     });
     this._ioHookEvent("blur", () => {
-      this._pressedKeys.clear();
+      this._releasePressedKeys();
     });
   }
   _uninstallEvents() {
     this._mouseCaptured = false;
+    if (this._mousePointerId !== void 0) {
+      if (this._settings.target.hasPointerCapture(this._mousePointerId)) {
+        this._settings.target.releasePointerCapture(this._mousePointerId);
+      }
+      this._mousePointerId = void 0;
+    }
     for (const name of ["mousedown", "mousemove", "mouseup"]) {
       document.removeEventListener(name, this._capturedMouseEvent);
     }
@@ -4394,6 +5286,7 @@ export {
   onSolidLabelResized,
   renderDebugInfo,
   renderParagraphMeasurements,
+  replaceVirtualDomFromRenderingDom,
   setCaretVisible,
   setParagraphLayout,
   updateParagraphInlineImages,

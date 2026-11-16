@@ -1,6 +1,7 @@
 import { createHtmlRenderer, GacUIHtmlRendererExitError, isShortcutReservedForBrowser } from './gacui.js';
 import { connectWasmServer, WasmApplication } from './wasm.js';
-import { installFullControlTestRawElements } from './fullControlTestRaw.js';
+import { installRawClock } from './rawClock.js';
+import { installRawTouching } from './rawTouching.js';
 
 const screen = document.getElementById('gacui-screen');
 const loading = document.getElementById('gacui-loading');
@@ -9,12 +10,12 @@ const progress = document.getElementById('gacui-progress');
 const buttons = [...document.querySelectorAll('button')];
 let application;
 let renderer;
-let disposeRawElements;
+let disposeTouching;
 let rendererStarted = false;
 
 function stopRenderer(disconnected = false) {
-    disposeRawElements?.();
-    disposeRawElements = undefined;
+    disposeTouching?.();
+    disposeTouching = undefined;
     if (rendererStarted) {
         rendererStarted = false;
         renderer.stop(disconnected);
@@ -91,7 +92,8 @@ async function main() {
         idle: () => { window.__gacui_playwright_idle?.(); },
         blink: () => { window.__gacui_playwright_blink?.(); },
     });
-    disposeRawElements = installFullControlTestRawElements(renderer);
+    installRawClock(renderer);
+    disposeTouching = installRawTouching(renderer);
     let client;
     try {
         client = await connectWasmServer(application, renderer.requests);

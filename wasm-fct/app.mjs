@@ -6142,9 +6142,9 @@ var dynCall_viiiiiiiiii = Module["dynCall_viiiiiiiiii"] = (a0, a1, a2, a3, a4, a
 
 var dynCall_iiiiiiiiiiii = Module["dynCall_iiiiiiiiiiii"] = (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) => (dynCall_iiiiiiiiiiii = Module["dynCall_iiiiiiiiiiii"] = wasmExports["dynCall_iiiiiiiiiiii"])(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
 
-var dynCall_jiii = Module["dynCall_jiii"] = (a0, a1, a2, a3) => (dynCall_jiii = Module["dynCall_jiii"] = wasmExports["dynCall_jiii"])(a0, a1, a2, a3);
-
 var dynCall_diiii = Module["dynCall_diiii"] = (a0, a1, a2, a3, a4) => (dynCall_diiii = Module["dynCall_diiii"] = wasmExports["dynCall_diiii"])(a0, a1, a2, a3, a4);
+
+var dynCall_jiii = Module["dynCall_jiii"] = (a0, a1, a2, a3) => (dynCall_jiii = Module["dynCall_jiii"] = wasmExports["dynCall_jiii"])(a0, a1, a2, a3);
 
 var dynCall_viiiid = Module["dynCall_viiiid"] = (a0, a1, a2, a3, a4, a5) => (dynCall_viiiid = Module["dynCall_viiiid"] = wasmExports["dynCall_viiiid"])(a0, a1, a2, a3, a4, a5);
 
