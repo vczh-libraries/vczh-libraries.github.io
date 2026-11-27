@@ -126,7 +126,7 @@ function renderExamples(data) {
     }, 'hello');
 }
 
-function renderPlatforms(platforms, labels) {
+function renderPlatforms(platforms, labels, moreLooksLink) {
     const built = new Map();
     let visible = false;
     let selected = 'windows';
@@ -166,6 +166,8 @@ function renderPlatforms(platforms, labels) {
             const mode = data.modes.find((item) => item.id === modeId);
             const group = byId(`${id}-mode-${modeId}`);
             group.append(clone(`${id === 'html5' ? 'html5' : modeId}-themes-template`));
+            const themeTabs = group.querySelector('.theme-tabs');
+            if (id !== 'html5' && moreLooksLink) themeTabs.append(link(moreLooksLink));
             const pictures = element('div', undefined, 'screenshot-panels');
             group.append(pictures);
             let selectedTheme = mode.themes[0].id;
@@ -201,7 +203,7 @@ function renderPlatforms(platforms, labels) {
                 loaded.add(themeId);
             };
             modes.set(modeId, () => showTheme(selectedTheme));
-            tabs(group.querySelector('.theme-tabs'), showTheme, selectedTheme, `${id}-${modeId}`);
+            tabs(themeTabs, showTheme, selectedTheme, `${id}-${modeId}`);
         }
         built.set(id, () => showMode(selectedMode));
         if (id === 'html5') {
@@ -270,7 +272,7 @@ function render(data) {
     }
     for (const item of data.footerLinks) byId('footer-links').append(link(item));
     renderExamples(data.examples);
-    renderPlatforms(data.platforms, data.galleryLabels);
+    renderPlatforms(data.platforms, data.galleryLabels, data.moreLooksLink);
     byId('load-status').hidden = true;
     byId('home-content').hidden = false;
 }
