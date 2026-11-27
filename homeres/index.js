@@ -126,7 +126,7 @@ function renderExamples(data) {
     }, 'hello');
 }
 
-function renderPlatforms(platforms, labels, moreLooksLink) {
+function renderPlatforms(platforms, labels, galleryLinks) {
     const built = new Map();
     let visible = false;
     let selected = 'windows';
@@ -137,6 +137,7 @@ function renderPlatforms(platforms, labels, moreLooksLink) {
             return;
         }
         const data = platforms.find((platform) => platform.id === id);
+        const galleryLink = galleryLinks?.[data.galleryLink];
         const panel = byId(`platform-${id}`);
         panel.append(clone('gallery-template'));
         panel.querySelector('.platform-info p').textContent = data.description;
@@ -167,7 +168,7 @@ function renderPlatforms(platforms, labels, moreLooksLink) {
             const group = byId(`${id}-mode-${modeId}`);
             group.append(clone(`${id === 'html5' ? 'html5' : modeId}-themes-template`));
             const themeTabs = group.querySelector('.theme-tabs');
-            if (id !== 'html5' && moreLooksLink) themeTabs.append(link(moreLooksLink));
+            if (galleryLink) themeTabs.append(link(galleryLink));
             const pictures = element('div', undefined, 'screenshot-panels');
             group.append(pictures);
             let selectedTheme = mode.themes[0].id;
@@ -272,7 +273,7 @@ function render(data) {
     }
     for (const item of data.footerLinks) byId('footer-links').append(link(item));
     renderExamples(data.examples);
-    renderPlatforms(data.platforms, data.galleryLabels, data.moreLooksLink);
+    renderPlatforms(data.platforms, data.galleryLabels, data.galleryLinks);
     byId('load-status').hidden = true;
     byId('home-content').hidden = false;
 }
