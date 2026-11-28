@@ -128,7 +128,7 @@
           },
           {
             "kind": "Program",
-            "code": "using namespace vl;\nusing namespace vl::presentation;\nusing namespace vl::presentation::remoteprotocol;\nusing namespace vl::presentation::remoteprotocol::channeling;\nusing namespace vl::presentation::remote_renderer;\n\nGuiRemoteRendererSingle* remoteRenderer = nullptr;\nGuiRemoteProtocolAsyncJsonChannelRenderer* asyncChannel = nullptr;\n\nclass GuiMainInvoker : public IGuiRemoteProtocolAsyncRendererInvoker\n{\npublic:\n    void InvokeInMainThread(const Func<void()>& proc) override\n    {\n        GetApplication()->InvokeInMainThread(nullptr, proc);\n    }\n};\n\nvoid GuiMain()\n{\n    auto mainWindow = GetCurrentController()->WindowService()->CreateNativeWindow(INativeWindow::Normal);\n    mainWindow->SetTitle(L\"Connecting ...\");\n\n    GuiMainInvoker invoker;\n    remoteRenderer->RegisterMainWindow(mainWindow);\n    asyncChannel->SetInvokeInMainThread(&invoker);\n\n    GetCurrentController()->WindowService()->Run(mainWindow);\n\n    asyncChannel->SetInvokeInMainThread(nullptr);\n    remoteRenderer->UnregisterMainWindow();\n}\n\nint StartNamedPipeRemoteRenderer()\n{\n    auto jsonParser = Ptr(new glr::json::Parser);\n    auto networkClient = Ptr(new inter_process::named_pipe::NamedPipeClient(L\"GacUIRemoteProtocolNamedPipe\"));\n\n    GuiRemoteProtocolChannelClient channelClient(networkClient, jsonParser);\n    GuiRemoteProtocolAsyncJsonChannelRenderer asyncRendererChannel(channelClient.GetProtocolChannel());\n    GuiRemoteRendererSingle renderer(true);\n    GuiRemoteProtocolRendererChannel rendererChannel(\n        &asyncRendererChannel,\n        &renderer);\n\n    channelClient.WaitForServer();\n\n    remoteRenderer = &renderer;\n    asyncChannel = &asyncRendererChannel;\n    auto result = SetupRawWindowsDirect2DRenderer();\n    asyncChannel = nullptr;\n    remoteRenderer = nullptr;\n    return result;\n}",
+            "code": "using namespace vl;\nusing namespace vl::presentation;\nusing namespace vl::presentation::remoteprotocol;\nusing namespace vl::presentation::remoteprotocol::channeling;\nusing namespace vl::presentation::remote_renderer;\n\nGuiRemoteRendererSingle* remoteRenderer = nullptr;\nGuiRemoteProtocolAsyncJsonChannelRenderer* asyncChannel = nullptr;\n\nclass GuiMainInvoker : public IGuiRemoteProtocolAsyncRendererInvoker\n{\npublic:\n    void InvokeInMainThread(const Func<void()>& proc) override\n    {\n        GetApplication()->InvokeInMainThread(nullptr, proc);\n    }\n};\n\nvoid GuiMain()\n{\n    auto mainWindow = GetCurrentController()->WindowService()->CreateNativeWindow(INativeWindow::Normal);\n    mainWindow->SetTitle(L\"Connecting ...\");\n\n    GuiMainInvoker invoker;\n    remoteRenderer->RegisterMainWindow(mainWindow, L\"localhost\");\n    asyncChannel->SetInvokeInMainThread(&invoker);\n\n    GetCurrentController()->WindowService()->Run(mainWindow);\n\n    asyncChannel->SetInvokeInMainThread(nullptr);\n    remoteRenderer->UnregisterMainWindow();\n}\n\nint StartNamedPipeRemoteRenderer()\n{\n    auto jsonParser = Ptr(new glr::json::Parser);\n    auto networkClient = Ptr(new inter_process::named_pipe::NamedPipeClient(L\"GacUIRemoteProtocolNamedPipe\"));\n\n    GuiRemoteProtocolChannelClient channelClient(networkClient, jsonParser);\n    GuiRemoteProtocolAsyncJsonChannelRenderer asyncRendererChannel(channelClient.GetProtocolChannel());\n    GuiRemoteRendererSingle renderer(true);\n    GuiRemoteProtocolRendererChannel rendererChannel(\n        &asyncRendererChannel,\n        &renderer);\n\n    channelClient.WaitForServer();\n\n    remoteRenderer = &renderer;\n    asyncChannel = &asyncRendererChannel;\n    auto result = SetupRawWindowsDirect2DRenderer();\n    asyncChannel = nullptr;\n    remoteRenderer = nullptr;\n    return result;\n}",
             "language": "c++"
           }
         ]
@@ -388,7 +388,7 @@
               },
               {
                 "kind": "Text",
-                "text": " initializes all three capabilities to "
+                "text": " initializes these three capabilities to "
               },
               {
                 "kind": "Name",
@@ -462,6 +462,95 @@
               {
                 "kind": "Text",
                 "text": "; this replacement is separate from capability advertisement."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "Topic",
+        "title": "Sharing the renderer clipboard",
+        "content": [
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Clipboard sharing is enabled by default. The renderer advertises "
+              },
+              {
+                "kind": "Name",
+                "text": "ControllerGlobalConfig::injectClipboard"
+              },
+              {
+                "kind": "Text",
+                "text": " when it can provide the service. Core sends "
+              },
+              {
+                "kind": "Name",
+                "text": "InjectionRequestClipboard"
+              },
+              {
+                "kind": "Text",
+                "text": " once per enabled connection. The renderer publishes its current clipboard and later OS changes with "
+              },
+              {
+                "kind": "Name",
+                "text": "InjectionUpdateClipboardFromRenderer"
+              },
+              {
+                "kind": "Text",
+                "text": ". It acknowledges each "
+              },
+              {
+                "kind": "Name",
+                "text": "InjectionUpdateClipboardFromCore"
+              },
+              {
+                "kind": "Text",
+                "text": " write with the result for that request."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "GacJS uses the clipboard available to its browser page. Use the "
+              },
+              {
+                "kind": "Name",
+                "text": "remoteClipboard"
+              },
+              {
+                "kind": "Text",
+                "text": " checkbox or URL option. An omitted option, a bare option and "
+              },
+              {
+                "kind": "Name",
+                "text": "remoteClipboard=true"
+              },
+              {
+                "kind": "Text",
+                "text": " enable it. "
+              },
+              {
+                "kind": "Name",
+                "text": "remoteClipboard=false"
+              },
+              {
+                "kind": "Text",
+                "text": " disables it after refresh. The page needs a secure context and browser clipboard access. It asks before sharing with a different network destination. A denied read leaves the last known contents intact. On browsers without clipboard-change events, focus and permitted input gestures refresh the snapshot."
+              }
+            ]
+          },
+          {
+            "kind": "Paragraph",
+            "content": [
+              {
+                "kind": "Text",
+                "text": "Copying text in another renderer-side application updates the remote editor’s Paste command. Styled selections use a GacUI document representation where the clipboard supports it. A standalone image uses PNG. The Wasm worker uses the same page-side adapter."
               }
             ]
           }
